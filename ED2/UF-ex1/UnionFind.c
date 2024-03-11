@@ -84,6 +84,7 @@ int main()
   
   scanf("%d", &n);
   int result[n][2];
+  
   uf = init_UF(n);
 
   scanf("%d %d", &p, &q);
@@ -92,23 +93,19 @@ int main()
 
     if (!connected_UF(uf, p, q))
     {
-    result[i][i]=p;
-    result[i][i+1]=q;
+    result[i][0]=p;
+    result[i][1]=q;
     i++;
       union_UF(uf, p, q);
     }
-
-    // printf("\n\n");
-    // for (int j = 0; j < uf->n; ++j)
-    // {
-    //   printf("%d -> %d\n", j, uf->id[j]);
-    // }
     scanf("%d %d", &p, &q);
   }
 
   for (int j=0;j<n;j++){
-    for (int K=0;K<2;K++){ 
-        printf("%d",result[j][k]);
-  }
+    for (int k=0;k<2;k++){ 
+        if (!(result[j][0]==0 && result[j][1]==0)){
+            printf("%d ",result[j][k]);}
+  }printf("\n");}
+  
   printf("%d components\n", uf->count);
-}}
+}
