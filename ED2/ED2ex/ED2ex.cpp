@@ -1,5 +1,3 @@
-// ED2ex.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 
 #include <iostream>
 #include <chrono>
@@ -81,26 +79,6 @@ int main() {
 
     
     
-    
-    /*int b = 43;
-    double recursive_time = measure_execution_time(std::bind(fib_recursive, b));
-    double iterative_time = measure_execution_time(std::bind(fib_iterative, b));
-    // Print the results
-    std::cout << "Recursive Fibonacci (n=" << b << ") execution time: " << recursive_time << " seconds\n";
-    std::cout << "Iterative Fibonacci (n=" << b << ") execution time: " << iterative_time << " seconds\n";
-    int c = 1000;
-    double recursive_time = measure_execution_time(std::bind(fib_recursive, c));
-    double iterative_time = measure_execution_time(std::bind(fib_iterative, c));
-    // Print the results
-    std::cout << "Recursive Fibonacci (n=" << c << ") execution time: " << recursive_time << " seconds\n";
-    std::cout << "Iterative Fibonacci (n=" << c << ") execution time: " << iterative_time << " seconds\n";
-    int d = 100000;
-    double recursive_time = measure_execution_time(std::bind(fib_recursive, d));
-    double iterative_time = measure_execution_time(std::bind(fib_iterative, d));
-    // Print the results
-    std::cout << "Recursive Fibonacci (n=" << d << ") execution time: " << recursive_time << " seconds\n";
-    std::cout << "Iterative Fibonacci (n=" << d << ") execution time: " << iterative_time << " seconds\n";
-    */
 
    
     return 0;
