@@ -1,0 +1,37 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\GIT\\UFPR-\\ED2\\ED2ex\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{67EDE3F4-DF3F-4000-A963-FB2219805005}|ED2ex.vcxproj|E:\\GIT\\UFPR-\\ED2\\ED2ex\\ED2ex.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{67EDE3F4-DF3F-4000-A963-FB2219805005}|ED2ex.vcxproj|solutionrelative:ED2ex.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "ED2ex.cpp",
+              "DocumentMoniker": "E:\\GIT\\UFPR-\\ED2\\ED2ex\\ED2ex.cpp",
+              "RelativeDocumentMoniker": "ED2ex.cpp",
+              "ToolTip": "E:\\GIT\\UFPR-\\ED2\\ED2ex\\ED2ex.cpp",
+              "RelativeToolTip": "ED2ex.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
+              "WhenOpened": "2024-03-14T18:49:18.946Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
