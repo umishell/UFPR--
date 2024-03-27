@@ -1,10 +1,10 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "E:\\GIT\\UFPR-\\ED2\\tarefas\\",
+  "WorkspaceRootPath": "C:\\Users\\zuria\\OneDrive\\Documents\\0 UMI\\GIT\\UFPR--\\ED2\\tarefas\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{66E49740-F6A9-4EA7-89AA-7743F3EC5D8C}|tarefas.vcxproj|E:\\GIT\\UFPR-\\ED2\\tarefas\\tarefas.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{66E49740-F6A9-4EA7-89AA-7743F3EC5D8C}|tarefas.vcxproj|solutionrelative:tarefas.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{66E49740-F6A9-4EA7-89AA-7743F3EC5D8C}|tarefas.vcxproj|C:\\Users\\zuria\\OneDrive\\Documents\\0 UMI\\GIT\\UFPR--\\ED2\\tarefas\\roboSupermercado.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{66E49740-F6A9-4EA7-89AA-7743F3EC5D8C}|tarefas.vcxproj|solutionrelative:roboSupermercado.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,15 +19,19 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "tarefas.cpp",
-              "DocumentMoniker": "E:\\GIT\\UFPR-\\ED2\\tarefas\\tarefas.cpp",
-              "RelativeDocumentMoniker": "tarefas.cpp",
-              "ToolTip": "E:\\GIT\\UFPR-\\ED2\\tarefas\\tarefas.cpp",
-              "RelativeToolTip": "tarefas.cpp",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABQAAAAIAAAA",
+              "Title": "roboSupermercado.cpp",
+              "DocumentMoniker": "C:\\Users\\zuria\\OneDrive\\Documents\\0 UMI\\GIT\\UFPR--\\ED2\\tarefas\\roboSupermercado.cpp",
+              "RelativeDocumentMoniker": "roboSupermercado.cpp",
+              "ToolTip": "C:\\Users\\zuria\\OneDrive\\Documents\\0 UMI\\GIT\\UFPR--\\ED2\\tarefas\\roboSupermercado.cpp",
+              "RelativeToolTip": "roboSupermercado.cpp",
+              "ViewState": "AQIAAEsAAAAAAAAAAAAAAFYAAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-03-25T01:00:54.155Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             }
           ]
         }
