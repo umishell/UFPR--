@@ -3,29 +3,27 @@
 #include <cstdlib>
 
 using namespace std;
+int Removed = 0;
 
-
-int removeSacks(int ar[], int arlen, int quant, int removed) {
-    for (int i = 0; i <= arlen; i++) {
-        if (quant < 1) break;
-        if (i == arlen) removeSacks(ar, arlen, quant, removed);
+void removeSacks(int ar[], int quant, int removed) {
+    for (int i = 0; i < 11; i++) {
+        if (quant < 1) { cout << "{" << removed << "}"; Removed = removed; break; }
+        cout << "." << removed+1<<".\n";
+        if (i == 10) removeSacks(ar, quant, removed);
         else if (ar[i] < 1) continue;
         else { ar[i]--; quant--; removed++; }
-    }
-    //cout << removed << endl;
-    return removed;
+    } 
 }
-
 
 
 int main() {
 
     int ar[10]{};
-    int totalItens = 20, arlen = 10, stak = 0, quant = 22, removed;
+    int totalItens = 20, stak = 0, quant = 22, removed=0,rem=0;
     //randomize through out array
     srand(time(0));
     while (totalItens > 0) {
-        int randomNumber = rand() % arlen;
+        int randomNumber = rand() % 10;
         if (ar[randomNumber] > 2) {
             continue;
         }
@@ -49,24 +47,30 @@ int main() {
         cout << "quantidade: ";
         cin >> quant;
         if (quant > 20) cout << "wrong value\n";
-        if (quant < 1) exit(0);
+        else if (quant < 1) exit(0);
     }
     while (stak < 20) {  
-        removed += removeSacks(ar, arlen, quant, removed = 0);
-        cout << removed << endl;
+        removeSacks(ar, quant, removed);
+        cout <<"rem: "<< Removed << endl;
+        stak += Removed;
+
+        cout << "stak: " <<stak << endl;
+
         //check array
         for (int i = 0; i < 10; i++) {
             cout << ar[i];
         }cout << endl;
-        if (stak >= 20) { cout << "nao ha mais itens\n" << endl; break; }
-        quant = 22;
-            while (quant > 20) {
-                cout << "quantidade: ";
-                cin >> quant;
-                if (quant > 20) cout << "wrong value\n";
-                if (quant < 1) exit(0);
 
-            }
+        if (stak >= 20) { cout << "nao ha mais itens\n" << endl; break; }
+
+        quant = 22;
+        while (quant > 20) {
+            cout << "quantidade: ";
+            cin >> quant;
+            if (quant > 20) cout << "wrong value\n";
+            else if (quant < 1) exit(0);
+
+        }
     }
 
    
