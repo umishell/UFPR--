@@ -49,12 +49,11 @@ int main() {
         cout << "quantidade: ";
         cin >> quant;
         if (quant > 20) cout << "wrong value\n";
+        if (quant < 1) exit(0);
     }
-    while (quant > 0 || stak < 20) {  
-        removed = removeSacks(ar, arlen, quant, removed = 0);
+    while (stak < 20) {  
+        removed += removeSacks(ar, arlen, quant, removed = 0);
         cout << removed << endl;
-        stak += removed;
-        cout << stak << endl;
         //check array
         for (int i = 0; i < 10; i++) {
             cout << ar[i];
@@ -65,6 +64,8 @@ int main() {
                 cout << "quantidade: ";
                 cin >> quant;
                 if (quant > 20) cout << "wrong value\n";
+                if (quant < 1) exit(0);
+
             }
     }
 
