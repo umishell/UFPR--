@@ -1,3 +1,3 @@
-﻿  tarefas.cpp
-E:\GIT\UFPR-\ED2\tarefas\tarefas.cpp(85,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-  tarefas.vcxproj -> E:\GIT\UFPR-\ED2\tarefas\x64\Debug\tarefas.exe
+﻿  roboSupermercadoJump0.cpp
+C:\Users\zuria\OneDrive\Documents\0 UMI\GIT\UFPR--\ED2\tarefas\roboSupermercadoJump0.cpp(26,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  tarefas.vcxproj -> C:\Users\zuria\OneDrive\Documents\0 UMI\GIT\UFPR--\ED2\tarefas\x64\Debug\tarefas.exe
