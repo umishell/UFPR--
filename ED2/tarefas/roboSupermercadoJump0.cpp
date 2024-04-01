@@ -1,25 +1,43 @@
 
 #include <iostream>
 #include <cstdlib>
+#include < ctype.h >
 
 using namespace std;
 int Removed = 0;
 
-void removeSacks(int ar[], int quant, int removed) {
+void removeSequencial(int ar[], int quant, int removed) {
+    
+
     for (int i = 0; i < 11; i++) {
-        if (quant < 1) { cout << "{" << removed << "}"; Removed = removed; break; }
-        cout << "." << removed+1<<".\n";
-        if (i == 10) removeSacks(ar, quant, removed);
+        if (quant>20-Removed) quant=20-Removed;
+        if (quant < 1) { cout << "{" << removed << "}"; Removed = removed; return; }
+        if (i == 10) removeSequencial(ar, quant, removed);
+
         else if (ar[i] < 1) continue;
-        else { ar[i]--; quant--; removed++; }
+        else { ar[i]--; quant--; removed++;cout << "." << removed<<".\n"; }
+        
     } 
 }
 
+void removeBinary(int ar[], int quant, int removed) {
+
+
+    for (int i = 0; i < 11; i++) {
+        if (quant > 20 - Removed) quant = 20 - Removed;
+        if (quant < 1) { cout << "{" << removed << "}"; Removed = removed; return; }
+        if (i == 10) removeSequencial(ar, quant, removed);
+
+        else if (ar[i] < 1) continue;
+        else { ar[i]--; quant--; removed++; cout << "." << removed << ".\n"; }
+
+    }
+}
 
 int main() {
 
     int ar[10]{};
-    int totalItens = 20, stak = 0, quant = 22, removed=0,rem=0;
+    int totalItens = 20, stak = 0, quant = 22, removed ;
     //randomize through out array
     srand(time(0));
     while (totalItens > 0) {
@@ -49,12 +67,11 @@ int main() {
         if (quant > 20) cout << "wrong value\n";
         else if (quant < 1) exit(0);
     }
-    while (stak < 20) {  
-        removeSacks(ar, quant, removed);
+    while (stak < 20) { 
+        removeSequencial(ar, quant, removed=0);
         cout <<"rem: "<< Removed << endl;
-        stak += Removed;
 
-        cout << "stak: " <<stak << endl;
+        stak += Removed;cout << "stak: " <<stak << endl;
 
         //check array
         for (int i = 0; i < 10; i++) {
