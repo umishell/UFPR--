@@ -127,7 +127,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="roboSupermercado.cpp" />
+    <ClCompile Include="roboSupermercado-v1.cpp" />
+    <ClCompile Include="roboSupermercadoJump0.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="roboSupermercadoJump0.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
