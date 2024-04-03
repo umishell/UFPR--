@@ -1,4 +1,4 @@
-package tarefa1;
+package areaCalculator_1;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -7,7 +7,7 @@ public class AreaCalculator {
 
     public static void isNegative(double number) throws RuntimeException {
         if (number < 0) {
-            throw new RuntimeException("Must be a positive number");+
+            throw new RuntimeException("Must be a positive number");
 
         }
     }
@@ -20,17 +20,17 @@ public class AreaCalculator {
         return side1 * side2 / 2;
     }
 
-    public static double circumferenceArea(double radius) {
+    public static double circleArea(double radius) {
         return Math.PI * radius * radius;
     }
 
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
 
-        System.out.print("Calculate the area of a:\n" +
+        System.out.print("Calculate the area of a: \n" +
                 "Triangle = 1\n" +
                 "Rectangle = 2\n" +
-                "Circumference = 3\n" +
+                "Circle = 3\n" +
                 "option:");
 
         int choice = 0 ;
@@ -78,7 +78,7 @@ public class AreaCalculator {
                     double radius = scan.nextDouble();
                     isNegative(radius);
                     isNegative(radius);
-                    System.out.println("area of circle is " + String.format("%.2f", circumferenceArea(radius)) + " square meters");
+                    System.out.println("area of circle is " + String.format("%.2f", circleArea(radius)) + " square meters");
                 }
             }
         scan.close();
