@@ -49,7 +49,7 @@ public class Salarios {
             double salarioLiquido = calcularSalarioLiquido(valorHora, horasTrabalhadas, inss);
 
             imprimirExtrato(valorHora, horasTrabalhadas, salarioBruto, salarioLiquido);
-            
+
         } catch (InputMismatchException e) {
             System.err.println("Erro: Entrada inválida. Digite números decimais para valor da hora e percentual do INSS, e números inteiros para horas trabalhadas.");
         } finally {
