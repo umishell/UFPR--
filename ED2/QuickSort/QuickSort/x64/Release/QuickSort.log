@@ -1,0 +1,24 @@
+﻿  QuickSort.cpp
+C:\Users\zuria\OneDrive\Documents\0 UMI\GIT\UFPR--\ED2\QuickSort\QuickSort.cpp(7,7): error C2039: 'random_device': is not a member of 'std'
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\iostream(18,1):
+  see declaration of 'std'
+  
+C:\Users\zuria\OneDrive\Documents\0 UMI\GIT\UFPR--\ED2\QuickSort\QuickSort.cpp(7,7): error C2065: 'random_device': undeclared identifier
+C:\Users\zuria\OneDrive\Documents\0 UMI\GIT\UFPR--\ED2\QuickSort\QuickSort.cpp(7,21): error C2146: syntax error: missing ';' before identifier 'rd'
+C:\Users\zuria\OneDrive\Documents\0 UMI\GIT\UFPR--\ED2\QuickSort\QuickSort.cpp(7,21): error C2065: 'rd': undeclared identifier
+C:\Users\zuria\OneDrive\Documents\0 UMI\GIT\UFPR--\ED2\QuickSort\QuickSort.cpp(8,7): error C2039: 'mt19937': is not a member of 'std'
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\iostream(18,1):
+  see declaration of 'std'
+  
+C:\Users\zuria\OneDrive\Documents\0 UMI\GIT\UFPR--\ED2\QuickSort\QuickSort.cpp(8,7): error C2065: 'mt19937': undeclared identifier
+C:\Users\zuria\OneDrive\Documents\0 UMI\GIT\UFPR--\ED2\QuickSort\QuickSort.cpp(8,15): error C2146: syntax error: missing ';' before identifier 'g'
+C:\Users\zuria\OneDrive\Documents\0 UMI\GIT\UFPR--\ED2\QuickSort\QuickSort.cpp(8,17): error C3861: 'rd': identifier not found
+C:\Users\zuria\OneDrive\Documents\0 UMI\GIT\UFPR--\ED2\QuickSort\QuickSort.cpp(8,15): error C3861: 'g': identifier not found
+C:\Users\zuria\OneDrive\Documents\0 UMI\GIT\UFPR--\ED2\QuickSort\QuickSort.cpp(11,7): error C2039: 'uniform_int_distribution': is not a member of 'std'
+  C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.39.33519\include\iostream(18,1):
+  see declaration of 'std'
+  
+C:\Users\zuria\OneDrive\Documents\0 UMI\GIT\UFPR--\ED2\QuickSort\QuickSort.cpp(11,7): error C2065: 'uniform_int_distribution': undeclared identifier
+C:\Users\zuria\OneDrive\Documents\0 UMI\GIT\UFPR--\ED2\QuickSort\QuickSort.cpp(11,32): error C2062: type 'int' unexpected
+C:\Users\zuria\OneDrive\Documents\0 UMI\GIT\UFPR--\ED2\QuickSort\QuickSort.cpp(15,16): error C2065: 'g': undeclared identifier
+C:\Users\zuria\OneDrive\Documents\0 UMI\GIT\UFPR--\ED2\QuickSort\QuickSort.cpp(15,11): error C3861: 'dist': identifier not found
