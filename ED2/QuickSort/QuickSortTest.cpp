@@ -1,61 +1,64 @@
-#include <iostream>
-#include <algorithm>  // Add this line
+/*#include <iostream>
+#include <algorithm>  
 #include <string>
 #include <random>
 
 using namespace std;
 
-void shuffle(string* name, int n) {
-	// Use random number generator for shuffling
-	random_device rd;
-	mt19937 g(rd()); // Seed the generator
-
-	// Use a uniform distribution to generate random indexes
-	uniform_int_distribution<int> dist(0, n - 1);
-
-	for (int i = 0; i < n - 1; ++i) {
-		// Swap current element with a random element
-		int j = dist(g);
-		swap(name[i], name[j]);
-	}
-}
-
-void swap(string* name, int i, int j) {
-	/* Directly swap elements within the array */
-	string temp = name[i];
+void swap(char* name, int i, int j) {
+	// Directly swap elements within the array
+	char temp = name[i];
 	name[i] = name[j];
 	name[j] = temp;
 }
 
-int partition(string* name, int lo, int hi) {
+void shuffle(char* arr, int n) {
+	// Use random number generator for shuffling
+	std::random_device rd;
+	std::mt19937 g(rd()); // Seed the generator
+
+	// Use a uniform distribution to generate random indexes
+	std::uniform_int_distribution<int> dist(0, n - 1);
+
+	for (int i = 0; i < n - 1; ++i) {
+		// Swap current element with a random element
+		int j = dist(g);
+		swap(arr[i], arr[j]);
+	}
+}
+
+
+
+
+int partition(char* a, int lo, int hi) {
 
 	int i = lo, j = hi + 1;
 	while (1) {
-		while (name[++i] < name[lo]) // Encontra item na esquerda para a troca
+		while (a[++i] < a[lo]) // Encontra item na esquerda para a troca
 			if (i == hi) break;
 
-		while (name[lo] < name[--j]) // Encontra item na direita para a troca
+		while (a[lo] < a[--j]) // Encontra item na direita para a troca
 			if (j == lo) break;
 		if (i >= j) break;
-		swap(name, i, j);
+		swap(a, i, j);
 	}
-	swap(name, lo, j);
+	swap(a, lo, j);
 	return(j);
 }
 
 
-void quicksort_(string* name, int lo, int hi)
+void quicksort_(char* a, int lo, int hi)
 {
 	if (hi <= lo) return;
-	int j = partition(name, lo, hi);
-	quicksort_(name, lo, j - 1);
-	quicksort_(name, j + 1, hi);
+	int j = partition(a, lo, hi);
+	quicksort_(a, lo, j - 1);
+	quicksort_(a, j + 1, hi);
 }
 
-void quicksort(string* name, int n)
+void quicksort(char* a, int n)
 {
-	//shuffle(name, n);
-	quicksort_(name, 0, n - 1);
+	shuffle(a, n);
+	quicksort_(a, 0, n - 1);
 }
 
 
@@ -63,16 +66,24 @@ void quicksort(string* name, int n)
 
 int main()
 {
-	string name = "Michel Abril Marinho";
-	name.erase(remove_if(name.begin(), name.end(), [](unsigned char x) { return isspace(x); }), name.end());cout << name << endl;
+	string strname = "Michel Abril Marinho";
+	strname.erase(remove_if(strname.begin(), strname.end(), [](unsigned char x) { return isspace(x); }), strname.end());
+	cout << strname << endl;
+	int n = strname.size();//size of name
+	cout << n << endl;
 
-	int n = name.size();cout << n << endl;
+	// Convert string to character array
+	char* name = new char[n + 1]; // char array with \0 
+	name[n] = '\0';
+	for (int i = 0; i < n; i++) {
+		name[i] = strname[i];
+	}
 
-	shuffle(&name, n);	cout << name << endl;
+	for (int i = 0; i < n; i++) cout << name[i] << " ";
+	cout << endl;
 
-
-	//quicksort(&name, n - 1);
-	//quicksort_(&name, 0, n - 1);
+	shuffle(name, n);
+	//quicksort(name, n - 1);
 	cout << "Sorted name: \n";
 	cout << name << endl;
 
@@ -81,3 +92,4 @@ int main()
 
 
 }
+*/

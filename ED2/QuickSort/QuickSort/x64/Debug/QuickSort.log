@@ -1,7 +1,3 @@
-﻿QuickSortTest.obj : error LNK2005: "int __cdecl partition(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > *,int,int)" (?partition@@YAHPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HH@Z) already defined in QuickSort.obj
-QuickSortTest.obj : error LNK2005: "void __cdecl quicksort(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > *,int)" (?quicksort@@YAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z) already defined in QuickSort.obj
-QuickSortTest.obj : error LNK2005: "void __cdecl quicksort_(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > *,int,int)" (?quicksort_@@YAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HH@Z) already defined in QuickSort.obj
-QuickSortTest.obj : error LNK2005: "void __cdecl shuffle(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > *,int)" (?shuffle@@YAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@H@Z) already defined in QuickSort.obj
-QuickSortTest.obj : error LNK2005: "void __cdecl swap(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > *,int,int)" (?swap@@YAXPEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@HH@Z) already defined in QuickSort.obj
-QuickSortTest.obj : error LNK2005: main already defined in QuickSort.obj
-C:\Users\zuria\OneDrive\Documents\0 UMI\GIT\UFPR--\ED2\QuickSort\x64\Debug\QuickSort.exe : fatal error LNK1169: one or more multiply defined symbols found
+﻿  QuickSort.cpp
+E:\GIT\UFPR--\ED2\QuickSort\QuickSort.cpp(72,8): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  QuickSort.vcxproj -> E:\GIT\UFPR--\ED2\QuickSort\x64\Debug\QuickSort.exe

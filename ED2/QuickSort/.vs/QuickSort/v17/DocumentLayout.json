@@ -1,14 +1,14 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\zuria\\OneDrive\\Documents\\0 UMI\\GIT\\UFPR--\\ED2\\QuickSort\\",
+  "WorkspaceRootPath": "E:\\GIT\\UFPR--\\ED2\\QuickSort\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{722A24AC-F919-4FA0-88CF-0C41E0BECF7B}|QuickSort.vcxproj|C:\\Users\\zuria\\OneDrive\\Documents\\0 UMI\\GIT\\UFPR--\\ED2\\QuickSort\\QuickSortTest.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{722A24AC-F919-4FA0-88CF-0C41E0BECF7B}|QuickSort.vcxproj|solutionrelative:QuickSortTest.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{722A24AC-F919-4FA0-88CF-0C41E0BECF7B}|QuickSort.vcxproj|E:\\GIT\\UFPR--\\ED2\\QuickSort\\QuickSort.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{722A24AC-F919-4FA0-88CF-0C41E0BECF7B}|QuickSort.vcxproj|solutionrelative:QuickSort.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{722A24AC-F919-4FA0-88CF-0C41E0BECF7B}|QuickSort.vcxproj|C:\\Users\\zuria\\OneDrive\\Documents\\0 UMI\\GIT\\UFPR--\\ED2\\QuickSort\\QuickSort.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{722A24AC-F919-4FA0-88CF-0C41E0BECF7B}|QuickSort.vcxproj|solutionrelative:QuickSort.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{722A24AC-F919-4FA0-88CF-0C41E0BECF7B}|QuickSort.vcxproj|E:\\GIT\\UFPR--\\ED2\\QuickSort\\QuickSortTest.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{722A24AC-F919-4FA0-88CF-0C41E0BECF7B}|QuickSort.vcxproj|solutionrelative:QuickSortTest.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -27,27 +27,27 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "QuickSortTest.cpp",
-              "DocumentMoniker": "C:\\Users\\zuria\\OneDrive\\Documents\\0 UMI\\GIT\\UFPR--\\ED2\\QuickSort\\QuickSortTest.cpp",
-              "RelativeDocumentMoniker": "QuickSortTest.cpp",
-              "ToolTip": "C:\\Users\\zuria\\OneDrive\\Documents\\0 UMI\\GIT\\UFPR--\\ED2\\QuickSort\\QuickSortTest.cpp",
-              "RelativeToolTip": "QuickSortTest.cpp",
-              "ViewState": "AQIAAFMAAAAAAAAAAAAAAFMAAAAAAAAA",
+              "Title": "QuickSort.cpp",
+              "DocumentMoniker": "E:\\GIT\\UFPR--\\ED2\\QuickSort\\QuickSort.cpp",
+              "RelativeDocumentMoniker": "QuickSort.cpp",
+              "ToolTip": "E:\\GIT\\UFPR--\\ED2\\QuickSort\\QuickSort.cpp",
+              "RelativeToolTip": "QuickSort.cpp",
+              "ViewState": "AQIAAC0AAAAAAAAAAAAAAEMAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-04-03T15:29:00.905Z",
+              "WhenOpened": "2024-04-01T22:49:15.333Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "QuickSort.cpp",
-              "DocumentMoniker": "C:\\Users\\zuria\\OneDrive\\Documents\\0 UMI\\GIT\\UFPR--\\ED2\\QuickSort\\QuickSort.cpp",
-              "RelativeDocumentMoniker": "QuickSort.cpp",
-              "ToolTip": "C:\\Users\\zuria\\OneDrive\\Documents\\0 UMI\\GIT\\UFPR--\\ED2\\QuickSort\\QuickSort.cpp",
-              "RelativeToolTip": "QuickSort.cpp",
-              "ViewState": "AQIAADgAAAAAAAAAAAAAAFIAAAAAAAAA",
+              "Title": "QuickSortTest.cpp",
+              "DocumentMoniker": "E:\\GIT\\UFPR--\\ED2\\QuickSort\\QuickSortTest.cpp",
+              "RelativeDocumentMoniker": "QuickSortTest.cpp",
+              "ToolTip": "E:\\GIT\\UFPR--\\ED2\\QuickSort\\QuickSortTest.cpp",
+              "RelativeToolTip": "QuickSortTest.cpp",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA0AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-04-01T22:49:15.333Z",
+              "WhenOpened": "2024-04-03T15:29:00.905Z",
               "EditorCaption": ""
             }
           ]
