@@ -20,7 +20,7 @@ void shuffle(char* arr, int n) {
 	// Use a uniform distribution to generate random indexes
 	std::uniform_int_distribution<int> dist(0, n - 1);
 
-	for (int i = 0; i < n - 1; ++i) {
+	for (int i = 0; i < n+1 ; ++i) {
 		// Swap current element with a random element
 		int j = dist(g);
 		swap(arr[i], arr[j]);
@@ -45,16 +45,33 @@ int partition(char* a, int lo, int hi) {
 
 void quicksort_(char* a, int lo, int hi)
 {
+	
+
 	if (hi <= lo) return;
 	int j = partition(a, lo, hi);
+	//printing for tracking changes
+	cout << a << endl;//array
+	cout << "lo = " << lo;//low
+	cout << "  hi = " << lo;//high
+	cout << "  j = " << lo << endl;;//pivot
+
 	quicksort_(a, lo, j - 1);
 	quicksort_(a, j + 1, hi);
+	
 }
 
 void quicksort(char* a, int n)
-{
+{	
+	cout <<"before shuffle n= " << n << endl;
+
 	shuffle(a, n);
+	cout << "after shuffle n= " << n << endl;
+
+	cout << "shuffled name: \n";
+	cout << a << "\n" << endl;
+	cout << "quick sort starting: \n";
 	quicksort_(a, 0, n - 1);
+
 }
 
 
@@ -64,14 +81,13 @@ int main()
 {
 	string strname = "Michel Abril Marinho"; // string input name
 	cout << "string passed as input: \n";
-	cout << strname << endl;
+	cout << strname << "\n" << endl;
 
 	strname.erase(remove_if(strname.begin(), strname.end(), [](unsigned char x) { return isspace(x); }), strname.end());
 	cout << "name without spaces: \n";
-	cout << strname << endl;
+	cout << strname << "\n" << endl;
 
 	int n = strname.size();//size of name
-
 	// Convert string to character array
 	char* name = new char[n + 1]; // char array with \0 
 	name[n] = '\0';
@@ -81,14 +97,12 @@ int main()
 
 	cout << "char array: \n";
 	for (int i = 0; i < n; i++) cout << name[i];
-	cout << endl;
+	cout << "\n" << endl;
 
-	shuffle(name, n);
-	cout << "shuffled name: \n";
-	cout << name << endl;
+	cout <<"n= " << n << endl;
 
 	quicksort(name, n - 1);
-	cout << "Sorted name: \n";
+	cout << "\nSorted name: \n";
 	cout << name << endl;
 
 
