@@ -28,49 +28,54 @@ void shuffle(char* arr, int n) {
 }
 
 int partition(char* a, int lo, int hi) {
-
-	int i = lo, j = hi + 1;
+	
+	int i = lo, j = hi;
 	while (1) {
-		while (a[++i] < a[lo]) // Encontra item na esquerda para a troca
-			if (i == hi) break;
+		while (a[++i] < a[lo]) if (i == hi) break; 
+		cout <<"i." << i << " = " << a[i] << endl;
+	
+		while (a[j--] > a[lo]) if (j == lo) break; 
+		cout <<"j." << j << " = " << a[j] << endl;
 
-		while (a[lo] < a[--j]) // Encontra item na direita para a troca
-			if (j == lo) break;
 		if (i >= j) break;
-		swap(a, i, j);
+		swap(a, i, j); 
+		cout << "- swapping . i= " << a[i] <<"   j= " << a[j] << endl;
 	}
-	swap(a, lo, j);
-	return(j);
+	cout << "before swap j." << j << " = " << a[j] << endl;
+	cout << "           lo." << lo << " = " << a[lo] << endl;
+	cout << a << endl;//array
+	//swap(a, j-1, lo);
+	char temp = a[lo];
+	a[lo] = a[j];
+	a[j] = temp;
+	cout << "after swap j." << j << " = " << a[j] << endl;
+	cout << "           lo." << lo << " = " << a[lo] << endl;
+	cout << a << endl;//array
+	 cout << "end of partition\n"<<endl; return(j);
 }
 
 void quicksort_(char* a, int lo, int hi)
 {
-	
 
-	if (hi <= lo) return;
-	int j = partition(a, lo, hi);
-	//printing for tracking changes
+	cout << "lo = " << lo << "  hi = " << hi << endl;
+	if (hi <= lo) {
+		cout << "hi <= lo \n"; return;
+	}
+	int pivot = partition(a, lo, hi);
+	//tracking changes
 	cout << a << endl;//array
-	cout << "lo = " << lo;//low
-	cout << "  hi = " << lo;//high
-	cout << "  j = " << lo << endl;;//pivot
 
-	quicksort_(a, lo, j - 1);
-	quicksort_(a, j + 1, hi);
-	
+	quicksort_(a, lo, pivot - 1);
+	quicksort_(a, pivot + 1, hi);
 }
 
 void quicksort(char* a, int n)
 {	
-	cout <<"before shuffle n= " << n << endl;
-
-	shuffle(a, n);
-	cout << "after shuffle n= " << n << endl;
-
-	cout << "shuffled name: \n";
-	cout << a << "\n" << endl;
+	//shuffle(a, n-1);
+	//cout << "shuffled name: \n";
+	//cout << a << "\n" << endl;
 	cout << "quick sort starting: \n";
-	quicksort_(a, 0, n - 1);
+	quicksort_(a, 0, n-1);
 
 }
 
@@ -79,7 +84,7 @@ void quicksort(char* a, int n)
 
 int main()
 {
-	string strname = "Michel Abril Marinho"; // string input name
+	string strname = "fedcba"; // string input name
 	cout << "string passed as input: \n";
 	cout << strname << "\n" << endl;
 
@@ -101,7 +106,7 @@ int main()
 
 	cout <<"n= " << n << endl;
 
-	quicksort(name, n - 1);
+	quicksort(name, n );
 	cout << "\nSorted name: \n";
 	cout << name << endl;
 
