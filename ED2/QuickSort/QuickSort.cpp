@@ -5,11 +5,14 @@
 
 using namespace std;
 
-void swap(char* name, int i, int j) {
+void swap(char* a, int i, int j) {
 	// Directly swap elements within the array
-	char temp = name[i];
-	name[i] = name[j];
-	name[j] = temp;
+	char temp = a[i];
+	a[i] = a[j];
+	a[j] = temp;
+	//char temp = name[i];
+	//name[i] = name[j];
+	//name[j] = temp;
 }
 
 void shuffle(char* arr, int n) {
@@ -25,32 +28,26 @@ void shuffle(char* arr, int n) {
 		int j = dist(g);
 		swap(arr[i], arr[j]);
 	}
-}
+} 
 
 int partition(char* a, int lo, int hi) {
 	
-	int i = lo, j = hi;
+	int i = lo, j = hi+1;
 	while (1) {
 		while (a[++i] < a[lo]) if (i == hi) break; 
 		cout <<"i." << i << " = " << a[i] << endl;
 	
-		while (a[j--] > a[lo]) if (j == lo) break; 
+		while (a[--j] > a[lo]) if (j == lo) break;
 		cout <<"j." << j << " = " << a[j] << endl;
 
 		if (i >= j) break;
 		swap(a, i, j); 
 		cout << "- swapping . i= " << a[i] <<"   j= " << a[j] << endl;
 	}
-	cout << "before swap j." << j << " = " << a[j] << endl;
-	cout << "           lo." << lo << " = " << a[lo] << endl;
-	cout << a << endl;//array
-	//swap(a, j-1, lo);
-	char temp = a[lo];
-	a[lo] = a[j];
-	a[j] = temp;
-	cout << "after swap j." << j << " = " << a[j] << endl;
-	cout << "           lo." << lo << " = " << a[lo] << endl;
-	cout << a << endl;//array
+
+	swap(a, lo, j);
+	cout << "--swapped j." << j << " = " << a[j] << " - with lo." << lo << " = " << a[lo] << endl;
+	
 	 cout << "end of partition\n"<<endl; return(j);
 }
 
@@ -63,7 +60,7 @@ void quicksort_(char* a, int lo, int hi)
 	}
 	int pivot = partition(a, lo, hi);
 	//tracking changes
-	cout << a << endl;//array
+	cout <<"[" << a <<"]" << endl;//array
 
 	quicksort_(a, lo, pivot - 1);
 	quicksort_(a, pivot + 1, hi);
@@ -71,10 +68,12 @@ void quicksort_(char* a, int lo, int hi)
 
 void quicksort(char* a, int n)
 {	
-	//shuffle(a, n-1);
-	//cout << "shuffled name: \n";
-	//cout << a << "\n" << endl;
-	cout << "quick sort starting: \n";
+	cout << "\nchar array: \n"; 
+	cout << a <<"\n"<< endl;//array
+	shuffle(a, n-1);
+	cout << "shuffled name: \n";
+	cout << a << "\n\n" << endl;
+	cout << "quick sort starting: \n"<<endl;
 	quicksort_(a, 0, n-1);
 
 }
@@ -84,7 +83,7 @@ void quicksort(char* a, int n)
 
 int main()
 {
-	string strname = "fedcba"; // string input name
+	string strname = "Michel Abril Marinho"; // string input name
 	cout << "string passed as input: \n";
 	cout << strname << "\n" << endl;
 
@@ -99,10 +98,6 @@ int main()
 	for (int i = 0; i < n; i++) {
 		name[i] = strname[i];
 	}
-
-	cout << "char array: \n";
-	for (int i = 0; i < n; i++) cout << name[i];
-	cout << "\n" << endl;
 
 	cout <<"n= " << n << endl;
 

@@ -1,3 +1,5 @@
 ﻿  QuickSort.cpp
-E:\GIT\UFPR--\ED2\QuickSort\QuickSort.cpp(96,8): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-  QuickSort.vcxproj -> E:\GIT\UFPR--\ED2\QuickSort\x64\Debug\QuickSort.exe
+C:\Users\zuria\OneDrive\Documents\0UMI\GIT\UFPR--\ED2\QuickSort\QuickSort.cpp(94,8): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  QuickSortTest.cpp
+  Generating Code...
+  QuickSort.vcxproj -> C:\Users\zuria\OneDrive\Documents\0UMI\GIT\UFPR--\ED2\QuickSort\x64\Debug\QuickSort.exe
