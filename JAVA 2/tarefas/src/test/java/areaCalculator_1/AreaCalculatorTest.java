@@ -30,5 +30,4 @@ class AreaCalculatorTest {
     void  circleArea_radius3(){
         assertEquals(28.274333882308138, AreaCalculator.circleArea(3));
     }
-
 }

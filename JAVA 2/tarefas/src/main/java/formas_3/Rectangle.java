@@ -16,7 +16,4 @@ public class Rectangle {
     public double perimeter(){
         return 2*side1+2*side2;
     }
-
-
-
 }

@@ -33,11 +33,14 @@ public class UseShapes {
                     "Circle = 3\n" +
                     "option:");
             try {
-                choice = scan.nextInt();
-                System.out.println("You entered: " + choice);
-                if (choice != 1 && choice != 2 && choice != 3) {  // Use && for logical AND
-                    System.out.println("type the number options");
+
+                while (choice != 1 && choice != 2 && choice != 3) {
                     choice = scan.nextInt();
+                    System.out.println("You entered: " + choice);
+                    if (choice != 1 && choice != 2 && choice != 3) {  // Use && for logical AND
+                        System.out.println("type the number options");
+
+                    }
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter an integer.");
@@ -92,6 +95,7 @@ public class UseShapes {
         }
         for (int i = 0; i < rectanglesPos; i++) {
             System.out.println("area of rectangle "+ (i+1) +" = "+ rectangles[i].area()+" square meters");
+            System.out.println("perimeter of rectangle "+ (i+1) +" = "+ rectangles[i].perimeter()+" square meters");
         }
         for (int i = 0; i < circlesPos; i++) {
             System.out.printf("area of circle %d = %.2f square meters%n", i + 1, circles[i].area());
