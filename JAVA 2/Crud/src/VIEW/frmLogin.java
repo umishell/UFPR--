@@ -4,7 +4,11 @@
  */
 package VIEW;
 
+import DAO.UserDao;
 import DTO.User;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -92,7 +96,7 @@ public class frmLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtUsernameActionPerformed
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
+        userLogin();
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
@@ -139,11 +143,28 @@ public class frmLogin extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     private void userLogin(){
-        String username, password;
-        username = txtUsername.getText();
-        password = txtPassword.getText();
+        try {
+            String username, password;
+            username = txtUsername.getText();
+            password = txtPassword.getText();
         
-        User user  = new User(username, password);
+            User user  = new User(username, password);
+            UserDao userDao = new UserDao();
+            ResultSet rsUserDao = userDao.userAutentication(user);
+            
+            if (rsUserDao.next()){
+                //if user credentials are correct change to main view 
+                JOptionPane.showMessageDialog(null, "Welcome " + username + " :)");
+                frmMain mainView = new frmMain();
+                mainView.setVisible(true);
+                dispose();
+            }else{
+                JOptionPane.showMessageDialog(null, "@frmLogin.userLogin: invalid user or password!");
+            }          
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "@frmLogin.userLogin: " + e.getMessage());
+        }
+        
         
         
     }
