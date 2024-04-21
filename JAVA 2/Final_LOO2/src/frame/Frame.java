@@ -3,6 +3,11 @@ package frame;
 import tela3.LocarVeiculoTableModel;
 import tela3.Locacao;
 import tela3.FiltroDeTabela;
+import tela1.*;
+import tela2.*;
+import tela3.*;
+import tela4.*;
+import tela5.*;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
@@ -16,11 +21,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import tela1.*;
-import tela2.*;
-import tela3.ClienteLocacaoTableModel;
-import tela4.VeiculoDevolverTableModel;
-import tela5.VeiculoVenderTableModel;
+
 
 public class Frame extends javax.swing.JFrame {
 

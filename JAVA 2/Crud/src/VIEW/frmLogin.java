@@ -125,6 +125,9 @@ public class frmLogin extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(frmLogin.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -142,30 +145,35 @@ public class frmLogin extends javax.swing.JFrame {
     private javax.swing.JTextField txtUsername;
     // End of variables declaration//GEN-END:variables
 
-    private void userLogin(){
+    public void initView() {
+
+        java.awt.EventQueue.invokeLater(() -> {
+            new frmLogin().setVisible(true);
+        });
+    }
+
+    private void userLogin() {
         try {
             String username, password;
             username = txtUsername.getText();
             password = txtPassword.getText();
-        
-            User user  = new User(username, password);
+
+            User user = new User(username, password);
             UserDao userDao = new UserDao();
             ResultSet rsUserDao = userDao.userAutentication(user);
-            
-            if (rsUserDao.next()){
+
+            if (rsUserDao.next()) {
                 //if user credentials are correct change to main view 
                 JOptionPane.showMessageDialog(null, "Welcome " + username + " :)");
-                frmMain mainView = new frmMain();
+                frmMainMenu mainView = new frmMainMenu();
                 mainView.setVisible(true);
                 dispose();
-            }else{
-                JOptionPane.showMessageDialog(null, "@frmLogin.userLogin: invalid user or password!");
-            }          
+            } else {
+                JOptionPane.showMessageDialog(null, "@frmLogin.userLogin().if (rsUserDao.next()) : invalid user or password!");
+            }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "@frmLogin.userLogin: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@frmLogin.userLogin() : " + e.getMessage());
         }
-        
-        
-        
+
     }
 }
