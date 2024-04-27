@@ -12,13 +12,19 @@ public class Employee {
 
     private int id;
     private String name, address;
-
+   
+    public Employee() {
+        }
+    
     public Employee(String name, String address) {
         this.name = name;
         this.address = address;
     }
 
-    public Employee() {
+    public Employee(int id, String name, String address) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
     }
 
     public String getName() {

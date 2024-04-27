@@ -12,13 +12,13 @@ public class EmployeeDao {
     ResultSet rs;
     ArrayList<Employee> employees = new ArrayList<>();
 
-    public void registerEmployee(Employee employee) {
+    public void registerEmployee(Employee emp) {
         conn = new ConexaoDao().connectDB();
         try {
             String sql = "insert into employee (name, address) values (?,?)";
             stmt = conn.prepareStatement(sql);
-            stmt.setString(1, employee.getName());
-            stmt.setString(2, employee.getAddress());
+            stmt.setString(1, emp.getName());
+            stmt.setString(2, emp.getAddress());
             stmt.execute();
             JOptionPane.showMessageDialog(null, "register successful.");
             stmt.close();
@@ -46,5 +46,35 @@ public class EmployeeDao {
             return null;
         }
         return employees;
+    }
+    
+    public void updateEmployee(Employee emp){
+        conn = new ConexaoDao().connectDB();
+        try {
+            String sql = "update employee set name = ?, address = ? where id = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, emp.getName());
+            stmt.setString(2, emp.getAddress());
+            stmt.setInt(3, emp.getId());
+            stmt.execute();
+            JOptionPane.showMessageDialog(null, "update successful.");
+            stmt.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "@EmployeeDao.updateEmployee() : " + e.getMessage());
+        }
+    }
+    
+    public void deleteEmployee(int id){
+        conn = new ConexaoDao().connectDB();
+        try {
+            String sql = "delete from employee where id = ?";
+            stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+            stmt.execute();
+            JOptionPane.showMessageDialog(null, "employee deleted.");
+            stmt.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "@EmployeeDao.deleteEmployee() : " + e.getMessage());
+        }
     }
 }
