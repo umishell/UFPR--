@@ -3,15 +3,17 @@ package VIEW;
 import DAO.EmployeeDao;
 import DTO.Employee;
 import javax.swing.JOptionPane;
-import java.sql.SQLException;
 import javax.swing.table.DefaultTableModel;
 import java.util.ArrayList;
+import java.sql.*;
 
 public class frmEmployee extends javax.swing.JFrame {
 
     public frmEmployee() {
         initComponents();
         showTableContents();
+        loadCargobox();
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -34,6 +36,8 @@ public class frmEmployee extends javax.swing.JFrame {
         btnClearFields = new javax.swing.JButton();
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
+        lblCargo = new javax.swing.JLabel();
+        cbxCargo = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,7 +69,7 @@ public class frmEmployee extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "id", "name", "address"
+                "id", "name", "address", "cargo"
             }
         ));
         jScrollPane1.setViewportView(table_employee);
@@ -114,6 +118,15 @@ public class frmEmployee extends javax.swing.JFrame {
             }
         });
 
+        lblCargo.setText("cargo");
+
+        cbxCargo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        cbxCargo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxCargoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -129,17 +142,18 @@ public class frmEmployee extends javax.swing.JFrame {
                                 .addComponent(btnUpdate)
                                 .addGap(57, 57, 57)
                                 .addComponent(btnDelete))
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(lblAddress)
                                 .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lblName, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblid)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                     .addComponent(btnClearFields)
                                     .addGap(50, 50, 50))
-                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(lblid)
+                                .addComponent(lblCargo)
+                                .addComponent(cbxCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(btnReturnMainMenu)
@@ -157,7 +171,7 @@ public class frmEmployee extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -166,24 +180,28 @@ public class frmEmployee extends javax.swing.JFrame {
                                         .addGap(13, 13, 13)
                                         .addComponent(lblEmployee))
                                     .addComponent(btnReturnMainMenu))
-                                .addGap(31, 31, 31)
+                                .addGap(39, 39, 39)
                                 .addComponent(lblid)
-                                .addGap(14, 14, 14)
-                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblName))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(btnSearchAll)
                                 .addGap(22, 22, 22)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(btnLoadFields)
                                     .addComponent(btnClearFields))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblName)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblAddress)
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtAddress, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblCargo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbxCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnRegister, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -242,6 +260,10 @@ public class frmEmployee extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
+    private void cbxCargoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCargoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxCargoActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -283,8 +305,10 @@ public class frmEmployee extends javax.swing.JFrame {
     private javax.swing.JButton btnReturnMainMenu;
     private javax.swing.JButton btnSearchAll;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.JComboBox<String> cbxCargo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAddress;
+    private javax.swing.JLabel lblCargo;
     private javax.swing.JLabel lblEmployee;
     private javax.swing.JLabel lblName;
     private javax.swing.JLabel lblid;
@@ -301,13 +325,15 @@ public class frmEmployee extends javax.swing.JFrame {
     }
 
     private void register() {
-        String name, address;
+        String name, address, cargo;
         name = txtName.getText();
         address = txtAddress.getText();
+        cargo = (String) cbxCargo.getSelectedItem();
+        
         if (name.isEmpty() || address.isEmpty()) {
             JOptionPane.showMessageDialog(null, "please fill both name and address");
         } else {
-            Employee emp = new Employee(name, address);
+            Employee emp = new Employee(name, address, cargo);
 
             EmployeeDao ed = new EmployeeDao();
             ed.registerEmployee(emp);
@@ -327,7 +353,8 @@ public class frmEmployee extends javax.swing.JFrame {
                 model.addRow(new Object[]{
                     employees.get(i).getId(),
                     employees.get(i).getName(),
-                    employees.get(i).getAddress()
+                    employees.get(i).getAddress(),
+                    employees.get(i).getCargo()
                 });
             }
 
@@ -342,6 +369,9 @@ public class frmEmployee extends javax.swing.JFrame {
             txtId.setText(table_employee.getModel().getValueAt(row, 0).toString());
             txtName.setText(table_employee.getModel().getValueAt(row, 1).toString());
             txtAddress.setText(table_employee.getModel().getValueAt(row, 2).toString());
+            String c = table_employee.getModel().getValueAt(row, 3).toString();
+            if (c == null) c = " ";
+            cbxCargo.setSelectedItem(c);
         } catch (ArrayIndexOutOfBoundsException e) {
             JOptionPane.showMessageDialog(null, "select a row to load a field.");
         }
@@ -373,5 +403,19 @@ public class frmEmployee extends javax.swing.JFrame {
 
         EmployeeDao ed = new EmployeeDao();
         ed.deleteEmployee(id);
+    }
+    
+    //ArrayList<Employee> id_cargo = new ArrayList<>();
+    private void loadCargobox(){
+        try {
+            EmployeeDao ed = new EmployeeDao();
+            ResultSet rs = ed.showCargo_cbx();
+            while (rs.next()) {
+                cbxCargo.addItem(rs.getString("description"));
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "@frmEmployee.loadCargobox(): " + e.getMessage());
+        }
     }
 }

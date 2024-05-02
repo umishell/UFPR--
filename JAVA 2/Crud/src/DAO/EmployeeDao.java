@@ -15,10 +15,11 @@ public class EmployeeDao {
     public void registerEmployee(Employee emp) {
         conn = new ConexaoDao().connectDB();
         try {
-            String sql = "insert into employee (name, address) values (?,?)";
+            String sql = "insert into employee (name, address, cargo) values (?,?,?)";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, emp.getName());
             stmt.setString(2, emp.getAddress());
+            stmt.setString(3, emp.getCargo());
             stmt.execute();
             JOptionPane.showMessageDialog(null, "register successful.");
             stmt.close();
@@ -39,6 +40,7 @@ public class EmployeeDao {
                 emp.setId(rs.getInt("id"));
                 emp.setName(rs.getString("name"));
                 emp.setAddress(rs.getString("address"));
+                emp.setCargo(rs.getString("cargo"));
                 employees.add(emp);
             }
         } catch (SQLException e) {
@@ -51,11 +53,12 @@ public class EmployeeDao {
     public void updateEmployee(Employee emp){
         conn = new ConexaoDao().connectDB();
         try {
-            String sql = "update employee set name = ?, address = ? where id = ?";
+            String sql = "update employee set name = ?, address = ?, cargo = ? where id = ?";
             stmt = conn.prepareStatement(sql);
             stmt.setString(1, emp.getName());
             stmt.setString(2, emp.getAddress());
-            stmt.setInt(3, emp.getId());
+            stmt.setString(3, emp.getCargo());
+            stmt.setInt(4, emp.getId());
             stmt.execute();
             JOptionPane.showMessageDialog(null, "update successful.");
             stmt.close();
@@ -76,5 +79,19 @@ public class EmployeeDao {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "@EmployeeDao.deleteEmployee() : " + e.getMessage());
         }
+    }
+    
+    public ResultSet showCargo_cbx(){
+        conn = new ConexaoDao().connectDB();
+        try {
+            String sql = "select description from cargo order by description";
+            stmt = conn.prepareStatement(sql);
+            return stmt.executeQuery();
+            
+            
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "@EmployeeDao.showCargo_cbx(): " + e.getMessage());
+            return null;
+        }      
     }
 }

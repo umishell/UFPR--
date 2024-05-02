@@ -11,20 +11,29 @@ package DTO;
 public class Employee {
 
     private int id;
-    private String name, address;
-   
+    private String name, address, cargo;
+
     public Employee() {
-        }
-    
-    public Employee(String name, String address) {
+    }
+
+    public Employee(String name, String address, String cargo) {
         this.name = name;
         this.address = address;
+        this.cargo = cargo;
     }
 
     public Employee(int id, String name, String address) {
         this.id = id;
         this.name = name;
         this.address = address;
+    }
+
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
     }
 
     public String getName() {

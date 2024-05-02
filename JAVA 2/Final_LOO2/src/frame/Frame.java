@@ -6,8 +6,8 @@ import tela3.FiltroDeTabela;
 import tela1.*;
 import tela2.*;
 import tela3.*;
-import tela4.*;
-import tela5.*;
+//import tela4.*;
+//import tela5.*;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.text.ParseException;
@@ -29,8 +29,8 @@ public class Frame extends javax.swing.JFrame {
     private ClienteTableModel ctm;
     private LocarVeiculoTableModel lvtm;
     private ClienteLocacaoTableModel cltm;
-    private VeiculoDevolverTableModel vdtm;
-    private VeiculoVenderTableModel vvtm;
+    //private VeiculoDevolverTableModel vdtm;
+    //private VeiculoVenderTableModel vvtm;
 
     private Repository rep;
     private ComboModels cm;
@@ -41,13 +41,13 @@ public class Frame extends javax.swing.JFrame {
         ctm = new ClienteTableModel();
         lvtm = new LocarVeiculoTableModel();
         cltm = new ClienteLocacaoTableModel();
-        vdtm = new VeiculoDevolverTableModel();
-        vvtm = new VeiculoVenderTableModel();
+        //vdtm = new VeiculoDevolverTableModel();
+       //vvtm = new VeiculoVenderTableModel();
         ctm.repRef(rep);
         lvtm.repRef(rep);
         cltm.repRef(rep);
-        vdtm.repRef(rep);
-        vvtm.repRef(rep);
+        //vdtm.repRef(rep);
+        //vvtm.repRef(rep);
         cm = new ComboModels();
 
         initComponents();
@@ -1090,18 +1090,18 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_CmarcaVeiculosVendaActionPerformed
 
     private void BautomoveisVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BautomoveisVendaActionPerformed
-        vvtm.setTipoVeiculo(3);
-        vvtm.setListaVeiculos();
+        //vvtm.setTipoVeiculo(3);
+        //vvtm.setListaVeiculos();
     }//GEN-LAST:event_BautomoveisVendaActionPerformed
 
     private void BmotocicletasVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BmotocicletasVendaActionPerformed
-        vvtm.setTipoVeiculo(2);
-        vvtm.setListaVeiculos();
+       // vvtm.setTipoVeiculo(2);
+        //vvtm.setListaVeiculos();
     }//GEN-LAST:event_BmotocicletasVendaActionPerformed
 
     private void BvansVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BvansVendaActionPerformed
-        vvtm.setTipoVeiculo(1);
-        vvtm.setListaVeiculos();
+        //vvtm.setTipoVeiculo(1);
+        //vvtm.setListaVeiculos();
     }//GEN-LAST:event_BvansVendaActionPerformed
 
     private void DevolverTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DevolverTableMousePressed
@@ -1109,18 +1109,18 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_DevolverTableMousePressed
 
     private void BvansDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BvansDevolverActionPerformed
-        vdtm.setTipoVeiculo(1);
-        vdtm.setListaVeiculos();
+        //vdtm.setTipoVeiculo(1);
+        //vdtm.setListaVeiculos();
     }//GEN-LAST:event_BvansDevolverActionPerformed
 
     private void BmotocicletasDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BmotocicletasDevolverActionPerformed
-        vdtm.setTipoVeiculo(2);
-        vdtm.setListaVeiculos();
+        //vdtm.setTipoVeiculo(2);
+        //vdtm.setListaVeiculos();
     }//GEN-LAST:event_BmotocicletasDevolverActionPerformed
 
     private void BautomoveisDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BautomoveisDevolverActionPerformed
-        vdtm.setTipoVeiculo(3);
-        vdtm.setListaVeiculos();
+        //vdtm.setTipoVeiculo(3);
+        //vdtm.setListaVeiculos();
     }//GEN-LAST:event_BautomoveisDevolverActionPerformed
 
     private void FTFdataLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FTFdataLocacaoActionPerformed
