@@ -1,4 +1,4 @@
-package tela2;
+package veiculo;
 
 import java.util.HashMap;
 import java.util.Map;

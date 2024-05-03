@@ -1,4 +1,4 @@
-package tela3;
+package veiculo;
 
 import frame.Repository;
 import java.util.ArrayList;
@@ -6,9 +6,9 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-import tela2.Automovel;
-import tela2.Motocicleta;
-import tela2.Van;
+import veiculo.Automovel;
+import veiculo.Motocicleta;
+import veiculo.Van;
 
 public class LocarVeiculoTableModel extends DefaultTableModel {
 

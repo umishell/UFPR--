@@ -1,4 +1,4 @@
-package tela3;
+package clienteLocacao;
 
 import javax.swing.JTable;
 import javax.swing.RowFilter;

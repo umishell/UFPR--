@@ -2,10 +2,10 @@ package frame;
 
 import java.util.ArrayList;
 import java.util.List;
-import tela1.Cliente;
-import tela2.Automovel;
-import tela2.Motocicleta;
-import tela2.Van;
+import cliente.Cliente;
+import veiculo.Automovel;
+import veiculo.Motocicleta;
+import veiculo.Van;
 
 public class Repository {
 

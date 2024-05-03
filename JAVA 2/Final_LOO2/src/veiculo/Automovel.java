@@ -1,9 +1,9 @@
-package tela2;
+package veiculo;
 
-import tela3.Locacao;
+import clienteLocacao.Locacao;
 import java.util.Calendar;
 
-import tela1.Cliente;
+import cliente.Cliente;
 
 public class Automovel extends Veiculo {
 

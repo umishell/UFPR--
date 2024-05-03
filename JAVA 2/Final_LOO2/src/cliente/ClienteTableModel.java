@@ -1,4 +1,4 @@
-package tela1;
+package cliente;
 
 import frame.Repository;
 import java.util.ArrayList;

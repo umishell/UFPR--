@@ -1,6 +1,6 @@
-package tela3;
+package clienteLocacao;
 
-import tela1.*;
+import cliente.Cliente;
 import frame.Repository;
 import java.util.ArrayList;
 import java.util.List;

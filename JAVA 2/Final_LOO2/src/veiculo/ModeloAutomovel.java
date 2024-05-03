@@ -1,4 +1,4 @@
-package tela2;
+package veiculo;
 
 public enum ModeloAutomovel {
 	GOLF, 

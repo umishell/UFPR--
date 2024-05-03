@@ -1,4 +1,4 @@
-package tela1;
+package cliente;
 
 public class Cliente {
 

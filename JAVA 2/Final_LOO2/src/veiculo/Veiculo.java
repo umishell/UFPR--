@@ -1,6 +1,6 @@
-package tela2;
+package veiculo;
 
-import tela3.Locacao;
+import clienteLocacao.Locacao;
 
 public abstract class Veiculo implements VeiculoInterface {
 

@@ -1,8 +1,8 @@
-package tela3;
+package clienteLocacao;
 
 import java.util.Calendar;
 
-import tela1.Cliente;
+import cliente.Cliente;
 
 public class Locacao {
 

@@ -1,11 +1,21 @@
 package frame;
 
-import tela3.LocarVeiculoTableModel;
-import tela3.Locacao;
-import tela3.FiltroDeTabela;
-import tela1.*;
-import tela2.*;
-import tela3.*;
+import clienteLocacao.ClienteLocacaoTableModel;
+import veiculo.Automovel;
+import veiculo.Categoria;
+import veiculo.ModeloAutomovel;
+import veiculo.ComboModels;
+import veiculo.Motocicleta;
+import veiculo.Van;
+import veiculo.ModeloVan;
+import veiculo.ModeloMotocicleta;
+import veiculo.Marca;
+import veiculo.Estado;
+import cliente.ClienteTableModel;
+import cliente.Cliente;
+import veiculo.LocarVeiculoTableModel;
+import clienteLocacao.Locacao;
+import clienteLocacao.FiltroDeTabela;
 //import tela4.*;
 //import tela5.*;
 import java.awt.Point;
@@ -74,149 +84,149 @@ public class Frame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        TabbedPane = new javax.swing.JTabbedPane();
+        paneAllTabs = new javax.swing.JTabbedPane();
         tabCliente = new javax.swing.JPanel();
-        nomeCliente = new javax.swing.JLabel();
-        sobrenomeCliente = new javax.swing.JLabel();
-        rgCliente = new javax.swing.JLabel();
-        cpfCliente = new javax.swing.JLabel();
-        enderecoCliente = new javax.swing.JLabel();
-        TFnome = new javax.swing.JTextField();
-        TFsobrenome = new javax.swing.JTextField();
-        TFrg = new javax.swing.JFormattedTextField();
-        TFcpf = new javax.swing.JFormattedTextField();
-        TFendereco = new javax.swing.JTextField();
-        BincluirCliente = new javax.swing.JButton();
-        BlistarCliente = new javax.swing.JButton();
-        BremoverCliente = new javax.swing.JButton();
-        BlimparCliente = new javax.swing.JButton();
-        BatualizarCliente = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        lblNomeCliente = new javax.swing.JLabel();
+        lblSobrenomeCliente = new javax.swing.JLabel();
+        lblRgCliente = new javax.swing.JLabel();
+        lblCpfCliente = new javax.swing.JLabel();
+        lblEnderecoCliente = new javax.swing.JLabel();
+        txtNomeCliente = new javax.swing.JTextField();
+        txtSobrenomeCliente = new javax.swing.JTextField();
+        ftxtRgCliente = new javax.swing.JFormattedTextField();
+        ftxtCpfCliente = new javax.swing.JFormattedTextField();
+        txtEndereco = new javax.swing.JTextField();
+        btnIncluirCliente = new javax.swing.JButton();
+        btnListarCliente = new javax.swing.JButton();
+        btnRemoverCliente = new javax.swing.JButton();
+        btnLimparCliente = new javax.swing.JButton();
+        btnAtualizarCliente = new javax.swing.JButton();
+        paneClienteTable = new javax.swing.JScrollPane();
         clienteTable = new javax.swing.JTable();
-        Pveiculos = new javax.swing.JPanel();
-        BincluirVeiculo = new javax.swing.JButton();
-        LvalorDaCompra = new javax.swing.JLabel();
-        Lplaca = new javax.swing.JLabel();
-        Lmodelo = new javax.swing.JLabel();
-        Lmarca = new javax.swing.JLabel();
-        Ccategoria = new javax.swing.JComboBox<>();
-        Lcategoria = new javax.swing.JLabel();
-        Lano = new javax.swing.JLabel();
-        Ctipo = new javax.swing.JComboBox<>();
-        Cmodelo = new javax.swing.JComboBox<>();
-        Cmarca = new javax.swing.JComboBox<>();
-        Ltipo = new javax.swing.JLabel();
-        Cestado = new javax.swing.JComboBox<>();
-        Lestado = new javax.swing.JLabel();
-        FTFplaca = new javax.swing.JFormattedTextField();
-        FTFano = new javax.swing.JFormattedTextField();
-        FTFvalorDeCompra = new javax.swing.JFormattedTextField();
-        jPanel3 = new javax.swing.JPanel();
-        Bvans = new javax.swing.JButton();
-        Bmotocicletas = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        tabVeiculos = new javax.swing.JPanel();
+        btnIncluirVeiculo = new javax.swing.JButton();
+        lblValorDaCompra = new javax.swing.JLabel();
+        lblPlaca = new javax.swing.JLabel();
+        lblModelo = new javax.swing.JLabel();
+        lblMarca = new javax.swing.JLabel();
+        cboxCategoria = new javax.swing.JComboBox<>();
+        lblCategoria = new javax.swing.JLabel();
+        lblAno = new javax.swing.JLabel();
+        cboxTipo = new javax.swing.JComboBox<>();
+        cboxModelo = new javax.swing.JComboBox<>();
+        cboxMarca = new javax.swing.JComboBox<>();
+        lblTipo = new javax.swing.JLabel();
+        cboxEstado = new javax.swing.JComboBox<>();
+        lblEstado = new javax.swing.JLabel();
+        ftxtPlaca = new javax.swing.JFormattedTextField();
+        ftxtAno = new javax.swing.JFormattedTextField();
+        ftxtValorDeCompra = new javax.swing.JFormattedTextField();
+        tabLocacao = new javax.swing.JPanel();
+        btnVans = new javax.swing.JButton();
+        btnMotocicletas = new javax.swing.JButton();
+        paneVeiculoTable = new javax.swing.JScrollPane();
         veiculoTable = new javax.swing.JTable();
-        Bautomoveis = new javax.swing.JButton();
-        CmarcaVeiculos = new javax.swing.JComboBox<>();
-        CcategoriaVeiculos = new javax.swing.JComboBox<>();
-        TFpesquisa = new javax.swing.JTextField();
-        Blocar = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        btnAutomoveis = new javax.swing.JButton();
+        cboxMarcaVeiculos = new javax.swing.JComboBox<>();
+        cboxCategoriaVeiculos = new javax.swing.JComboBox<>();
+        txtPesquisarClientes = new javax.swing.JTextField();
+        btnLocar = new javax.swing.JButton();
+        paneClienteLocacaoTable = new javax.swing.JScrollPane();
         clienteLocacaoTable = new javax.swing.JTable();
-        LpesquisarClientes = new javax.swing.JLabel();
-        FTFdataLocacao = new javax.swing.JFormattedTextField();
-        LnumDiasLocacao = new javax.swing.JLabel();
-        LdataLocacao = new javax.swing.JLabel();
-        TFdiasLocacao = new javax.swing.JFormattedTextField();
-        jPanel4 = new javax.swing.JPanel();
-        jScrollPane5 = new javax.swing.JScrollPane();
+        lblPesquisarClientes = new javax.swing.JLabel();
+        ftxtDataLocacao = new javax.swing.JFormattedTextField();
+        lblNumDiasLocacao = new javax.swing.JLabel();
+        lblDataLocacao = new javax.swing.JLabel();
+        txtDiasLocacao = new javax.swing.JFormattedTextField();
+        tabDevolucao = new javax.swing.JPanel();
+        paneDevolverTable = new javax.swing.JScrollPane();
         DevolverTable = new javax.swing.JTable();
-        BvansDevolver = new javax.swing.JButton();
-        BmotocicletasDevolver = new javax.swing.JButton();
-        BautomoveisDevolver = new javax.swing.JButton();
-        jPanel5 = new javax.swing.JPanel();
-        jScrollPane4 = new javax.swing.JScrollPane();
+        btnVansDevolver = new javax.swing.JButton();
+        btnMotocicletasDevolver = new javax.swing.JButton();
+        btnAutomoveisDevolver = new javax.swing.JButton();
+        tabVenda = new javax.swing.JPanel();
+        paneVendaTable = new javax.swing.JScrollPane();
         VendaTable = new javax.swing.JTable();
-        CcategoriaVeiculosVenda = new javax.swing.JComboBox<>();
-        CmarcaVeiculosVenda = new javax.swing.JComboBox<>();
-        BautomoveisVenda = new javax.swing.JButton();
-        BmotocicletasVenda = new javax.swing.JButton();
-        BvansVenda = new javax.swing.JButton();
+        cboxCategoriaVeiculosVenda = new javax.swing.JComboBox<>();
+        cboxMarcaVeiculosVenda = new javax.swing.JComboBox<>();
+        btnAutomoveisVenda = new javax.swing.JButton();
+        btnMotocicletasVenda = new javax.swing.JButton();
+        btnVansVenda = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        TabbedPane.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        paneAllTabs.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        nomeCliente.setText("Nome");
+        lblNomeCliente.setText("Nome");
 
-        sobrenomeCliente.setText("Sobrenome");
+        lblSobrenomeCliente.setText("Sobrenome");
 
-        rgCliente.setText("RG");
+        lblRgCliente.setText("RG");
 
-        cpfCliente.setText("CPF");
+        lblCpfCliente.setText("CPF");
 
-        enderecoCliente.setText("Endereço");
+        lblEnderecoCliente.setText("Endereço");
 
-        TFnome.addActionListener(new java.awt.event.ActionListener() {
+        txtNomeCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TFnomeActionPerformed(evt);
+                txtNomeClienteActionPerformed(evt);
             }
         });
 
         try {
-            TFrg.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###-#")));
+            ftxtRgCliente.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###-#")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
 
         try {
-            TFcpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+            ftxtCpfCliente.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        TFcpf.addActionListener(new java.awt.event.ActionListener() {
+        ftxtCpfCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TFcpfActionPerformed(evt);
+                ftxtCpfClienteActionPerformed(evt);
             }
         });
 
-        BincluirCliente.setText("Incluir");
-        BincluirCliente.addActionListener(new java.awt.event.ActionListener() {
+        btnIncluirCliente.setText("Incluir");
+        btnIncluirCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BincluirClienteActionPerformed(evt);
+                btnIncluirClienteActionPerformed(evt);
             }
         });
 
-        BlistarCliente.setText("Listar");
-        BlistarCliente.addActionListener(new java.awt.event.ActionListener() {
+        btnListarCliente.setText("Listar");
+        btnListarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BlistarClienteActionPerformed(evt);
+                btnListarClienteActionPerformed(evt);
             }
         });
 
-        BremoverCliente.setText("Remover");
-        BremoverCliente.addActionListener(new java.awt.event.ActionListener() {
+        btnRemoverCliente.setText("Remover");
+        btnRemoverCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BremoverClienteActionPerformed(evt);
+                btnRemoverClienteActionPerformed(evt);
             }
         });
 
-        BlimparCliente.setText("Limpar");
-        BlimparCliente.addActionListener(new java.awt.event.ActionListener() {
+        btnLimparCliente.setText("Limpar");
+        btnLimparCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BlimparClienteActionPerformed(evt);
+                btnLimparClienteActionPerformed(evt);
             }
         });
 
-        BatualizarCliente.setText("Atualizar");
-        BatualizarCliente.addActionListener(new java.awt.event.ActionListener() {
+        btnAtualizarCliente.setText("Atualizar");
+        btnAtualizarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BatualizarClienteActionPerformed(evt);
+                btnAtualizarClienteActionPerformed(evt);
             }
         });
 
         clienteTable.setModel(ctm);
-        jScrollPane2.setViewportView(clienteTable);
+        paneClienteTable.setViewportView(clienteTable);
         clienteTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             public void valueChanged(ListSelectionEvent event) {
                 // Verifique se há uma linha selecionada
@@ -228,11 +238,11 @@ public class Frame extends javax.swing.JFrame {
                     Object cpf = clienteTable.getValueAt(clienteTable.getSelectedRow(), 3);
                     Object endereco = clienteTable.getValueAt(clienteTable.getSelectedRow(), 4);
                     // Defina o valor no JTextField
-                    TFnome.setText(nome.toString());
-                    TFsobrenome.setText(sobrenome.toString());
-                    TFrg.setText(rg.toString());
-                    TFcpf.setText(cpf.toString());
-                    TFendereco.setText(endereco.toString());
+                    txtNomeCliente.setText(nome.toString());
+                    txtSobrenomeCliente.setText(sobrenome.toString());
+                    ftxtRgCliente.setText(rg.toString());
+                    ftxtCpfCliente.setText(cpf.toString());
+                    txtEndereco.setText(endereco.toString());
 
                 }
             }
@@ -249,42 +259,42 @@ public class Frame extends javax.swing.JFrame {
                             .addGroup(tabClienteLayout.createSequentialGroup()
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cpfCliente, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(enderecoCliente, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(sobrenomeCliente, javax.swing.GroupLayout.Alignment.TRAILING))
+                                    .addComponent(lblCpfCliente, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblEnderecoCliente, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblSobrenomeCliente, javax.swing.GroupLayout.Alignment.TRAILING))
                                 .addGap(18, 18, 18)
                                 .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(TFendereco)
-                                    .addComponent(TFsobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtEndereco)
+                                    .addComponent(txtSobrenomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabClienteLayout.createSequentialGroup()
                                         .addGap(0, 0, Short.MAX_VALUE)
-                                        .addComponent(TFcpf, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(ftxtCpfCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(tabClienteLayout.createSequentialGroup()
                                 .addGap(48, 48, 48)
-                                .addComponent(nomeCliente)
+                                .addComponent(lblNomeCliente)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                                .addComponent(TFnome, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabClienteLayout.createSequentialGroup()
                             .addContainerGap()
-                            .addComponent(rgCliente)
+                            .addComponent(lblRgCliente)
                             .addGap(18, 18, 18)
-                            .addComponent(TFrg, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(ftxtRgCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(tabClienteLayout.createSequentialGroup()
                         .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(tabClienteLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(BincluirCliente)
+                                .addComponent(btnIncluirCliente)
                                 .addGap(18, 18, 18)
-                                .addComponent(BatualizarCliente))
+                                .addComponent(btnAtualizarCliente))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tabClienteLayout.createSequentialGroup()
                                 .addGap(47, 47, 47)
-                                .addComponent(BremoverCliente)))
+                                .addComponent(btnRemoverCliente)))
                         .addGap(53, 53, 53)
                         .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(BlistarCliente)
-                            .addComponent(BlimparCliente))))
+                            .addComponent(btnListarCliente)
+                            .addComponent(btnLimparCliente))))
                 .addGap(30, 30, 30)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 704, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(paneClienteTable, javax.swing.GroupLayout.PREFERRED_SIZE, 704, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(154, Short.MAX_VALUE))
         );
         tabClienteLayout.setVerticalGroup(
@@ -294,225 +304,225 @@ public class Frame extends javax.swing.JFrame {
                 .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tabClienteLayout.createSequentialGroup()
                         .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(TFnome, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(nomeCliente))
+                            .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblNomeCliente))
                         .addGap(17, 17, 17)
                         .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(TFsobrenome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(sobrenomeCliente))
+                            .addComponent(txtSobrenomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblSobrenomeCliente))
                         .addGap(18, 18, 18)
                         .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(TFrg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(rgCliente))
+                            .addComponent(ftxtRgCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblRgCliente))
                         .addGap(18, 18, 18)
                         .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(TFcpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cpfCliente))
+                            .addComponent(ftxtCpfCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCpfCliente))
                         .addGap(18, 18, 18)
                         .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(TFendereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(enderecoCliente))
+                            .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblEnderecoCliente))
                         .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(tabClienteLayout.createSequentialGroup()
                                 .addGap(50, 50, 50)
                                 .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(BincluirCliente)
-                                    .addComponent(BatualizarCliente)))
+                                    .addComponent(btnIncluirCliente)
+                                    .addComponent(btnAtualizarCliente)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabClienteLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(BlistarCliente)))
+                                .addComponent(btnListarCliente)))
                         .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(tabClienteLayout.createSequentialGroup()
                                 .addGap(37, 37, 37)
-                                .addComponent(BremoverCliente))
+                                .addComponent(btnRemoverCliente))
                             .addGroup(tabClienteLayout.createSequentialGroup()
                                 .addGap(29, 29, 29)
-                                .addComponent(BlimparCliente))))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnLimparCliente))))
+                    .addComponent(paneClienteTable, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(141, 141, 141))
         );
 
-        TabbedPane.addTab("Clientes", tabCliente);
+        paneAllTabs.addTab("Clientes", tabCliente);
 
-        Pveiculos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        Pveiculos.addComponentListener(new java.awt.event.ComponentAdapter() {
+        tabVeiculos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tabVeiculos.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
-                PveiculosComponentShown(evt);
+                tabVeiculosComponentShown(evt);
             }
         });
 
-        BincluirVeiculo.setText("Incluir");
-        BincluirVeiculo.addActionListener(new java.awt.event.ActionListener() {
+        btnIncluirVeiculo.setText("Incluir");
+        btnIncluirVeiculo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BincluirVeiculoActionPerformed(evt);
+                btnIncluirVeiculoActionPerformed(evt);
             }
         });
 
-        LvalorDaCompra.setText("valor de compra");
+        lblValorDaCompra.setText("valor de compra");
 
-        Lplaca.setText("placa");
+        lblPlaca.setText("placa");
 
-        Lmodelo.setText("modelo");
+        lblModelo.setText("modelo");
 
-        Lmarca.setText("marca");
+        lblMarca.setText("marca");
 
-        Ccategoria.setModel(cm.getCategoriaModel());
-        Ccategoria.addActionListener(new java.awt.event.ActionListener() {
+        cboxCategoria.setModel(cm.getCategoriaModel());
+        cboxCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CcategoriaActionPerformed(evt);
+                cboxCategoriaActionPerformed(evt);
             }
         });
 
-        Lcategoria.setText("categoria");
+        lblCategoria.setText("categoria");
 
-        Lano.setText("ano");
+        lblAno.setText("ano");
 
-        Ctipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Motocicleta", "Automóvel", "Van" }));
-        Ctipo.addActionListener(new java.awt.event.ActionListener() {
+        cboxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Motocicleta", "Automóvel", "Van" }));
+        cboxTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CtipoActionPerformed(evt);
+                cboxTipoActionPerformed(evt);
             }
         });
 
-        Cmodelo.addActionListener(new java.awt.event.ActionListener() {
+        cboxModelo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CmodeloActionPerformed(evt);
+                cboxModeloActionPerformed(evt);
             }
         });
 
-        Cmarca.setModel(cm.getMarcaModel());
-        Cmarca.addActionListener(new java.awt.event.ActionListener() {
+        cboxMarca.setModel(cm.getMarcaModel());
+        cboxMarca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CmarcaActionPerformed(evt);
+                cboxMarcaActionPerformed(evt);
             }
         });
 
-        Ltipo.setText("tipo");
+        lblTipo.setText("tipo");
 
-        Cestado.setModel(cm.getEstadoModel());
+        cboxEstado.setModel(cm.getEstadoModel());
 
-        Lestado.setText("estado");
+        lblEstado.setText("estado");
 
         try {
-            FTFplaca.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("UUU-####")));
+            ftxtPlaca.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("UUU-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
 
-        FTFano.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("####"))));
+        ftxtAno.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("####"))));
 
-        javax.swing.GroupLayout PveiculosLayout = new javax.swing.GroupLayout(Pveiculos);
-        Pveiculos.setLayout(PveiculosLayout);
-        PveiculosLayout.setHorizontalGroup(
-            PveiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PveiculosLayout.createSequentialGroup()
-                .addGroup(PveiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PveiculosLayout.createSequentialGroup()
+        javax.swing.GroupLayout tabVeiculosLayout = new javax.swing.GroupLayout(tabVeiculos);
+        tabVeiculos.setLayout(tabVeiculosLayout);
+        tabVeiculosLayout.setHorizontalGroup(
+            tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabVeiculosLayout.createSequentialGroup()
+                .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tabVeiculosLayout.createSequentialGroup()
                         .addGap(29, 29, 29)
-                        .addGroup(PveiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PveiculosLayout.createSequentialGroup()
-                                .addGroup(PveiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(Lmodelo)
-                                    .addComponent(Ltipo)
-                                    .addComponent(Lestado))
-                                .addGroup(PveiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(PveiculosLayout.createSequentialGroup()
+                        .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(tabVeiculosLayout.createSequentialGroup()
+                                .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblModelo)
+                                    .addComponent(lblTipo)
+                                    .addComponent(lblEstado))
+                                .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(tabVeiculosLayout.createSequentialGroup()
                                         .addGap(33, 33, 33)
-                                        .addGroup(PveiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(Cmodelo, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(Ctipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(cboxModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(cboxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(26, 26, 26)
-                                        .addGroup(PveiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(PveiculosLayout.createSequentialGroup()
-                                                .addComponent(Lmarca)
+                                        .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(tabVeiculosLayout.createSequentialGroup()
+                                                .addComponent(lblMarca)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(Cmarca, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(PveiculosLayout.createSequentialGroup()
-                                                .addComponent(Lcategoria)
+                                                .addComponent(cboxMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(tabVeiculosLayout.createSequentialGroup()
+                                                .addComponent(lblCategoria)
                                                 .addGap(12, 12, 12)
-                                                .addComponent(Ccategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                    .addGroup(PveiculosLayout.createSequentialGroup()
+                                                .addComponent(cboxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addGroup(tabVeiculosLayout.createSequentialGroup()
                                         .addGap(18, 18, 18)
-                                        .addComponent(Cestado, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(PveiculosLayout.createSequentialGroup()
-                                .addGroup(PveiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(LvalorDaCompra)
-                                    .addGroup(PveiculosLayout.createSequentialGroup()
+                                        .addComponent(cboxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(tabVeiculosLayout.createSequentialGroup()
+                                .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblValorDaCompra)
+                                    .addGroup(tabVeiculosLayout.createSequentialGroup()
                                         .addGap(33, 33, 33)
-                                        .addGroup(PveiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(Lano)
-                                            .addComponent(Lplaca))))
-                                .addGroup(PveiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(PveiculosLayout.createSequentialGroup()
+                                        .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblAno)
+                                            .addComponent(lblPlaca))))
+                                .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(tabVeiculosLayout.createSequentialGroup()
                                         .addGap(8, 8, 8)
-                                        .addGroup(PveiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(FTFplaca, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(FTFano, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(PveiculosLayout.createSequentialGroup()
+                                        .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(ftxtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(ftxtAno, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGroup(tabVeiculosLayout.createSequentialGroup()
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(FTFvalorDeCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                    .addGroup(PveiculosLayout.createSequentialGroup()
+                                        .addComponent(ftxtValorDeCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                    .addGroup(tabVeiculosLayout.createSequentialGroup()
                         .addGap(98, 98, 98)
-                        .addComponent(BincluirVeiculo)))
+                        .addComponent(btnIncluirVeiculo)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        PveiculosLayout.setVerticalGroup(
-            PveiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PveiculosLayout.createSequentialGroup()
+        tabVeiculosLayout.setVerticalGroup(
+            tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabVeiculosLayout.createSequentialGroup()
                 .addGap(37, 37, 37)
-                .addGroup(PveiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Ctipo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Lmarca)
-                    .addComponent(Cmarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Ltipo))
+                .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cboxTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMarca)
+                    .addComponent(cboxMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblTipo))
                 .addGap(18, 18, 18)
-                .addGroup(PveiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PveiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(Ccategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Lcategoria))
-                    .addGroup(PveiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(Cmodelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(Lmodelo)))
+                .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cboxCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblCategoria))
+                    .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(cboxModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblModelo)))
                 .addGap(36, 36, 36)
-                .addGroup(PveiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Lestado)
-                    .addComponent(Cestado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblEstado)
+                    .addComponent(cboxEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(PveiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(LvalorDaCompra)
-                    .addComponent(FTFvalorDeCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblValorDaCompra)
+                    .addComponent(ftxtValorDeCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(PveiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Lplaca)
-                    .addComponent(FTFplaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblPlaca)
+                    .addComponent(ftxtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(PveiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Lano)
-                    .addComponent(FTFano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblAno)
+                    .addComponent(ftxtAno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44)
-                .addComponent(BincluirVeiculo)
+                .addComponent(btnIncluirVeiculo)
                 .addContainerGap(293, Short.MAX_VALUE))
         );
 
-        TabbedPane.addTab("Veículos", Pveiculos);
+        paneAllTabs.addTab("Veículos", tabVeiculos);
 
-        jPanel3.addComponentListener(new java.awt.event.ComponentAdapter() {
+        tabLocacao.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
-                jPanel3ComponentShown(evt);
+                tabLocacaoComponentShown(evt);
             }
         });
 
-        Bvans.setText("Vans");
-        Bvans.addActionListener(new java.awt.event.ActionListener() {
+        btnVans.setText("Vans");
+        btnVans.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BvansActionPerformed(evt);
+                btnVansActionPerformed(evt);
             }
         });
 
-        Bmotocicletas.setText("Motocicletas");
-        Bmotocicletas.addActionListener(new java.awt.event.ActionListener() {
+        btnMotocicletas.setText("Motocicletas");
+        btnMotocicletas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BmotocicletasActionPerformed(evt);
+                btnMotocicletasActionPerformed(evt);
             }
         });
 
@@ -522,158 +532,158 @@ public class Frame extends javax.swing.JFrame {
                 veiculoTableMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(veiculoTable);
+        paneVeiculoTable.setViewportView(veiculoTable);
 
-        Bautomoveis.setText("Automoveis");
-        Bautomoveis.addActionListener(new java.awt.event.ActionListener() {
+        btnAutomoveis.setText("Automoveis");
+        btnAutomoveis.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BautomoveisActionPerformed(evt);
+                btnAutomoveisActionPerformed(evt);
             }
         });
 
-        CmarcaVeiculos.setModel(cm.getMarcaLocacaoModel());
-        CmarcaVeiculos.addActionListener(new java.awt.event.ActionListener() {
+        cboxMarcaVeiculos.setModel(cm.getMarcaLocacaoModel());
+        cboxMarcaVeiculos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CmarcaVeiculosActionPerformed(evt);
+                cboxMarcaVeiculosActionPerformed(evt);
             }
         });
 
-        CcategoriaVeiculos.setModel(cm.getCategoriaLocacaoModel());
-        CcategoriaVeiculos.addActionListener(new java.awt.event.ActionListener() {
+        cboxCategoriaVeiculos.setModel(cm.getCategoriaLocacaoModel());
+        cboxCategoriaVeiculos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CcategoriaVeiculosActionPerformed(evt);
+                cboxCategoriaVeiculosActionPerformed(evt);
             }
         });
 
-        TFpesquisa.addActionListener(new java.awt.event.ActionListener() {
+        txtPesquisarClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TFpesquisaActionPerformed(evt);
+                txtPesquisarClientesActionPerformed(evt);
             }
         });
-        TFpesquisa.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtPesquisarClientes.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                TFpesquisaKeyReleased(evt);
+                txtPesquisarClientesKeyReleased(evt);
             }
         });
 
-        Blocar.setText("Locar");
-        Blocar.addActionListener(new java.awt.event.ActionListener() {
+        btnLocar.setText("Locar");
+        btnLocar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BlocarActionPerformed(evt);
+                btnLocarActionPerformed(evt);
             }
         });
 
         clienteLocacaoTable.setModel(cltm);
-        jScrollPane3.setViewportView(clienteLocacaoTable);
+        paneClienteLocacaoTable.setViewportView(clienteLocacaoTable);
 
-        LpesquisarClientes.setText("Pesquisar Clientes");
+        lblPesquisarClientes.setText("Pesquisar Clientes");
 
         try {
-            FTFdataLocacao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/##")));
+            ftxtDataLocacao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        FTFdataLocacao.addActionListener(new java.awt.event.ActionListener() {
+        ftxtDataLocacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FTFdataLocacaoActionPerformed(evt);
+                ftxtDataLocacaoActionPerformed(evt);
             }
         });
 
-        LnumDiasLocacao.setText("numDiasLocacao");
+        lblNumDiasLocacao.setText("numDiasLocacao");
 
-        LdataLocacao.setText("data");
+        lblDataLocacao.setText("data");
 
         try {
-            TFdiasLocacao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###")));
+            txtDiasLocacao.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+        javax.swing.GroupLayout tabLocacaoLayout = new javax.swing.GroupLayout(tabLocacao);
+        tabLocacao.setLayout(tabLocacaoLayout);
+        tabLocacaoLayout.setHorizontalGroup(
+            tabLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabLocacaoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(tabLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(tabLocacaoLayout.createSequentialGroup()
                         .addGap(34, 34, 34)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(LpesquisarClientes)
+                        .addComponent(paneClienteLocacaoTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(tabLocacaoLayout.createSequentialGroup()
+                        .addComponent(lblPesquisarClientes)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(TFpesquisa))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(LnumDiasLocacao)
+                        .addComponent(txtPesquisarClientes))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabLocacaoLayout.createSequentialGroup()
+                        .addGroup(tabLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(tabLocacaoLayout.createSequentialGroup()
+                                .addComponent(lblNumDiasLocacao)
                                 .addGap(33, 33, 33))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(LdataLocacao)
+                            .addGroup(tabLocacaoLayout.createSequentialGroup()
+                                .addComponent(lblDataLocacao)
                                 .addGap(43, 43, 43)))
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(tabLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(tabLocacaoLayout.createSequentialGroup()
                                 .addGap(2, 2, 2)
-                                .addComponent(TFdiasLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtDiasLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(126, 126, 126)
-                                .addComponent(Blocar))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(btnLocar))
+                            .addGroup(tabLocacaoLayout.createSequentialGroup()
                                 .addGap(12, 12, 12)
-                                .addComponent(FTFdataLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(ftxtDataLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(46, 46, 46)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(tabLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(paneVeiculoTable, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(tabLocacaoLayout.createSequentialGroup()
                         .addGap(132, 132, 132)
-                        .addComponent(Bvans)
+                        .addComponent(btnVans)
                         .addGap(72, 72, 72)
-                        .addComponent(Bmotocicletas)
+                        .addComponent(btnMotocicletas)
                         .addGap(18, 18, 18)
-                        .addComponent(Bautomoveis)
+                        .addComponent(btnAutomoveis)
                         .addGap(38, 38, 38)
-                        .addComponent(CmarcaVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cboxMarcaVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
-                        .addComponent(CcategoriaVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cboxCategoriaVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(107, 107, 107))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        tabLocacaoLayout.setVerticalGroup(
+            tabLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabLocacaoLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Bvans)
-                    .addComponent(Bmotocicletas)
-                    .addComponent(Bautomoveis)
-                    .addComponent(CmarcaVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CcategoriaVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(TFpesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(LpesquisarClientes))
+                .addGroup(tabLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnVans)
+                    .addComponent(btnMotocicletas)
+                    .addComponent(btnAutomoveis)
+                    .addComponent(cboxMarcaVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboxCategoriaVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPesquisarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPesquisarClientes))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(tabLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tabLocacaoLayout.createSequentialGroup()
+                        .addComponent(paneVeiculoTable, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(121, Short.MAX_VALUE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(tabLocacaoLayout.createSequentialGroup()
+                        .addComponent(paneClienteLocacaoTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(Blocar)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(LnumDiasLocacao)
-                                .addComponent(TFdiasLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(tabLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnLocar)
+                            .addGroup(tabLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(lblNumDiasLocacao)
+                                .addComponent(txtDiasLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(23, 23, 23)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(FTFdataLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(LdataLocacao))
+                        .addGroup(tabLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ftxtDataLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblDataLocacao))
                         .addGap(54, 54, 54))))
         );
 
-        TabbedPane.addTab("Locação", jPanel3);
+        paneAllTabs.addTab("Locação", tabLocacao);
 
-        jPanel4.addComponentListener(new java.awt.event.ComponentAdapter() {
+        tabDevolucao.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
-                jPanel4ComponentShown(evt);
+                tabDevolucaoComponentShown(evt);
             }
         });
 
@@ -683,61 +693,61 @@ public class Frame extends javax.swing.JFrame {
                 DevolverTableMousePressed(evt);
             }
         });
-        jScrollPane5.setViewportView(DevolverTable);
+        paneDevolverTable.setViewportView(DevolverTable);
 
-        BvansDevolver.setText("Vans");
-        BvansDevolver.addActionListener(new java.awt.event.ActionListener() {
+        btnVansDevolver.setText("Vans");
+        btnVansDevolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BvansDevolverActionPerformed(evt);
+                btnVansDevolverActionPerformed(evt);
             }
         });
 
-        BmotocicletasDevolver.setText("Motocicletas");
-        BmotocicletasDevolver.addActionListener(new java.awt.event.ActionListener() {
+        btnMotocicletasDevolver.setText("Motocicletas");
+        btnMotocicletasDevolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BmotocicletasDevolverActionPerformed(evt);
+                btnMotocicletasDevolverActionPerformed(evt);
             }
         });
 
-        BautomoveisDevolver.setText("Automoveis");
-        BautomoveisDevolver.addActionListener(new java.awt.event.ActionListener() {
+        btnAutomoveisDevolver.setText("Automoveis");
+        btnAutomoveisDevolver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BautomoveisDevolverActionPerformed(evt);
+                btnAutomoveisDevolverActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout tabDevolucaoLayout = new javax.swing.GroupLayout(tabDevolucao);
+        tabDevolucao.setLayout(tabDevolucaoLayout);
+        tabDevolucaoLayout.setHorizontalGroup(
+            tabDevolucaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabDevolucaoLayout.createSequentialGroup()
                 .addContainerGap(351, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(tabDevolucaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(paneDevolverTable, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(tabDevolucaoLayout.createSequentialGroup()
                         .addGap(176, 176, 176)
-                        .addComponent(BvansDevolver)
+                        .addComponent(btnVansDevolver)
                         .addGap(28, 28, 28)
-                        .addComponent(BmotocicletasDevolver)
+                        .addComponent(btnMotocicletasDevolver)
                         .addGap(18, 18, 18)
-                        .addComponent(BautomoveisDevolver)
+                        .addComponent(btnAutomoveisDevolver)
                         .addGap(231, 231, 231)))
                 .addGap(270, 270, 270))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        tabDevolucaoLayout.setVerticalGroup(
+            tabDevolucaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabDevolucaoLayout.createSequentialGroup()
                 .addGap(56, 56, 56)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BvansDevolver)
-                    .addComponent(BmotocicletasDevolver)
-                    .addComponent(BautomoveisDevolver))
+                .addGroup(tabDevolucaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnVansDevolver)
+                    .addComponent(btnMotocicletasDevolver)
+                    .addComponent(btnAutomoveisDevolver))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(paneDevolverTable, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(86, Short.MAX_VALUE))
         );
 
-        TabbedPane.addTab("Devolução", jPanel4);
+        paneAllTabs.addTab("Devolução", tabDevolucao);
 
         VendaTable.setModel(vvtm);
         VendaTable.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -745,81 +755,81 @@ public class Frame extends javax.swing.JFrame {
                 VendaTableMousePressed(evt);
             }
         });
-        jScrollPane4.setViewportView(VendaTable);
+        paneVendaTable.setViewportView(VendaTable);
 
-        CcategoriaVeiculosVenda.setModel(cm.getCategoriaLocacaoModel());
-        CcategoriaVeiculosVenda.addActionListener(new java.awt.event.ActionListener() {
+        cboxCategoriaVeiculosVenda.setModel(cm.getCategoriaLocacaoModel());
+        cboxCategoriaVeiculosVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CcategoriaVeiculosVendaActionPerformed(evt);
+                cboxCategoriaVeiculosVendaActionPerformed(evt);
             }
         });
 
-        CmarcaVeiculosVenda.setModel(cm.getMarcaLocacaoModel());
-        CmarcaVeiculosVenda.addActionListener(new java.awt.event.ActionListener() {
+        cboxMarcaVeiculosVenda.setModel(cm.getMarcaLocacaoModel());
+        cboxMarcaVeiculosVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                CmarcaVeiculosVendaActionPerformed(evt);
+                cboxMarcaVeiculosVendaActionPerformed(evt);
             }
         });
 
-        BautomoveisVenda.setText("Automoveis");
-        BautomoveisVenda.addActionListener(new java.awt.event.ActionListener() {
+        btnAutomoveisVenda.setText("Automoveis");
+        btnAutomoveisVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BautomoveisVendaActionPerformed(evt);
+                btnAutomoveisVendaActionPerformed(evt);
             }
         });
 
-        BmotocicletasVenda.setText("Motocicletas");
-        BmotocicletasVenda.addActionListener(new java.awt.event.ActionListener() {
+        btnMotocicletasVenda.setText("Motocicletas");
+        btnMotocicletasVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BmotocicletasVendaActionPerformed(evt);
+                btnMotocicletasVendaActionPerformed(evt);
             }
         });
 
-        BvansVenda.setText("Vans");
-        BvansVenda.addActionListener(new java.awt.event.ActionListener() {
+        btnVansVenda.setText("Vans");
+        btnVansVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BvansVendaActionPerformed(evt);
+                btnVansVendaActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+        javax.swing.GroupLayout tabVendaLayout = new javax.swing.GroupLayout(tabVenda);
+        tabVenda.setLayout(tabVendaLayout);
+        tabVendaLayout.setHorizontalGroup(
+            tabVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabVendaLayout.createSequentialGroup()
                 .addContainerGap(370, Short.MAX_VALUE)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
+                .addGroup(tabVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(paneVendaTable, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(tabVendaLayout.createSequentialGroup()
                         .addGap(176, 176, 176)
-                        .addComponent(BvansVenda)
+                        .addComponent(btnVansVenda)
                         .addGap(28, 28, 28)
-                        .addComponent(BmotocicletasVenda)
+                        .addComponent(btnMotocicletasVenda)
                         .addGap(18, 18, 18)
-                        .addComponent(BautomoveisVenda)
+                        .addComponent(btnAutomoveisVenda)
                         .addGap(38, 38, 38)
-                        .addComponent(CmarcaVeiculosVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cboxMarcaVeiculosVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
-                        .addComponent(CcategoriaVeiculosVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cboxCategoriaVeiculosVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(251, 251, 251))
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        tabVendaLayout.setVerticalGroup(
+            tabVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabVendaLayout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(BvansVenda)
-                    .addComponent(BmotocicletasVenda)
-                    .addComponent(BautomoveisVenda)
-                    .addComponent(CmarcaVeiculosVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(CcategoriaVeiculosVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(tabVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnVansVenda)
+                    .addComponent(btnMotocicletasVenda)
+                    .addComponent(btnAutomoveisVenda)
+                    .addComponent(cboxMarcaVeiculosVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cboxCategoriaVeiculosVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(paneVendaTable, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(108, Short.MAX_VALUE))
         );
 
-        TabbedPane.addTab("Venda", jPanel5);
+        paneAllTabs.addTab("Venda", tabVenda);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -827,54 +837,54 @@ public class Frame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(TabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 1338, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(paneAllTabs, javax.swing.GroupLayout.PREFERRED_SIZE, 1338, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(TabbedPane)
+            .addComponent(paneAllTabs)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TFnomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFnomeActionPerformed
+    private void txtNomeClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeClienteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TFnomeActionPerformed
+    }//GEN-LAST:event_txtNomeClienteActionPerformed
 
-    private void BincluirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BincluirClienteActionPerformed
-        String nome = TFnome.getText();
-        String sobrenome = TFsobrenome.getText();
-        String rg = TFrg.getText();
-        String cpf = TFcpf.getText();
-        String endereco = TFendereco.getText();
+    private void btnIncluirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirClienteActionPerformed
+        String nome = txtNomeCliente.getText();
+        String sobrenome = txtSobrenomeCliente.getText();
+        String rg = ftxtRgCliente.getText();
+        String cpf = ftxtCpfCliente.getText();
+        String endereco = txtEndereco.getText();
         Cliente cliente = new Cliente(nome, sobrenome, rg, cpf, endereco);
         ctm.addCliente(cliente);
-        TFnome.setText("");
-        TFsobrenome.setText("");
-        TFrg.setText("");
-        TFcpf.setText("");
-        TFendereco.setText("");
+        txtNomeCliente.setText("");
+        txtSobrenomeCliente.setText("");
+        ftxtRgCliente.setText("");
+        ftxtCpfCliente.setText("");
+        txtEndereco.setText("");
 
 
-    }//GEN-LAST:event_BincluirClienteActionPerformed
+    }//GEN-LAST:event_btnIncluirClienteActionPerformed
 
-    private void BlistarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BlistarClienteActionPerformed
+    private void btnListarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarClienteActionPerformed
         ctm.setListaCliente();
         for (Cliente c : rep.getListaClientes()) {//test
             System.out.print(c.getNome());
         }//test
 
-    }//GEN-LAST:event_BlistarClienteActionPerformed
+    }//GEN-LAST:event_btnListarClienteActionPerformed
 
-    private void BremoverClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BremoverClienteActionPerformed
+    private void btnRemoverClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverClienteActionPerformed
 
         if (clienteTable.getSelectedRow() == -1) {
-            BremoverCliente.setToolTipText("Selecione um ou mais clientes para remover.");
+            btnRemoverCliente.setToolTipText("Selecione um ou mais clientes para remover.");
             // Força o tooltip a aparecer imediatamente
             ToolTipManager.sharedInstance().setInitialDelay(0);
             // Cria um evento de mouse falso para disparar o tooltip
             MouseEvent phantom = new MouseEvent(
-                    BremoverCliente,
+                    btnRemoverCliente,
                     MouseEvent.MOUSE_MOVED,
                     System.currentTimeMillis(),
                     0,
@@ -885,25 +895,25 @@ public class Frame extends javax.swing.JFrame {
             ToolTipManager.sharedInstance().mouseMoved(phantom);
         } else {
             // Limpa o tooltip se uma linha estiver selecionada
-            BremoverCliente.setToolTipText(null);
+            btnRemoverCliente.setToolTipText(null);
         }
 
         ctm.removeSelectedRows(clienteTable);
 
-    }//GEN-LAST:event_BremoverClienteActionPerformed
+    }//GEN-LAST:event_btnRemoverClienteActionPerformed
 
-    private void BlimparClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BlimparClienteActionPerformed
+    private void btnLimparClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparClienteActionPerformed
         ctm.limpaTabela();
-    }//GEN-LAST:event_BlimparClienteActionPerformed
+    }//GEN-LAST:event_btnLimparClienteActionPerformed
 
-    private void BatualizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BatualizarClienteActionPerformed
+    private void btnAtualizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarClienteActionPerformed
 
         if (clienteTable.getSelectedRowCount() == 1) {
-            String nome = TFnome.getText();
-            String sobrenome = TFsobrenome.getText();
-            String rg = TFrg.getText();
-            String cpf = TFcpf.getText();
-            String endereco = TFendereco.getText();
+            String nome = txtNomeCliente.getText();
+            String sobrenome = txtSobrenomeCliente.getText();
+            String rg = ftxtRgCliente.getText();
+            String cpf = ftxtCpfCliente.getText();
+            String endereco = txtEndereco.getText();
             int row = clienteTable.getSelectedRow();
             ctm.setValueAt(nome, row, 0);
             ctm.setValueAt(sobrenome, row, 1);
@@ -914,15 +924,15 @@ public class Frame extends javax.swing.JFrame {
             rep.updateRowCliente(row, ctm.getListaClientes().get(row));
 
         }
-    }//GEN-LAST:event_BatualizarClienteActionPerformed
+    }//GEN-LAST:event_btnAtualizarClienteActionPerformed
 
-    private void BincluirVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BincluirVeiculoActionPerformed
-        Marca marca = (Marca) Cmarca.getSelectedItem();
-        Estado estado = (Estado) Cestado.getSelectedItem();
+    private void btnIncluirVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirVeiculoActionPerformed
+        Marca marca = (Marca) cboxMarca.getSelectedItem();
+        Estado estado = (Estado) cboxEstado.getSelectedItem();
         Locacao locacao = null;
-        Categoria categoria = (Categoria) Ccategoria.getSelectedItem();
+        Categoria categoria = (Categoria) cboxCategoria.getSelectedItem();
         //valor de compra
-        String str = FTFvalorDeCompra.getText();
+        String str = ftxtValorDeCompra.getText();
         double valorDeCompra = 0;
         try {
             if (str != null && !str.isEmpty()) {
@@ -933,13 +943,13 @@ public class Frame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Por favor, insira um número válido.");
         }
 
-        String placa = FTFplaca.getText();
+        String placa = ftxtPlaca.getText();
         //ano
-        String str0 = FTFano.getText();
+        String str0 = ftxtAno.getText();
         int ano = 0;
         try {
             if (str0 != null && !str0.isEmpty()) {
-                ano = Integer.parseInt(FTFano.getText());
+                ano = Integer.parseInt(ftxtAno.getText());
             }
 
         } catch (NumberFormatException e) {
@@ -947,55 +957,55 @@ public class Frame extends javax.swing.JFrame {
         }
 
         //model,contructors,adding
-        if ("Motocicleta".equals(Ctipo.getSelectedItem())) {
-            ModeloMotocicleta modeloMoto = (ModeloMotocicleta) Cmodelo.getSelectedItem();
+        if ("Motocicleta".equals(cboxTipo.getSelectedItem())) {
+            ModeloMotocicleta modeloMoto = (ModeloMotocicleta) cboxModelo.getSelectedItem();
             Motocicleta motocicleta = new Motocicleta(marca, estado, locacao, categoria, valorDeCompra, placa, ano, modeloMoto);
             SwingUtilities.invokeLater(() -> {
                 lvtm.addMotocicleta(motocicleta);
             });
 
-        } else if ("Automóvel".equals(Ctipo.getSelectedItem())) {
-            ModeloAutomovel modeloAuto = (ModeloAutomovel) Cmodelo.getSelectedItem();
+        } else if ("Automóvel".equals(cboxTipo.getSelectedItem())) {
+            ModeloAutomovel modeloAuto = (ModeloAutomovel) cboxModelo.getSelectedItem();
             Automovel automovel = new Automovel(marca, estado, locacao, categoria, valorDeCompra, placa, ano, modeloAuto);
             lvtm.addAutomovel(automovel);
-        } else if ("Van".equals(Ctipo.getSelectedItem())) {
-            ModeloVan modeloVan = (ModeloVan) Cmodelo.getSelectedItem();
+        } else if ("Van".equals(cboxTipo.getSelectedItem())) {
+            ModeloVan modeloVan = (ModeloVan) cboxModelo.getSelectedItem();
             Van van = new Van(marca, estado, locacao, categoria, valorDeCompra, placa, ano, modeloVan);
             lvtm.addVan(van);
         }
-        FTFvalorDeCompra.setText("");
-        FTFplaca.setText("");
-        FTFano.setText("");
+        ftxtValorDeCompra.setText("");
+        ftxtPlaca.setText("");
+        ftxtAno.setText("");
 
-    }//GEN-LAST:event_BincluirVeiculoActionPerformed
+    }//GEN-LAST:event_btnIncluirVeiculoActionPerformed
 
-    private void PveiculosComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_PveiculosComponentShown
+    private void tabVeiculosComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabVeiculosComponentShown
         // Cmarca.setModel(cm.getMarcaModel());
         //Ccategoria.setModel(cm.getCategoriaModel());
 
-    }//GEN-LAST:event_PveiculosComponentShown
+    }//GEN-LAST:event_tabVeiculosComponentShown
 
-    private void TFcpfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFcpfActionPerformed
+    private void ftxtCpfClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ftxtCpfClienteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TFcpfActionPerformed
+    }//GEN-LAST:event_ftxtCpfClienteActionPerformed
 
-    private void CtipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CtipoActionPerformed
-        if ("Motocicleta".equals(Ctipo.getSelectedItem().toString())) {
-            Cmodelo.setModel((DefaultComboBoxModel) cm.getMotocicletaModel());
-        } else if ("Automóvel".equals(Ctipo.getSelectedItem().toString())) {
-            Cmodelo.setModel((DefaultComboBoxModel) cm.getAutomovelModel());
-        } else if ("Van".equals(Ctipo.getSelectedItem().toString())) {
-            Cmodelo.setModel((DefaultComboBoxModel) cm.getVanModel());
+    private void cboxTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxTipoActionPerformed
+        if ("Motocicleta".equals(cboxTipo.getSelectedItem().toString())) {
+            cboxModelo.setModel((DefaultComboBoxModel) cm.getMotocicletaModel());
+        } else if ("Automóvel".equals(cboxTipo.getSelectedItem().toString())) {
+            cboxModelo.setModel((DefaultComboBoxModel) cm.getAutomovelModel());
+        } else if ("Van".equals(cboxTipo.getSelectedItem().toString())) {
+            cboxModelo.setModel((DefaultComboBoxModel) cm.getVanModel());
         }
-    }//GEN-LAST:event_CtipoActionPerformed
+    }//GEN-LAST:event_cboxTipoActionPerformed
 
-    private void CmodeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmodeloActionPerformed
+    private void cboxModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxModeloActionPerformed
 
-    }//GEN-LAST:event_CmodeloActionPerformed
+    }//GEN-LAST:event_cboxModeloActionPerformed
 
-    private void CmarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmarcaActionPerformed
+    private void cboxMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxMarcaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_CmarcaActionPerformed
+    }//GEN-LAST:event_cboxMarcaActionPerformed
 
     private void veiculoTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_veiculoTableMousePressed
         JTable table = (JTable) evt.getSource();
@@ -1006,50 +1016,50 @@ public class Frame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_veiculoTableMousePressed
 
-    private void BvansActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BvansActionPerformed
+    private void btnVansActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVansActionPerformed
         lvtm.setTipoVeiculo(1);
         lvtm.setListaVeiculos();
-    }//GEN-LAST:event_BvansActionPerformed
+    }//GEN-LAST:event_btnVansActionPerformed
 
-    private void BmotocicletasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BmotocicletasActionPerformed
+    private void btnMotocicletasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotocicletasActionPerformed
         lvtm.setTipoVeiculo(2);
         lvtm.setListaVeiculos();
-    }//GEN-LAST:event_BmotocicletasActionPerformed
+    }//GEN-LAST:event_btnMotocicletasActionPerformed
 
-    private void BautomoveisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BautomoveisActionPerformed
+    private void btnAutomoveisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutomoveisActionPerformed
         lvtm.setTipoVeiculo(3);
         lvtm.setListaVeiculos();
-    }//GEN-LAST:event_BautomoveisActionPerformed
+    }//GEN-LAST:event_btnAutomoveisActionPerformed
 
-    private void CcategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CcategoriaActionPerformed
+    private void cboxCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxCategoriaActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_CcategoriaActionPerformed
+    }//GEN-LAST:event_cboxCategoriaActionPerformed
 
-    private void jPanel3ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel3ComponentShown
+    private void tabLocacaoComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabLocacaoComponentShown
         ClienteLocacaoTableModel modeloTabela = (ClienteLocacaoTableModel) clienteLocacaoTable.getModel();
         modeloTabela.filtrarClientes("");
-    }//GEN-LAST:event_jPanel3ComponentShown
+    }//GEN-LAST:event_tabLocacaoComponentShown
 
-    private void CmarcaVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmarcaVeiculosActionPerformed
-        Marca marca = (Marca) CmarcaVeiculos.getSelectedItem();
+    private void cboxMarcaVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxMarcaVeiculosActionPerformed
+        Marca marca = (Marca) cboxMarcaVeiculos.getSelectedItem();
         f.filtrarPorMarca(marca.name());
-    }//GEN-LAST:event_CmarcaVeiculosActionPerformed
+    }//GEN-LAST:event_cboxMarcaVeiculosActionPerformed
 
-    private void CcategoriaVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CcategoriaVeiculosActionPerformed
-        Marca marca = (Marca) CcategoriaVeiculos.getSelectedItem();
+    private void cboxCategoriaVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxCategoriaVeiculosActionPerformed
+        Marca marca = (Marca) cboxCategoriaVeiculos.getSelectedItem();
         f.filtrarPorMarca(marca.name());
-    }//GEN-LAST:event_CcategoriaVeiculosActionPerformed
+    }//GEN-LAST:event_cboxCategoriaVeiculosActionPerformed
 
-    private void TFpesquisaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_TFpesquisaKeyReleased
-        String textoPesquisa = TFpesquisa.getText();
+    private void txtPesquisarClientesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarClientesKeyReleased
+        String textoPesquisa = txtPesquisarClientes.getText();
         filtrarPesquisa(textoPesquisa);
-    }//GEN-LAST:event_TFpesquisaKeyReleased
+    }//GEN-LAST:event_txtPesquisarClientesKeyReleased
 
-    private void TFpesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TFpesquisaActionPerformed
+    private void txtPesquisarClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesquisarClientesActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_TFpesquisaActionPerformed
+    }//GEN-LAST:event_txtPesquisarClientesActionPerformed
 
-    private void BlocarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BlocarActionPerformed
+    private void btnLocarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocarActionPerformed
         //setComVeiculoLocado
         Cliente c = null;
         int lscliente = clienteLocacaoTable.getSelectedRow();
@@ -1059,11 +1069,11 @@ public class Frame extends javax.swing.JFrame {
             c = clienteSelecionado;
         }
 
-        int dias = Integer.parseInt(TFdiasLocacao.getText());
+        int dias = Integer.parseInt(txtDiasLocacao.getText());
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy"); // Altere para o formato da sua data
         Date dataDate;
         try {
-            dataDate = formato.parse(FTFdataLocacao.getText());
+            dataDate = formato.parse(ftxtDataLocacao.getText());
         } catch (ParseException e) {
             e.printStackTrace();
             return;
@@ -1073,133 +1083,133 @@ public class Frame extends javax.swing.JFrame {
 
         locarVeiculo(dias, data, c);
 
-    }//GEN-LAST:event_BlocarActionPerformed
+    }//GEN-LAST:event_btnLocarActionPerformed
 
     private void VendaTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VendaTableMousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_VendaTableMousePressed
 
-    private void CcategoriaVeiculosVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CcategoriaVeiculosVendaActionPerformed
-        Marca marca = (Marca) CcategoriaVeiculosVenda.getSelectedItem();
+    private void cboxCategoriaVeiculosVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxCategoriaVeiculosVendaActionPerformed
+        Marca marca = (Marca) cboxCategoriaVeiculosVenda.getSelectedItem();
         f1.filtrarPorMarca(marca.name());
-    }//GEN-LAST:event_CcategoriaVeiculosVendaActionPerformed
+    }//GEN-LAST:event_cboxCategoriaVeiculosVendaActionPerformed
 
-    private void CmarcaVeiculosVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CmarcaVeiculosVendaActionPerformed
-        Marca marca = (Marca) CmarcaVeiculosVenda.getSelectedItem();
+    private void cboxMarcaVeiculosVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxMarcaVeiculosVendaActionPerformed
+        Marca marca = (Marca) cboxMarcaVeiculosVenda.getSelectedItem();
         f1.filtrarPorMarca(marca.name());
-    }//GEN-LAST:event_CmarcaVeiculosVendaActionPerformed
+    }//GEN-LAST:event_cboxMarcaVeiculosVendaActionPerformed
 
-    private void BautomoveisVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BautomoveisVendaActionPerformed
+    private void btnAutomoveisVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutomoveisVendaActionPerformed
         //vvtm.setTipoVeiculo(3);
         //vvtm.setListaVeiculos();
-    }//GEN-LAST:event_BautomoveisVendaActionPerformed
+    }//GEN-LAST:event_btnAutomoveisVendaActionPerformed
 
-    private void BmotocicletasVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BmotocicletasVendaActionPerformed
+    private void btnMotocicletasVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotocicletasVendaActionPerformed
        // vvtm.setTipoVeiculo(2);
         //vvtm.setListaVeiculos();
-    }//GEN-LAST:event_BmotocicletasVendaActionPerformed
+    }//GEN-LAST:event_btnMotocicletasVendaActionPerformed
 
-    private void BvansVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BvansVendaActionPerformed
+    private void btnVansVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVansVendaActionPerformed
         //vvtm.setTipoVeiculo(1);
         //vvtm.setListaVeiculos();
-    }//GEN-LAST:event_BvansVendaActionPerformed
+    }//GEN-LAST:event_btnVansVendaActionPerformed
 
     private void DevolverTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DevolverTableMousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_DevolverTableMousePressed
 
-    private void BvansDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BvansDevolverActionPerformed
+    private void btnVansDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVansDevolverActionPerformed
         //vdtm.setTipoVeiculo(1);
         //vdtm.setListaVeiculos();
-    }//GEN-LAST:event_BvansDevolverActionPerformed
+    }//GEN-LAST:event_btnVansDevolverActionPerformed
 
-    private void BmotocicletasDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BmotocicletasDevolverActionPerformed
+    private void btnMotocicletasDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotocicletasDevolverActionPerformed
         //vdtm.setTipoVeiculo(2);
         //vdtm.setListaVeiculos();
-    }//GEN-LAST:event_BmotocicletasDevolverActionPerformed
+    }//GEN-LAST:event_btnMotocicletasDevolverActionPerformed
 
-    private void BautomoveisDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BautomoveisDevolverActionPerformed
+    private void btnAutomoveisDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutomoveisDevolverActionPerformed
         //vdtm.setTipoVeiculo(3);
         //vdtm.setListaVeiculos();
-    }//GEN-LAST:event_BautomoveisDevolverActionPerformed
+    }//GEN-LAST:event_btnAutomoveisDevolverActionPerformed
 
-    private void FTFdataLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FTFdataLocacaoActionPerformed
+    private void ftxtDataLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ftxtDataLocacaoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_FTFdataLocacaoActionPerformed
+    }//GEN-LAST:event_ftxtDataLocacaoActionPerformed
 
-    private void jPanel4ComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_jPanel4ComponentShown
+    private void tabDevolucaoComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabDevolucaoComponentShown
 
-    }//GEN-LAST:event_jPanel4ComponentShown
+    }//GEN-LAST:event_tabDevolucaoComponentShown
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BatualizarCliente;
-    private javax.swing.JButton Bautomoveis;
-    private javax.swing.JButton BautomoveisDevolver;
-    private javax.swing.JButton BautomoveisVenda;
-    private javax.swing.JButton BincluirCliente;
-    private javax.swing.JButton BincluirVeiculo;
-    private javax.swing.JButton BlimparCliente;
-    private javax.swing.JButton BlistarCliente;
-    private javax.swing.JButton Blocar;
-    private javax.swing.JButton Bmotocicletas;
-    private javax.swing.JButton BmotocicletasDevolver;
-    private javax.swing.JButton BmotocicletasVenda;
-    private javax.swing.JButton BremoverCliente;
-    private javax.swing.JButton Bvans;
-    private javax.swing.JButton BvansDevolver;
-    private javax.swing.JButton BvansVenda;
-    private javax.swing.JComboBox<Categoria> Ccategoria;
-    private javax.swing.JComboBox<Categoria> CcategoriaVeiculos;
-    private javax.swing.JComboBox<Categoria> CcategoriaVeiculosVenda;
-    private javax.swing.JComboBox<Estado> Cestado;
-    private javax.swing.JComboBox<Marca> Cmarca;
-    private javax.swing.JComboBox<Marca> CmarcaVeiculos;
-    private javax.swing.JComboBox<Marca> CmarcaVeiculosVenda;
-    private javax.swing.JComboBox<Object> Cmodelo;
-    private javax.swing.JComboBox<String> Ctipo;
     private javax.swing.JTable DevolverTable;
-    private javax.swing.JFormattedTextField FTFano;
-    private javax.swing.JFormattedTextField FTFdataLocacao;
-    private javax.swing.JFormattedTextField FTFplaca;
-    private javax.swing.JFormattedTextField FTFvalorDeCompra;
-    private javax.swing.JLabel Lano;
-    private javax.swing.JLabel Lcategoria;
-    private javax.swing.JLabel LdataLocacao;
-    private javax.swing.JLabel Lestado;
-    private javax.swing.JLabel Lmarca;
-    private javax.swing.JLabel Lmodelo;
-    private javax.swing.JLabel LnumDiasLocacao;
-    private javax.swing.JLabel LpesquisarClientes;
-    private javax.swing.JLabel Lplaca;
-    private javax.swing.JLabel Ltipo;
-    private javax.swing.JLabel LvalorDaCompra;
-    private javax.swing.JPanel Pveiculos;
-    private javax.swing.JFormattedTextField TFcpf;
-    private javax.swing.JFormattedTextField TFdiasLocacao;
-    private javax.swing.JTextField TFendereco;
-    private javax.swing.JTextField TFnome;
-    private javax.swing.JTextField TFpesquisa;
-    private javax.swing.JFormattedTextField TFrg;
-    private javax.swing.JTextField TFsobrenome;
-    private javax.swing.JTabbedPane TabbedPane;
     private javax.swing.JTable VendaTable;
+    private javax.swing.JButton btnAtualizarCliente;
+    private javax.swing.JButton btnAutomoveis;
+    private javax.swing.JButton btnAutomoveisDevolver;
+    private javax.swing.JButton btnAutomoveisVenda;
+    private javax.swing.JButton btnIncluirCliente;
+    private javax.swing.JButton btnIncluirVeiculo;
+    private javax.swing.JButton btnLimparCliente;
+    private javax.swing.JButton btnListarCliente;
+    private javax.swing.JButton btnLocar;
+    private javax.swing.JButton btnMotocicletas;
+    private javax.swing.JButton btnMotocicletasDevolver;
+    private javax.swing.JButton btnMotocicletasVenda;
+    private javax.swing.JButton btnRemoverCliente;
+    private javax.swing.JButton btnVans;
+    private javax.swing.JButton btnVansDevolver;
+    private javax.swing.JButton btnVansVenda;
+    private javax.swing.JComboBox<Categoria> cboxCategoria;
+    private javax.swing.JComboBox<Categoria> cboxCategoriaVeiculos;
+    private javax.swing.JComboBox<Categoria> cboxCategoriaVeiculosVenda;
+    private javax.swing.JComboBox<Estado> cboxEstado;
+    private javax.swing.JComboBox<Marca> cboxMarca;
+    private javax.swing.JComboBox<Marca> cboxMarcaVeiculos;
+    private javax.swing.JComboBox<Marca> cboxMarcaVeiculosVenda;
+    private javax.swing.JComboBox<Object> cboxModelo;
+    private javax.swing.JComboBox<String> cboxTipo;
     private javax.swing.JTable clienteLocacaoTable;
     private javax.swing.JTable clienteTable;
-    private javax.swing.JLabel cpfCliente;
-    private javax.swing.JLabel enderecoCliente;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JLabel nomeCliente;
-    private javax.swing.JLabel rgCliente;
-    private javax.swing.JLabel sobrenomeCliente;
+    private javax.swing.JFormattedTextField ftxtAno;
+    private javax.swing.JFormattedTextField ftxtCpfCliente;
+    private javax.swing.JFormattedTextField ftxtDataLocacao;
+    private javax.swing.JFormattedTextField ftxtPlaca;
+    private javax.swing.JFormattedTextField ftxtRgCliente;
+    private javax.swing.JFormattedTextField ftxtValorDeCompra;
+    private javax.swing.JLabel lblAno;
+    private javax.swing.JLabel lblCategoria;
+    private javax.swing.JLabel lblCpfCliente;
+    private javax.swing.JLabel lblDataLocacao;
+    private javax.swing.JLabel lblEnderecoCliente;
+    private javax.swing.JLabel lblEstado;
+    private javax.swing.JLabel lblMarca;
+    private javax.swing.JLabel lblModelo;
+    private javax.swing.JLabel lblNomeCliente;
+    private javax.swing.JLabel lblNumDiasLocacao;
+    private javax.swing.JLabel lblPesquisarClientes;
+    private javax.swing.JLabel lblPlaca;
+    private javax.swing.JLabel lblRgCliente;
+    private javax.swing.JLabel lblSobrenomeCliente;
+    private javax.swing.JLabel lblTipo;
+    private javax.swing.JLabel lblValorDaCompra;
+    private javax.swing.JTabbedPane paneAllTabs;
+    private javax.swing.JScrollPane paneClienteLocacaoTable;
+    private javax.swing.JScrollPane paneClienteTable;
+    private javax.swing.JScrollPane paneDevolverTable;
+    private javax.swing.JScrollPane paneVeiculoTable;
+    private javax.swing.JScrollPane paneVendaTable;
     private javax.swing.JPanel tabCliente;
+    private javax.swing.JPanel tabDevolucao;
+    private javax.swing.JPanel tabLocacao;
+    private javax.swing.JPanel tabVeiculos;
+    private javax.swing.JPanel tabVenda;
+    private javax.swing.JFormattedTextField txtDiasLocacao;
+    private javax.swing.JTextField txtEndereco;
+    private javax.swing.JTextField txtNomeCliente;
+    private javax.swing.JTextField txtPesquisarClientes;
+    private javax.swing.JTextField txtSobrenomeCliente;
     private javax.swing.JTable veiculoTable;
     // End of variables declaration//GEN-END:variables
 

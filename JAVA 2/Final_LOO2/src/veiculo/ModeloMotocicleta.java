@@ -1,4 +1,4 @@
-package tela2;
+package veiculo;
 
 public enum ModeloMotocicleta {
 	NOVA_DESERT_X, 
