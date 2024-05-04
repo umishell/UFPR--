@@ -4,6 +4,14 @@ import clienteLocacao.Locacao;
 import java.util.Calendar;
 
 import cliente.Cliente;
+import veiculo.Categoria;
+import veiculo.Categoria;
+import veiculo.Estado;
+import veiculo.Estado;
+import veiculo.Marca;
+import veiculo.Marca;
+import veiculo.ModeloAutomovel;
+import veiculo.ModeloAutomovel;
 
 public class Automovel extends Veiculo {
 

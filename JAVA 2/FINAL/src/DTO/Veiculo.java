@@ -1,12 +1,4 @@
-package veiculo;
-
-import clienteLocacao.Locacao;
-import veiculo.Categoria;
-import veiculo.Categoria;
-import veiculo.Estado;
-import veiculo.Estado;
-import veiculo.Marca;
-import veiculo.Marca;
+package DTO;
 
 public abstract class Veiculo implements VeiculoInterface {
 

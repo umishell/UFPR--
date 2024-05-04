@@ -1,17 +1,9 @@
-package veiculo;
+package DTO;
 
-import clienteLocacao.Locacao;
+import tela3.Locacao;
 import java.util.Calendar;
 
-import cliente.Cliente;
-import veiculo.Categoria;
-import veiculo.Categoria;
-import veiculo.Estado;
-import veiculo.Estado;
-import veiculo.Marca;
-import veiculo.Marca;
-import veiculo.ModeloMotocicleta;
-import veiculo.ModeloMotocicleta;
+import tela1.Cliente;
 
 public class Motocicleta extends Veiculo {
 

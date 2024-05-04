@@ -687,7 +687,6 @@ public class Frame extends javax.swing.JFrame {
             }
         });
 
-        DevolverTable.setModel(vdtm);
         DevolverTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 DevolverTableMousePressed(evt);
@@ -749,7 +748,6 @@ public class Frame extends javax.swing.JFrame {
 
         paneAllTabs.addTab("Devolução", tabDevolucao);
 
-        VendaTable.setModel(vvtm);
         VendaTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 VendaTableMousePressed(evt);

@@ -1,15 +1,9 @@
-package veiculo;
+package DTO;
 
-import clienteLocacao.Locacao;
+
 import java.util.Calendar;
 
-import cliente.Cliente;
-import veiculo.Categoria;
-import veiculo.Categoria;
-import veiculo.Estado;
-import veiculo.Estado;
-import veiculo.Marca;
-import veiculo.Marca;
+
 
 public interface VeiculoInterface {
 
@@ -23,13 +17,13 @@ public interface VeiculoInterface {
 	// Muda estado para DISPONIVEL
 	public void devolver();
 
-	public Estado getEstado();
+	public String getEstado();
 
-	public Marca getMarca();
+	public String getMarca();
 
-	public Categoria getCategoria();
+	public String getCategoria();
 
-	public Locacao getLocacao();
+	public String getLocacao();
 
 	public String getPlaca();
 

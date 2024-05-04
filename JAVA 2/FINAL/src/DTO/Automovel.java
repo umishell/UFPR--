@@ -1,28 +1,20 @@
-package veiculo;
+package DTO;
 
-import clienteLocacao.Locacao;
+import tela3.Locacao;
 import java.util.Calendar;
 
-import cliente.Cliente;
-import veiculo.Categoria;
-import veiculo.Categoria;
-import veiculo.Estado;
-import veiculo.Estado;
-import veiculo.Marca;
-import veiculo.Marca;
-import veiculo.ModeloVan;
-import veiculo.ModeloVan;
+import tela1.Cliente;
 
-public class Van extends Veiculo {
+public class Automovel extends Veiculo {
 
-    private ModeloVan modelo;
+    private ModeloAutomovel modelo;
 
-    public Van(Marca marca, Estado estado, Locacao locacao, Categoria categoria, double valorDeCompra, String placa, int ano, ModeloVan v) {
+    public Automovel(Marca marca, Estado estado, Locacao locacao, Categoria categoria, double valorDeCompra, String placa, int ano, ModeloAutomovel a) {
         super(marca, estado, locacao, categoria, valorDeCompra, placa, ano);
-        modelo = v;
+        modelo = a;
     }
 
-    public ModeloVan getModelo() {
+    public ModeloAutomovel getModelo() {
         return modelo;
     }
 
@@ -37,15 +29,16 @@ public class Van extends Veiculo {
     public double getValorDiariaLocacao() {
         switch (this.getCategoria().name()) {
             case "POPULAR" -> {
-                return 200;
+                return 100;
             }
             case "INTERMEDIARIO" -> {
-                return 400;
+                return 300;
             }
             case "LUXO" -> {
-                return 600;
+                return 450;
             }
         }
         return 0;
     }
+
 }
