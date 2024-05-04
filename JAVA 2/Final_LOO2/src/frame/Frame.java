@@ -47,18 +47,18 @@ public class Frame extends javax.swing.JFrame {
     private FiltroDeTabela f, f1;
 
     public Frame() {
-        rep = new Repository();
+        //rep = new Repository();
         ctm = new ClienteTableModel();
         lvtm = new LocarVeiculoTableModel();
         cltm = new ClienteLocacaoTableModel();
         //vdtm = new VeiculoDevolverTableModel();
        //vvtm = new VeiculoVenderTableModel();
-        ctm.repRef(rep);
-        lvtm.repRef(rep);
-        cltm.repRef(rep);
+        //ctm.repRef(rep);
+        //lvtm.repRef(rep);
+       // cltm.repRef(rep);
         //vdtm.repRef(rep);
         //vvtm.repRef(rep);
-        cm = new ComboModels();
+        //cm = new ComboModels();
 
         initComponents();
 

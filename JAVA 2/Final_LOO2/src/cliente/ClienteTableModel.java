@@ -12,9 +12,6 @@ public class ClienteTableModel extends DefaultTableModel {
     private String[] colunas = new String[]{"Nome", "Sobrenome", "RG", "CPF", "Endereço"};
     private List<Cliente> listaClientes = new ArrayList();
 
-    public void repRef(Repository rep) {
-        this.rep = rep;
-    }
 
     public ClienteTableModel() {
     }
