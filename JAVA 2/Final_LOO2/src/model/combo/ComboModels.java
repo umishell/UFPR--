@@ -1,4 +1,4 @@
-package model;
+package model.combo;
 
 import model.enums.ModeloVan;
 import model.enums.ModeloMotocicleta;

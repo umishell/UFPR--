@@ -1,4 +1,4 @@
-package model.tableModel;
+package model.tables;
 
 import view.Repository;
 import java.util.ArrayList;
@@ -6,12 +6,12 @@ import java.util.List;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-import model.Automovel;
-import model.Automovel;
-import model.Motocicleta;
-import model.Motocicleta;
-import model.Van;
-import model.Van;
+import model.dto.Automovel;
+import model.dto.Automovel;
+import model.dto.Motocicleta;
+import model.dto.Motocicleta;
+import model.dto.Van;
+import model.dto.Van;
 
 public class LocarVeiculoTableModel extends DefaultTableModel {
 

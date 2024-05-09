@@ -1,4 +1,4 @@
-package model;
+package model.tables;
 
 import javax.swing.JTable;
 import javax.swing.RowFilter;

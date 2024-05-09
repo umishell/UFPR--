@@ -1,6 +1,6 @@
-package model;
+package model.dto;
 
-import model.Locacao;
+import model.dto.Locacao;
 import model.enums.Categoria;
 import model.enums.Categoria;
 import model.enums.Estado;

@@ -2,10 +2,10 @@ package view;
 
 import java.util.ArrayList;
 import java.util.List;
-import model.Cliente;
-import model.Automovel;
-import model.Motocicleta;
-import model.Van;
+import model.dto.Cliente;
+import model.dto.Automovel;
+import model.dto.Motocicleta;
+import model.dto.Van;
 
 public class Repository {
 

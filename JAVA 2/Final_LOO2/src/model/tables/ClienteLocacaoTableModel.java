@@ -1,24 +1,28 @@
-package model.tableModel;
+package model.tables;
 
-import model.Cliente;
+import model.dto.Cliente;
 import view.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
-import model.Cliente;
+import model.dto.Cliente;
 
-public class ClienteTableModel extends DefaultTableModel {
+public class ClienteLocacaoTableModel extends DefaultTableModel {
 
     private Repository rep;
-    private String[] colunas = new String[]{"Nome", "Sobrenome", "RG", "CPF", "Endereço"};
+    private String[] colunas = new String[]{"Nome", "Sobrenome", "CPF"};
     private List<Cliente> listaClientes = new ArrayList();
 
-
-    public ClienteTableModel() {
+    public void repRef(Repository rep) {
+        this.rep = rep;
     }
 
-    public ClienteTableModel(List<Cliente> c) {
+    public ClienteLocacaoTableModel() {
+    }
+
+    public ClienteLocacaoTableModel(List<Cliente> c) {
         this.listaClientes = c;
     }
 
@@ -50,16 +54,13 @@ public class ClienteTableModel extends DefaultTableModel {
             case 1 ->
                 cliente.getSobrenome();
             case 2 ->
-                cliente.getRg();
-            case 3 ->
                 cliente.getCpf();
-            case 4 ->
-                cliente.getEndereco();
             default ->
                 null;
         };
     }
 
+    /*
     @Override
     public void setValueAt(Object value, int row, int col) {
         Cliente cliente = listaClientes.get(row);
@@ -89,7 +90,7 @@ public class ClienteTableModel extends DefaultTableModel {
 
     public void removeSelectedRows(JTable myJTable) {
         int[] selectedRows = myJTable.getSelectedRows();
-        ClienteTableModel tableModel = (ClienteTableModel) myJTable.getModel();
+        ClienteLocacaoTableModel tableModel = (ClienteLocacaoTableModel) myJTable.getModel();
 
         for (int i = selectedRows.length - 1; i >= 0; i--) {
             int row = selectedRows[i];
@@ -104,9 +105,9 @@ public class ClienteTableModel extends DefaultTableModel {
 
     public void addCliente(Cliente c) {
         this.listaClientes.add(c);
-        rep.gravarCliente(c);// incluir no db
+        rep.gravarCliente(c);
         this.fireTableDataChanged();
-        this.fireTableRowsInserted(listaClientes.size() , listaClientes.size() );//update JTable
+        this.fireTableRowsInserted(listaClientes.size(), listaClientes.size());//update JTable
     }
 
     public void setListaCliente() {
@@ -125,11 +126,34 @@ public class ClienteTableModel extends DefaultTableModel {
         this.listaClientes = new ArrayList();
         this.fireTableRowsDeleted(0, indice);//update JTable
     }
-
+     */
     @Override
     public boolean isCellEditable(int row, int column) {
         // permite a edição em todas as células
-        return true;
+        return false;
     }
 
+    public void filtrarClientes(String textoPesquisa) {
+        if (textoPesquisa.isEmpty()) {
+            this.listaClientes = rep.getListaClientes();
+        } else {
+            List<Cliente> listaFiltrada = new ArrayList<>();
+            for (Cliente cliente : rep.getListaClientes()) {
+                if (!cliente.isComVeiculoLocado() && (textoPesquisa.isEmpty() || cliente.getNome().toLowerCase().contains(textoPesquisa.toLowerCase())
+                        || cliente.getSobrenome().toLowerCase().contains(textoPesquisa.toLowerCase())
+                        || cliente.getCpf().toLowerCase().contains(textoPesquisa.toLowerCase()))) {
+                    listaFiltrada.add(cliente);
+                }
+            }
+            this.listaClientes = listaFiltrada;
+        }
+        this.fireTableDataChanged();
+    }
+
+    public void setSingleSelection(JTable tabela) {
+        ListSelectionModel selectionModel = tabela.getSelectionModel();
+        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+    
+    
 }

@@ -1,9 +1,9 @@
-package model;
+package model.dto;
 
-import model.Locacao;
+import model.dto.Locacao;
 import java.util.Calendar;
 
-import model.Cliente;
+import model.dto.Cliente;
 import model.enums.Categoria;
 import model.enums.Categoria;
 import model.enums.Estado;

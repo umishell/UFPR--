@@ -1,4 +1,4 @@
-package model;
+package model.dto;
 
 public class Cliente {
 
@@ -65,5 +65,5 @@ public class Cliente {
     public void setComVeiculoLocado(boolean comVeiculoLocado) {
         this.comVeiculoLocado = comVeiculoLocado;
     }
-    
+
 }
