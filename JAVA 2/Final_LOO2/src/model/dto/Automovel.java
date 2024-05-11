@@ -1,16 +1,10 @@
 package model.dto;
 
-import model.dto.Locacao;
 import java.util.Calendar;
 
-import model.dto.Cliente;
-import model.enums.Categoria;
 import model.enums.Categoria;
 import model.enums.Estado;
-import model.enums.Estado;
 import model.enums.Marca;
-import model.enums.Marca;
-import model.enums.ModeloAutomovel;
 import model.enums.ModeloAutomovel;
 
 public class Automovel extends Veiculo {

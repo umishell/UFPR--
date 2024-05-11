@@ -1,11 +1,7 @@
 package model.dto;
 
-import model.dto.Locacao;
-import model.enums.Categoria;
 import model.enums.Categoria;
 import model.enums.Estado;
-import model.enums.Estado;
-import model.enums.Marca;
 import model.enums.Marca;
 
 public abstract class Veiculo implements VeiculoInterface {
