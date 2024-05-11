@@ -8,7 +8,7 @@ public interface Dao<T> {
 
     public List<T> getAll() throws Exception;
 
-    public T getById(long id) throws Exception;
+    public T getById(int id) throws Exception;
 
     public void update(T aluno) throws Exception;
 

@@ -2,6 +2,7 @@ package model.dto;
 
 public class Cliente {
 
+    private int id;
     private String nome;
     private String sobrenome;
     private String rg;
@@ -9,13 +10,32 @@ public class Cliente {
     private String endereco;
     private boolean comVeiculoLocado;
 
-    public Cliente(String nome, String sobrenome, String rg, String cpf, String endereco) {
+    public Cliente(int id, String nome, String sobrenome, String rg, String cpf, String endereco, Boolean comVeiculoLocado) {
+        this.id = id;
+        this.nome = nome;
+        this.sobrenome = sobrenome;
+        this.rg = rg;
+        this.cpf = cpf;
+        this.endereco = endereco;
+        this.comVeiculoLocado = comVeiculoLocado;
+    }
+
+    public Cliente(int id, String nome, String sobrenome, String rg, String cpf, String endereco) {
+        this.id = -1;
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.rg = rg;
         this.cpf = cpf;
         this.endereco = endereco;
         this.comVeiculoLocado = false;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -58,7 +78,7 @@ public class Cliente {
         this.endereco = endereco;
     }
 
-    public boolean isComVeiculoLocado() {
+    public boolean getComVeiculoLocado() {
         return comVeiculoLocado;
     }
 
