@@ -38,9 +38,9 @@ public class ClienteDaoSql implements ClienteDao{
     
     
     @Override
-    public void add(Cliente cliente) throws SQLException, IOException {
-        try (Connection connection = ConnectionFactory.getConnection(); 
-             PreparedStatement stmtAdiciona = connection.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);) 
+    public void add(Cliente cliente) {
+        try (Connection conn = ConnectionFactory.getConnection(); 
+             PreparedStatement stmtAdiciona = conn.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);) 
         {
             stmtAdiciona.setString(1, cliente.getNome());
             stmtAdiciona.setString(2, cliente.getSobrenome());
@@ -64,8 +64,8 @@ public class ClienteDaoSql implements ClienteDao{
     
     @Override
     public List<Cliente> getAll() throws SQLException, IOException {
-        try (Connection connection = ConnectionFactory.getConnection(); 
-             PreparedStatement stmtLista = connection.prepareStatement(selectAll); 
+        try (Connection conn = ConnectionFactory.getConnection(); 
+             PreparedStatement stmtLista = conn.prepareStatement(selectAll); 
              ResultSet rs = stmtLista.executeQuery();) 
         {
             List<Cliente> clientes = new ArrayList();
@@ -91,8 +91,8 @@ public class ClienteDaoSql implements ClienteDao{
     
     @Override
     public Cliente getById(int id) throws SQLException, IOException {
-        try (Connection connection = ConnectionFactory.getConnection(); 
-             PreparedStatement stmtLista = connection.prepareStatement(selectById);) 
+        try (Connection conn = ConnectionFactory.getConnection(); 
+             PreparedStatement stmtLista = conn.prepareStatement(selectById);) 
         {
             stmtLista.setInt(1, id);
             try (ResultSet rs = stmtLista.executeQuery()) {
@@ -118,8 +118,8 @@ public class ClienteDaoSql implements ClienteDao{
     
     @Override
     public void update(Cliente cliente) throws SQLException, IOException {
-        try (Connection connection = ConnectionFactory.getConnection(); 
-             PreparedStatement stmtAtualiza = connection.prepareStatement(update);) 
+        try (Connection conn = ConnectionFactory.getConnection(); 
+             PreparedStatement stmtAtualiza = conn.prepareStatement(update);) 
         {
             stmtAtualiza.setString(1, cliente.getNome());
             stmtAtualiza.setString(2, cliente.getSobrenome());
@@ -135,8 +135,8 @@ public class ClienteDaoSql implements ClienteDao{
     }
     
     public void updateComVeiculoLocado(Cliente cliente) throws SQLException, IOException {
-        try (Connection connection = ConnectionFactory.getConnection(); 
-             PreparedStatement stmtAtualiza = connection.prepareStatement(updateComVeiculoLocado);) 
+        try (Connection conn = ConnectionFactory.getConnection(); 
+             PreparedStatement stmtAtualiza = conn.prepareStatement(updateComVeiculoLocado);) 
         {
             stmtAtualiza.setBoolean(1, cliente.getComVeiculoLocado());
             stmtAtualiza.setInt(2, cliente.getId());
@@ -150,8 +150,8 @@ public class ClienteDaoSql implements ClienteDao{
     @Override
     public void delete(Cliente cliente) throws SQLException, IOException {
         
-        try (Connection connection = ConnectionFactory.getConnection(); 
-             PreparedStatement stmtExcluir = connection.prepareStatement(delete);) 
+        try (Connection conn = ConnectionFactory.getConnection(); 
+             PreparedStatement stmtExcluir = conn.prepareStatement(delete);) 
         {
             stmtExcluir.setInt(1, cliente.getId());
             stmtExcluir.executeUpdate();
@@ -163,8 +163,8 @@ public class ClienteDaoSql implements ClienteDao{
     @Override
     public void deleteAll() throws SQLException, IOException {
 
-        try (Connection connection = ConnectionFactory.getConnection(); 
-             PreparedStatement stmtExcluir = connection.prepareStatement(deleteAll);) 
+        try (Connection conn = ConnectionFactory.getConnection(); 
+             PreparedStatement stmtExcluir = conn.prepareStatement(deleteAll);) 
         {
             stmtExcluir.executeUpdate();
             

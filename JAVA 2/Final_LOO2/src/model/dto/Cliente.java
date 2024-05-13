@@ -20,7 +20,7 @@ public class Cliente {
         this.comVeiculoLocado = comVeiculoLocado;
     }
 
-    public Cliente(int id, String nome, String sobrenome, String rg, String cpf, String endereco) {
+    public Cliente(String nome, String sobrenome, String rg, String cpf, String endereco) {
         this.id = -1;
         this.nome = nome;
         this.sobrenome = sobrenome;

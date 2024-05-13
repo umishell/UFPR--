@@ -1,6 +1,5 @@
 package model.tables;
 
-import model.dto.Cliente;
 import view.Repository;
 import java.util.ArrayList;
 import java.util.List;
@@ -139,7 +138,7 @@ public class ClienteLocacaoTableModel extends DefaultTableModel {
         } else {
             List<Cliente> listaFiltrada = new ArrayList<>();
             for (Cliente cliente : rep.getListaClientes()) {
-                if (!cliente.isComVeiculoLocado() && (textoPesquisa.isEmpty() || cliente.getNome().toLowerCase().contains(textoPesquisa.toLowerCase())
+                if (!cliente.getComVeiculoLocado() && (textoPesquisa.isEmpty() || cliente.getNome().toLowerCase().contains(textoPesquisa.toLowerCase())
                         || cliente.getSobrenome().toLowerCase().contains(textoPesquisa.toLowerCase())
                         || cliente.getCpf().toLowerCase().contains(textoPesquisa.toLowerCase()))) {
                     listaFiltrada.add(cliente);
