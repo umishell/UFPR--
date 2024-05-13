@@ -104,7 +104,7 @@ public class ClienteTableModel extends DefaultTableModel {
 
     public void addCliente(Cliente c) {
         this.listaClientes.add(c);
-        rep.gravarCliente(c);// incluir no db
+        // incluir no db
         this.fireTableDataChanged();
         this.fireTableRowsInserted(listaClientes.size() , listaClientes.size() );//update JTable
     }
