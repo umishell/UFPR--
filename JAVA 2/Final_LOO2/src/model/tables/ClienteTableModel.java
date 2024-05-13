@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import model.connection.ClienteDaoSql;
 import model.dto.Cliente;
 
 public class ClienteTableModel extends DefaultTableModel {
 
-    private Repository rep;
     private String[] colunas = new String[]{"Nome", "Sobrenome", "RG", "CPF", "Endereço"};
     private List<Cliente> listaClientes = new ArrayList();
 
@@ -83,6 +83,7 @@ public class ClienteTableModel extends DefaultTableModel {
 
     @Override
     public void removeRow(int row) {
+        
         listaClientes.remove(row);
         fireTableRowsDeleted(row, row);
     }
@@ -90,27 +91,28 @@ public class ClienteTableModel extends DefaultTableModel {
     public void removeSelectedRows(JTable myJTable) {
         int[] selectedRows = myJTable.getSelectedRows();
         ClienteTableModel tableModel = (ClienteTableModel) myJTable.getModel();
-
+        
         for (int i = selectedRows.length - 1; i >= 0; i--) {
             int row = selectedRows[i];
-            rep.apagarCliente(row);
             // Convert row index to model index
             int modelRow = myJTable.convertRowIndexToModel(row);
+            Cliente cliente = this.getListaClientes().get(modelRow);
+            ClienteDaoSql c = new ClienteDaoSql();
+            c.delete(cliente);
             tableModel.removeRow(modelRow);
         }
-        // Clear the selection after removal
         myJTable.clearSelection();
     }
 
-    public void addCliente(Cliente c) {
+    public void add(Cliente c) {
         this.listaClientes.add(c);
-        // incluir no db
         this.fireTableDataChanged();
         this.fireTableRowsInserted(listaClientes.size() , listaClientes.size() );//update JTable
     }
 
     public void setListaCliente() {
-        this.listaClientes = rep.getListaClientes();
+        ClienteDaoSql c = new ClienteDaoSql();
+        this.listaClientes = c.getAll();
         if (!listaClientes.isEmpty()) {
             this.fireTableDataChanged();
             this.fireTableRowsInserted(0, listaClientes.size() - 1);//update JTable

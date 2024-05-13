@@ -24,9 +24,8 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="paneAllTabs" min="-2" pref="1338" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <Component id="paneAllTabs" min="-2" pref="1344" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -115,7 +114,7 @@
                       </Group>
                       <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       <Component id="paneClienteTable" min="-2" pref="704" max="-2" attributes="0"/>
-                      <EmptySpace pref="154" max="32767" attributes="0"/>
+                      <EmptySpace pref="160" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -219,6 +218,9 @@
                   <Format format="##.###.###-#" subtype="-1" type="5"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="ftxtRgClienteActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JFormattedTextField" name="ftxtCpfCliente">
               <Properties>
@@ -380,7 +382,7 @@
                               <Component id="btnIncluirVeiculo" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="966" max="32767" attributes="0"/>
+                      <EmptySpace pref="972" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -880,7 +882,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="351" max="32767" attributes="0"/>
+                      <EmptySpace pref="357" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="paneDevolverTable" alignment="1" min="-2" pref="717" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
@@ -978,7 +980,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="370" max="32767" attributes="0"/>
+                      <EmptySpace pref="376" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="paneVendaTable" alignment="1" min="-2" pref="717" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">

@@ -20,6 +20,7 @@ import model.tables.FiltroDeTabela;
 //import tela5.*;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -47,34 +48,30 @@ public class Frame extends javax.swing.JFrame {
     private VeiculoDevolverTableModel vdtm;
     private VeiculoVenderTableModel vvtm;
 
-    //private Repository rep;
-    //private ComboModels cm;
     private FiltroDeTabela f, f1;
 
     public Frame() {
+        //TABLE MODELS
         ctm = new ClienteTableModel();
         lvtm = new LocarVeiculoTableModel();
         cltm = new ClienteLocacaoTableModel();
         vdtm = new VeiculoDevolverTableModel();
         vvtm = new VeiculoVenderTableModel();
-        //ctm.repRef(rep);
-        //lvtm.repRef(rep);
-        // cltm.repRef(rep);
-        //vdtm.repRef(rep);
-        //vvtm.repRef(rep);
-        //cm = new ComboModels();
 
         initComponents();
+        ctm.setListaCliente();
 
+        //FILTERS
         f = new FiltroDeTabela();
         f.criarTabela(veiculoTable);
         f1 = new FiltroDeTabela();
         f1.criarTabela(VendaTable);
 
-        ClienteLocacaoTableModel modelcl = (ClienteLocacaoTableModel) clienteLocacaoTable.getModel();
-        modelcl.setSingleSelection(clienteLocacaoTable);
-        LocarVeiculoTableModel modellv = (LocarVeiculoTableModel) veiculoTable.getModel();
-        modellv.setSingleSelection(veiculoTable);
+        //SET SINGLE SELECTION
+        cltm = (ClienteLocacaoTableModel) clienteLocacaoTable.getModel();
+        cltm.setSingleSelection(clienteLocacaoTable);
+        //LocarVeiculoTableModel modellv = (LocarVeiculoTableModel) veiculoTable.getModel();
+        //modellv.setSingleSelection(veiculoTable);
 
     }
 
@@ -185,6 +182,11 @@ public class Frame extends javax.swing.JFrame {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        ftxtRgCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ftxtRgClienteActionPerformed(evt);
+            }
+        });
 
         try {
             ftxtCpfCliente.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
@@ -302,7 +304,7 @@ public class Frame extends javax.swing.JFrame {
                             .addComponent(btnLimparCliente))))
                 .addGap(30, 30, 30)
                 .addComponent(paneClienteTable, javax.swing.GroupLayout.PREFERRED_SIZE, 704, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
         tabClienteLayout.setVerticalGroup(
             tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -465,7 +467,7 @@ public class Frame extends javax.swing.JFrame {
                     .addGroup(tabVeiculosLayout.createSequentialGroup()
                         .addGap(98, 98, 98)
                         .addComponent(btnIncluirVeiculo)))
-                .addContainerGap(966, Short.MAX_VALUE))
+                .addContainerGap(972, Short.MAX_VALUE))
         );
         tabVeiculosLayout.setVerticalGroup(
             tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -730,7 +732,7 @@ public class Frame extends javax.swing.JFrame {
         tabDevolucaoLayout.setHorizontalGroup(
             tabDevolucaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabDevolucaoLayout.createSequentialGroup()
-                .addContainerGap(351, Short.MAX_VALUE)
+                .addContainerGap(357, Short.MAX_VALUE)
                 .addGroup(tabDevolucaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(paneDevolverTable, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(tabDevolucaoLayout.createSequentialGroup()
@@ -807,7 +809,7 @@ public class Frame extends javax.swing.JFrame {
         tabVendaLayout.setHorizontalGroup(
             tabVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabVendaLayout.createSequentialGroup()
-                .addContainerGap(370, Short.MAX_VALUE)
+                .addContainerGap(376, Short.MAX_VALUE)
                 .addGroup(tabVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(paneVendaTable, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(tabVendaLayout.createSequentialGroup()
@@ -855,9 +857,8 @@ public class Frame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(paneAllTabs, javax.swing.GroupLayout.PREFERRED_SIZE, 1338, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(paneAllTabs, javax.swing.GroupLayout.PREFERRED_SIZE, 1344, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 6, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -873,70 +874,27 @@ public class Frame extends javax.swing.JFrame {
 
     private void btnIncluirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirClienteActionPerformed
         incluirCliente();
-
-
     }//GEN-LAST:event_btnIncluirClienteActionPerformed
 
     private void btnListarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarClienteActionPerformed
-        //ctm.setListaCliente();
-        //for (Cliente c : rep.getListaClientes()) {//test
-        //   System.out.print(c.getNome());
-        // }//test
-
+        ctm.setListaCliente();
     }//GEN-LAST:event_btnListarClienteActionPerformed
 
     private void btnRemoverClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverClienteActionPerformed
-
-        if (clienteTable.getSelectedRow() == -1) {
-            btnRemoverCliente.setToolTipText("Selecione um ou mais clientes para remover.");
-            // Força o tooltip a aparecer imediatamente
-            ToolTipManager.sharedInstance().setInitialDelay(0);
-            // Cria um evento de mouse falso para disparar o tooltip
-            MouseEvent phantom = new MouseEvent(
-                    btnRemoverCliente,
-                    MouseEvent.MOUSE_MOVED,
-                    System.currentTimeMillis(),
-                    0,
-                    0,
-                    0,
-                    0,
-                    false);
-            ToolTipManager.sharedInstance().mouseMoved(phantom);
-        } else {
-            // Limpa o tooltip se uma linha estiver selecionada
-            btnRemoverCliente.setToolTipText(null);
-        }
-
-        ctm.removeSelectedRows(clienteTable);
-
+        removerCliente();
     }//GEN-LAST:event_btnRemoverClienteActionPerformed
 
     private void btnLimparClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparClienteActionPerformed
         ctm.limpaTabela();
+        clearFieldsCliente();
     }//GEN-LAST:event_btnLimparClienteActionPerformed
 
     private void btnAtualizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarClienteActionPerformed
-
-        if (clienteTable.getSelectedRowCount() == 1) {
-            String nome = txtNomeCliente.getText();
-            String sobrenome = txtSobrenomeCliente.getText();
-            String rg = ftxtRgCliente.getText();
-            String cpf = ftxtCpfCliente.getText();
-            String endereco = txtEndereco.getText();
-            int row = clienteTable.getSelectedRow();
-            ctm.setValueAt(nome, row, 0);
-            ctm.setValueAt(sobrenome, row, 1);
-            ctm.setValueAt(rg, row, 2);
-            ctm.setValueAt(cpf, row, 3);
-            ctm.setValueAt(endereco, row, 4);
-            Cliente cliente = ctm.getListaClientes().get(row);
-            //rep.updateRowCliente(row, ctm.getListaClientes().get(row));
-
-        }
+        atualizarCliente();
     }//GEN-LAST:event_btnAtualizarClienteActionPerformed
 
     private void btnIncluirVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirVeiculoActionPerformed
-/*      Marca marca = (Marca) cbxMarca.getSelectedItem();
+        /*      Marca marca = (Marca) cbxMarca.getSelectedItem();
         Estado estado = (Estado) cbxEstado.getSelectedItem();
         Locacao locacao = null;
         Categoria categoria = (Categoria) cbxCategoria.getSelectedItem();
@@ -985,7 +943,7 @@ public class Frame extends javax.swing.JFrame {
         ftxtValorDeCompra.setText("");
         ftxtPlaca.setText("");
         ftxtAno.setText("");
-*/
+         */
     }//GEN-LAST:event_btnIncluirVeiculoActionPerformed
 
     private void tabVeiculosComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabVeiculosComponentShown
@@ -1047,7 +1005,7 @@ public class Frame extends javax.swing.JFrame {
 
     private void txtPesquisarClientesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarClientesKeyReleased
         String textoPesquisa = txtPesquisarClientes.getText();
-        filtrarPesquisa(textoPesquisa);
+        //filtrarPesquisa(textoPesquisa);
     }//GEN-LAST:event_txtPesquisarClientesKeyReleased
 
     private void txtPesquisarClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesquisarClientesActionPerformed
@@ -1077,7 +1035,7 @@ public class Frame extends javax.swing.JFrame {
         data.setTime(dataDate);
 
         locarVeiculo(dias, data, c);
-*/
+         */
     }//GEN-LAST:event_btnLocarActionPerformed
 
     private void VendaTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VendaTableMousePressed
@@ -1139,6 +1097,10 @@ public class Frame extends javax.swing.JFrame {
     private void cboxMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxMarcaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cboxMarcaActionPerformed
+
+    private void ftxtRgClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ftxtRgClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ftxtRgClienteActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1233,12 +1195,68 @@ public class Frame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "preencha o nome, sobrenome e cpf.");
         } else {
             Cliente cliente = new Cliente(nome, sobrenome, rg, cpf, endereco);
-            ClienteDaoSql cds = new ClienteDaoSql();
-            cds.add(cliente);
-            ctm.addCliente(cliente);
+            ClienteDaoSql c = new ClienteDaoSql();
+            try {
+                if (!c.clienteCpfExists(cliente)) {
+                    c.add(cliente);
+                    JOptionPane.showMessageDialog(null, "cliente id: " + cliente.getId());//test
+                    ctm.add(cliente);
+                    clearFieldsCliente();
+                } else {
+                    JOptionPane.showMessageDialog(null, "client already exists");
+                }
+            } catch (SQLException | IOException e) {
+                JOptionPane.showMessageDialog(null, "@ClienteDaoSql.add():  Error adding cliente: " + e.getMessage());
+            }
+        }
+
+    }
+
+    private void atualizarCliente() {
+        if (clienteTable.getSelectedRowCount() == 1) {
+            String nome = txtNomeCliente.getText();
+            String sobrenome = txtSobrenomeCliente.getText();
+            String rg = ftxtRgCliente.getText();
+            String cpf = ftxtCpfCliente.getText();
+            String endereco = txtEndereco.getText();
+            int row = clienteTable.getSelectedRow();
+            ctm.setValueAt(nome, row, 0);
+            ctm.setValueAt(sobrenome, row, 1);
+            ctm.setValueAt(rg, row, 2);
+            ctm.setValueAt(cpf, row, 3);
+            ctm.setValueAt(endereco, row, 4);
+            Cliente cliente = ctm.getListaClientes().get(row);
+            ClienteDaoSql c = new ClienteDaoSql();
+            c.update(cliente);
+            JOptionPane.showMessageDialog(null, "cliente id: " + cliente.getId());//test
             clearFieldsCliente();
 
         }
+    }
+
+    private void removerCliente() {
+        if (clienteTable.getSelectedRow() == -1) {
+            btnRemoverCliente.setToolTipText("Selecione um ou mais clientes para remover.");
+            // Força o tooltip a aparecer imediatamente
+            ToolTipManager.sharedInstance().setInitialDelay(0);
+            // Cria um evento de mouse falso para disparar o tooltip
+            MouseEvent phantom = new MouseEvent(
+                    btnRemoverCliente,
+                    MouseEvent.MOUSE_MOVED,
+                    System.currentTimeMillis(),
+                    0,
+                    0,
+                    0,
+                    0,
+                    false);
+            ToolTipManager.sharedInstance().mouseMoved(phantom);
+        } else {
+            // Limpa o tooltip se uma linha estiver selecionada
+            btnRemoverCliente.setToolTipText(null);
+        }
+
+        ctm.removeSelectedRows(clienteTable);
+        clearFieldsCliente();
     }
 
     private void clearFieldsCliente() {
@@ -1284,35 +1302,34 @@ public class Frame extends javax.swing.JFrame {
     }
      */
     private void loadModeloBox(String veiculoTipo) {
-        
 
         if ("Motocicleta".equals(cbxTipo.getSelectedItem().toString())) {
             try {
-            ResultSet rs = ComboBox.showCboxModeloMotocicleta();
-            while (rs.next()) {
-                cboxModelo.addItem(rs.getString("description"));
+                ResultSet rs = ComboBox.showCboxModeloMotocicleta();
+                while (rs.next()) {
+                    cboxModelo.addItem(rs.getString("description"));
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "@Frame.loadModeloBox(): failed loading modelo comboBox motocicleta" + e.getMessage());
             }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "@Frame.loadModeloBox(): failed loading modelo comboBox motocicleta" + e.getMessage());
-        }
         } else if ("Automóvel".equals(cbxTipo.getSelectedItem().toString())) {
             try {
-            ResultSet rs = ComboBox.showCboxModeloAutomovel();
-            while (rs.next()) {
-                cboxModelo.addItem(rs.getString("description"));
+                ResultSet rs = ComboBox.showCboxModeloAutomovel();
+                while (rs.next()) {
+                    cboxModelo.addItem(rs.getString("description"));
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "@Frame.loadModeloBox(): failed loading modelo comboBox automovel" + e.getMessage());
             }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "@Frame.loadModeloBox(): failed loading modelo comboBox automovel" + e.getMessage());
-        }
         } else if ("Van".equals(cbxTipo.getSelectedItem().toString())) {
             try {
-            ResultSet rs = ComboBox.showCboxModeloVan();
-            while (rs.next()) {
-                cboxModelo.addItem(rs.getString("description"));
+                ResultSet rs = ComboBox.showCboxModeloVan();
+                while (rs.next()) {
+                    cboxModelo.addItem(rs.getString("description"));
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "@Frame.loadModeloBox(): failed loading modelo comboBox van" + e.getMessage());
             }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "@Frame.loadModeloBox(): failed loading modelo comboBox van" + e.getMessage());
-        }
         }
     }
 
