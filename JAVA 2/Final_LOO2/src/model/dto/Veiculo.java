@@ -8,13 +8,13 @@ public abstract class Veiculo implements VeiculoInterface {
 
     private Marca marca;
     private Estado estado;
+    private Locacao locacao;
+    private Categoria categoria;
+    private double valorDeCompra;
 
     public void setEstado(Estado estado) {
         this.estado = estado;
     }
-    private Locacao locacao;
-    private Categoria categoria;
-    private double valorDeCompra;
 
     public double getValorDeCompra() {
         return valorDeCompra;

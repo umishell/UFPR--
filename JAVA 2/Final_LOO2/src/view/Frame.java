@@ -19,6 +19,8 @@ import model.tables.FiltroDeTabela;
 //import tela4.*;
 //import tela5.*;
 import java.awt.Point;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.sql.ResultSet;
@@ -28,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
@@ -60,6 +63,10 @@ public class Frame extends javax.swing.JFrame {
 
         initComponents();
         ctm.setListaCliente();
+        ComboBox.loadCboxMarca(cboxMarca);
+        cboxMarca_AddItemListener();
+        
+        
 
         //FILTERS
         f = new FiltroDeTabela();
@@ -380,16 +387,11 @@ public class Frame extends javax.swing.JFrame {
         lblAno.setText("ano");
 
         cbxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Motocicleta", "Automóvel", "Van" }));
-        cbxTipo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxTipoActionPerformed(evt);
-            }
-        });
 
         cboxModelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
-        cboxModelo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboxModeloActionPerformed(evt);
+        cboxModelo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                cboxModeloMouseReleased(evt);
             }
         });
 
@@ -467,7 +469,7 @@ public class Frame extends javax.swing.JFrame {
                     .addGroup(tabVeiculosLayout.createSequentialGroup()
                         .addGap(98, 98, 98)
                         .addComponent(btnIncluirVeiculo)))
-                .addContainerGap(972, Short.MAX_VALUE))
+                .addContainerGap(975, Short.MAX_VALUE))
         );
         tabVeiculosLayout.setVerticalGroup(
             tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -956,13 +958,7 @@ public class Frame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ftxtCpfClienteActionPerformed
 
-    private void cbxTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTipoActionPerformed
-
-    }//GEN-LAST:event_cbxTipoActionPerformed
-
-    private void cboxModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxModeloActionPerformed
-
-    }//GEN-LAST:event_cboxModeloActionPerformed
+    
 
     private void veiculoTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_veiculoTableMousePressed
         JTable table = (JTable) evt.getSource();
@@ -1095,13 +1091,30 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_tabDevolucaoComponentShown
 
     private void cboxMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxMarcaActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_cboxMarcaActionPerformed
 
     private void ftxtRgClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ftxtRgClienteActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_ftxtRgClienteActionPerformed
 
+    private void cboxModeloMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboxModeloMouseReleased
+       
+    }//GEN-LAST:event_cboxModeloMouseReleased
+
+    private void cboxMarca_AddItemListener() {
+        cboxMarca.addItemListener((ItemEvent e) -> {
+           if (e.getStateChange() == ItemEvent.SELECTED && cboxModelo.getModel().getSize() == 0 ) {
+                String type = (String) cbxTipo.getSelectedItem();
+                String marca = (String) cboxMarca.getSelectedItem();
+                if (!" ".equals(type) && !" ".equals(marca)){
+                    int idmarca = ComboBox.getIdMarca(marca);
+                        ComboBox.loadCboxModelo(cboxModelo, type, idmarca);
+                }
+            }
+        });
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable DevolverTable;
@@ -1268,13 +1281,15 @@ public class Frame extends javax.swing.JFrame {
         txtNomeCliente.requestFocus();
     }
 
+    
+
     private void filtrarPesquisa(String textoPesquisa) {
         ClienteLocacaoTableModel modeloTabela = (ClienteLocacaoTableModel) clienteLocacaoTable.getModel();
         modeloTabela.filtrarClientes(textoPesquisa);
     }
 
-    /*
-    private void locarVeiculo(int dias, Calendar data, Cliente cliente) {
+    
+    /*private void locarVeiculo(int dias, Calendar data, Cliente cliente) {
         int t = lvtm.getTipoVeiculo();
         int veiculoSelecionado = veiculoTable.getSelectedRow();
 
@@ -1299,9 +1314,8 @@ public class Frame extends javax.swing.JFrame {
             }
         }
 
-    }
-     */
-    private void loadModeloBox(String veiculoTipo) {
+    }*/
+    /*private void loadModeloBox(String veiculoTipo) {
 
         if ("Motocicleta".equals(cbxTipo.getSelectedItem().toString())) {
             try {
@@ -1331,6 +1345,10 @@ public class Frame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "@Frame.loadModeloBox(): failed loading modelo comboBox van" + e.getMessage());
             }
         }
+    }*/
+
+    public JComboBox<Object> getCboxModelo() {
+        return cboxModelo;
     }
 
 }
