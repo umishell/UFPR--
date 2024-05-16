@@ -63,8 +63,8 @@ public class Frame extends javax.swing.JFrame {
 
         initComponents();
         ctm.setListaCliente();
-        ComboBox.loadCboxMarca(cboxMarca);
-        cboxMarca_AddItemListener();
+        
+        //cboxMarca_AddItemListener();
         
         
 
@@ -387,6 +387,11 @@ public class Frame extends javax.swing.JFrame {
         lblAno.setText("ano");
 
         cbxTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Motocicleta", "Automóvel", "Van" }));
+        cbxTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxTipoActionPerformed(evt);
+            }
+        });
 
         cboxModelo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
         cboxModelo.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1091,7 +1096,12 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_tabDevolucaoComponentShown
 
     private void cboxMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxMarcaActionPerformed
-        
+        String type = (String) cbxTipo.getSelectedItem();
+        String marca = (String) cboxMarca.getSelectedItem();
+            if (!" ".equals(type) && !" ".equals(marca)){
+                int idmarca = ComboBox.getIdMarca(marca);
+                ComboBox.loadCboxModelo(cboxModelo, type, idmarca);
+            }
     }//GEN-LAST:event_cboxMarcaActionPerformed
 
     private void ftxtRgClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ftxtRgClienteActionPerformed
@@ -1102,6 +1112,10 @@ public class Frame extends javax.swing.JFrame {
        
     }//GEN-LAST:event_cboxModeloMouseReleased
 
+    private void cbxTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTipoActionPerformed
+        ComboBox.loadCboxMarca(cboxMarca);
+    }//GEN-LAST:event_cbxTipoActionPerformed
+/*
     private void cboxMarca_AddItemListener() {
         cboxMarca.addItemListener((ItemEvent e) -> {
            if (e.getStateChange() == ItemEvent.SELECTED && cboxModelo.getModel().getSize() == 0 ) {
@@ -1114,7 +1128,7 @@ public class Frame extends javax.swing.JFrame {
             }
         });
     }
-    
+  */  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable DevolverTable;
