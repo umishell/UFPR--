@@ -22,19 +22,26 @@ import model.connection.ConnectionFactory;
 public class ComboBox {
 
     private static final String sqlGetidMarca = "select idmarca from marca where marca=?";
-    private static final String sqlModeloMotocicleta = "select modelo from ModeloMotocicleta where idmarca=? order by modelo";
-    private static final String sqlModeloAutomovel = "select modelo from ModeloAutomovel where idmarca=? order by modelo";
-    private static final String sqlModeloVan = "select modelo from ModeloVan where idmarca=? order by modelo";
+    private static final String sqlGetidCategoria = "select idCategoria from categoria where categoria=?";
+    private static final String sqlModeloMotocicleta = "select modelo from ModeloMotocicleta where idmarca=? and idcategoria=? order by modelo";
+    private static final String sqlModeloAutomovel = "select modelo from ModeloAutomovel where idmarca=? and idcategoria=? order by modelo";
+    private static final String sqlModeloVan = "select modelo from ModeloVan where idmarca=? and idcategoria=? order by modelo";
     private static final String sqlMarcas = "select marca from marca order by marca";
+    private static final String sqlCategorias = "select categoria from categoria order by categoria";
     
-    public static void loadCboxModelo(JComboBox<Object> cbox, String type, int idmarca) {
+    public static void loadCboxModelo(JComboBox<Object> cbox, String type, String marca, String categoria) {
+        cbox.removeAllItems();
         ResultSet rs;
+        System.out.println("marca: "+marca);             System.out.println("type: "+type);
+        int idmarca = getIdMarca(marca);              System.out.println("idmarca: "+idmarca);
+        int idcategoria = getIdCategoria(categoria); System.out.println("categoria: "+categoria );   System.out.println("idcategoria: "+idcategoria);
         try {
             switch (type) {
                 case "Motocicleta" -> {
                     try (Connection conn = ConnectionFactory.getConnection(); 
                          PreparedStatement stmtModelo = conn.prepareStatement(sqlModeloMotocicleta);) {
                          stmtModelo.setInt(1,idmarca);
+                         stmtModelo.setInt(2,idcategoria);
                          rs = stmtModelo.executeQuery();
                         while (rs.next()) {
                             cbox.addItem(rs.getString("modelo"));
@@ -45,6 +52,7 @@ public class ComboBox {
                     try (Connection conn = ConnectionFactory.getConnection(); 
                          PreparedStatement stmtModelo = conn.prepareStatement(sqlModeloAutomovel);) {
                          stmtModelo.setInt(1,idmarca);
+                         stmtModelo.setInt(2,idcategoria);
                          rs = stmtModelo.executeQuery();
                         while (rs.next()) {
                             cbox.addItem(rs.getString("modelo"));
@@ -55,6 +63,7 @@ public class ComboBox {
                     try (Connection conn = ConnectionFactory.getConnection(); 
                          PreparedStatement stmtModelo = conn.prepareStatement(sqlModeloVan);) {
                          stmtModelo.setInt(1,idmarca);
+                         stmtModelo.setInt(2,idcategoria);
                          rs = stmtModelo.executeQuery();
                         while (rs.next()) {
                             cbox.addItem(rs.getString("modelo"));
@@ -65,7 +74,8 @@ public class ComboBox {
                 }
             }
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@Frame.loadCboxModelo(): " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@ComboBox.loadCboxModelo(): " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -78,7 +88,21 @@ public class ComboBox {
                 return rs.getInt("idmarca");
             }
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@Frame.loadCboxModelo(): " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@ComboBox.getIdMarca(): " + e.getMessage());
+        }
+        return 0;
+    }
+    
+    public static int getIdCategoria(String categoria){
+        try (Connection conn = ConnectionFactory.getConnection(); 
+            PreparedStatement stmtModelo = conn.prepareStatement(sqlGetidCategoria);) {
+            stmtModelo.setString(1, categoria);
+            ResultSet rs = stmtModelo.executeQuery();
+            while (rs.next()) {
+                return rs.getInt("idcategoria");
+            }
+        } catch (SQLException | IOException e) {
+            JOptionPane.showMessageDialog(null, "@ComboBox.getIdCategoria(): " + e.getMessage());
         }
         return 0;
     }
@@ -88,7 +112,31 @@ public class ComboBox {
             PreparedStatement stmtMarca = conn.prepareStatement(sqlMarcas);) {
             ResultSet rs = stmtMarca.executeQuery();
                 while (rs.next()) {
-                    cbox.addItem(rs.getString("marca"));
+                    cbox.addItem(rs.getString(1));
+                }
+        }catch (SQLException | IOException e) {
+            JOptionPane.showMessageDialog(null, "@ComboBox.loadCboxMarca(): " + e.getMessage());
+        }
+    }
+    
+    public static void loadCboxCategoria(JComboBox<String> cbox) {
+        try (Connection conn = ConnectionFactory.getConnection(); 
+            PreparedStatement stmtMarca = conn.prepareStatement(sqlCategorias);) {
+            ResultSet rs = stmtMarca.executeQuery();
+                while (rs.next()) {
+                    cbox.addItem(rs.getString(1));
+                }
+        }catch (SQLException | IOException e) {
+            JOptionPane.showMessageDialog(null, "@ComboBox.loadCboxMarca(): " + e.getMessage());
+        }
+    }
+    
+    public static void loadCboxEstado(JComboBox<String> cbox) {
+        try (Connection conn = ConnectionFactory.getConnection(); 
+            PreparedStatement stmtMarca = conn.prepareStatement(sqlMarcas);) {
+            ResultSet rs = stmtMarca.executeQuery();
+                while (rs.next()) {
+                    cbox.addItem(rs.getString(1));
                 }
         }catch (SQLException | IOException e) {
             JOptionPane.showMessageDialog(null, "@ComboBox.loadCboxMarca(): " + e.getMessage());
