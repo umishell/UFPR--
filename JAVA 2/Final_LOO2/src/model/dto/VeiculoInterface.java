@@ -1,15 +1,8 @@
 package model.dto;
 
-import model.dto.Locacao;
 import java.util.Calendar;
 
-import model.dto.Cliente;
-import model.enums.Categoria;
-import model.enums.Categoria;
-import model.enums.Estado;
-import model.enums.Estado;
-import model.enums.Marca;
-import model.enums.Marca;
+
 
 public interface VeiculoInterface {
 
@@ -23,11 +16,11 @@ public interface VeiculoInterface {
 	// Muda estado para DISPONIVEL
 	public void devolver();
 
-	public Estado getEstado();
+	public String getEstado();
 
-	public Marca getMarca();
+	public String getMarca();
 
-	public Categoria getCategoria();
+	public String getCategoria();
 
 	public Locacao getLocacao();
 
@@ -42,5 +35,5 @@ public interface VeiculoInterface {
 	public double getValorParaVenda();
 
 	// Método que será abstrato na classe Veiculo
-	public double getValorDiariaLocacao();
+	//public double getValorDiariaLocacao();
 }

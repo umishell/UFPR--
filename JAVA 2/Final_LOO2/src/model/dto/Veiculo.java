@@ -1,28 +1,18 @@
 package model.dto;
 
-import model.enums.Categoria;
-import model.enums.Estado;
-import model.enums.Marca;
+import java.util.Calendar;
 
 public abstract class Veiculo implements VeiculoInterface {
 
-    private Marca marca;
-    private Estado estado;
+    private String marca;
+    private String estado;
     private Locacao locacao;
-    private Categoria categoria;
+    private String categoria;
     private double valorDeCompra;
-
-    public void setEstado(Estado estado) {
-        this.estado = estado;
-    }
-
-    public double getValorDeCompra() {
-        return valorDeCompra;
-    }
     private String placa;
     private int ano;
 
-    public Veiculo(Marca marca, Estado estado, Locacao locacao, Categoria categoria, double valorDeCompra, String placa, int ano) {
+    public Veiculo(String marca, String estado, Locacao locacao, String categoria, double valorDeCompra, String placa, int ano) {
         this.marca = marca;
         this.estado = estado;
         this.locacao = locacao;
@@ -32,29 +22,31 @@ public abstract class Veiculo implements VeiculoInterface {
         this.ano = ano;
     }
 
-    @Override
-    public void vender() {
-        if (this.estado == Estado.DISPONIVEL) {
-            this.estado = Estado.VENDIDO;
-        }
-
-    }
+    ////@Override
+    //public abstract double getValorDiariaLocacao();
 
     @Override
-    public void devolver() {
-        this.locacao = null;
-    }
-
-    @Override
-    public double getValorParaVenda() {
+    public double getValorParaVenda(){
         return 0;
     }
 
     @Override
-    public abstract double getValorDiariaLocacao();
+    public abstract void devolver();
 
-    public void setLocacao(Locacao locacao) {
-        this.locacao = locacao;
+    @Override
+    public abstract void vender();
+
+    @Override
+    public abstract void locar(int dias, Calendar data, Cliente cliente);
+
+    @Override
+    public String getMarca() {
+            return marca;
+    }
+
+    @Override
+    public String getEstado() {
+        return estado;
     }
 
     @Override
@@ -63,17 +55,7 @@ public abstract class Veiculo implements VeiculoInterface {
     }
 
     @Override
-    public Estado getEstado() {
-        return estado;
-    }
-
-    @Override
-    public Marca getMarca() {
-        return marca;
-    }
-
-    @Override
-    public Categoria getCategoria() {
+    public String getCategoria() {
         return categoria;
     }
 
@@ -87,24 +69,8 @@ public abstract class Veiculo implements VeiculoInterface {
         return ano;
     }
 
-    public void setMarca(Marca marca) {
-        this.marca = marca;
-    }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
-
-    public void setValorDeCompra(double valorDeCompra) {
-        this.valorDeCompra = valorDeCompra;
-    }
-
-    public void setPlaca(String placa) {
-        this.placa = placa;
-    }
-
-    public void setAno(int ano) {
-        this.ano = ano;
+    public double getValorDeCompra() {
+        return valorDeCompra;
     }
 
 }
