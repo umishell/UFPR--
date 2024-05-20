@@ -1,11 +1,13 @@
 
 #include <iostream>
+#include <random>
+#include <chrono>
 using namespace std;
 
 
 typedef struct tree {
     int data;
-    struct tree *left;
+    struct tree* left;
     struct tree* right;
 }Tree;
 
@@ -35,7 +37,7 @@ Tree* clearTree(Tree* t) {
         clearTree(t->right);
         free(t);
     }
-    return NULL;    
+    return NULL;
 }
 
 int searchTree(Tree* t, int data) {
@@ -128,9 +130,64 @@ void inOrderTraversal(Tree* t) {
 
 int main()
 {
-    
-    // Create the binary search tree with the given data
+
+
+    // EXERCISE 1
+    cout << "EXERCISE 1" << endl;
+
     Tree* root = NULL;
+
+    // Generate 30 random numbers from 0 to 999
+    random_device rd;
+    mt19937 generator(rd());
+    uniform_int_distribution<int> distribution(0, 999);
+
+    for (int i = 0; i < 30; i++) {
+        int random_number = distribution(generator);
+        root = insertTree(root, random_number);
+    }
+
+    // Print the tree in in-order traversal
+    std::cout << "In-order traversal of the binary search tree with 30 random numbers:" << endl;
+    inOrderTraversal(root);
+    cout << endl;
+    std::cout << "Numbers are in order." << endl;
+
+    clearTree(root);
+
+
+    // EXERCISE 2
+    cout << "\nEXERCISE 2" << endl;
+
+    root = NULL;
+
+    // random_device rd;
+    // mt19937 generator(rd());
+    uniform_int_distribution<int> distribution2(0, 99999);
+
+    for (int i = 0; i < 100000; i++) {
+        int random_number = distribution2(generator);
+        root = insertTree(root, random_number);
+    }
+
+    auto start = chrono::high_resolution_clock::now();
+    bool found = searchTree(root, 100000);
+    auto end = chrono::high_resolution_clock::now();
+    chrono::duration<double, nano> diff = end - start;
+
+    // Print search result and time
+    if (found) std::cout << "Data value 100000 found in the binary search tree." << endl;
+    else std::cout << "Data value 100000 not found in the binary search tree." << endl;
+    std::cout << "Search time: " << diff.count() << " nanoseconds" << endl;
+
+    clearTree(root);
+
+
+    //EXERCISE 3
+    cout << "\nEXERCISE 3" << endl;
+
+    // Create the binary search tree with the given data
+    root = NULL;
     root = newTree(50, newTree(30, newTree(20, newTree(10, NULL, NULL), NULL), newTree(40, newTree(35, NULL, NULL), newTree(45, NULL, NULL))), newTree(90, NULL, newTree(95, NULL, NULL)));
 
     // Print the tree in in-order traversal before each deletion
@@ -153,5 +210,8 @@ int main()
     std::cout << "Tree after deletion 1 (10): ";
     inOrderTraversal(root);
     std::cout << endl;
-}
 
+
+
+    return 0;
+}
