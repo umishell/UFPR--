@@ -4,21 +4,21 @@
 #include <chrono>
 using namespace std;
 
-
+// definition of tree
 typedef struct tree {
     int data;
     struct tree* left;
     struct tree* right;
 }Tree;
-
+// Function to create new empry tree node
 Tree* newEmptyTree(void) {
     return NULL;
 }
-
+// Function to create tree
 Tree* newTree(char c, Tree* l, Tree* r) {
     Tree* t = (Tree*)malloc(sizeof(Tree));
     if (t == NULL) {
-        std::cerr << "Error: Memory allocation failed for tree node." << std::endl;
+        cerr << "Error: Memory allocation failed for tree node." << endl;
         return NULL;
     }
     t->data = c;
@@ -26,11 +26,11 @@ Tree* newTree(char c, Tree* l, Tree* r) {
     t->right = r;
     return t;
 }
-
+// Function to check if tree is empty
 int TreeIsEmpty(Tree* t) {
     return (t == NULL);
 }
-
+// Function to clear tree
 Tree* clearTree(Tree* t) {
     if (!TreeIsEmpty(t)) {
         clearTree(t->left);
@@ -39,20 +39,20 @@ Tree* clearTree(Tree* t) {
     }
     return NULL;
 }
-
+// Function to find specific data in node in tree
 int searchTree(Tree* t, int data) {
     if (t == NULL) return 0;
     else if (data < t->data) return searchTree(t->left, data);
     else if (data > t->data) return searchTree(t->right, data);
     else return 1; //data found
 }
-
+// Function to insert new node into tree
 Tree* insertTree(Tree* t, int data) {
     if (t == NULL) {
         t = (Tree*)malloc(sizeof(Tree));
         if (t == NULL) {
-            std::cerr << "Error: Memory allocation failed for tree node." << std::endl;
-            return NULL;  // Indicate insertion failure due to memory issue
+            cerr << "Error: Memory allocation failed for tree node." << endl;
+            return NULL;  
         }
         t->data = data;
         t->left = t->right = NULL;
@@ -104,18 +104,14 @@ Tree* deleteNode(Tree* t, int data) {
         }
 
         // Handle the case where the node to be deleted has two children
-        else {
-            // Find the successor (smallest node in the right subtree)
+        else {       
             temp = findMin(t->right);
-
             // Replace the value of the node to be deleted with the successor's value
             t->data = temp->data;
-
             // Recursively delete the successor (which will have at most one child)
             t->right = deleteNode(t->right, temp->data);
         }
     }
-
     return t;
 }
 
@@ -123,7 +119,7 @@ Tree* deleteNode(Tree* t, int data) {
 void inOrderTraversal(Tree* t) {
     if (t != NULL) {
         inOrderTraversal(t->left);
-        std::cout << t->data << " ";
+        cout << t->data << " ";
         inOrderTraversal(t->right);
     }
 }
@@ -148,10 +144,10 @@ int main()
     }
 
     // Print the tree in in-order traversal
-    std::cout << "In-order traversal of the binary search tree with 30 random numbers:" << endl;
+    cout << "In-order traversal of the binary search tree with 30 random numbers:" << endl;
     inOrderTraversal(root);
     cout << endl;
-    std::cout << "Numbers are in order." << endl;
+    cout << "Numbers are in order." << endl;
 
     clearTree(root);
 
@@ -176,9 +172,9 @@ int main()
     chrono::duration<double, nano> diff = end - start;
 
     // Print search result and time
-    if (found) std::cout << "Data value 100000 found in the binary search tree." << endl;
-    else std::cout << "Data value 100000 not found in the binary search tree." << endl;
-    std::cout << "Search time: " << diff.count() << " nanoseconds" << endl;
+    if (found) cout << "Data value 100000 found in the binary search tree." << endl;
+    else cout << "Data value 100000 not found in the binary search tree." << endl;
+    cout << "Search time: " << diff.count() << " nanoseconds" << endl;
 
     clearTree(root);
 
@@ -191,26 +187,33 @@ int main()
     root = newTree(50, newTree(30, newTree(20, newTree(10, NULL, NULL), NULL), newTree(40, newTree(35, NULL, NULL), newTree(45, NULL, NULL))), newTree(90, NULL, newTree(95, NULL, NULL)));
 
     // Print the tree in in-order traversal before each deletion
-    std::cout << "Tree before deletion 1 (10): ";
+    cout << "Tree before deletion 1 (10): ";
     inOrderTraversal(root);
-    std::cout << endl;
+    cout << endl;
 
     // Remove node 10 (no children)
     root = deleteNode(root, 10);
 
     // Print the tree after deletion 1
-    std::cout << "Tree after deletion 1 (10): ";
+    cout << "Tree after deletion 1 (10): ";
     inOrderTraversal(root);
-    std::cout << endl;
+    cout << endl;
 
     // Remove node 90 (one child)
     root = deleteNode(root, 90);
 
     // Print the tree after deletion 2
-    std::cout << "Tree after deletion 1 (10): ";
+    cout << "Tree after deletion 2 (90): ";
     inOrderTraversal(root);
-    std::cout << endl;
+    cout << endl;
 
+    // Remove node 40 (two children)
+    root = deleteNode(root, 40);
+
+    // Print the tree after deletion 2
+    cout << "Tree after deletion 2 (40): ";
+    inOrderTraversal(root);
+    cout << endl;
 
 
     return 0;
