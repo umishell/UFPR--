@@ -11,33 +11,33 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.JOptionPane;
+import model.dto.Locacao;
 
-public class ClienteDaoSql implements ClienteDao {
+public class LocacaoDaoSql implements LocacaoDao {
 
-    private final String insert = "insert into cliente (nome,sobrenome,rg,cpf,endereco,comVeiculoLocado) values (?,?,?,?,?,?)";
-    private final String selectAll = "select * from cliente";
-    private final String selectById = "select * from cliente where id=?";
-    private final String selectByCpf = "select cpf from cliente where cpf = ?";
-    private final String update = "update cliente set nome=?, sobrenome=?, rg=?, cpf=?, endereco=? WHERE ID=?";
-    private final String updateComVeiculoLocado = "update cliente set comVeiculoLocado=? WHERE id=?";
-    private final String delete = "delete from cliente WHERE ID=?";
-    private final String deleteAll = "TRUNCATE cliente";
+    private final String insert = "insert into locacao (int dias, double valor, Date data, int idcliente, int idveiculo) values (?,?,?,?)";
+    private final String selectAll = "select * from locacao";
+    private final String selectById = "select * from locacao where idlocacao = ?";
+    //private final String update = "update locacao set dias=?, valor=?, data=? where idcliente = ? && idveiculo = ? && data = ?";
+    private final String delete = "delete from locacao where idcliente = ? && idveiculo = ?";
+    private final String deleteAll = "TRUNCATE locacao";
 
-    private static ClienteDaoSql dao;
+    private static LocacaoDaoSql dao;
 
-    public static ClienteDaoSql getClienteDaoSql() {
+    public static LocacaoDaoSql getLocacaoDaoSql() {
         if (dao == null) {
-            return dao = new ClienteDaoSql();
+            return dao = new LocacaoDaoSql();
         } else {
             return dao;
         }
     }
 
     @Override
-    public void add(Cliente cliente) {
+    public void add(Locacao locacao) {
         
                 try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtAdiciona = conn.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);) {
                     stmtAdiciona.setString(1, cliente.getNome());
@@ -62,9 +62,9 @@ public class ClienteDaoSql implements ClienteDao {
     }
 
     @Override
-    public List<Cliente> getAll() /*throws SQLException, IOException*/ {
+    public List<Locacao> getAll() /*throws SQLException, IOException*/ {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLista = conn.prepareStatement(selectAll); ResultSet rs = stmtLista.executeQuery();) {
-            List<Cliente> clientes = new ArrayList();
+            List<Cliente> locacoes = new ArrayList();
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String nome = rs.getString("nome");
@@ -74,18 +74,18 @@ public class ClienteDaoSql implements ClienteDao {
                 String endereco = rs.getString("endereco");
                 Boolean comVeiculoLocado = rs.getBoolean("comVeiculoLocado");
 
-                clientes.add(new Cliente(id, nome, sobrenome, rg, cpf, endereco, comVeiculoLocado));
+                locacoes.add(new Cliente(id, nome, sobrenome, rg, cpf, endereco, comVeiculoLocado));
             }
-            return clientes;
+            return locacoes;
 
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@ClienteDaoSql.getAll():  Error getting all clients: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@LocacaoDaoSql.getAll():  Error getting all locacoes: " + e.getMessage());
         }
         return null;
     }
 
     @Override
-    public Cliente getById(int id) throws SQLException, IOException {
+    public Locacao getById(int idlocacao) {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLista = conn.prepareStatement(selectById);) {
             stmtLista.setInt(1, id);
             try (ResultSet rs = stmtLista.executeQuery()) {
@@ -97,7 +97,7 @@ public class ClienteDaoSql implements ClienteDao {
                     String endereco = rs.getString("endereco");
                     Boolean comVeiculoLocado = rs.getBoolean("comVeiculoLocado");
 
-                    return new Cliente(id, nome, sobrenome, rg, cpf, endereco, comVeiculoLocado);
+                    return new Locacao(dias, valor, data, cliente);
                 } else {
                     throw new SQLException("Cliente não encontrado com id=" + id);
                 }
@@ -169,5 +169,4 @@ public class ClienteDaoSql implements ClienteDao {
         }
     }
 
-    
 }

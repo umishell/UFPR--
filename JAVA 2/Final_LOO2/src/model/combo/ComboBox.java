@@ -8,9 +8,12 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import view.Frame;
+import com.mysql.cj.jdbc.Driver; // Example using MySQL Connector/J driver
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import model.connection.ConnectionFactory;
@@ -28,6 +31,7 @@ public class ComboBox {
     private static final String sqlGetidEstado = "select idestado from estado where estado=?";
     private static final String sqlGetidMarca = "select idmarca from marca where marca=?";
     private static final String sqlGetidCategoria = "select idCategoria from categoria where categoria=?";
+    private static final String sqlGetidLocacao = "select idlocacao from locacao where idveiculo = ? && data = ?";
     private static final String sqlModeloMotocicleta = "select modelo from ModeloMotocicleta where idmarca=? and idcategoria=? order by modelo";
     private static final String sqlModeloAutomovel = "select modelo from ModeloAutomovel where idmarca=? and idcategoria=? order by modelo";
     private static final String sqlModeloVan = "select modelo from ModeloVan where idmarca=? and idcategoria=? order by modelo";
@@ -132,6 +136,21 @@ public class ComboBox {
         return 0;
     }
 
+    public static int getIdLocacao(int idveiculo, Calendar data) {
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sqlGetidLocacao);) {
+            stmt.setInt(1, idveiculo);
+            Date sqldate = driver.calendarToUtilDate(data);
+            stmt.setDate(2, d);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                return rs.getInt("idmarca");
+            }
+        } catch (SQLException | IOException e) {
+            JOptionPane.showMessageDialog(null, "@ComboBox.getIdMarca(): " + e.getMessage());
+        }
+        return 0;
+    }
+    
     public static int getIdmodelo(String type, String modelo) {
         try {
             switch (type) {
@@ -174,8 +193,8 @@ public class ComboBox {
     }
 
     public static void loadCboxMarca(JComboBox<String> cbox) {
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtMarca = conn.prepareStatement(sqlMarcas);) {
-            ResultSet rs = stmtMarca.executeQuery();
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sqlMarcas);) {
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 cbox.addItem(rs.getString(1));
             }
@@ -185,8 +204,8 @@ public class ComboBox {
     }
 
     public static void loadCboxCategoria(JComboBox<String> cbox) {
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtMarca = conn.prepareStatement(sqlCategorias);) {
-            ResultSet rs = stmtMarca.executeQuery();
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sqlCategorias);) {
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 cbox.addItem(rs.getString(1));
             }
@@ -196,8 +215,8 @@ public class ComboBox {
     }
 
     public static void loadCboxEstado(JComboBox<String> cbox) {
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtMarca = conn.prepareStatement(sqlMarcas);) {
-            ResultSet rs = stmtMarca.executeQuery();
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sqlMarcas);) {
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 cbox.addItem(rs.getString(1));
             }
@@ -205,4 +224,6 @@ public class ComboBox {
             JOptionPane.showMessageDialog(null, "@ComboBox.loadCboxMarca(): " + e.getMessage());
         }
     }
+    
+    
 }

@@ -71,6 +71,7 @@ public class MotocicletaDaoSql implements MotocicletaDao {
     }
 
         private final String selectAll = "SELECT\n"
+            + "    veiculo.idveiculo,\n"
             + "    veiculo.placa,\n"
             + "    veiculo.ano ,\n"
             + "    veiculo.valorDeCompra,\n"
@@ -90,10 +91,21 @@ public class MotocicletaDaoSql implements MotocicletaDao {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLista = conn.prepareStatement(selectAll); ResultSet rs = stmtLista.executeQuery();) {
             List<Motocicleta> motocicletas = new ArrayList();
             while (rs.next()) {
-                int id = rs.getInt("id");
+                int idveiculo = rs.getInt("idveiculo");
                 String marca = rs.getString("marca");
                 String estado = rs.getString("estado");
+                Locacao locacao;
                 if (estado == "locado"){
+                    int dias = 
+                    double valor = 
+                    Calendar data = 
+                    Cliente cliente = new Cliente()
+                    LocacaoDaoSql l = new LocacaoDaoSql();
+                    l.
+                    locacao = new Locacao(id, id, data, cliente)
+                }else{ 
+                    locacao = null;
+                }
                 Locacao locacao = rs.getString("rg");
                 String cpf = rs.getString("cpf");
                 String endereco = rs.getString("endereco");
