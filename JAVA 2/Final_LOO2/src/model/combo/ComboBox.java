@@ -13,7 +13,8 @@ import com.mysql.cj.jdbc.Driver; // Example using MySQL Connector/J driver
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Calendar;
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDate;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import model.connection.ConnectionFactory;
@@ -136,17 +137,17 @@ public class ComboBox {
         return 0;
     }
 
-    public static int getIdLocacao(int idveiculo, Calendar data) {
+    public static int getIdLocacao(int idveiculo, LocalDate date) {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sqlGetidLocacao);) {
             stmt.setInt(1, idveiculo);
-            Date sqldate = driver.calendarToUtilDate(data);
-            stmt.setDate(2, d);
+            Date sqldate = java.sql.Date.valueOf(date);
+            stmt.setDate(2, sqldate);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                return rs.getInt("idmarca");
+                return rs.getInt("idlocacao");
             }
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@ComboBox.getIdMarca(): " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@ComboBox.getIdLocacao(): " + e.getMessage());
         }
         return 0;
     }
