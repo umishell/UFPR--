@@ -38,31 +38,30 @@ public class ClienteDaoSql implements ClienteDao {
 
     @Override
     public void add(Cliente cliente) {
-        
-                try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtAdiciona = conn.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);) {
-                    stmtAdiciona.setString(1, cliente.getNome());
-                    stmtAdiciona.setString(2, cliente.getSobrenome());
-                    stmtAdiciona.setString(3, cliente.getRg());
-                    stmtAdiciona.setString(4, cliente.getCpf());
-                    stmtAdiciona.setString(5, cliente.getEndereco());
-                    stmtAdiciona.setBoolean(6, cliente.getComVeiculoLocado());
 
-                    stmtAdiciona.execute();
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtAdiciona = conn.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);) {
+            stmtAdiciona.setString(1, cliente.getNome());
+            stmtAdiciona.setString(2, cliente.getSobrenome());
+            stmtAdiciona.setString(3, cliente.getRg());
+            stmtAdiciona.setString(4, cliente.getCpf());
+            stmtAdiciona.setString(5, cliente.getEndereco());
+            stmtAdiciona.setBoolean(6, cliente.getComVeiculoLocado());
 
-                    ResultSet rs = stmtAdiciona.getGeneratedKeys();
-                    rs.next();
-                    int i = rs.getInt(1);
-                    cliente.setId(i);
+            stmtAdiciona.execute();
 
-                } catch (SQLException | IOException e) {
-                    JOptionPane.showMessageDialog(null, "@ClienteDaoSql.add().when client exists:  Error adding cliente: " + e.getMessage());
-                }
-            
+            ResultSet rs = stmtAdiciona.getGeneratedKeys();
+            rs.next();
+            int i = rs.getInt(1);
+            cliente.setId(i);
+
+        } catch (SQLException | IOException e) {
+            JOptionPane.showMessageDialog(null, "@ClienteDaoSql.add().when client exists:  Error adding cliente: " + e.getMessage());
+        }
 
     }
 
     @Override
-    public List<Cliente> getAll() /*throws SQLException, IOException*/ {
+    public List<Cliente> getAll() {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLista = conn.prepareStatement(selectAll); ResultSet rs = stmtLista.executeQuery();) {
             List<Cliente> clientes = new ArrayList();
             while (rs.next()) {
@@ -85,7 +84,7 @@ public class ClienteDaoSql implements ClienteDao {
     }
 
     @Override
-    public Cliente getById(int id) throws SQLException, IOException {
+    public Cliente getById(int id) {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLista = conn.prepareStatement(selectById);) {
             stmtLista.setInt(1, id);
             try (ResultSet rs = stmtLista.executeQuery()) {
@@ -124,7 +123,7 @@ public class ClienteDaoSql implements ClienteDao {
         }
     }
 
-    public void updateComVeiculoLocado(Cliente cliente) throws SQLException, IOException {
+    public void updateComVeiculoLocado(Cliente cliente) {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtAtualiza = conn.prepareStatement(updateComVeiculoLocado);) {
             stmtAtualiza.setBoolean(1, cliente.getComVeiculoLocado());
             stmtAtualiza.setInt(2, cliente.getId());
@@ -137,7 +136,7 @@ public class ClienteDaoSql implements ClienteDao {
     }
 
     @Override
-    public void delete(Cliente cliente) /*throws SQLException, IOException*/ {
+    public void delete(Cliente cliente) {
 
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtExcluir = conn.prepareStatement(delete);) {
             stmtExcluir.setInt(1, cliente.getId());
@@ -149,7 +148,7 @@ public class ClienteDaoSql implements ClienteDao {
     }
 
     @Override
-    public void deleteAll() throws SQLException, IOException {
+    public void deleteAll() {
 
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtExcluir = conn.prepareStatement(deleteAll);) {
             stmtExcluir.executeUpdate();
@@ -169,5 +168,4 @@ public class ClienteDaoSql implements ClienteDao {
         }
     }
 
-    
 }

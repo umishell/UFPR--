@@ -8,17 +8,21 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import model.combo.ComboBox;
+import model.dto.Cliente;
 import model.dto.Locacao;
+import model.dto.Veiculo;
 
 public class LocacaoDaoSql implements LocacaoDao {
 
     private final String insert = "insert into locacao (int dias, double valor, Date date, int idcliente, int idveiculo) values (?,?,?,?,?)";
     private final String selectAll = "select * from locacao";
+    private final String selectAllwithCliente = "select * from locacao where idcliente = ?";
+    private final String selectAllwithVeiculo = "select * from locacao where idveiculo = ?";
     private final String selectById = "select * from locacao where idlocacao = ?";
-    private final String update = "update locacao set dias=?, valor=?, date=? where idlocacao = ?";
+    //private final String update = "update locacao set dias=?, valor=?, date=? where idlocacao = ?";
     private final String delete = "delete from locacao where idlocacao = ?";
     private final String deleteAll = "TRUNCATE locacao";
 
@@ -49,9 +53,9 @@ public class LocacaoDaoSql implements LocacaoDao {
     }
 
     @Override
-    public List<Locacao> getAll() /*throws SQLException, IOException*/ {
+    public ArrayList<Locacao> getAll() {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLista = conn.prepareStatement(selectAll); ResultSet rs = stmtLista.executeQuery();) {
-            List<Locacao> locacoes = new ArrayList();
+            ArrayList<Locacao> locacoes = new ArrayList();
             while (rs.next()) {
                 int dias = rs.getInt("dias");
                 double valor = rs.getDouble("valor");
@@ -64,6 +68,46 @@ public class LocacaoDaoSql implements LocacaoDao {
 
         } catch (SQLException | IOException e) {
             JOptionPane.showMessageDialog(null, "@LocacaoDaoSql.getAll():  Error getting all locacoes: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public ArrayList<Locacao> getAllwithCliente(int idcliente) {
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLista = conn.prepareStatement(selectAllwithCliente); ResultSet rs = stmtLista.executeQuery();) {
+            ArrayList<Locacao> locacoes = new ArrayList();
+            stmtLista.setInt(1, idcliente);
+            while (rs.next()) {
+                int dias = rs.getInt("dias");
+                double valor = rs.getDouble("valor");
+                LocalDate date = rs.getDate("date").toLocalDate();
+                int idCliente = rs.getInt("idcliente");
+                int idVeiculo = rs.getInt("idveiculo");
+                locacoes.add(new Locacao(dias, valor, date, idCliente, idVeiculo));
+            }
+            return locacoes;
+
+        } catch (SQLException | IOException e) {
+            JOptionPane.showMessageDialog(null, "@LocacaoDaoSql.getAllwithCliente():  Error getting all locacoes with idcliente " + idcliente + " :" + e.getMessage());
+        }
+        return null;
+    }
+
+    public ArrayList<Locacao> getAllwithVeiculo(int idveiculo) /*throws SQLException, IOException*/ {
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLista = conn.prepareStatement(selectAllwithVeiculo); ResultSet rs = stmtLista.executeQuery();) {
+            ArrayList<Locacao> locacoes = new ArrayList();
+            stmtLista.setInt(1, idveiculo);
+            while (rs.next()) {
+                int dias = rs.getInt("dias");
+                double valor = rs.getDouble("valor");
+                LocalDate date = rs.getDate("date").toLocalDate();
+                int idCliente = rs.getInt("idcliente");
+                int idVeiculo = rs.getInt("idveiculo");
+                locacoes.add(new Locacao(dias, valor, date, idCliente, idVeiculo));
+            }
+            return locacoes;
+
+        } catch (SQLException | IOException e) {
+            JOptionPane.showMessageDialog(null, "@LocacaoDaoSql.getAll():  Error getting all locacoes with idveiculo: " + e.getMessage());
         }
         return null;
     }
@@ -91,9 +135,17 @@ public class LocacaoDaoSql implements LocacaoDao {
         return null;
     }
 
+    private final String update = "update locacao set dias=?, valor=?, date=? , idcliente=?, idveiculo=? where idlocacao = ?";
+
     @Override
     public void update(Locacao locacao) {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtAtualiza = conn.prepareStatement(update);) {
+            stmtAtualiza.setInt(1, locacao.getDias());
+            stmtAtualiza.setDouble(2, locacao.getValor());
+            stmtAtualiza.setDate(3, java.sql.Date.valueOf(locacao.getDate()));
+            stmtAtualiza.setInt(4, locacao.getIdCliente());
+            stmtAtualiza.setInt(5, locacao.getIdVeiculo());
+            stmtAtualiza.setInt(6, ComboBox.getIdLocacao(locacao.getIdVeiculo(), locacao.getDate()));
 
             stmtAtualiza.executeUpdate();
 
@@ -103,7 +155,7 @@ public class LocacaoDaoSql implements LocacaoDao {
     }
 
     @Override
-    public void delete(Locacao locacao) /*throws SQLException, IOException*/ {
+    public void delete(Locacao locacao) {
 
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtExcluir = conn.prepareStatement(delete);) {
             stmtExcluir.setInt(1, ComboBox.getIdLocacao(locacao.getIdVeiculo(), locacao.getDate()));
@@ -115,7 +167,7 @@ public class LocacaoDaoSql implements LocacaoDao {
     }
 
     @Override
-    public void deleteAll() throws SQLException, IOException {
+    public void deleteAll() {
 
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtExcluir = conn.prepareStatement(deleteAll);) {
             stmtExcluir.executeUpdate();

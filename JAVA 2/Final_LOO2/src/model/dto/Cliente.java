@@ -1,5 +1,7 @@
 package model.dto;
 
+import java.util.ArrayList;
+
 public class Cliente {
 
     private int id;
@@ -9,6 +11,7 @@ public class Cliente {
     private String cpf;
     private String endereco;
     private boolean comVeiculoLocado;
+    private ArrayList<Locacao> locacoes;
 
     public Cliente(int id, String nome, String sobrenome, String rg, String cpf, String endereco, Boolean comVeiculoLocado) {
         this.id = id;

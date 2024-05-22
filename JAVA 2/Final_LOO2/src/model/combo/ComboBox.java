@@ -193,6 +193,7 @@ public class ComboBox {
         return 0;
     }
 
+    
     public static void loadCboxMarca(JComboBox<String> cbox) {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sqlMarcas);) {
             ResultSet rs = stmt.executeQuery();

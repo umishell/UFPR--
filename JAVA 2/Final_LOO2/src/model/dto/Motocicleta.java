@@ -1,13 +1,14 @@
 package model.dto;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Motocicleta extends Veiculo {
 
     private String modelo;
 
-    public Motocicleta(String marca, String estado, Locacao locacao, String categoria, double valorDeCompra, String placa, int ano, String m) {
-        super(marca, estado, locacao, categoria, valorDeCompra, placa, ano);
+    public Motocicleta(String marca, String estado, ArrayList<Locacao> locacoes, String categoria, double valorDeCompra, String placa, int ano, String m) {
+        super(marca, estado, locacoes, categoria, valorDeCompra, placa, ano);
         modelo = m;
     }
 

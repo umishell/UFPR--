@@ -1,5 +1,6 @@
 package model.dto;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 
@@ -22,7 +23,7 @@ public interface VeiculoInterface {
 
 	public String getCategoria();
 
-	public Locacao getLocacao();
+	public ArrayList<Locacao> getLocacoes();
 
 	public String getPlaca();
 

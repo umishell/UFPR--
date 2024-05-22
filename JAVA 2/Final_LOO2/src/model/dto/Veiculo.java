@@ -1,21 +1,23 @@
 package model.dto;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 public abstract class Veiculo implements VeiculoInterface {
 
     private String marca;
     private String estado;
-    private Locacao locacao;
+    private ArrayList<Locacao> locacoes;
     private String categoria;
     private double valorDeCompra;
     private String placa;
     private int ano;
 
-    public Veiculo(String marca, String estado, Locacao locacao, String categoria, double valorDeCompra, String placa, int ano) {
+    public Veiculo(String marca, String estado, ArrayList<Locacao> locacoes, String categoria, double valorDeCompra, String placa, int ano) {
         this.marca = marca;
         this.estado = estado;
-        this.locacao = locacao;
+        this.locacoes = locacoes;
         this.categoria = categoria;
         this.valorDeCompra = valorDeCompra;
         this.placa = placa;
@@ -24,9 +26,8 @@ public abstract class Veiculo implements VeiculoInterface {
 
     ////@Override
     //public abstract double getValorDiariaLocacao();
-
     @Override
-    public double getValorParaVenda(){
+    public double getValorParaVenda() {
         return 0;
     }
 
@@ -41,7 +42,7 @@ public abstract class Veiculo implements VeiculoInterface {
 
     @Override
     public String getMarca() {
-            return marca;
+        return marca;
     }
 
     @Override
@@ -50,8 +51,8 @@ public abstract class Veiculo implements VeiculoInterface {
     }
 
     @Override
-    public Locacao getLocacao() {
-        return locacao;
+    public ArrayList<Locacao> getLocacoes() {
+        return locacoes;
     }
 
     @Override
