@@ -5,7 +5,7 @@ public class DaoFactory {
     private DaoFactory() {
     }
 
-    public static ClienteDaoSql getAlunoDao(DaoType type) {
+    public static ClienteDaoSql getClienteDao(DaoType type) {
         switch (type) {
             case SQL:
                 return ClienteDaoSql.getClienteDaoSql();
