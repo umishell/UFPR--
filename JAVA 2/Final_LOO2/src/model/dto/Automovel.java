@@ -9,7 +9,7 @@ import model.enums.ModeloAutomovel;
 
 public class Automovel extends Veiculo {
 
-    private ModeloAutomovel modelo;
+    private String modelo;
 
     public Automovel(Marca marca, Estado estado, Locacao locacao, Categoria categoria, double valorDeCompra, String placa, int ano, ModeloAutomovel a) {
         super(marca, estado, locacao, categoria, valorDeCompra, placa, ano);

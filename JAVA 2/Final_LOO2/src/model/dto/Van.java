@@ -15,7 +15,7 @@ import model.enums.ModeloVan;
 
 public class Van extends Veiculo {
 
-    private ModeloVan modelo;
+    private String modelo;
 
     public Van(Marca marca, Estado estado, Locacao locacao, Categoria categoria, double valorDeCompra, String placa, int ano, ModeloVan v) {
         super(marca, estado, locacao, categoria, valorDeCompra, placa, ano);
