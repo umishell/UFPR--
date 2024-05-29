@@ -4,7 +4,9 @@
  */
 package controller;
 
-import model.connection.ClienteDao;
+import java.io.IOException;
+import java.sql.SQLException;
+import model.connection.ClienteDaoSql;
 import model.dto.Cliente;
 import view.Frame;
 
@@ -13,27 +15,29 @@ import view.Frame;
  * @author Pichau
  */
 public class ClientesTabController {
-    
+
     private Frame view;
-    private ClienteDao cliDao;
-    
-    
-    public ClientesTabController(Frame view, ClienteDao cliDao) {
+    private ClienteDaoSql cliDao;
+
+    public ClientesTabController(Frame view, ClienteDaoSql cliDao) {
         this.view = view;
         this.cliDao = cliDao;
     }
-    
-  public void criarCliente() {
-        try{
+
+    public void criarCliente() {
+        try {
             Cliente cliente = view.getClienteFormulario();
-            modelDao.add(contato);
-            view.inserirContatoView(contato);
-            view.apresentaInfo("Adicionado com sucesso!!!");
-            
-        }catch(Exception ex){
-            view.apresentaErro("Erro ao criar contato.");
+            if (!cliDao.clienteCpfExists(cliente)) {
+                cliDao.add(cliente);
+                view.addToCtm(cliente);
+                view.clearFieldsCliente();
+            } else {
+                view.apresentaInfo("client already exists");
+            }
+        } catch (IOException | SQLException e) {
+            view.apresentaErro("Erro ao criar Cliente.");
+            e.getStackTrace();
         }
     }
 
-    
 }

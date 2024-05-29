@@ -25,19 +25,16 @@ import model.connection.ClienteDaoSql;
 import model.tables.VeiculoDevolverTableModel;
 import model.tables.VeiculoVenderTableModel;
 
-
 public class Frame extends javax.swing.JFrame {
 
     private Main main;
-    
-     ClientesTabController ctrlClientes;
-     VeiculosTabController ctrlVeiculos ;
-     LocacaoTabController ctrlLocacao;
-     DevolucaoTabController ctrlDevolucao;
-     VendaTabController ctrlVenda;
 
-    
-        
+    ClientesTabController ctrlClientes;
+    //VeiculosTabController ctrlVeiculos;
+    //LocacaoTabController ctrlLocacao;
+    //DevolucaoTabController ctrlDevolucao;
+    //VendaTabController ctrlVenda;
+
     private ClienteTableModel ctm;
     private LocarVeiculoTableModel lvtm;
     private ClienteLocacaoTableModel cltm;
@@ -45,8 +42,6 @@ public class Frame extends javax.swing.JFrame {
     private VeiculoVenderTableModel vvtm;
 
     private FiltroDeTabela f, f1;
-    
-    
 
     public Frame() {
         //TABLE MODELS
@@ -57,9 +52,8 @@ public class Frame extends javax.swing.JFrame {
         vvtm = new VeiculoVenderTableModel();
 
         initComponents();
-        
+
         ctm.setListaCliente();
-        
 
         //FILTERS
         f = new FiltroDeTabela();
@@ -70,9 +64,8 @@ public class Frame extends javax.swing.JFrame {
         //SET SINGLE SELECTION
         cltm = (ClienteLocacaoTableModel) clienteLocacaoTable.getModel();
         cltm.setSingleSelection(clienteLocacaoTable);
-        
-    }
 
+    }
 
     public void initView() {
 
@@ -80,10 +73,10 @@ public class Frame extends javax.swing.JFrame {
             new Frame().setVisible(true);
         });
     }
-    
+/*
     public void setControllers(ClientesTabController ctrlClientes, VeiculosTabController ctrlVeiculos,
-                                LocacaoTabController ctrlLocacao, DevolucaoTabController ctrlDevolucao,
-                                VendaTabController ctrlVenda){
+            LocacaoTabController ctrlLocacao, DevolucaoTabController ctrlDevolucao,
+            VendaTabController ctrlVenda) {
 
         this.ctrlClientes = ctrlClientes;
         this.ctrlVeiculos = ctrlVeiculos;
@@ -91,7 +84,16 @@ public class Frame extends javax.swing.JFrame {
         this.ctrlDevolucao = ctrlDevolucao;
         this.ctrlVenda = ctrlVenda;
     }
-    
+*/
+    //FOR TESTING
+    public void setControllers(ClientesTabController ctrlClientes) {
+        this.ctrlClientes = ctrlClientes;
+    }
+
+    public ClienteTableModel getCtm() {
+        return ctm;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -946,7 +948,6 @@ public class Frame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ftxtCpfClienteActionPerformed
 
-    
 
     private void veiculoTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_veiculoTableMousePressed
         JTable table = (JTable) evt.getSource();
@@ -1080,37 +1081,40 @@ public class Frame extends javax.swing.JFrame {
 
     private void cboxMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxMarcaActionPerformed
         boolean cboxCategoriaIsEmpty = cboxMarca.getModel().getSize() == 0;
-        if (!cboxCategoriaIsEmpty){
-            String type = (String) cbxTipo.getSelectedItem();                
-            String marca = (String) cboxMarca.getSelectedItem();            
-            String categoria = (String) cboxCategoria.getSelectedItem(); 
-            if (!"".equals(type) && !"".equals(marca)){
+        if (!cboxCategoriaIsEmpty) {
+            String type = (String) cbxTipo.getSelectedItem();
+            String marca = (String) cboxMarca.getSelectedItem();
+            String categoria = (String) cboxCategoria.getSelectedItem();
+            if (!"".equals(type) && !"".equals(marca)) {
                 ComboBox.loadCboxModelo(cboxModelo, type, marca, categoria);
             }
         }
     }//GEN-LAST:event_cboxMarcaActionPerformed
 
     private void ftxtRgClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ftxtRgClienteActionPerformed
-        
+
     }//GEN-LAST:event_ftxtRgClienteActionPerformed
 
     private void cboxModeloMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboxModeloMouseReleased
-       
+
     }//GEN-LAST:event_cboxModeloMouseReleased
-   
+
     private void cbxTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTipoActionPerformed
         boolean cboxMarcaIsEmpty = cboxMarca.getModel().getSize() == 0;
         boolean cboxCategoriaIsEmpty = cboxMarca.getModel().getSize() == 0;
-         
-        if (cboxMarcaIsEmpty ) ComboBox.loadCboxMarca(cboxMarca);
-        if (cboxCategoriaIsEmpty) ComboBox.loadCboxCategoria(cboxCategoria);
+
+        if (cboxMarcaIsEmpty) {
+            ComboBox.loadCboxMarca(cboxMarca);
+        }
+        if (cboxCategoriaIsEmpty)
+            ComboBox.loadCboxCategoria(cboxCategoria);
     }//GEN-LAST:event_cbxTipoActionPerformed
 
     private void cboxCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxCategoriaActionPerformed
-        String type = (String) cbxTipo.getSelectedItem();                
-        String marca = (String) cboxMarca.getSelectedItem();           
-        String categoria = (String) cboxCategoria.getSelectedItem();  
-        if (!"".equals(type) && !"".equals(marca)){
+        String type = (String) cbxTipo.getSelectedItem();
+        String marca = (String) cboxMarca.getSelectedItem();
+        String categoria = (String) cboxCategoria.getSelectedItem();
+        if (!"".equals(type) && !"".equals(marca)) {
             ComboBox.loadCboxModelo(cboxModelo, type, marca, categoria);
         }
     }//GEN-LAST:event_cboxCategoriaActionPerformed
@@ -1133,10 +1137,10 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRemoverClienteActionPerformed
 
     private void btnIncluirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirClienteActionPerformed
-        incluirCliente();
+        //incluirCliente();
         ctrlClientes.criarCliente();
     }//GEN-LAST:event_btnIncluirClienteActionPerformed
- 
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable DevolverTable;
@@ -1212,15 +1216,21 @@ public class Frame extends javax.swing.JFrame {
     private javax.swing.JTable veiculoTable;
     // End of variables declaration//GEN-END:variables
 
-    
-    
-    private void incluirVeiculo(){
-       // String nome = cbxTipo.getText();
-       // String sobrenome = txtSobrenomeCliente.getSelectedText();
-       // Locacao locacao = null;
+    private void incluirVeiculo() {
+        // String nome = cbxTipo.getText();
+        // String sobrenome = txtSobrenomeCliente.getSelectedText();
+        // Locacao locacao = null;
         //String rg = ftxtRgCliente.getText();
     }
-    
+
+    public void apresentaInfo(String info) {
+        JOptionPane.showMessageDialog(null, info + "\n", "Informação", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void apresentaErro(String erro) {
+        JOptionPane.showMessageDialog(null, erro + "\n", "Erro", JOptionPane.ERROR_MESSAGE);
+    }
+
     public Cliente getClienteFormulario() {
         String nome = txtNomeCliente.getText();
         String sobrenome = txtSobrenomeCliente.getText();
@@ -1231,32 +1241,12 @@ public class Frame extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "preencha o nome, sobrenome e cpf.");
         } else {
             return new Cliente(nome, sobrenome, rg, cpf, endereco);
-    }
-    private void incluirCliente() {
-        String nome = txtNomeCliente.getText();
-        String sobrenome = txtSobrenomeCliente.getText();
-        String rg = ftxtRgCliente.getText();
-        String cpf = ftxtCpfCliente.getText();
-        String endereco = txtEndereco.getText();
-        if (nome.isEmpty() || sobrenome.isEmpty() || cpf.isEmpty()) {
-            JOptionPane.showMessageDialog(null, "preencha o nome, sobrenome e cpf.");
-        } else {
-            Cliente cliente = new Cliente(nome, sobrenome, rg, cpf, endereco);
-            ClienteDaoSql c = new ClienteDaoSql();
-            try {
-                if (!c.clienteCpfExists(cliente)) {
-                    c.add(cliente);
-                    JOptionPane.showMessageDialog(null, "cliente id: " + cliente.getId());//test
-                    ctm.add(cliente);
-                    clearFieldsCliente();
-                } else {
-                    JOptionPane.showMessageDialog(null, "client already exists");
-                }
-            } catch (SQLException | IOException e) {
-                JOptionPane.showMessageDialog(null, "@ClienteDaoSql.add():  Error adding cliente: " + e.getMessage());
-            }
         }
+        return null;
+    }
 
+    public void addToCtm(Cliente cliente) {
+        ctm.add(cliente);
     }
 
     private void atualizarCliente() {
@@ -1306,7 +1296,7 @@ public class Frame extends javax.swing.JFrame {
         clearFieldsCliente();
     }
 
-    private void clearFieldsCliente() {
+    public void clearFieldsCliente() {
         txtNomeCliente.setText("");
         txtSobrenomeCliente.setText("");
         ftxtRgCliente.setText("");
@@ -1315,14 +1305,11 @@ public class Frame extends javax.swing.JFrame {
         txtNomeCliente.requestFocus();
     }
 
-    
-
     private void filtrarPesquisa(String textoPesquisa) {
         ClienteLocacaoTableModel modeloTabela = (ClienteLocacaoTableModel) clienteLocacaoTable.getModel();
         modeloTabela.filtrarClientes(textoPesquisa);
     }
 
-    
     /*private void locarVeiculo(int dias, Calendar data, Cliente cliente) {
         int t = lvtm.getTipoVeiculo();
         int veiculoSelecionado = veiculoTable.getSelectedRow();
@@ -1349,7 +1336,7 @@ public class Frame extends javax.swing.JFrame {
         }
 
     }*/
-    /*private void loadModeloBox(String veiculoTipo) {
+ /*private void loadModeloBox(String veiculoTipo) {
 
         if ("Motocicleta".equals(cbxTipo.getSelectedItem().toString())) {
             try {
@@ -1380,9 +1367,8 @@ public class Frame extends javax.swing.JFrame {
             }
         }
     }*/
-
     public JComboBox<Object> getCboxModelo() {
         return cboxModelo;
     }
-    
+
 }
