@@ -1,19 +1,16 @@
 package view;
 
+import controller.ClientesTabController;
 import controller.Main;
 import model.tables.ClienteLocacaoTableModel;
-
 import model.enums.Categoria;
-
 import model.enums.Marca;
 import model.tables.ClienteTableModel;
 import model.dto.Cliente;
 import model.tables.LocarVeiculoTableModel;
 import model.dto.Locacao;
 import model.tables.FiltroDeTabela;
-
 import java.awt.Point;
-
 import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -28,9 +25,19 @@ import model.connection.ClienteDaoSql;
 import model.tables.VeiculoDevolverTableModel;
 import model.tables.VeiculoVenderTableModel;
 
+
 public class Frame extends javax.swing.JFrame {
 
     private Main main;
+    
+     ClientesTabController ctrlClientes;
+     VeiculosTabController ctrlVeiculos ;
+     LocacaoTabController ctrlLocacao;
+     DevolucaoTabController ctrlDevolucao;
+     VendaTabController ctrlVenda;
+
+    
+        
     private ClienteTableModel ctm;
     private LocarVeiculoTableModel lvtm;
     private ClienteLocacaoTableModel cltm;
@@ -38,6 +45,8 @@ public class Frame extends javax.swing.JFrame {
     private VeiculoVenderTableModel vvtm;
 
     private FiltroDeTabela f, f1;
+    
+    
 
     public Frame() {
         //TABLE MODELS
@@ -48,10 +57,8 @@ public class Frame extends javax.swing.JFrame {
         vvtm = new VeiculoVenderTableModel();
 
         initComponents();
+        
         ctm.setListaCliente();
-        
-
-        
         
 
         //FILTERS
@@ -63,11 +70,28 @@ public class Frame extends javax.swing.JFrame {
         //SET SINGLE SELECTION
         cltm = (ClienteLocacaoTableModel) clienteLocacaoTable.getModel();
         cltm.setSingleSelection(clienteLocacaoTable);
-
-
+        
     }
 
 
+    public void initView() {
+
+        java.awt.EventQueue.invokeLater(() -> {
+            new Frame().setVisible(true);
+        });
+    }
+    
+    public void setControllers(ClientesTabController ctrlClientes, VeiculosTabController ctrlVeiculos,
+                                LocacaoTabController ctrlLocacao, DevolucaoTabController ctrlDevolucao,
+                                VendaTabController ctrlVenda){
+
+        this.ctrlClientes = ctrlClientes;
+        this.ctrlVeiculos = ctrlVeiculos;
+        this.ctrlLocacao = ctrlLocacao;
+        this.ctrlDevolucao = ctrlDevolucao;
+        this.ctrlVenda = ctrlVenda;
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -859,27 +883,6 @@ public class Frame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeClienteActionPerformed
 
-    private void btnIncluirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirClienteActionPerformed
-        incluirCliente();
-    }//GEN-LAST:event_btnIncluirClienteActionPerformed
-
-    private void btnListarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarClienteActionPerformed
-        ctm.setListaCliente();
-    }//GEN-LAST:event_btnListarClienteActionPerformed
-
-    private void btnRemoverClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverClienteActionPerformed
-        removerCliente();
-    }//GEN-LAST:event_btnRemoverClienteActionPerformed
-
-    private void btnLimparClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparClienteActionPerformed
-        ctm.limpaTabela();
-        clearFieldsCliente();
-    }//GEN-LAST:event_btnLimparClienteActionPerformed
-
-    private void btnAtualizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarClienteActionPerformed
-        atualizarCliente();
-    }//GEN-LAST:event_btnAtualizarClienteActionPerformed
-
     private void btnIncluirVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirVeiculoActionPerformed
         /*      Marca marca = (Marca) cbxMarca.getSelectedItem();
         Estado estado = (Estado) cbxEstado.getSelectedItem();
@@ -1111,6 +1114,28 @@ public class Frame extends javax.swing.JFrame {
             ComboBox.loadCboxModelo(cboxModelo, type, marca, categoria);
         }
     }//GEN-LAST:event_cboxCategoriaActionPerformed
+
+    private void btnLimparClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparClienteActionPerformed
+        ctm.limpaTabela();
+        clearFieldsCliente();
+    }//GEN-LAST:event_btnLimparClienteActionPerformed
+
+    private void btnListarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarClienteActionPerformed
+        ctm.setListaCliente();
+    }//GEN-LAST:event_btnListarClienteActionPerformed
+
+    private void btnAtualizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarClienteActionPerformed
+        atualizarCliente();
+    }//GEN-LAST:event_btnAtualizarClienteActionPerformed
+
+    private void btnRemoverClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverClienteActionPerformed
+        removerCliente();
+    }//GEN-LAST:event_btnRemoverClienteActionPerformed
+
+    private void btnIncluirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirClienteActionPerformed
+        incluirCliente();
+        ctrlClientes.criarCliente();
+    }//GEN-LAST:event_btnIncluirClienteActionPerformed
  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1187,18 +1212,25 @@ public class Frame extends javax.swing.JFrame {
     private javax.swing.JTable veiculoTable;
     // End of variables declaration//GEN-END:variables
 
-    public void initView() {
-
-        java.awt.EventQueue.invokeLater(() -> {
-            new Frame().setVisible(true);
-        });
-    }
+    
     
     private void incluirVeiculo(){
-        String nome = cbxTipo.getText();
-        String sobrenome = txtSobrenomeCliente.getSelectedText();
-        Locacao locacao = null;
+       // String nome = cbxTipo.getText();
+       // String sobrenome = txtSobrenomeCliente.getSelectedText();
+       // Locacao locacao = null;
+        //String rg = ftxtRgCliente.getText();
+    }
+    
+    public Cliente getClienteFormulario() {
+        String nome = txtNomeCliente.getText();
+        String sobrenome = txtSobrenomeCliente.getText();
         String rg = ftxtRgCliente.getText();
+        String cpf = ftxtCpfCliente.getText();
+        String endereco = txtEndereco.getText();
+        if (nome.isEmpty() || sobrenome.isEmpty() || cpf.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "preencha o nome, sobrenome e cpf.");
+        } else {
+            return new Cliente(nome, sobrenome, rg, cpf, endereco);
     }
     private void incluirCliente() {
         String nome = txtNomeCliente.getText();

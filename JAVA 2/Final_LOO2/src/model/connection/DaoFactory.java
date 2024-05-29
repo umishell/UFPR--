@@ -7,12 +7,13 @@ public class DaoFactory {
 
     public static ClienteDaoSql getClienteDao(DaoType type) {
         switch (type) {
-            case SQL:
+            case SQL -> {
                 return ClienteDaoSql.getClienteDaoSql();
-            case INMEMORY:
+            }
+            case INMEMORY -> {
                 return ClienteDaoSql.getClienteDaoSql();//ClienteDaoInMemory.getClienteDaoInMemory();
-            default:
-                throw new RuntimeException("Tipo não existe:" + type);
+            }
+            default -> throw new RuntimeException("Tipo não existe:" + type);
         }
     }
 
