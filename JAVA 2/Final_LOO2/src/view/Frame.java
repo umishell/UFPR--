@@ -12,6 +12,7 @@ import model.tables.FiltroDeTabela;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ToolTipManager;
@@ -65,11 +66,16 @@ public class Frame extends javax.swing.JFrame {
 
     }
 
-    public void initView() {
+    public void initView(Frame frame) {
+        // 1. Set the frame's size (optional, adjust as needed)
+        //frame.setSize(800, 600);
 
-        java.awt.EventQueue.invokeLater(() -> {
-            new Frame().setVisible(true);
-        });
+        // 2. Set the frame's default close operation (optional)
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Example
+
+        // 3. (Optional) Add other components or layout managers to the frame
+        // 4. Make the frame visible
+        frame.setVisible(true);
     }
 
     /*
@@ -1128,7 +1134,7 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnListarClienteActionPerformed
 
     private void btnAtualizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarClienteActionPerformed
-        atualizarCliente();
+        ctrlClientes.updateCliente();
     }//GEN-LAST:event_btnAtualizarClienteActionPerformed
 
     private void btnRemoverClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverClienteActionPerformed
@@ -1136,8 +1142,7 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnRemoverClienteActionPerformed
 
     private void btnIncluirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirClienteActionPerformed
-        //incluirCliente();
-        ctrlClientes.criarCliente();
+        ctrlClientes.newCliente();
     }//GEN-LAST:event_btnIncluirClienteActionPerformed
 
 
@@ -1230,6 +1235,10 @@ public class Frame extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, erro + "\n", "Erro", JOptionPane.ERROR_MESSAGE);
     }
 
+    public void addClienteToCtm(Cliente cliente) {
+        ctm.add(cliente);
+    }
+
     public Cliente getClienteFormulario() {
         String nome = txtNomeCliente.getText();
         String sobrenome = txtSobrenomeCliente.getText();
@@ -1244,11 +1253,19 @@ public class Frame extends javax.swing.JFrame {
         return null;
     }
 
-    public void addToCtm(Cliente cliente) {
-        ctm.add(cliente);
+    public void updateClienteAtCtm(int row, Cliente cliente) {
+        ctm.setValuesAtRow(row, cliente);
     }
 
-    private void atualizarCliente() {
+    public int GetSelectedRow() {
+        return clienteTable.getSelectedRow();
+    }
+    
+    public int GetSelectedClienteId() {
+        return clienteTable.getSelectedRow();
+    }
+
+  /*  private void atualizarCliente() {
         if (clienteTable.getSelectedRowCount() == 1) {
             String nome = txtNomeCliente.getText();
             String sobrenome = txtSobrenomeCliente.getText();
@@ -1268,7 +1285,7 @@ public class Frame extends javax.swing.JFrame {
             clearFieldsCliente();
 
         }
-    }
+    }*/
 
     private void removerCliente() {
         if (clienteTable.getSelectedRow() == -1) {

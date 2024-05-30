@@ -21,7 +21,7 @@ public class ClienteDaoSql implements ClienteDao {
     private final String selectAll = "select * from cliente";
     private final String selectById = "select * from cliente where id=?";
     private final String selectByCpf = "select cpf from cliente where cpf = ?";
-    private final String update = "update cliente set nome=?, sobrenome=?, rg=?, cpf=?, endereco=? WHERE ID=?";
+    private final String update = "update cliente set nome=?, sobrenome=?, rg=?, cpf=?, endereco=? WHERE cpf=?";
     private final String updateComVeiculoLocado = "update cliente set comVeiculoLocado=? WHERE id=?";
     private final String delete = "delete from cliente WHERE ID=?";
     private final String deleteAll = "TRUNCATE cliente";
@@ -108,18 +108,18 @@ public class ClienteDaoSql implements ClienteDao {
     }
 
     @Override
-    public void update(Cliente cliente) {
+    public void update(Cliente cliente) throws SQLException, IOException {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtAtualiza = conn.prepareStatement(update);) {
             stmtAtualiza.setString(1, cliente.getNome());
             stmtAtualiza.setString(2, cliente.getSobrenome());
             stmtAtualiza.setString(3, cliente.getRg());
             stmtAtualiza.setString(4, cliente.getCpf());
             stmtAtualiza.setString(5, cliente.getEndereco());
-            stmtAtualiza.setInt(6, cliente.getId());
+            stmtAtualiza.setString(6, cliente.getCpf());
             stmtAtualiza.executeUpdate();
 
-        } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@ClienteDaoSql.update():  Error updating client: " + e.getMessage());
+        //} catch (SQLException | IOException e) {
+         //   JOptionPane.showMessageDialog(null, "@ClienteDaoSql.update():  Error updating client: " + e.getMessage());
         }
     }
 
@@ -158,7 +158,7 @@ public class ClienteDaoSql implements ClienteDao {
         }
     }
 
-    public boolean clienteCpfExists(Cliente cliente) throws SQLException, IOException {
+    public boolean clienteCpfExists(Cliente cliente) throws SQLException, IOException , NullPointerException {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(selectByCpf)) {
             stmt.setString(1, cliente.getCpf());
             ResultSet rs = stmt.executeQuery();

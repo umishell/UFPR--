@@ -80,6 +80,14 @@ public class ClienteTableModel extends DefaultTableModel {
         this.fireTableCellUpdated(row, col);
     }
 
+    public void setValuesAtRow(int row,Cliente c) {
+            this.setValueAt(c.getNome(), row, 0);
+            this.setValueAt(c.getSobrenome(), row, 1);
+            this.setValueAt(c.getRg(), row, 2);
+            this.setValueAt(c.getCpf(), row, 3);
+            this.setValueAt(c.getEndereco(), row, 4);
+    }
+    
     @Override
     public void removeRow(int row) {
         

@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
 
         Frame view = new Frame();
-        view.initView();
+        
 
         ClienteDaoSql cliDao = DaoFactory.getClienteDao(DaoType.SQL);
         //MotocicletaDao motoDao = DaoFactory.getMotocicletaDao(DaoType.SQL);
@@ -25,7 +25,10 @@ public class Main {
         // VendaTabController ctrlVenda= new VendaTabController(frame,cliDao, motoDao, autoDao, vanDao, locDao);
 
         //frame.setControllers(ctrlClientes, ctrlVeiculos, ctrlLocacao, ctrlDevolucao, ctrlVenda);
+       
         view.setControllers(ctrlClientes);
+        
+        view.initView(view);
 
     }
 }
