@@ -1,46 +1,57 @@
 package model.dto;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
-import model.enums.Categoria;
-import model.enums.Estado;
-import model.enums.Marca;
-import model.enums.ModeloAutomovel;
+
 
 public class Automovel extends Veiculo {
 
     private String modelo;
 
-    public Automovel(Marca marca, Estado estado, Locacao locacao, Categoria categoria, double valorDeCompra, String placa, int ano, ModeloAutomovel a) {
-        super(marca, estado, locacao, categoria, valorDeCompra, placa, ano);
-        modelo = a;
+    public Automovel(String marca, String estado, ArrayList<Locacao> locacoes, String categoria, 
+                       double valorDeCompra, String placa, int ano, String m) {
+        super(marca, estado, locacoes, categoria, valorDeCompra, placa, ano);
+        modelo = m;
     }
 
-    public ModeloAutomovel getModelo() {
+    public String getModelo() {
         return modelo;
     }
 
     @Override
     public void locar(int dias, Calendar data, Cliente cliente) {
-        super.setEstado(Estado.LOCADO);
-        super.setLocacao(new Locacao(dias, this.getValorDiariaLocacao(), data, cliente));
+        // super.setEstado("locado");
+        //super.setLocacao(new Locacao(dias, this.getValorDiariaLocacao(), data, cliente));
 
     }
 
     @Override
-    public double getValorDiariaLocacao() {
-        switch (this.getCategoria().name()) {
-            case "POPULAR" -> {
-                return 100;
+    public void devolver() {
+
+    }
+
+    @Override
+    public void vender() {
+        //if (this.estado == Estado.DISPONIVEL) {
+        //  this.estado = Estado.VENDIDO;
+        //}
+    }
+
+    public double getValorDiariaLocacao(String s){
+        
+        switch (s) {
+            case "popular" -> {
+                return 70;
             }
-            case "INTERMEDIARIO" -> {
-                return 300;
+            case "intermediario" -> {
+                return 200;
             }
-            case "LUXO" -> {
-                return 450;
+            case "luxo" -> {
+                return 350;
             }
         }
         return 0;
-    }
-
+}
+ 
 }

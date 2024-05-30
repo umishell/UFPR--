@@ -1,6 +1,5 @@
 package model.tables;
 
-import view.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
@@ -10,13 +9,10 @@ import model.dto.Cliente;
 
 public class ClienteLocacaoTableModel extends DefaultTableModel {
 
-    private Repository rep;
     private String[] colunas = new String[]{"Nome", "Sobrenome", "CPF"};
     private List<Cliente> listaClientes = new ArrayList();
 
-    public void repRef(Repository rep) {
-        this.rep = rep;
-    }
+
 
     public ClienteLocacaoTableModel() {
     }
@@ -133,7 +129,7 @@ public class ClienteLocacaoTableModel extends DefaultTableModel {
     }
 
     public void filtrarClientes(String textoPesquisa) {
-        if (textoPesquisa.isEmpty()) {
+       /* if (textoPesquisa.isEmpty()) {
             this.listaClientes = rep.getListaClientes();
         } else {
             List<Cliente> listaFiltrada = new ArrayList<>();
@@ -146,7 +142,7 @@ public class ClienteLocacaoTableModel extends DefaultTableModel {
             }
             this.listaClientes = listaFiltrada;
         }
-        this.fireTableDataChanged();
+        this.fireTableDataChanged();*/
     }
 
     public void setSingleSelection(JTable tabela) {

@@ -7,7 +7,8 @@ public class Motocicleta extends Veiculo {
 
     private String modelo;
 
-    public Motocicleta(String marca, String estado, ArrayList<Locacao> locacoes, String categoria, double valorDeCompra, String placa, int ano, String m) {
+    public Motocicleta(String marca, String estado, ArrayList<Locacao> locacoes, String categoria, 
+                       double valorDeCompra, String placa, int ano, String m) {
         super(marca, estado, locacoes, categoria, valorDeCompra, placa, ano);
         modelo = m;
     }
@@ -36,11 +37,11 @@ public class Motocicleta extends Veiculo {
     }
 
 
-/*
-@Override
-public double getValorDiariaLocacao(){
+
+
+public double getValorDiariaLocacao(String s){
         
-        switch () {
+        switch (s) {
             case "popular" -> {
                 return 70;
             }
@@ -53,5 +54,7 @@ public double getValorDiariaLocacao(){
         }
         return 0;
 }
- */
+ 
+
+
 }

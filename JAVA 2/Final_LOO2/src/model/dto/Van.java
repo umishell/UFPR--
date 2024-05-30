@@ -1,51 +1,57 @@
 package model.dto;
 
-import model.dto.Locacao;
+import java.util.ArrayList;
 import java.util.Calendar;
 
-import model.dto.Cliente;
-import model.enums.Categoria;
-import model.enums.Categoria;
-import model.enums.Estado;
-import model.enums.Estado;
-import model.enums.Marca;
-import model.enums.Marca;
-import model.enums.ModeloVan;
-import model.enums.ModeloVan;
+
 
 public class Van extends Veiculo {
 
     private String modelo;
 
-    public Van(Marca marca, Estado estado, Locacao locacao, Categoria categoria, double valorDeCompra, String placa, int ano, ModeloVan v) {
-        super(marca, estado, locacao, categoria, valorDeCompra, placa, ano);
-        modelo = v;
+    public Van(String marca, String estado, ArrayList<Locacao> locacoes, String categoria, 
+                       double valorDeCompra, String placa, int ano, String m) {
+        super(marca, estado, locacoes, categoria, valorDeCompra, placa, ano);
+        modelo = m;
     }
 
-    public ModeloVan getModelo() {
+    public String getModelo() {
         return modelo;
     }
 
     @Override
     public void locar(int dias, Calendar data, Cliente cliente) {
-        super.setEstado(Estado.LOCADO);
-        super.setLocacao(new Locacao(dias, this.getValorDiariaLocacao(), data, cliente));
+        // super.setEstado("locado");
+        //super.setLocacao(new Locacao(dias, this.getValorDiariaLocacao(), data, cliente));
 
     }
 
     @Override
-    public double getValorDiariaLocacao() {
-        switch (this.getCategoria().name()) {
-            case "POPULAR" -> {
+    public void devolver() {
+
+    }
+
+    @Override
+    public void vender() {
+        //if (this.estado == Estado.DISPONIVEL) {
+        //  this.estado = Estado.VENDIDO;
+        //}
+    }
+    
+    public double getValorDiariaLocacao(String s){
+        
+        switch (s) {
+            case "popular" -> {
+                return 70;
+            }
+            case "intermediario" -> {
                 return 200;
             }
-            case "INTERMEDIARIO" -> {
-                return 400;
-            }
-            case "LUXO" -> {
-                return 600;
+            case "luxo" -> {
+                return 350;
             }
         }
         return 0;
-    }
+}
+ 
 }

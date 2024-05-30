@@ -1,6 +1,5 @@
 package model.tables;
 
-import view.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
@@ -15,16 +14,12 @@ import model.dto.Van;
 
 public class LocarVeiculoTableModel extends DefaultTableModel {
 
-    private Repository rep;
     private List<Van> listaVans = new ArrayList();
     private List<Motocicleta> listaMotocicletas = new ArrayList();
     private List<Automovel> listaAutomoveis = new ArrayList();
     private String[] colunas = new String[]{" "};
     private int tipoVeiculo; // 1 = Van, 2 = Moto, 3 = Auto
 
-    public void repRef(Repository rep) {
-        this.rep = rep;
-    }
 
     public LocarVeiculoTableModel() {
     }
@@ -120,7 +115,7 @@ public class LocarVeiculoTableModel extends DefaultTableModel {
                     case 2 ->
                         van.getAno();
                     case 3 ->
-                        van.getValorDiariaLocacao();
+                        van.getValorDeCompra();
                     case 4 ->
                         van.getPlaca();
                     default ->
@@ -137,7 +132,7 @@ public class LocarVeiculoTableModel extends DefaultTableModel {
                     case 2 ->
                         moto.getAno();
                     case 3 ->
-                        moto.getValorDiariaLocacao();
+                        moto.getValorDeCompra();
                     case 4 ->
                         moto.getPlaca();
                     default ->
@@ -154,7 +149,7 @@ public class LocarVeiculoTableModel extends DefaultTableModel {
                     case 2 ->
                         auto.getAno();
                     case 3 ->
-                        auto.getValorDiariaLocacao();
+                        auto.getValorDeCompra();
                     case 4 ->
                         auto.getPlaca();
                     default ->
@@ -179,7 +174,7 @@ public class LocarVeiculoTableModel extends DefaultTableModel {
                     case 2 ->
                         van.getAno();
                     case 3 ->
-                        van.getValorDiariaLocacao();
+                        van.getValorDeCompra();
                     case 4 ->
                         van.getPlaca();
                     default ->
@@ -197,7 +192,7 @@ public class LocarVeiculoTableModel extends DefaultTableModel {
                     case 2 ->
                         moto.getAno();
                     case 3 ->
-                        moto.getValorDiariaLocacao();
+                        moto.getValorDeCompra();
                     case 4 ->
                         moto.getPlaca();
                     default ->
@@ -215,7 +210,7 @@ public class LocarVeiculoTableModel extends DefaultTableModel {
                     case 2 ->
                         auto.getAno();
                     case 3 ->
-                        auto.getValorDiariaLocacao();
+                        auto.getValorDeCompra();
                     case 4 ->
                         auto.getPlaca();
                     default ->
@@ -252,7 +247,7 @@ public class LocarVeiculoTableModel extends DefaultTableModel {
             case 1 -> {
                 for (int i = selectedRows.length - 1; i >= 0; i--) {
                     int row = selectedRows[i];
-                    rep.apagarVan(row);
+                    //rep.apagarVan(row);
                     // Convert row index to model index
                     int modelRow = myJTable.convertRowIndexToModel(row);
                     tableModel.removeRow(modelRow);
@@ -261,7 +256,7 @@ public class LocarVeiculoTableModel extends DefaultTableModel {
             case 2 -> {
                 for (int i = selectedRows.length - 1; i >= 0; i--) {
                     int row = selectedRows[i];
-                    rep.apagarMotocicleta(row);
+                    //rep.apagarMotocicleta(row);
                     // Convert row index to model index
                     int modelRow = myJTable.convertRowIndexToModel(row);
                     tableModel.removeRow(modelRow);
@@ -270,7 +265,7 @@ public class LocarVeiculoTableModel extends DefaultTableModel {
             case 3 -> {
                 for (int i = selectedRows.length - 1; i >= 0; i--) {
                     int row = selectedRows[i];
-                    rep.apagarAutomovel(row);
+                    //rep.apagarAutomovel(row);
                     // Convert row index to model index
                     int modelRow = myJTable.convertRowIndexToModel(row);
                     tableModel.removeRow(modelRow);
@@ -282,21 +277,21 @@ public class LocarVeiculoTableModel extends DefaultTableModel {
 
     public void addVan(Van v) {
         //this.listaVans.add(v);
-        rep.gravarVan(v);
+        //rep.gravarVan(v);
         this.fireTableDataChanged();
         this.fireTableRowsInserted(listaVans.size() - 1, listaVans.size() - 1);//update JTable
     }
 
     public void addMotocicleta(Motocicleta m) {
         //this.listaMotocicletas.add(m);
-        rep.gravarMotocicleta(m);
+        //rep.gravarMotocicleta(m);
         this.fireTableDataChanged();
         this.fireTableRowsInserted(listaMotocicletas.size() - 1, listaMotocicletas.size() - 1);//update JTable
     }
 
     public void addAutomovel(Automovel a) {
         //this.listaAutomoveis.add(a);
-        rep.gravarAutomovel(a);
+        //rep.gravarAutomovel(a);
         this.fireTableDataChanged();
         this.fireTableRowsInserted(listaAutomoveis.size() - 1, listaAutomoveis.size() - 1);//update JTable
     }
@@ -304,21 +299,21 @@ public class LocarVeiculoTableModel extends DefaultTableModel {
     public void setListaVeiculos() {
         switch (tipoVeiculo) {
             case 1 -> {
-                this.listaVans = rep.getListaVans();
+               // this.listaVans = rep.getListaVans();
                 if (!listaVans.isEmpty()) {
                     this.fireTableDataChanged();
                     this.fireTableRowsInserted(0, listaVans.size() - 1);
                 }
             }
             case 2 -> {
-                this.listaMotocicletas = rep.getListaMotocicletas();
+               // this.listaMotocicletas = rep.getListaMotocicletas();
                 if (!listaMotocicletas.isEmpty()) {
                     this.fireTableDataChanged();
                     this.fireTableRowsInserted(0, listaVans.size() - 1);
                 }
             }
             case 3 -> {
-                this.listaAutomoveis = rep.getListaAutomoveis();
+                //this.listaAutomoveis = rep.getListaAutomoveis();
                 if (!listaAutomoveis.isEmpty()) {
                     this.fireTableDataChanged();
                     this.fireTableRowsInserted(0, listaVans.size() - 1);

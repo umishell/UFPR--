@@ -8,12 +8,9 @@ import model.enums.Marca;
 import model.tables.ClienteTableModel;
 import model.dto.Cliente;
 import model.tables.LocarVeiculoTableModel;
-import model.dto.Locacao;
 import model.tables.FiltroDeTabela;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.sql.SQLException;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
@@ -29,7 +26,7 @@ public class Frame extends javax.swing.JFrame {
 
     private Main main;
 
-    ClientesTabController ctrlClientes;
+    private ClientesTabController ctrlClientes;
     //VeiculosTabController ctrlVeiculos;
     //LocacaoTabController ctrlLocacao;
     //DevolucaoTabController ctrlDevolucao;
@@ -44,6 +41,7 @@ public class Frame extends javax.swing.JFrame {
     private FiltroDeTabela f, f1;
 
     public Frame() {
+
         //TABLE MODELS
         ctm = new ClienteTableModel();
         lvtm = new LocarVeiculoTableModel();
@@ -73,7 +71,8 @@ public class Frame extends javax.swing.JFrame {
             new Frame().setVisible(true);
         });
     }
-/*
+
+    /*
     public void setControllers(ClientesTabController ctrlClientes, VeiculosTabController ctrlVeiculos,
             LocacaoTabController ctrlLocacao, DevolucaoTabController ctrlDevolucao,
             VendaTabController ctrlVenda) {
@@ -84,7 +83,7 @@ public class Frame extends javax.swing.JFrame {
         this.ctrlDevolucao = ctrlDevolucao;
         this.ctrlVenda = ctrlVenda;
     }
-*/
+     */
     //FOR TESTING
     public void setControllers(ClientesTabController ctrlClientes) {
         this.ctrlClientes = ctrlClientes;

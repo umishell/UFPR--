@@ -1,7 +1,6 @@
 package model.tables;
 
 import model.dto.Cliente;
-import view.Repository;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTable;
