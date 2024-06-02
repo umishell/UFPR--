@@ -1,17 +1,13 @@
 package model.connection;
 
 import model.dto.Cliente;
-
 import java.io.IOException;
 import java.sql.SQLException;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class ClienteDaoSql implements ClienteDao {
 
@@ -55,9 +51,9 @@ public class ClienteDaoSql implements ClienteDao {
     }
 
     @Override
-    public List<Cliente> getAll() throws SQLException, IOException {
+    public ArrayList<Cliente> getAll() throws SQLException, IOException {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(selectAll); ResultSet rs = stmt.executeQuery();) {
-            List<Cliente> clientes = new ArrayList();
+            ArrayList<Cliente> clientes = new ArrayList<>();
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String nome = rs.getString("nome");

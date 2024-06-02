@@ -13,16 +13,16 @@ import model.dto.Cliente;
 public class ClienteTableModel extends DefaultTableModel {
 
     private String[] colunas = new String[]{"Nome", "Sobrenome", "RG", "CPF", "Endereço"};
-    private List<Cliente> listaClientes = new ArrayList();
+    private ArrayList<Cliente> listaClientes = new ArrayList<>();
 
     public ClienteTableModel() {
     }
 
-    public ClienteTableModel(List<Cliente> c) {
+    public ClienteTableModel(ArrayList<Cliente> c) {
         this.listaClientes = c;
     }
 
-    public List<Cliente> getListaClientes() {
+    public ArrayList<Cliente> getListaClientes() {
         return listaClientes;
     }
 
@@ -115,16 +115,11 @@ public class ClienteTableModel extends DefaultTableModel {
         this.fireTableRowsInserted(listaClientes.size(), listaClientes.size());//update JTable
     }
 
-    public void setListaCliente() {
-        try {
-            ClienteDaoSql c = new ClienteDaoSql();
-            this.listaClientes = c.getAll();
-            if (!listaClientes.isEmpty()) {
-                this.fireTableDataChanged();
-                this.fireTableRowsInserted(0, listaClientes.size() - 1);//update JTable
-            }
-        } catch (IOException | SQLException e) {
-            e.getStackTrace();
+    public void setListaCliente(ArrayList<Cliente> clientes) {
+        this.listaClientes = clientes;
+        if (!listaClientes.isEmpty()) {
+            this.fireTableDataChanged();
+            this.fireTableRowsInserted(0, listaClientes.size() - 1);//update JTable
         }
     }
 

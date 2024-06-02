@@ -10,17 +10,14 @@ import model.dto.Cliente;
 import model.tables.LocarVeiculoTableModel;
 import model.tables.FiltroDeTabela;
 import java.awt.Point;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.ToolTipManager;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import model.combo.ComboBox;
-import model.connection.ClienteDaoSql;
 import model.tables.VeiculoDevolverTableModel;
 import model.tables.VeiculoVenderTableModel;
 
@@ -53,8 +50,7 @@ public class Frame extends javax.swing.JFrame {
 
         initComponents();
 
-        ctm.setListaCliente();
-
+        
         //FILTERS
         f = new FiltroDeTabela();
         f.criarTabela(veiculoTable);
@@ -1131,7 +1127,7 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLimparClienteActionPerformed
 
     private void btnListarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarClienteActionPerformed
-        ctm.setListaCliente();
+        ctrlClientes.showClientes();
     }//GEN-LAST:event_btnListarClienteActionPerformed
 
     private void btnAtualizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarClienteActionPerformed
@@ -1271,6 +1267,10 @@ public class Frame extends javax.swing.JFrame {
         ftxtCpfCliente.setText("");
         txtEndereco.setText("");
         txtNomeCliente.requestFocus();
+    }
+
+    public void ShowCtm(ArrayList<Cliente> clientes) {
+        ctm.setListaCliente(clientes);
     }
 
     private void filtrarPesquisa(String textoPesquisa) {

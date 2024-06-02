@@ -30,11 +30,9 @@ public class ClientesTabController {
             } else {
                 view.apresentaInfo("client already exists");
             }
-        } catch (IOException | SQLException e) {
-            view.apresentaErro("Erro ao criar Cliente.");
-            e.getStackTrace();
-        } catch (NullPointerException e) {
-            e.getStackTrace();
+        } catch (IOException | SQLException | NullPointerException e) {
+            view.apresentaErro("Erro ao incluir Cliente.");
+            e.printStackTrace();
         }
     }
 
@@ -46,11 +44,9 @@ public class ClientesTabController {
             cliDao.update(cliente);
             view.clearFieldsCliente();
 
-        } catch (IOException | SQLException e) {
+        } catch (IOException | SQLException | NullPointerException e) {
             view.apresentaErro("Erro ao atualizar Cliente.");
-            e.getStackTrace();
-        } catch (NullPointerException e) {
-            e.getStackTrace();
+            e.printStackTrace();
         }
     }
 
@@ -63,12 +59,29 @@ public class ClientesTabController {
             }
             view.clearFieldsCliente();
 
-        } catch (IOException | SQLException e) {
+        } catch (IOException | SQLException | NullPointerException e) {
             view.apresentaErro("Erro ao deletar Cliente.");
-            e.printStackTrace();
-        } catch (NullPointerException e) {
             e.printStackTrace();
         }
     }
 
+    public ArrayList<Cliente> showClientes() {
+        ClienteDaoSql c = new ClienteDaoSql();
+        ArrayList<Cliente> clientes = new ArrayList<>();
+        try {
+            clientes = c.getAll();
+            view.ShowCtm(clientes);
+        } catch (IOException | SQLException | NullPointerException e) {
+            view.apresentaErro("Erro ao mostrar Clientes na tabela.");
+            e.printStackTrace();
+        }
+        return clientes;
+    }
+    
+
+    
+
+    public void initTable() {
+
+    }
 }
