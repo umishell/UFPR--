@@ -1,5 +1,7 @@
 package model.tables;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import model.dto.Cliente;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +14,6 @@ public class ClienteTableModel extends DefaultTableModel {
 
     private String[] colunas = new String[]{"Nome", "Sobrenome", "RG", "CPF", "Endereço"};
     private List<Cliente> listaClientes = new ArrayList();
-
 
     public ClienteTableModel() {
     }
@@ -80,49 +81,50 @@ public class ClienteTableModel extends DefaultTableModel {
         this.fireTableCellUpdated(row, col);
     }
 
-    public void setValuesAtRow(int row,Cliente c) {
-            this.setValueAt(c.getNome(), row, 0);
-            this.setValueAt(c.getSobrenome(), row, 1);
-            this.setValueAt(c.getRg(), row, 2);
-            this.setValueAt(c.getCpf(), row, 3);
-            this.setValueAt(c.getEndereco(), row, 4);
+    public void setValuesAtRow(int row, Cliente c) {
+        this.setValueAt(c.getNome(), row, 0);
+        this.setValueAt(c.getSobrenome(), row, 1);
+        this.setValueAt(c.getRg(), row, 2);
+        this.setValueAt(c.getCpf(), row, 3);
+        this.setValueAt(c.getEndereco(), row, 4);
     }
-    
+
     @Override
     public void removeRow(int row) {
-        
+
         listaClientes.remove(row);
         fireTableRowsDeleted(row, row);
     }
 
-    public void removeSelectedRows(JTable myJTable) {
+    public ArrayList<Cliente> removeSelectedRows(JTable myJTable) {
         int[] selectedRows = myJTable.getSelectedRows();
         ClienteTableModel tableModel = (ClienteTableModel) myJTable.getModel();
-        
+        ArrayList<Cliente> clientes = new ArrayList<>();
         for (int i = selectedRows.length - 1; i >= 0; i--) {
-            int row = selectedRows[i];
-            // Convert row index to model index
-            int modelRow = myJTable.convertRowIndexToModel(row);
-            Cliente cliente = this.getListaClientes().get(modelRow);
-            ClienteDaoSql c = new ClienteDaoSql();
-            c.delete(cliente);
+            int modelRow = myJTable.convertRowIndexToModel(selectedRows[i]);
+            clientes.add(this.getListaClientes().get(modelRow));
             tableModel.removeRow(modelRow);
         }
         myJTable.clearSelection();
+        return clientes;
     }
 
     public void add(Cliente c) {
         this.listaClientes.add(c);
         this.fireTableDataChanged();
-        this.fireTableRowsInserted(listaClientes.size() , listaClientes.size() );//update JTable
+        this.fireTableRowsInserted(listaClientes.size(), listaClientes.size());//update JTable
     }
 
     public void setListaCliente() {
-        ClienteDaoSql c = new ClienteDaoSql();
-        this.listaClientes = c.getAll();
-        if (!listaClientes.isEmpty()) {
-            this.fireTableDataChanged();
-            this.fireTableRowsInserted(0, listaClientes.size() - 1);//update JTable
+        try {
+            ClienteDaoSql c = new ClienteDaoSql();
+            this.listaClientes = c.getAll();
+            if (!listaClientes.isEmpty()) {
+                this.fireTableDataChanged();
+                this.fireTableRowsInserted(0, listaClientes.size() - 1);//update JTable
+            }
+        } catch (IOException | SQLException e) {
+            e.getStackTrace();
         }
     }
 

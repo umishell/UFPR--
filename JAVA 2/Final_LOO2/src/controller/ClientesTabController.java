@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import model.connection.ClienteDaoSql;
 import model.dto.Cliente;
 import view.Frame;
@@ -14,16 +15,9 @@ public class ClientesTabController {
     public ClientesTabController(Frame view, ClienteDaoSql cliDao) {
         this.view = view;
         this.cliDao = cliDao;
-        // initController();
     }
 
     public ClientesTabController() {
-
-    }
-
-    private void initController() {
-        view.setControllers(this);
-        //this.view.initView();
     }
 
     public void newCliente() {
@@ -40,26 +34,40 @@ public class ClientesTabController {
             view.apresentaErro("Erro ao criar Cliente.");
             e.getStackTrace();
         } catch (NullPointerException e) {
-            //view.apresentaErro("preencha o nome, sobrenome e cpf.");
             e.getStackTrace();
         }
     }
-    
+
     public void updateCliente() {
         try {
             Cliente cliente = view.getClienteFormulario();
-            int row = view.GetSelectedRow();
-            view.updateClienteAtCtm(row, cliente);  System.out.println(cliente.getId());
-            //cliente.setId(row);
+            int row = view.getSelectedRowAtClienteTable();
+            view.updateClienteAtCtm(row, cliente);
             cliDao.update(cliente);
             view.clearFieldsCliente();
-            
+
         } catch (IOException | SQLException e) {
-            view.apresentaErro("Erro ao criar Cliente.");
+            view.apresentaErro("Erro ao atualizar Cliente.");
             e.getStackTrace();
         } catch (NullPointerException e) {
-            //view.apresentaErro("preencha o nome, sobrenome e cpf.");
             e.getStackTrace();
+        }
+    }
+
+    public void deleteCliente() {
+        try {
+            ArrayList<Cliente> clientes = view.removeClientesFromSelectedRowsAtCtm();
+            for (Cliente c : clientes) {
+                cliDao.delete(c);
+                view.removeSelectedRowsAtClienteTable();
+            }
+            view.clearFieldsCliente();
+
+        } catch (IOException | SQLException e) {
+            view.apresentaErro("Erro ao deletar Cliente.");
+            e.printStackTrace();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
         }
     }
 

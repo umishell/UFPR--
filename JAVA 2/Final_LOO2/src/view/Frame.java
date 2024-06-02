@@ -11,6 +11,7 @@ import model.tables.LocarVeiculoTableModel;
 import model.tables.FiltroDeTabela;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -1138,7 +1139,7 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAtualizarClienteActionPerformed
 
     private void btnRemoverClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverClienteActionPerformed
-        removerCliente();
+        ctrlClientes.deleteCliente();
     }//GEN-LAST:event_btnRemoverClienteActionPerformed
 
     private void btnIncluirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirClienteActionPerformed
@@ -1220,13 +1221,6 @@ public class Frame extends javax.swing.JFrame {
     private javax.swing.JTable veiculoTable;
     // End of variables declaration//GEN-END:variables
 
-    private void incluirVeiculo() {
-        // String nome = cbxTipo.getText();
-        // String sobrenome = txtSobrenomeCliente.getSelectedText();
-        // Locacao locacao = null;
-        //String rg = ftxtRgCliente.getText();
-    }
-
     public void apresentaInfo(String info) {
         JOptionPane.showMessageDialog(null, info + "\n", "Informação", JOptionPane.INFORMATION_MESSAGE);
     }
@@ -1257,59 +1251,17 @@ public class Frame extends javax.swing.JFrame {
         ctm.setValuesAtRow(row, cliente);
     }
 
-    public int GetSelectedRow() {
-        return clienteTable.getSelectedRow();
-    }
-    
-    public int GetSelectedClienteId() {
+    public int getSelectedRowAtClienteTable() {
         return clienteTable.getSelectedRow();
     }
 
-  /*  private void atualizarCliente() {
-        if (clienteTable.getSelectedRowCount() == 1) {
-            String nome = txtNomeCliente.getText();
-            String sobrenome = txtSobrenomeCliente.getText();
-            String rg = ftxtRgCliente.getText();
-            String cpf = ftxtCpfCliente.getText();
-            String endereco = txtEndereco.getText();
-            int row = clienteTable.getSelectedRow();
-            ctm.setValueAt(nome, row, 0);
-            ctm.setValueAt(sobrenome, row, 1);
-            ctm.setValueAt(rg, row, 2);
-            ctm.setValueAt(cpf, row, 3);
-            ctm.setValueAt(endereco, row, 4);
-            Cliente cliente = ctm.getListaClientes().get(row);
-            ClienteDaoSql c = new ClienteDaoSql();
-            c.update(cliente);
-            JOptionPane.showMessageDialog(null, "cliente id: " + cliente.getId());//test
-            clearFieldsCliente();
+    public ArrayList<Cliente> removeClientesFromSelectedRowsAtCtm() {
+        return ctm.removeSelectedRows(clienteTable);
+    }
 
-        }
-    }*/
-
-    private void removerCliente() {
-        if (clienteTable.getSelectedRow() == -1) {
-            btnRemoverCliente.setToolTipText("Selecione um ou mais clientes para remover.");
-            // Força o tooltip a aparecer imediatamente
-            ToolTipManager.sharedInstance().setInitialDelay(0);
-            // Cria um evento de mouse falso para disparar o tooltip
-            MouseEvent phantom = new MouseEvent(
-                    btnRemoverCliente,
-                    MouseEvent.MOUSE_MOVED,
-                    System.currentTimeMillis(),
-                    0,
-                    0,
-                    0,
-                    0,
-                    false);
-            ToolTipManager.sharedInstance().mouseMoved(phantom);
-        } else {
-            // Limpa o tooltip se uma linha estiver selecionada
-            btnRemoverCliente.setToolTipText(null);
-        }
+    public void removeSelectedRowsAtClienteTable() {
 
         ctm.removeSelectedRows(clienteTable);
-        clearFieldsCliente();
     }
 
     public void clearFieldsCliente() {

@@ -11,7 +11,7 @@ public class Cliente {
     private String cpf;
     private String endereco;
     private boolean comVeiculoLocado;
-    private ArrayList<Locacao> locacoes;
+    //private ArrayList<Locacao> locacoes;
 
     public Cliente(int id, String nome, String sobrenome, String rg, String cpf, String endereco, Boolean comVeiculoLocado) {
         this.id = id;
