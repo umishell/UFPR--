@@ -65,7 +65,7 @@ public class ClientesTabController {
         }
     }
 
-    public ArrayList<Cliente> showClientes() {
+    public void showClientes() {
         ClienteDaoSql c = new ClienteDaoSql();
         ArrayList<Cliente> clientes = new ArrayList<>();
         try {
@@ -75,13 +75,6 @@ public class ClientesTabController {
             view.apresentaErro("Erro ao mostrar Clientes na tabela.");
             e.printStackTrace();
         }
-        return clientes;
     }
-    
 
-    
-
-    public void initTable() {
-
-    }
 }
