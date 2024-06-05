@@ -41,24 +41,21 @@ public class MotocicletaDaoSql implements MotocicletaDao {
         }
     }
 
-    private final String insert = "insert into veiculo (idestado, valorDeCompra, tipo, ano, placa) values (?,?,?,?,?);"
-            + "insert into modelomotocicleta (idmarca, idcategoria, modelo) values (?,?,?);"
-            + "insert into motocicleta (idveiculo, idmodeloMotocicleta) values (?,?);";
+    private final String insert = """
+                                  INSERT INTO veiculo (valorDeCompra, tipo, ano, placa) VALUES (?,?,?,?);
+                                  INSERT INTO motocicleta (idveiculo, idmodeloMotocicleta) VALUES ((SELECT idveiculo FROM veiculo WHERE placa=?),
+                                  (SELECT idmodeloMotocicleta FROM modelomotocicleta WHERE modelo = ?));""";
 
     @Override
     public void add(Motocicleta moto) {
-
+//moto.to_String();
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);) {
-            stmt.setInt(1, ComboBox.getIdEstado(moto.getEstado()));
-            stmt.setDouble(2, moto.getValorDeCompra());
-            stmt.setString(3, "Motocicleta");
-            stmt.setInt(4, moto.getAno());
+            stmt.setDouble(1, moto.getValorDeCompra());
+            stmt.setString(2, "Motocicleta");
+            stmt.setInt(3, moto.getAno());
+            stmt.setString(4, moto.getPlaca());
             stmt.setString(5, moto.getPlaca());
-            stmt.setInt(6, ComboBox.getIdEstado(moto.getEstado()));
-            stmt.setInt(7, ComboBox.getIdCategoria(moto.getCategoria()));
-            stmt.setString(8, moto.getModelo());
-            stmt.setInt(9, ComboBox.getIdVeiculo(moto.getPlaca()));
-            stmt.setInt(10, ComboBox.getIdmodelo("Motocicleta", moto.getModelo()));
+            stmt.setString(6, moto.getModelo());
             stmt.execute();
 
             ResultSet rs = stmt.getGeneratedKeys();
@@ -66,7 +63,8 @@ public class MotocicletaDaoSql implements MotocicletaDao {
             int i = rs.getInt(1);
             moto.setIdveiculo(i);
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.add() Error adding moto: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.add() Error adding moto: \n" + e.getMessage());
+            e.printStackTrace();
         }
 
     }
@@ -110,7 +108,8 @@ public class MotocicletaDaoSql implements MotocicletaDao {
             return motocicletas;
 
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.getAll():  Error getting all motocicletas: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.getAll():  Error getting all motocicletas: \n" + e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }
@@ -156,7 +155,8 @@ public class MotocicletaDaoSql implements MotocicletaDao {
                 }
             }
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.getById():  Error getting moto by ID: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.getById():  Error getting moto by ID: \n" + e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }
@@ -179,7 +179,8 @@ public class MotocicletaDaoSql implements MotocicletaDao {
             stmtAtualiza.executeUpdate();
 
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.update():  Error updating moto: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.update():  Error updating moto: \n" + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -191,7 +192,8 @@ public class MotocicletaDaoSql implements MotocicletaDao {
 
         } catch (SQLException | IOException e) {
             JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.updateEstado():  "
-                    + "Error updating Estado of veiculo: " + e.getMessage());
+                    + "Error updating Estado of veiculo: \n" + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -205,7 +207,8 @@ public class MotocicletaDaoSql implements MotocicletaDao {
             stmtExcluir.executeUpdate();
 
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.delete():  Error deleting moto: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.delete():  Error deleting moto: \n" + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -216,7 +219,8 @@ public class MotocicletaDaoSql implements MotocicletaDao {
             stmtExcluir.executeUpdate();
 
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.deleteAll():  Error deleting all motos: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.deleteAll():  Error deleting all motos: \n" + e.getMessage());
+            e.printStackTrace();
         }
     }
 

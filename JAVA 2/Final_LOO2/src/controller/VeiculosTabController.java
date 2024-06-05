@@ -63,7 +63,10 @@ public class VeiculosTabController {
             }*/
 
         } catch (IOException | SQLException | NullPointerException e) {
-            view.apresentaErro("Erro ao incluir Cliente.");
+            view.apresentaErro("Erro ao incluir Veiculo.");
+            e.printStackTrace();
+        } catch (NumberFormatException e){
+            view.apresentaErro("preencha corretamente o ano.");
             e.printStackTrace();
         }
     }

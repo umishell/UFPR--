@@ -28,7 +28,7 @@ public class Main {
 
         //frame.setControllers(ctrlClientes, ctrlVeiculos, ctrlLocacao, ctrlDevolucao, ctrlVenda);
        
-        view.setControllers(ctrlClientes);
+        view.setControllers(ctrlClientes,ctrlVeiculos);
         
         view.initView(view);
 

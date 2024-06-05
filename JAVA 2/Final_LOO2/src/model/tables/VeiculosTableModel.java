@@ -13,16 +13,16 @@ public class VeiculosTableModel extends DefaultTableModel {
     private ArrayList<Van> listaVans = new ArrayList<>();
     private ArrayList<Motocicleta> listaMotocicletas = new ArrayList<>();
     private ArrayList<Automovel> listaAutomoveis = new ArrayList<>();
-    private String[] colunas = new String[]{"Marca", "Modelo", "Ano", "Preço da diária", "Placa"};
-    private int tipoVeiculo; // 1 = Van, 2 = Moto, 3 = Auto
+    private String[] colunas = new String[]{"Placa", "Marca", "Modelo", "Ano", "Preço da diária"};
+    private int tipoVeiculo; // 1 = Moto, 2 = Auto, 3 = Van
 
     public VeiculosTableModel() {
     }
 
     public VeiculosTableModel(ArrayList<Van> v, ArrayList<Motocicleta> m, ArrayList<Automovel> a) {
-        this.listaVans = v;
         this.listaMotocicletas = m;
         this.listaAutomoveis = a;
+        this.listaVans = v;
     }
 
     /*public void setTipoVeiculo(int tipoVeiculo) {
@@ -45,13 +45,13 @@ public class VeiculosTableModel extends DefaultTableModel {
     public int getRowCount() {
         switch (tipoVeiculo) {
             case 1 -> {
-                return (this.listaVans != null) ? this.listaVans.size() : 0;
-            }
-            case 2 -> {
                 return (this.listaMotocicletas != null) ? this.listaMotocicletas.size() : 0;
             }
-            case 3 -> {
+            case 2 -> {
                 return (this.listaAutomoveis != null) ? this.listaAutomoveis.size() : 0;
+            }
+            case 3 -> {
+                return (this.listaVans != null) ? this.listaVans.size() : 0;
             }
         }
         return 0;
@@ -65,14 +65,6 @@ public class VeiculosTableModel extends DefaultTableModel {
     public void limpaTabela() {
         switch (tipoVeiculo) {
             case 1 -> {
-                int indice = listaVans.size() - 1;
-                if (indice < 0) {
-                    indice = 0;
-                }
-                this.listaVans = new ArrayList();
-                this.fireTableRowsDeleted(0, indice);//update JTable
-            }
-            case 2 -> {
                 int indice = listaMotocicletas.size() - 1;
                 if (indice < 0) {
                     indice = 0;
@@ -80,12 +72,20 @@ public class VeiculosTableModel extends DefaultTableModel {
                 this.listaMotocicletas = new ArrayList();
                 this.fireTableRowsDeleted(0, indice);//update JTable
             }
-            case 3 -> {
+            case 2 -> {
                 int indice = listaAutomoveis.size() - 1;
                 if (indice < 0) {
                     indice = 0;
                 }
                 this.listaAutomoveis = new ArrayList();
+                this.fireTableRowsDeleted(0, indice);//update JTable
+            }
+            case 3 -> {
+                int indice = listaVans.size() - 1;
+                if (indice < 0) {
+                    indice = 0;
+                }
+                this.listaVans = new ArrayList();
                 this.fireTableRowsDeleted(0, indice);//update JTable
             }
         }
@@ -100,52 +100,52 @@ public class VeiculosTableModel extends DefaultTableModel {
     public Object getValueAt(int row, int col) {
         switch (tipoVeiculo) {
             case 1 -> {
-                Van van = listaVans.get(row);
+                Motocicleta moto = listaMotocicletas.get(row);
                 return switch (col) {
                     case 0 ->
-                        van.getMarca();
+                        moto.getPlaca();
                     case 1 ->
-                        van.getModelo();
+                        moto.getMarca();
                     case 2 ->
-                        van.getAno();
+                        moto.getModelo();
                     case 3 ->
-                        van.getValorDeCompra();
+                        moto.getAno();
                     case 4 ->
-                        van.getPlaca();
+                        moto.getValorDeCompra();
                     default ->
                         null;
                 };
             }
             case 2 -> {
-                Motocicleta moto = listaMotocicletas.get(row);
+                Automovel auto = listaAutomoveis.get(row);
                 return switch (col) {
                     case 0 ->
-                        moto.getMarca();
+                        auto.getPlaca();
                     case 1 ->
-                        moto.getModelo();
+                        auto.getMarca();
                     case 2 ->
-                        moto.getAno();
+                        auto.getModelo();
                     case 3 ->
-                        moto.getValorDeCompra();
+                        auto.getAno();
                     case 4 ->
-                        moto.getPlaca();
+                        auto.getValorDeCompra();
                     default ->
                         null;
                 };
             }
             case 3 -> {
-                Automovel auto = listaAutomoveis.get(row);
+                Van van = listaVans.get(row);
                 return switch (col) {
                     case 0 ->
-                        auto.getMarca();
+                        van.getPlaca();
                     case 1 ->
-                        auto.getModelo();
+                        van.getMarca();
                     case 2 ->
-                        auto.getAno();
+                        van.getModelo();
                     case 3 ->
-                        auto.getValorDeCompra();
+                        van.getAno();
                     case 4 ->
-                        auto.getPlaca();
+                        van.getValorDeCompra();
                     default ->
                         null;
                 };

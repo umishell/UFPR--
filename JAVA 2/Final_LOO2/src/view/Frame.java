@@ -1,7 +1,7 @@
 package view;
 
-import controller.ClientesTabController;
 import controller.Main;
+import controller.ClientesTabController;
 import controller.VeiculosTabController;
 import model.tables.ClienteLocacaoTableModel;
 import model.enums.Categoria;
@@ -70,18 +70,11 @@ public class Frame extends javax.swing.JFrame {
     }
 
     public void initView(Frame frame) {
-        // 1. Set the frame's size (optional, adjust as needed)
-        //frame.setSize(800, 600);
-
-        // 2. Set the frame's default close operation (optional)
+        frame.setSize(1455, 800);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Example
-
-        // 3. (Optional) Add other components or layout managers to the frame
-        // 4. Make the frame visible
         frame.setVisible(true);
     }
 
-    
     public void setControllers(ClientesTabController ctrlClientes, VeiculosTabController ctrlVeiculos/*,
             LocacaoTabController ctrlLocacao, DevolucaoTabController ctrlDevolucao,
             VendaTabController ctrlVenda*/) {
@@ -92,12 +85,11 @@ public class Frame extends javax.swing.JFrame {
         //this.ctrlDevolucao = ctrlDevolucao;
         //this.ctrlVenda = ctrlVenda;
     }
-     
-    //FOR TESTING
-    public void setControllers(ClientesTabController ctrlClientes) {
-        this.ctrlClientes = ctrlClientes;
-    }
 
+    //FOR TESTING
+    // public void setControllers(ClientesTabController ctrlClientes) {
+    //   this.ctrlClientes = ctrlClientes;
+    //}
     public ClienteTableModel getCtm() {
         return ctm;
     }
@@ -107,24 +99,6 @@ public class Frame extends javax.swing.JFrame {
     private void initComponents() {
 
         paneAllTabs = new javax.swing.JTabbedPane();
-        tabCliente = new javax.swing.JPanel();
-        lblNomeCliente = new javax.swing.JLabel();
-        lblSobrenomeCliente = new javax.swing.JLabel();
-        lblRgCliente = new javax.swing.JLabel();
-        lblCpfCliente = new javax.swing.JLabel();
-        lblEnderecoCliente = new javax.swing.JLabel();
-        txtNomeCliente = new javax.swing.JTextField();
-        txtSobrenomeCliente = new javax.swing.JTextField();
-        ftxtRgCliente = new javax.swing.JFormattedTextField();
-        ftxtCpfCliente = new javax.swing.JFormattedTextField();
-        txtEndereco = new javax.swing.JTextField();
-        btnIncluirCliente = new javax.swing.JButton();
-        btnListarCliente = new javax.swing.JButton();
-        btnRemoverCliente = new javax.swing.JButton();
-        btnLimparCliente = new javax.swing.JButton();
-        btnAtualizarCliente = new javax.swing.JButton();
-        paneClienteTable = new javax.swing.JScrollPane();
-        clienteTable = new javax.swing.JTable();
         tabVeiculos = new javax.swing.JPanel();
         paneVeiculosTable = new javax.swing.JScrollPane();
         veiculosTable = new javax.swing.JTable();
@@ -144,6 +118,24 @@ public class Frame extends javax.swing.JFrame {
         ftxtValorDeCompra = new javax.swing.JFormattedTextField();
         cboxMarca = new javax.swing.JComboBox<>();
         cboxCategoria = new javax.swing.JComboBox<>();
+        tabCliente = new javax.swing.JPanel();
+        lblNomeCliente = new javax.swing.JLabel();
+        lblSobrenomeCliente = new javax.swing.JLabel();
+        lblRgCliente = new javax.swing.JLabel();
+        lblCpfCliente = new javax.swing.JLabel();
+        lblEnderecoCliente = new javax.swing.JLabel();
+        txtNomeCliente = new javax.swing.JTextField();
+        txtSobrenomeCliente = new javax.swing.JTextField();
+        ftxtRgCliente = new javax.swing.JFormattedTextField();
+        ftxtCpfCliente = new javax.swing.JFormattedTextField();
+        txtEndereco = new javax.swing.JTextField();
+        btnIncluirCliente = new javax.swing.JButton();
+        btnListarCliente = new javax.swing.JButton();
+        btnRemoverCliente = new javax.swing.JButton();
+        btnLimparCliente = new javax.swing.JButton();
+        btnAtualizarCliente = new javax.swing.JButton();
+        paneClienteTable = new javax.swing.JScrollPane();
+        clienteTable = new javax.swing.JTable();
         tabLocacao = new javax.swing.JPanel();
         btnVans = new javax.swing.JButton();
         btnMotocicletas = new javax.swing.JButton();
@@ -183,196 +175,6 @@ public class Frame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         paneAllTabs.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        lblNomeCliente.setText("Nome");
-
-        lblSobrenomeCliente.setText("Sobrenome");
-
-        lblRgCliente.setText("RG");
-
-        lblCpfCliente.setText("CPF");
-
-        lblEnderecoCliente.setText("Endereço");
-
-        txtNomeCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNomeClienteActionPerformed(evt);
-            }
-        });
-
-        try {
-            ftxtRgCliente.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###-#")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        ftxtRgCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ftxtRgClienteActionPerformed(evt);
-            }
-        });
-
-        try {
-            ftxtCpfCliente.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        ftxtCpfCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ftxtCpfClienteActionPerformed(evt);
-            }
-        });
-
-        btnIncluirCliente.setText("Incluir");
-        btnIncluirCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIncluirClienteActionPerformed(evt);
-            }
-        });
-
-        btnListarCliente.setText("Listar");
-        btnListarCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnListarClienteActionPerformed(evt);
-            }
-        });
-
-        btnRemoverCliente.setText("Remover");
-        btnRemoverCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRemoverClienteActionPerformed(evt);
-            }
-        });
-
-        btnLimparCliente.setText("Limpar");
-        btnLimparCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimparClienteActionPerformed(evt);
-            }
-        });
-
-        btnAtualizarCliente.setText("Atualizar");
-        btnAtualizarCliente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAtualizarClienteActionPerformed(evt);
-            }
-        });
-
-        clienteTable.setModel(ctm);
-        paneClienteTable.setViewportView(clienteTable);
-        clienteTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
-            public void valueChanged(ListSelectionEvent event) {
-                // Verifique se há uma linha selecionada
-                if (clienteTable.getSelectedRow() != -1) {
-                    // Obtenha o valor da célula na coluna que você está interessado
-                    Object nome = clienteTable.getValueAt(clienteTable.getSelectedRow(), 0); // Altere o 0 para o índice da coluna que você deseja
-                    Object sobrenome = clienteTable.getValueAt(clienteTable.getSelectedRow(), 1);
-                    Object rg = clienteTable.getValueAt(clienteTable.getSelectedRow(), 2);
-                    Object cpf = clienteTable.getValueAt(clienteTable.getSelectedRow(), 3);
-                    Object endereco = clienteTable.getValueAt(clienteTable.getSelectedRow(), 4);
-                    // Defina o valor no JTextField
-                    txtNomeCliente.setText(nome.toString());
-                    txtSobrenomeCliente.setText(sobrenome.toString());
-                    ftxtRgCliente.setText(rg.toString());
-                    ftxtCpfCliente.setText(cpf.toString());
-                    txtEndereco.setText(endereco.toString());
-
-                }
-            }
-        });
-
-        javax.swing.GroupLayout tabClienteLayout = new javax.swing.GroupLayout(tabCliente);
-        tabCliente.setLayout(tabClienteLayout);
-        tabClienteLayout.setHorizontalGroup(
-            tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tabClienteLayout.createSequentialGroup()
-                .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(tabClienteLayout.createSequentialGroup()
-                                .addGap(19, 19, 19)
-                                .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(lblCpfCliente, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblEnderecoCliente, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblSobrenomeCliente, javax.swing.GroupLayout.Alignment.TRAILING))
-                                .addGap(18, 18, 18)
-                                .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtSobrenomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(ftxtCpfCliente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(tabClienteLayout.createSequentialGroup()
-                                .addGap(48, 48, 48)
-                                .addComponent(lblNomeCliente)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabClienteLayout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(lblRgCliente)
-                            .addGap(18, 18, 18)
-                            .addComponent(ftxtRgCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(tabClienteLayout.createSequentialGroup()
-                        .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(tabClienteLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(btnIncluirCliente)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnAtualizarCliente))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tabClienteLayout.createSequentialGroup()
-                                .addGap(47, 47, 47)
-                                .addComponent(btnRemoverCliente)))
-                        .addGap(53, 53, 53)
-                        .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnListarCliente)
-                            .addComponent(btnLimparCliente))))
-                .addGap(30, 30, 30)
-                .addComponent(paneClienteTable, javax.swing.GroupLayout.PREFERRED_SIZE, 704, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(160, Short.MAX_VALUE))
-        );
-        tabClienteLayout.setVerticalGroup(
-            tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tabClienteLayout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(tabClienteLayout.createSequentialGroup()
-                        .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblNomeCliente)
-                            .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(17, 17, 17)
-                        .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtSobrenomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblSobrenomeCliente))
-                        .addGap(18, 18, 18)
-                        .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ftxtRgCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblRgCliente))
-                        .addGap(18, 18, 18)
-                        .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ftxtCpfCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblCpfCliente))
-                        .addGap(18, 18, 18)
-                        .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblEnderecoCliente))
-                        .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(tabClienteLayout.createSequentialGroup()
-                                .addGap(50, 50, 50)
-                                .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(btnIncluirCliente)
-                                    .addComponent(btnAtualizarCliente)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabClienteLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnListarCliente)))
-                        .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(tabClienteLayout.createSequentialGroup()
-                                .addGap(37, 37, 37)
-                                .addComponent(btnRemoverCliente))
-                            .addGroup(tabClienteLayout.createSequentialGroup()
-                                .addGap(29, 29, 29)
-                                .addComponent(btnLimparCliente))))
-                    .addComponent(paneClienteTable, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(141, 141, 141))
-        );
-
-        paneAllTabs.addTab("Clientes", tabCliente);
 
         tabVeiculos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         tabVeiculos.addComponentListener(new java.awt.event.ComponentAdapter() {
@@ -514,8 +316,8 @@ public class Frame extends javax.swing.JFrame {
                         .addGap(179, 179, 179)
                         .addComponent(btnIncluirVeiculo)))
                 .addGap(56, 56, 56)
-                .addComponent(paneVeiculosTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(504, Short.MAX_VALUE))
+                .addComponent(paneVeiculosTable, javax.swing.GroupLayout.PREFERRED_SIZE, 804, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(152, Short.MAX_VALUE))
         );
         tabVeiculosLayout.setVerticalGroup(
             tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -561,6 +363,196 @@ public class Frame extends javax.swing.JFrame {
         );
 
         paneAllTabs.addTab("Veículos", tabVeiculos);
+
+        lblNomeCliente.setText("Nome");
+
+        lblSobrenomeCliente.setText("Sobrenome");
+
+        lblRgCliente.setText("RG");
+
+        lblCpfCliente.setText("CPF");
+
+        lblEnderecoCliente.setText("Endereço");
+
+        txtNomeCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNomeClienteActionPerformed(evt);
+            }
+        });
+
+        try {
+            ftxtRgCliente.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###-#")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        ftxtRgCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ftxtRgClienteActionPerformed(evt);
+            }
+        });
+
+        try {
+            ftxtCpfCliente.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        ftxtCpfCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ftxtCpfClienteActionPerformed(evt);
+            }
+        });
+
+        btnIncluirCliente.setText("Incluir");
+        btnIncluirCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIncluirClienteActionPerformed(evt);
+            }
+        });
+
+        btnListarCliente.setText("Listar");
+        btnListarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarClienteActionPerformed(evt);
+            }
+        });
+
+        btnRemoverCliente.setText("Remover");
+        btnRemoverCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoverClienteActionPerformed(evt);
+            }
+        });
+
+        btnLimparCliente.setText("Limpar");
+        btnLimparCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimparClienteActionPerformed(evt);
+            }
+        });
+
+        btnAtualizarCliente.setText("Atualizar");
+        btnAtualizarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarClienteActionPerformed(evt);
+            }
+        });
+
+        clienteTable.setModel(ctm);
+        paneClienteTable.setViewportView(clienteTable);
+        clienteTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent event) {
+                // Verifique se há uma linha selecionada
+                if (clienteTable.getSelectedRow() != -1) {
+                    // Obtenha o valor da célula na coluna que você está interessado
+                    Object nome = clienteTable.getValueAt(clienteTable.getSelectedRow(), 0); // Altere o 0 para o índice da coluna que você deseja
+                    Object sobrenome = clienteTable.getValueAt(clienteTable.getSelectedRow(), 1);
+                    Object rg = clienteTable.getValueAt(clienteTable.getSelectedRow(), 2);
+                    Object cpf = clienteTable.getValueAt(clienteTable.getSelectedRow(), 3);
+                    Object endereco = clienteTable.getValueAt(clienteTable.getSelectedRow(), 4);
+                    // Defina o valor no JTextField
+                    txtNomeCliente.setText(nome.toString());
+                    txtSobrenomeCliente.setText(sobrenome.toString());
+                    ftxtRgCliente.setText(rg.toString());
+                    ftxtCpfCliente.setText(cpf.toString());
+                    txtEndereco.setText(endereco.toString());
+
+                }
+            }
+        });
+
+        javax.swing.GroupLayout tabClienteLayout = new javax.swing.GroupLayout(tabCliente);
+        tabCliente.setLayout(tabClienteLayout);
+        tabClienteLayout.setHorizontalGroup(
+            tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabClienteLayout.createSequentialGroup()
+                .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(tabClienteLayout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblCpfCliente, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblEnderecoCliente, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblSobrenomeCliente, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGap(18, 18, 18)
+                                .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtSobrenomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(ftxtCpfCliente, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(tabClienteLayout.createSequentialGroup()
+                                .addGap(48, 48, 48)
+                                .addComponent(lblNomeCliente)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabClienteLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(lblRgCliente)
+                            .addGap(18, 18, 18)
+                            .addComponent(ftxtRgCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(tabClienteLayout.createSequentialGroup()
+                        .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(tabClienteLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(btnIncluirCliente)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAtualizarCliente))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, tabClienteLayout.createSequentialGroup()
+                                .addGap(47, 47, 47)
+                                .addComponent(btnRemoverCliente)))
+                        .addGap(53, 53, 53)
+                        .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnListarCliente)
+                            .addComponent(btnLimparCliente))))
+                .addGap(30, 30, 30)
+                .addComponent(paneClienteTable, javax.swing.GroupLayout.PREFERRED_SIZE, 815, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(49, Short.MAX_VALUE))
+        );
+        tabClienteLayout.setVerticalGroup(
+            tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(tabClienteLayout.createSequentialGroup()
+                .addGap(42, 42, 42)
+                .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tabClienteLayout.createSequentialGroup()
+                        .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblNomeCliente)
+                            .addComponent(txtNomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(17, 17, 17)
+                        .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtSobrenomeCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblSobrenomeCliente))
+                        .addGap(18, 18, 18)
+                        .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ftxtRgCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblRgCliente))
+                        .addGap(18, 18, 18)
+                        .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(ftxtCpfCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblCpfCliente))
+                        .addGap(18, 18, 18)
+                        .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtEndereco, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblEnderecoCliente))
+                        .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(tabClienteLayout.createSequentialGroup()
+                                .addGap(50, 50, 50)
+                                .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btnIncluirCliente)
+                                    .addComponent(btnAtualizarCliente)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabClienteLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnListarCliente)))
+                        .addGroup(tabClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(tabClienteLayout.createSequentialGroup()
+                                .addGap(37, 37, 37)
+                                .addComponent(btnRemoverCliente))
+                            .addGroup(tabClienteLayout.createSequentialGroup()
+                                .addGap(29, 29, 29)
+                                .addComponent(btnLimparCliente))))
+                    .addComponent(paneClienteTable, javax.swing.GroupLayout.PREFERRED_SIZE, 451, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(141, 141, 141))
+        );
+
+        paneAllTabs.addTab("Clientes", tabCliente);
 
         tabLocacao.addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
@@ -916,7 +908,7 @@ public class Frame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(paneAllTabs, javax.swing.GroupLayout.PREFERRED_SIZE, 1344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 8, Short.MAX_VALUE))
+                .addGap(0, 100, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -931,7 +923,7 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNomeClienteActionPerformed
 
     private void btnIncluirVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirVeiculoActionPerformed
-        
+
         ctrlVeiculos.newVeiculo();
         /*      Marca marca = (Marca) cbxMarca.getSelectedItem();
         Estado estado = (Estado) cbxEstado.getSelectedItem();
@@ -1307,28 +1299,29 @@ public class Frame extends javax.swing.JFrame {
         }
     }
 
-    public Veiculo getVeiculoFormulario() {
+    public Veiculo getVeiculoFormulario() throws NumberFormatException {
         String tipo = (String) cboxTipo.getSelectedItem();
         String marca = (String) cboxMarca.getSelectedItem();
         String categoria = (String) cboxCategoria.getSelectedItem();
         String modelo = (String) cboxModelo.getSelectedItem();
-        Double valorDeCompra = (Double) ftxtValorDeCompra.getValue();
+        Double valorDeCompra = Double.parseDouble(ftxtValorDeCompra.getText());
         String placa = ftxtPlaca.getText();
-        int ano = (int) ftxtAno.getValue();
-        if (modelo.isEmpty() || placa.isEmpty()) {
+        int ano = Integer.parseInt(ftxtAno.getText());
+        if (modelo.isBlank() || placa.isBlank()) {
             JOptionPane.showMessageDialog(null, "escolha marca, categoria e modelo, e preencha a placa do veiculo.");
+        } else {
+            return switch (tipo) {
+                case "Motocicleta" ->
+                    new Motocicleta(marca, categoria, valorDeCompra, placa, ano, modelo);
+                case "Automovel" ->
+                    new Automovel(marca, categoria, valorDeCompra, placa, ano, modelo);
+                case "Van" ->
+                    new Van(marca, categoria, valorDeCompra, placa, ano, modelo);
+                default ->
+                    null;
+            };
         }
-
-        return switch (tipo) {
-            case "Motocicleta" ->
-                new Motocicleta(marca, categoria, valorDeCompra, placa, ano, modelo);
-            case "Automovel" ->
-                new Automovel(marca, categoria, valorDeCompra, placa, ano, modelo);
-            case "Van" ->
-                new Van(marca, categoria, valorDeCompra, placa, ano, modelo);
-            default ->
-                null;
-        };
+        return null;
     }
 
     public void updateClienteAtCtm(int row, Cliente cliente) {
