@@ -7,10 +7,16 @@ public class Motocicleta extends Veiculo {
 
     private String modelo;
 
-    public Motocicleta(String marca, String estado, ArrayList<Locacao> locacoes, String categoria, 
-                       double valorDeCompra, String placa, int ano, String m) {
-        super(marca, estado, locacoes, categoria, valorDeCompra, placa, ano);
-        modelo = m;
+    public Motocicleta(String marca, String categoria,
+            double valorDeCompra, String placa, int ano, String modelo) {
+        super("Motocicleta", marca, categoria, valorDeCompra, placa, ano);
+        this.modelo = modelo;
+    }
+
+    public Motocicleta(int id, String tipo, String marca, String estado, ArrayList<Locacao> locacoes, String categoria,
+            double valorDeCompra, String placa, int ano, String modelo) {
+        super(id, tipo,  marca, estado, locacoes, categoria, valorDeCompra, placa, ano);
+        this.modelo = modelo;
     }
 
     public String getModelo() {
@@ -36,11 +42,8 @@ public class Motocicleta extends Veiculo {
         //}
     }
 
+    public double getValorDiariaLocacao(String s) {
 
-
-
-public double getValorDiariaLocacao(String s){
-        
         switch (s) {
             case "popular" -> {
                 return 70;
@@ -53,8 +56,10 @@ public double getValorDiariaLocacao(String s){
             }
         }
         return 0;
-}
- 
+    }
 
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
 
 }

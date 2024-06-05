@@ -31,6 +31,15 @@ public class ClienteDaoSql implements ClienteDao {
         }
     }
 
+    public boolean clienteExists(Cliente cliente) throws SQLException, IOException, NullPointerException {
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(selectByCpf)) {
+            stmt.setString(1, cliente.getCpf());
+            ResultSet rs = stmt.executeQuery();
+            // Check if any row is returned (indicating CPF exists)
+            return rs.next();
+        }
+    }
+
     @Override
     public void add(Cliente cliente) throws SQLException, IOException {
 
@@ -140,9 +149,7 @@ public class ClienteDaoSql implements ClienteDao {
     @Override
     public void delete(Cliente cliente) throws SQLException, IOException {
         String cpf = cliente.getCpf();
-        try (Connection conn = ConnectionFactory.getConnection(); 
-                PreparedStatement stmt= conn.prepareStatement(deleteLocacaoIdCliente); 
-                PreparedStatement stmt1 = conn.prepareStatement(delete);) {
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(deleteLocacaoIdCliente); PreparedStatement stmt1 = conn.prepareStatement(delete);) {
             stmt.setString(1, cpf);
             stmt.executeUpdate();
             stmt1.setString(1, cpf);
@@ -158,13 +165,4 @@ public class ClienteDaoSql implements ClienteDao {
         }
     }
 
-    public boolean clienteCpfExists(Cliente cliente) throws SQLException, IOException, NullPointerException {
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(selectByCpf)) {
-            stmt.setString(1, cliente.getCpf());
-            ResultSet rs = stmt.executeQuery();
-
-            // Check if any row is returned (indicating CPF exists)
-            return rs.next();
-        }
-    }
 }

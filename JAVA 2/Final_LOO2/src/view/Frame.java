@@ -2,6 +2,7 @@ package view;
 
 import controller.ClientesTabController;
 import controller.Main;
+import controller.VeiculosTabController;
 import model.tables.ClienteLocacaoTableModel;
 import model.enums.Categoria;
 import model.enums.Marca;
@@ -18,16 +19,20 @@ import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import model.combo.ComboBox;
+import model.dto.Automovel;
+import model.dto.Motocicleta;
+import model.dto.Van;
 import model.dto.Veiculo;
 import model.tables.VeiculoDevolverTableModel;
 import model.tables.VeiculoVenderTableModel;
+import model.tables.VeiculosTableModel;
 
 public class Frame extends javax.swing.JFrame {
 
     private Main main;
 
     private ClientesTabController ctrlClientes;
-    //VeiculosTabController ctrlVeiculos;
+    private VeiculosTabController ctrlVeiculos;
     //LocacaoTabController ctrlLocacao;
     //DevolucaoTabController ctrlDevolucao;
     //VendaTabController ctrlVenda;
@@ -37,13 +42,14 @@ public class Frame extends javax.swing.JFrame {
     private ClienteLocacaoTableModel cltm;
     private VeiculoDevolverTableModel vdtm;
     private VeiculoVenderTableModel vvtm;
-
+    private VeiculosTableModel vtm;
     private FiltroDeTabela f, f1;
 
     public Frame() {
 
         //TABLE MODELS
         ctm = new ClienteTableModel();
+        vtm = new VeiculosTableModel();
         lvtm = new LocarVeiculoTableModel();
         cltm = new ClienteLocacaoTableModel();
         vdtm = new VeiculoDevolverTableModel();
@@ -75,18 +81,18 @@ public class Frame extends javax.swing.JFrame {
         frame.setVisible(true);
     }
 
-    /*
-    public void setControllers(ClientesTabController ctrlClientes, VeiculosTabController ctrlVeiculos,
+    
+    public void setControllers(ClientesTabController ctrlClientes, VeiculosTabController ctrlVeiculos/*,
             LocacaoTabController ctrlLocacao, DevolucaoTabController ctrlDevolucao,
-            VendaTabController ctrlVenda) {
+            VendaTabController ctrlVenda*/) {
 
         this.ctrlClientes = ctrlClientes;
         this.ctrlVeiculos = ctrlVeiculos;
-        this.ctrlLocacao = ctrlLocacao;
-        this.ctrlDevolucao = ctrlDevolucao;
-        this.ctrlVenda = ctrlVenda;
+        //this.ctrlLocacao = ctrlLocacao;
+        //this.ctrlDevolucao = ctrlDevolucao;
+        //this.ctrlVenda = ctrlVenda;
     }
-     */
+     
     //FOR TESTING
     public void setControllers(ClientesTabController ctrlClientes) {
         this.ctrlClientes = ctrlClientes;
@@ -375,7 +381,7 @@ public class Frame extends javax.swing.JFrame {
             }
         });
 
-        veiculosTable.setModel(ctm);
+        veiculosTable.setModel(vtm);
         paneVeiculosTable.setViewportView(veiculosTable);
         clienteTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
             public void valueChanged(ListSelectionEvent event) {
@@ -925,6 +931,8 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNomeClienteActionPerformed
 
     private void btnIncluirVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirVeiculoActionPerformed
+        
+        ctrlVeiculos.newVeiculo();
         /*      Marca marca = (Marca) cbxMarca.getSelectedItem();
         Estado estado = (Estado) cbxEstado.getSelectedItem();
         Locacao locacao = null;
@@ -1286,29 +1294,41 @@ public class Frame extends javax.swing.JFrame {
         return null;
     }
 
-    public Veiculo getVeiculoFormulario() {
-        String tipo = (String) cboxTipo.getSelectedItem();
-        switch (tipo) {
-            case "Motocicleta" -> {
-                String marca = txtSobrenomeCliente.getText();
-                String categoria = ftxtRgCliente.getText();
-                String modelo = ftxtCpfCliente.getText();
-                Double valorDeCompra = txtEndereco.getText
-                String placa = txtEndereco.getText();
-                int ano = txtEndereco.getText();
-                if (nome.isEmpty() || sobrenome.isEmpty() || cpf.isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "preencha o nome, sobrenome e cpf.");
-                } else {
-                    return new Motocicleta(nome, sobrenome, rg, cpf, endereco);
-                }
-            }
+    public void addVeiculoToVtm(Veiculo v) {
+        switch (v.getTipo()) {
+            case "Motocicleta" ->
+                vtm.addMotocicleta((Motocicleta) v);
             case "Automovel" ->
+                vtm.addAutomovel((Automovel) v);
             case "Van" ->
+                vtm.addVan((Van) v);
             default -> {
             }
         }
+    }
 
-        return null;
+    public Veiculo getVeiculoFormulario() {
+        String tipo = (String) cboxTipo.getSelectedItem();
+        String marca = (String) cboxMarca.getSelectedItem();
+        String categoria = (String) cboxCategoria.getSelectedItem();
+        String modelo = (String) cboxModelo.getSelectedItem();
+        Double valorDeCompra = (Double) ftxtValorDeCompra.getValue();
+        String placa = ftxtPlaca.getText();
+        int ano = (int) ftxtAno.getValue();
+        if (modelo.isEmpty() || placa.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "escolha marca, categoria e modelo, e preencha a placa do veiculo.");
+        }
+
+        return switch (tipo) {
+            case "Motocicleta" ->
+                new Motocicleta(marca, categoria, valorDeCompra, placa, ano, modelo);
+            case "Automovel" ->
+                new Automovel(marca, categoria, valorDeCompra, placa, ano, modelo);
+            case "Van" ->
+                new Van(marca, categoria, valorDeCompra, placa, ano, modelo);
+            default ->
+                null;
+        };
     }
 
     public void updateClienteAtCtm(int row, Cliente cliente) {

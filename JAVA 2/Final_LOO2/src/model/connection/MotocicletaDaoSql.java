@@ -15,20 +15,29 @@ import model.dto.Motocicleta;
 
 public class MotocicletaDaoSql implements MotocicletaDao {
 
-
+    private final String selectByPlaca = "SELECT * from veiculo WHERE placa=?";
     private final String updateEstado = "update veiculo set idestado=? WHERE idveiculo=?";
     private final String delete = "delete from motocicleta WHERE idveiculo=?; "
-                                + "delete from veiculo where idveiculo=?";
+            + "delete from veiculo where idveiculo=?";
     private final String deleteAll = "TRUNCATE motocicleta;"
-                                   + "delete from veiculo where tipo = 1";
+            + "delete from veiculo where tipo = 1";
 
-    private static ClienteDaoSql dao;
+    private static MotocicletaDaoSql dao;
 
-    public static ClienteDaoSql getClienteDaoSql() {
+    public static MotocicletaDaoSql getMotocicletaDaoSql() {
         if (dao == null) {
-            return dao = new ClienteDaoSql();
+            return dao = new MotocicletaDaoSql();
         } else {
             return dao;
+        }
+    }
+
+    public boolean motoExists(Motocicleta moto) throws SQLException, IOException, NullPointerException {
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(selectByPlaca)) {
+            stmt.setString(1, moto.getPlaca());
+            ResultSet rs = stmt.executeQuery();
+            // Check if any row is returned (indicating Placa exists)
+            return rs.next();
         }
     }
 
@@ -39,23 +48,23 @@ public class MotocicletaDaoSql implements MotocicletaDao {
     @Override
     public void add(Motocicleta moto) {
 
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtAdiciona = conn.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);) {
-            stmtAdiciona.setInt(1, ComboBox.getIdEstado(moto.getEstado()));
-            stmtAdiciona.setDouble(2, moto.getValorDeCompra()); 
-            stmtAdiciona.setInt(3, 1);
-            stmtAdiciona.setInt(4, moto.getAno());
-            stmtAdiciona.setString(5, moto.getPlaca());
-            stmtAdiciona.setInt(6, ComboBox.getIdEstado(moto.getEstado()));
-            stmtAdiciona.setInt(7, ComboBox.getIdCategoria(moto.getCategoria()));
-            stmtAdiciona.setString(8, moto.getModelo());
-            stmtAdiciona.setInt(9, ComboBox.getIdVeiculo(moto.getPlaca()));
-            stmtAdiciona.setInt(10, ComboBox.getIdmodelo("Motocicleta", moto.getModelo()));
-            stmtAdiciona.execute();
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);) {
+            stmt.setInt(1, ComboBox.getIdEstado(moto.getEstado()));
+            stmt.setDouble(2, moto.getValorDeCompra());
+            stmt.setString(3, "Motocicleta");
+            stmt.setInt(4, moto.getAno());
+            stmt.setString(5, moto.getPlaca());
+            stmt.setInt(6, ComboBox.getIdEstado(moto.getEstado()));
+            stmt.setInt(7, ComboBox.getIdCategoria(moto.getCategoria()));
+            stmt.setString(8, moto.getModelo());
+            stmt.setInt(9, ComboBox.getIdVeiculo(moto.getPlaca()));
+            stmt.setInt(10, ComboBox.getIdmodelo("Motocicleta", moto.getModelo()));
+            stmt.execute();
 
-            //ResultSet rs = stmtAdiciona.getGeneratedKeys();
-            //rs.next();
-            //int i = rs.getInt(1);
-            //moto.setId(i);
+            ResultSet rs = stmt.getGeneratedKeys();
+            rs.next();
+            int i = rs.getInt(1);
+            moto.setIdveiculo(i);
         } catch (SQLException | IOException e) {
             JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.add() Error adding moto: " + e.getMessage());
         }
@@ -85,6 +94,7 @@ public class MotocicletaDaoSql implements MotocicletaDao {
             List<Motocicleta> motocicletas = new ArrayList();
             while (rs.next()) {
                 int idveiculo = rs.getInt("idveiculo");
+                String tipo = rs.getString("tipo");
                 String marca = rs.getString("marca");
                 String estado = rs.getString("estado");
                 LocacaoDaoSql l = new LocacaoDaoSql();
@@ -95,7 +105,7 @@ public class MotocicletaDaoSql implements MotocicletaDao {
                 int ano = rs.getInt("ano");
                 String modelo = rs.getString("modelo");
 
-                motocicletas.add(new Motocicleta(marca, estado, locacoes, categoria, valorDeCompra, placa, ano, modelo));
+                motocicletas.add(new Motocicleta(idveiculo, tipo, marca, estado, locacoes, categoria, valorDeCompra, placa, ano, modelo));
             }
             return motocicletas;
 
@@ -129,6 +139,7 @@ public class MotocicletaDaoSql implements MotocicletaDao {
             try (ResultSet rs = stmtLista.executeQuery()) {
                 if (rs.next()) {
                     int idveiculo = rs.getInt("idveiculo");
+                    String tipo = rs.getString("tipo");
                     String marca = rs.getString("marca");
                     String estado = rs.getString("estado");
                     LocacaoDaoSql l = new LocacaoDaoSql();
@@ -139,7 +150,7 @@ public class MotocicletaDaoSql implements MotocicletaDao {
                     int ano = rs.getInt("ano");
                     String modelo = rs.getString("modelo");
 
-                    return new Motocicleta(marca, estado, locacoes, categoria, valorDeCompra, placa, ano, modelo);
+                    return new Motocicleta(idveiculo, tipo, marca, estado, locacoes, categoria, valorDeCompra, placa, ano, modelo);
                 } else {
                     throw new SQLException("Moto não encontrado com id=" + id);
                 }
@@ -190,7 +201,7 @@ public class MotocicletaDaoSql implements MotocicletaDao {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtExcluir = conn.prepareStatement(delete);) {
             stmtExcluir.setInt(1, ComboBox.getIdVeiculo(moto.getPlaca()));
             stmtExcluir.setInt(1, ComboBox.getIdVeiculo(moto.getPlaca()));
-            
+
             stmtExcluir.executeUpdate();
 
         } catch (SQLException | IOException e) {

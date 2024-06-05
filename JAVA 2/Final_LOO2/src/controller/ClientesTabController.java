@@ -23,7 +23,7 @@ public class ClientesTabController {
     public void newCliente() {
         try {
             Cliente cliente = view.getClienteFormulario();
-            if (!cliDao.clienteCpfExists(cliente)) {
+            if (!cliDao.clienteExists(cliente)) {
                 view.addClienteToCtm(cliente);
                 cliDao.add(cliente);
                 view.clearFieldsCliente();

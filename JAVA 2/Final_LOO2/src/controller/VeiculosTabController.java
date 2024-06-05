@@ -35,10 +35,10 @@ public class VeiculosTabController {
 
             if (v instanceof Motocicleta) {
                 Motocicleta moto = (Motocicleta) v;
-                if (!motoDao.motocicletaExists(moto)) {
+                if (!motoDao.motoExists(moto)) {
                     view.addVeiculoToVtm(moto);
                     motoDao.add(moto);
-                    view.clearFieldsVeiculo();
+                    //view.clearFieldsVeiculo();
                 } else {
                     view.apresentaInfo("vehicle already exists");
                 }
@@ -67,7 +67,7 @@ public class VeiculosTabController {
             e.printStackTrace();
         }
     }
-
+/*
     public void updateVeiculo() {
         try {
             Cliente cliente = view.getClienteFormulario();
@@ -96,7 +96,7 @@ public class VeiculosTabController {
             e.printStackTrace();
         }
     }
-
+*/
     public void showVeiculos() {
         ClienteDaoSql c = new ClienteDaoSql();
         ArrayList<Cliente> clientes = new ArrayList<>();
