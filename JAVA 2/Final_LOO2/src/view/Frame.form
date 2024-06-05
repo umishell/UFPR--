@@ -358,7 +358,7 @@
                                               <Component id="cboxCategoria" max="32767" attributes="0"/>
                                           </Group>
                                           <Component id="cboxModelo" min="-2" pref="190" max="-2" attributes="0"/>
-                                          <Component id="cbxTipo" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
+                                          <Component id="cboxTipo" alignment="0" min="-2" pref="120" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
@@ -369,58 +369,87 @@
                               <Component id="btnIncluirVeiculo" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="1012" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+                      <Component id="paneVeiculosTable" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="504" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblTipo" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cbxTipo" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="cboxMarca" min="-2" max="-2" attributes="0"/>
-                          <Component id="lblMarca" alignment="1" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblTipo" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cboxTipo" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="cboxMarca" min="-2" max="-2" attributes="0"/>
+                                  <Component id="lblMarca" alignment="1" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblCategoria" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cboxCategoria" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblModelo" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cboxModelo" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="lblEstado" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblValorDaCompra" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="ftxtValorDeCompra" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblPlaca" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="ftxtPlaca" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="lblAno" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="ftxtAno" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                              <Component id="btnIncluirVeiculo" min="-2" pref="49" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                              <Component id="paneVeiculosTable" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblCategoria" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cboxCategoria" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblModelo" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cboxModelo" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="lblEstado" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblValorDaCompra" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="ftxtValorDeCompra" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblPlaca" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="ftxtPlaca" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="lblAno" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="ftxtAno" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                      <Component id="btnIncluirVeiculo" min="-2" pref="49" max="-2" attributes="0"/>
-                      <EmptySpace pref="245" max="32767" attributes="0"/>
+                      <EmptySpace pref="180" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
+            <Container class="javax.swing.JScrollPane" name="paneVeiculosTable">
+              <AuxValues>
+                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+              </AuxValues>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JTable" name="veiculosTable">
+                  <Properties>
+                    <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+                      <Connection code="ctm" type="code"/>
+                    </Property>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="clienteTable.getSelectionModel().addListSelectionListener(new ListSelectionListener(){&#xa;    public void valueChanged(ListSelectionEvent event) {&#xa;        // Verifique se h&#xe1; uma linha selecionada&#xa;        if (clienteTable.getSelectedRow() != -1) {&#xa;            // Obtenha o valor da c&#xe9;lula na coluna que voc&#xea; est&#xe1; interessado&#xa;            Object nome = clienteTable.getValueAt(clienteTable.getSelectedRow(), 0); // Altere o 0 para o &#xed;ndice da coluna que voc&#xea; deseja&#xa;            Object sobrenome = clienteTable.getValueAt(clienteTable.getSelectedRow(), 1);&#xa;            Object rg = clienteTable.getValueAt(clienteTable.getSelectedRow(), 2);&#xa;            Object cpf = clienteTable.getValueAt(clienteTable.getSelectedRow(), 3);&#xa;            Object endereco = clienteTable.getValueAt(clienteTable.getSelectedRow(), 4);&#xa;            // Defina o valor no JTextField&#xa;            txtNomeCliente.setText(nome.toString());&#xa;            txtSobrenomeCliente.setText(sobrenome.toString());&#xa;            ftxtRgCliente.setText(rg.toString());&#xa;            ftxtCpfCliente.setText(cpf.toString());&#xa;            txtEndereco.setText(endereco.toString());&#xa;&#xa;        }&#xa;    }&#xa;});"/>
+                  </AuxValues>
+                </Component>
+              </SubComponents>
+            </Container>
             <Component class="javax.swing.JButton" name="btnIncluirVeiculo">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Incluir"/>
@@ -459,14 +488,14 @@
                 <Property name="text" type="java.lang.String" value="ano"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cbxTipo">
+            <Component class="javax.swing.JComboBox" name="cboxTipo">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="new javax.swing.DefaultComboBoxModel&lt;&gt;(new String[] { &quot;&quot;, &quot;Motocicleta&quot;, &quot;Automovel&quot;, &quot;Van&quot; })" type="code"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbxTipoActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboxTipoActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -612,11 +641,11 @@
                               <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="cbxMarcaVeiculos" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cboxMarcaVeiculos" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cboxMarcaLocacao" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="cboxCategoriaVeiculos" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cboxCategoriaLocacao" min="-2" max="-2" attributes="0"/>
                                   <Component id="cbxCategoriaVeiculos" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -630,8 +659,8 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="cboxMarcaVeiculos" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cboxCategoriaVeiculos" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cboxMarcaLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cboxCategoriaLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -815,7 +844,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cboxMarcaVeiculos">
+            <Component class="javax.swing.JComboBox" name="cboxMarcaLocacao">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="1">
@@ -823,11 +852,14 @@
                   </StringArray>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboxMarcaLocacaoActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cboxCategoriaVeiculos">
+            <Component class="javax.swing.JComboBox" name="cboxCategoriaLocacao">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="1">
@@ -968,9 +1000,9 @@
                               <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="cboxMarcaVeiculosVenda" min="-2" max="-2" attributes="0"/>
+                                      <Component id="cboxMarcaVenda" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
-                                      <Component id="cboxCategoriaVeiculosVenda" min="-2" max="-2" attributes="0"/>
+                                      <Component id="cboxCategoriaVenda" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Component id="cbxMarcaVeiculosVenda" min="-2" max="-2" attributes="0"/>
@@ -989,8 +1021,8 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="cboxMarcaVeiculosVenda" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="cboxCategoriaVeiculosVenda" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cboxMarcaVenda" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cboxCategoriaVenda" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -1083,7 +1115,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVansVendaActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cboxMarcaVeiculosVenda">
+            <Component class="javax.swing.JComboBox" name="cboxMarcaVenda">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="1">
@@ -1095,7 +1127,7 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cboxCategoriaVeiculosVenda">
+            <Component class="javax.swing.JComboBox" name="cboxCategoriaVenda">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="1">
