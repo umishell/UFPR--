@@ -149,9 +149,10 @@ public class ClienteDaoSql implements ClienteDao {
     @Override
     public void delete(Cliente cliente) throws SQLException, IOException {
         String cpf = cliente.getCpf();
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(deleteLocacaoIdCliente); PreparedStatement stmt1 = conn.prepareStatement(delete);) {
-            stmt.setString(1, cpf);
-            stmt.executeUpdate();
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt0 = conn.prepareStatement(deleteLocacaoIdCliente);
+                                                                  PreparedStatement stmt1 = conn.prepareStatement(delete);) {
+            stmt0.setString(1, cpf);
+            stmt0.executeUpdate();
             stmt1.setString(1, cpf);
             stmt1.executeUpdate();
         }

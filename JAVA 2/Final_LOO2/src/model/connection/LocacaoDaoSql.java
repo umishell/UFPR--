@@ -8,12 +8,9 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import model.combo.ComboBox;
-import model.dto.Cliente;
 import model.dto.Locacao;
-import model.dto.Veiculo;
 
 public class LocacaoDaoSql implements LocacaoDao {
 
@@ -68,6 +65,7 @@ public class LocacaoDaoSql implements LocacaoDao {
 
         } catch (SQLException | IOException e) {
             JOptionPane.showMessageDialog(null, "@LocacaoDaoSql.getAll():  Error getting all locacoes: " + e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }
@@ -88,6 +86,7 @@ public class LocacaoDaoSql implements LocacaoDao {
 
         } catch (SQLException | IOException e) {
             JOptionPane.showMessageDialog(null, "@LocacaoDaoSql.getAllwithCliente():  Error getting all locacoes with idcliente " + idcliente + " :" + e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }
@@ -107,7 +106,8 @@ public class LocacaoDaoSql implements LocacaoDao {
             return locacoes;
 
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@LocacaoDaoSql.getAll():  Error getting all locacoes with idveiculo: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@LocacaoDaoSql.getAllwithVeiculo():  Error getting all locacoes with idveiculo: " + e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }

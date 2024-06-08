@@ -7,7 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import model.combo.ComboBox;
 import model.dto.Locacao;
@@ -41,24 +41,26 @@ public class MotocicletaDaoSql implements MotocicletaDao {
         }
     }
 
-    private final String insert = """
-                                  INSERT INTO veiculo (valorDeCompra, tipo, ano, placa) VALUES (?,?,?,?);
-                                  INSERT INTO motocicleta (idveiculo, idmodeloMotocicleta) VALUES ((SELECT idveiculo FROM veiculo WHERE placa=?),
+    private final String insertVeiculo = "INSERT INTO veiculo (valorDeCompra, tipo, ano, placa) VALUES (?,?,?,?);";
+    private final String insertMoto = """
+                                  INSERT INTO motocicleta (idveiculo, idmodeloMotocicleta) 
+                                  VALUES ((SELECT idveiculo FROM veiculo WHERE placa=?),
                                   (SELECT idmodeloMotocicleta FROM modelomotocicleta WHERE modelo = ?));""";
 
     @Override
     public void add(Motocicleta moto) {
 //moto.to_String();
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);) {
-            stmt.setDouble(1, moto.getValorDeCompra());
-            stmt.setString(2, "Motocicleta");
-            stmt.setInt(3, moto.getAno());
-            stmt.setString(4, moto.getPlaca());
-            stmt.setString(5, moto.getPlaca());
-            stmt.setString(6, moto.getModelo());
-            stmt.execute();
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtVeiculo = conn.prepareStatement(insertVeiculo, Statement.RETURN_GENERATED_KEYS); PreparedStatement stmtMoto = conn.prepareStatement(insertMoto);) {
+            stmtVeiculo.setDouble(1, moto.getValorDeCompra());
+            stmtVeiculo.setString(2, "Motocicleta");
+            stmtVeiculo.setInt(3, moto.getAno());
+            stmtVeiculo.setString(4, moto.getPlaca());
+            stmtMoto.setString(1, moto.getPlaca());
+            stmtMoto.setString(2, moto.getModelo());
+            stmtVeiculo.execute();
+            stmtMoto.execute();
 
-            ResultSet rs = stmt.getGeneratedKeys();
+            ResultSet rs = stmtVeiculo.getGeneratedKeys();
             rs.next();
             int i = rs.getInt(1);
             moto.setIdveiculo(i);
@@ -87,12 +89,11 @@ public class MotocicletaDaoSql implements MotocicletaDao {
             + "ORDER BY motocicleta.idveiculo;";
 
     @Override
-    public List<Motocicleta> getAll() {
+    public ArrayList<Motocicleta> getAll() {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLista = conn.prepareStatement(selectAll); ResultSet rs = stmtLista.executeQuery();) {
-            List<Motocicleta> motocicletas = new ArrayList();
+            ArrayList<Motocicleta> motocicletas = new ArrayList<>();
             while (rs.next()) {
                 int idveiculo = rs.getInt("idveiculo");
-                String tipo = rs.getString("tipo");
                 String marca = rs.getString("marca");
                 String estado = rs.getString("estado");
                 LocacaoDaoSql l = new LocacaoDaoSql();
@@ -103,7 +104,7 @@ public class MotocicletaDaoSql implements MotocicletaDao {
                 int ano = rs.getInt("ano");
                 String modelo = rs.getString("modelo");
 
-                motocicletas.add(new Motocicleta(idveiculo, tipo, marca, estado, locacoes, categoria, valorDeCompra, placa, ano, modelo));
+                motocicletas.add(new Motocicleta(idveiculo, "Motocicleta", marca, estado, locacoes, categoria, valorDeCompra, placa, ano, modelo));
             }
             return motocicletas;
 

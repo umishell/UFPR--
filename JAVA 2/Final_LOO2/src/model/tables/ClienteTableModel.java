@@ -1,25 +1,28 @@
 package model.tables;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import model.dto.Cliente;
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import model.connection.ClienteDaoSql;
 import model.dto.Cliente;
 
 public class ClienteTableModel extends DefaultTableModel {
 
-    private String[] colunas = new String[]{"Nome", "Sobrenome", "RG", "CPF", "Endereço"};
+    private final String[] colunas;
     private ArrayList<Cliente> listaClientes = new ArrayList<>();
 
     public ClienteTableModel() {
+        this.colunas = new String[]{"Nome", "Sobrenome", "RG", "CPF", "Endereço"};
     }
 
     public ClienteTableModel(ArrayList<Cliente> c) {
+        this.colunas = new String[]{"Nome", "Sobrenome", "RG", "CPF", "Endereço"};
         this.listaClientes = c;
+    }
+
+    public void add(Cliente c) {
+        this.listaClientes.add(c);
+        this.fireTableDataChanged();
+        this.fireTableRowsInserted(listaClientes.size(), listaClientes.size());//update JTable
     }
 
     public ArrayList<Cliente> getListaClientes() {
@@ -32,13 +35,13 @@ public class ClienteTableModel extends DefaultTableModel {
     }
 
     @Override
-    public int getColumnCount() {
-        return this.colunas.length;
+    public String getColumnName(int index) {
+        return this.colunas[index];
     }
 
     @Override
-    public String getColumnName(int index) {
-        return this.colunas[index];
+    public int getColumnCount() {
+        return this.colunas.length;
     }
 
     @Override
@@ -107,12 +110,6 @@ public class ClienteTableModel extends DefaultTableModel {
         }
         myJTable.clearSelection();
         return clientes;
-    }
-
-    public void add(Cliente c) {
-        this.listaClientes.add(c);
-        this.fireTableDataChanged();
-        this.fireTableRowsInserted(listaClientes.size(), listaClientes.size());//update JTable
     }
 
     public void setListaCliente(ArrayList<Cliente> clientes) {

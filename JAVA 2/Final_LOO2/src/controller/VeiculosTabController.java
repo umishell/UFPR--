@@ -33,44 +33,46 @@ public class VeiculosTabController {
         try {
             Veiculo v = view.getVeiculoFormulario();
 
-            if (v instanceof Motocicleta) {
-                Motocicleta moto = (Motocicleta) v;
+            if (v instanceof Motocicleta moto) {
                 if (!motoDao.motoExists(moto)) {
+                    showMotocicletas();
                     view.addVeiculoToVtm(moto);
                     motoDao.add(moto);
-                    //view.clearFieldsVeiculo();
-                } else {
-                    view.apresentaInfo("vehicle already exists");
-                }
-            }/* else if (v instanceof Automovel) {
-                Automovel auto = (Automovel) v;
-                if (!motoDao.automovelExists(auto)) {
-                    view.addVeiculoToVtm(auto);
-                    autoDao.add(auto);
                     view.clearFieldsVeiculo();
                 } else {
                     view.apresentaInfo("vehicle already exists");
                 }
+            }
+            /* else if (v instanceof Automovel) {
+            Automovel auto = (Automovel) v;
+            if (!motoDao.automovelExists(auto)) {
+            view.addVeiculoToVtm(auto);
+            autoDao.add(auto);
+            view.clearFieldsVeiculo();
+            } else {
+            view.apresentaInfo("vehicle already exists");
+            }
             } else if (v instanceof Van) {
-                Van van = (Van) v;
-                if (!motoDao.vanExists(van)) {
-                    view.addVeiculoToVtm(van);
-                    vanDao.add(van);
-                    view.clearFieldsVeiculo();
-                } else {
-                    view.apresentaInfo("vehicle already exists");
-                }
+            Van van = (Van) v;
+            if (!motoDao.vanExists(van)) {
+            view.addVeiculoToVtm(van);
+            vanDao.add(van);
+            view.clearFieldsVeiculo();
+            } else {
+            view.apresentaInfo("vehicle already exists");
+            }
             }*/
 
         } catch (IOException | SQLException | NullPointerException e) {
             view.apresentaErro("Erro ao incluir Veiculo.");
             e.printStackTrace();
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             view.apresentaErro("preencha corretamente o ano.");
             e.printStackTrace();
         }
     }
-/*
+
+    /*
     public void updateVeiculo() {
         try {
             Cliente cliente = view.getClienteFormulario();
@@ -99,17 +101,42 @@ public class VeiculosTabController {
             e.printStackTrace();
         }
     }
-*/
-    public void showVeiculos() {
-        ClienteDaoSql c = new ClienteDaoSql();
-        ArrayList<Cliente> clientes = new ArrayList<>();
+     */
+    public void showMotocicletas() {
+        MotocicletaDaoSql motoDao = new MotocicletaDaoSql();
+        ArrayList<Motocicleta> motos = new ArrayList<>();
         try {
-            clientes = c.getAll();
-            view.ShowCtm(clientes);
-        } catch (IOException | SQLException | NullPointerException e) {
-            view.apresentaErro("Erro ao mostrar Clientes na tabela.");
+            motos = motoDao.getAll();
+            view.showVtmMotos(motos);
+        } catch (NullPointerException e) {
+            view.apresentaErro("Erro ao mostrar motocicletas na tabela.");
             e.printStackTrace();
         }
     }
 
+    /*
+    public void showAutomoveis() {
+        AutomovelDaoSql autoDao = new AutomovelDaoSql();
+        ArrayList<Automovel> autos = new ArrayList<>();
+        try {
+            autos = autoDao.getAll();
+            view.showVtmAutos(autos);
+        } catch (NullPointerException e) {
+            view.apresentaErro("Erro ao mostrar automoveis na tabela.");
+            e.printStackTrace();
+        }
+    }
+    
+    public void showVans() {
+        MotocicletaDaoSql vanDao = new MotocicletaDaoSql();
+        ArrayList<Motocicleta> vans = new ArrayList<>();
+        try {
+            vans = vanDao.getAll();
+            view.showVtmVans(vans);
+        } catch (NullPointerException e) {
+            view.apresentaErro("Erro ao mostrar vans na tabela.");
+            e.printStackTrace();
+        }
+    }
+     */
 }

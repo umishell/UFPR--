@@ -7,19 +7,22 @@ import javax.swing.table.DefaultTableModel;
 import model.dto.Automovel;
 import model.dto.Motocicleta;
 import model.dto.Van;
+import model.dto.Veiculo;
 
 public class VeiculosTableModel extends DefaultTableModel {
 
     private ArrayList<Van> listaVans = new ArrayList<>();
     private ArrayList<Motocicleta> listaMotocicletas = new ArrayList<>();
     private ArrayList<Automovel> listaAutomoveis = new ArrayList<>();
-    private String[] colunas = new String[]{"Placa", "Marca", "Modelo", "Ano", "Preço da diária"};
+    private final String[] colunas;
     private int tipoVeiculo; // 1 = Moto, 2 = Auto, 3 = Van
 
     public VeiculosTableModel() {
+        this.colunas = new String[]{"Placa", "Marca", "Modelo", "Ano", "Preço da diária"};
     }
 
     public VeiculosTableModel(ArrayList<Van> v, ArrayList<Motocicleta> m, ArrayList<Automovel> a) {
+        this.colunas = new String[]{"Placa", "Marca", "Modelo", "Ano", "Preço da diária"};
         this.listaMotocicletas = m;
         this.listaAutomoveis = a;
         this.listaVans = v;
@@ -41,6 +44,65 @@ public class VeiculosTableModel extends DefaultTableModel {
         return tipoVeiculo;
     }
 
+    public void setTipoVeiculo(int tipoVeiculo) {
+        this.tipoVeiculo = tipoVeiculo;
+    }
+
+    @Override
+    public boolean isCellEditable(int row, int column) {
+        // permite a edição em todas as células
+        return false;
+    }
+
+    public void setSingleSelection(JTable tabela) {
+        ListSelectionModel selectionModel = tabela.getSelectionModel();
+        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+
+    public void addVeiculo(Veiculo v) {
+        if (v instanceof Motocicleta moto) {
+            this.listaMotocicletas.add(moto);
+            this.fireTableDataChanged();
+            this.fireTableRowsInserted(listaMotocicletas.size() - 1, listaMotocicletas.size() - 1);//update JTable
+        } else if (v instanceof Automovel auto) {
+            this.listaAutomoveis.add(auto);
+            this.fireTableDataChanged();
+            this.fireTableRowsInserted(listaAutomoveis.size() - 1, listaAutomoveis.size() - 1);//update JTable
+        } else if (v instanceof Van van) {
+            this.listaVans.add(van);
+            this.fireTableDataChanged();
+            this.fireTableRowsInserted(listaVans.size() - 1, listaVans.size() - 1);//update JTable
+        }
+    }
+
+    public void addVan(Van v) {
+        this.listaVans.add(v);
+        this.fireTableDataChanged();
+        this.fireTableRowsInserted(listaVans.size() - 1, listaVans.size() - 1);//update JTable
+    }
+
+    public void addMotocicleta(Motocicleta m) {
+        this.listaMotocicletas.add(m);
+        this.fireTableDataChanged();
+        this.fireTableRowsInserted(listaMotocicletas.size() - 1, listaMotocicletas.size() - 1);//update JTable
+    }
+
+    public void addAutomovel(Automovel a) {
+        this.listaAutomoveis.add(a);
+        this.fireTableDataChanged();
+        this.fireTableRowsInserted(listaAutomoveis.size() - 1, listaAutomoveis.size() - 1);//update JTable
+    }
+
+    @Override
+    public int getColumnCount() {
+        return colunas.length;
+    }
+
+    @Override
+    public String getColumnName(int column) {
+        return colunas[column];
+    }
+
     @Override
     public int getRowCount() {
         switch (tipoVeiculo) {
@@ -55,45 +117,6 @@ public class VeiculosTableModel extends DefaultTableModel {
             }
         }
         return 0;
-    }
-
-    @Override
-    public int getColumnCount() {
-        return colunas.length;
-    }
-
-    public void limpaTabela() {
-        switch (tipoVeiculo) {
-            case 1 -> {
-                int indice = listaMotocicletas.size() - 1;
-                if (indice < 0) {
-                    indice = 0;
-                }
-                this.listaMotocicletas = new ArrayList();
-                this.fireTableRowsDeleted(0, indice);//update JTable
-            }
-            case 2 -> {
-                int indice = listaAutomoveis.size() - 1;
-                if (indice < 0) {
-                    indice = 0;
-                }
-                this.listaAutomoveis = new ArrayList();
-                this.fireTableRowsDeleted(0, indice);//update JTable
-            }
-            case 3 -> {
-                int indice = listaVans.size() - 1;
-                if (indice < 0) {
-                    indice = 0;
-                }
-                this.listaVans = new ArrayList();
-                this.fireTableRowsDeleted(0, indice);//update JTable
-            }
-        }
-    }
-
-    @Override
-    public String getColumnName(int column) {
-        return colunas[column];
     }
 
     @Override
@@ -269,59 +292,56 @@ public class VeiculosTableModel extends DefaultTableModel {
         myJTable.clearSelection(); // Clear the selection after removal
     }
 
-    public void addVan(Van v) {
-        this.listaVans.add(v);
-        this.fireTableDataChanged();
-        this.fireTableRowsInserted(listaVans.size() - 1, listaVans.size() - 1);//update JTable
+    public void setListaMotos(ArrayList<Motocicleta> motos) {
+        this.listaMotocicletas = motos;
+        if (!listaMotocicletas.isEmpty()) {
+            this.fireTableDataChanged();
+            this.fireTableRowsInserted(0, listaMotocicletas.size() - 1);//update JTable
+        }
     }
-
-    public void addMotocicleta(Motocicleta m) {
-        this.listaMotocicletas.add(m);
-        this.fireTableDataChanged();
-        this.fireTableRowsInserted(listaMotocicletas.size() - 1, listaMotocicletas.size() - 1);//update JTable
+    
+    public void setListaAutos(ArrayList<Automovel> autos) {
+        this.listaAutomoveis = autos;
+        if (!listaAutomoveis.isEmpty()) {
+            this.fireTableDataChanged();
+            this.fireTableRowsInserted(0, listaAutomoveis.size() - 1);//update JTable
+        }
     }
-
-    public void addAutomovel(Automovel a) {
-        this.listaAutomoveis.add(a);
-        this.fireTableDataChanged();
-        this.fireTableRowsInserted(listaAutomoveis.size() - 1, listaAutomoveis.size() - 1);//update JTable
-    }
-
-    public void setListaVeiculos() {
-        switch (tipoVeiculo) {
-            case 1 -> {
-                // this.listaVans = rep.getListaVans();
-                if (!listaVans.isEmpty()) {
-                    this.fireTableDataChanged();
-                    this.fireTableRowsInserted(0, listaVans.size() - 1);
-                }
-            }
-            case 2 -> {
-                // this.listaMotocicletas = rep.getListaMotocicletas();
-                if (!listaMotocicletas.isEmpty()) {
-                    this.fireTableDataChanged();
-                    this.fireTableRowsInserted(0, listaVans.size() - 1);
-                }
-            }
-            case 3 -> {
-                //this.listaAutomoveis = rep.getListaAutomoveis();
-                if (!listaAutomoveis.isEmpty()) {
-                    this.fireTableDataChanged();
-                    this.fireTableRowsInserted(0, listaVans.size() - 1);
-                }
-            }
+    
+    public void setListaVans(ArrayList<Van> vans) {
+        this.listaVans = vans;
+        if (!listaVans.isEmpty()) {
+            this.fireTableDataChanged();
+            this.fireTableRowsInserted(0, listaVans.size() - 1);//update JTable
         }
     }
 
-    @Override
-    public boolean isCellEditable(int row, int column) {
-        // permite a edição em todas as células
-        return false;
+    public void limpaTabela() {
+        switch (tipoVeiculo) {
+            case 1 -> {
+                int indice = listaMotocicletas.size() - 1;
+                if (indice < 0) {
+                    indice = 0;
+                }
+                this.listaMotocicletas = new ArrayList();
+                this.fireTableRowsDeleted(0, indice);//update JTable
+            }
+            case 2 -> {
+                int indice = listaAutomoveis.size() - 1;
+                if (indice < 0) {
+                    indice = 0;
+                }
+                this.listaAutomoveis = new ArrayList();
+                this.fireTableRowsDeleted(0, indice);//update JTable
+            }
+            case 3 -> {
+                int indice = listaVans.size() - 1;
+                if (indice < 0) {
+                    indice = 0;
+                }
+                this.listaVans = new ArrayList();
+                this.fireTableRowsDeleted(0, indice);//update JTable
+            }
+        }
     }
-
-    public void setSingleSelection(JTable tabela) {
-        ListSelectionModel selectionModel = tabela.getSelectionModel();
-        selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    }
-
 }

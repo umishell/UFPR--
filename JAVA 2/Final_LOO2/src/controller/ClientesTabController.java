@@ -70,7 +70,7 @@ public class ClientesTabController {
         ArrayList<Cliente> clientes = new ArrayList<>();
         try {
             clientes = c.getAll();
-            view.ShowCtm(clientes);
+            view.showCtm(clientes);
         } catch (IOException | SQLException | NullPointerException e) {
             view.apresentaErro("Erro ao mostrar Clientes na tabela.");
             e.printStackTrace();

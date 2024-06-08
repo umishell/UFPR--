@@ -112,12 +112,14 @@ public class Frame extends javax.swing.JFrame {
         cboxTipo = new javax.swing.JComboBox<>();
         cboxModelo = new javax.swing.JComboBox<>();
         lblTipo = new javax.swing.JLabel();
-        lblEstado = new javax.swing.JLabel();
         ftxtPlaca = new javax.swing.JFormattedTextField();
         ftxtAno = new javax.swing.JFormattedTextField();
         ftxtValorDeCompra = new javax.swing.JFormattedTextField();
         cboxMarca = new javax.swing.JComboBox<>();
         cboxCategoria = new javax.swing.JComboBox<>();
+        btnVansVeiculos = new javax.swing.JButton();
+        btnMotocicletasVeiculos = new javax.swing.JButton();
+        btnAutomoveisVeiculos = new javax.swing.JButton();
         tabCliente = new javax.swing.JPanel();
         lblNomeCliente = new javax.swing.JLabel();
         lblSobrenomeCliente = new javax.swing.JLabel();
@@ -137,11 +139,11 @@ public class Frame extends javax.swing.JFrame {
         paneClienteTable = new javax.swing.JScrollPane();
         clienteTable = new javax.swing.JTable();
         tabLocacao = new javax.swing.JPanel();
-        btnVans = new javax.swing.JButton();
-        btnMotocicletas = new javax.swing.JButton();
+        btnVansLocacao = new javax.swing.JButton();
+        btnMotocicletasLocacao = new javax.swing.JButton();
         paneVeiculoTable = new javax.swing.JScrollPane();
         veiculoTable = new javax.swing.JTable();
-        btnAutomoveis = new javax.swing.JButton();
+        btnAutomoveisLocacao = new javax.swing.JButton();
         cbxMarcaVeiculos = new javax.swing.JComboBox<>();
         cbxCategoriaVeiculos = new javax.swing.JComboBox<>();
         txtPesquisarClientes = new javax.swing.JTextField();
@@ -241,8 +243,6 @@ public class Frame extends javax.swing.JFrame {
 
         lblTipo.setText("tipo");
 
-        lblEstado.setText("estado");
-
         try {
             ftxtPlaca.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("UUU-####")));
         } catch (java.text.ParseException ex) {
@@ -270,6 +270,27 @@ public class Frame extends javax.swing.JFrame {
             }
         });
 
+        btnVansVeiculos.setText("Vans");
+        btnVansVeiculos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVansVeiculosActionPerformed(evt);
+            }
+        });
+
+        btnMotocicletasVeiculos.setText("Motocicletas");
+        btnMotocicletasVeiculos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMotocicletasVeiculosActionPerformed(evt);
+            }
+        });
+
+        btnAutomoveisVeiculos.setText("Automoveis");
+        btnAutomoveisVeiculos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAutomoveisVeiculosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout tabVeiculosLayout = new javax.swing.GroupLayout(tabVeiculos);
         tabVeiculos.setLayout(tabVeiculosLayout);
         tabVeiculosLayout.setHorizontalGroup(
@@ -281,9 +302,7 @@ public class Frame extends javax.swing.JFrame {
                         .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(lblTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lblEstado)
-                                    .addComponent(lblModelo))
+                                .addComponent(lblModelo)
                                 .addGroup(tabVeiculosLayout.createSequentialGroup()
                                     .addGap(6, 6, 6)
                                     .addComponent(lblValorDaCompra)
@@ -315,8 +334,17 @@ public class Frame extends javax.swing.JFrame {
                     .addGroup(tabVeiculosLayout.createSequentialGroup()
                         .addGap(179, 179, 179)
                         .addComponent(btnIncluirVeiculo)))
-                .addGap(56, 56, 56)
-                .addComponent(paneVeiculosTable, javax.swing.GroupLayout.PREFERRED_SIZE, 804, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tabVeiculosLayout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addComponent(paneVeiculosTable, javax.swing.GroupLayout.PREFERRED_SIZE, 804, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(tabVeiculosLayout.createSequentialGroup()
+                        .addGap(144, 144, 144)
+                        .addComponent(btnMotocicletasVeiculos)
+                        .addGap(70, 70, 70)
+                        .addComponent(btnAutomoveisVeiculos)
+                        .addGap(62, 62, 62)
+                        .addComponent(btnVansVeiculos)))
                 .addContainerGap(152, Short.MAX_VALUE))
         );
         tabVeiculosLayout.setVerticalGroup(
@@ -340,9 +368,7 @@ public class Frame extends javax.swing.JFrame {
                         .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblModelo)
                             .addComponent(cboxModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addComponent(lblEstado)
-                        .addGap(18, 18, 18)
+                        .addGap(52, 52, 52)
                         .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lblValorDaCompra)
                             .addComponent(ftxtValorDeCompra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -357,7 +383,12 @@ public class Frame extends javax.swing.JFrame {
                         .addGap(26, 26, 26)
                         .addComponent(btnIncluirVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(tabVeiculosLayout.createSequentialGroup()
-                        .addGap(55, 55, 55)
+                        .addGap(14, 14, 14)
+                        .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnVansVeiculos)
+                            .addComponent(btnMotocicletasVeiculos)
+                            .addComponent(btnAutomoveisVeiculos))
+                        .addGap(18, 18, 18)
                         .addComponent(paneVeiculosTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(180, Short.MAX_VALUE))
         );
@@ -560,17 +591,17 @@ public class Frame extends javax.swing.JFrame {
             }
         });
 
-        btnVans.setText("Vans");
-        btnVans.addActionListener(new java.awt.event.ActionListener() {
+        btnVansLocacao.setText("Vans");
+        btnVansLocacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVansActionPerformed(evt);
+                btnVansLocacaoActionPerformed(evt);
             }
         });
 
-        btnMotocicletas.setText("Motocicletas");
-        btnMotocicletas.addActionListener(new java.awt.event.ActionListener() {
+        btnMotocicletasLocacao.setText("Motocicletas");
+        btnMotocicletasLocacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMotocicletasActionPerformed(evt);
+                btnMotocicletasLocacaoActionPerformed(evt);
             }
         });
 
@@ -582,10 +613,10 @@ public class Frame extends javax.swing.JFrame {
         });
         paneVeiculoTable.setViewportView(veiculoTable);
 
-        btnAutomoveis.setText("Automoveis");
-        btnAutomoveis.addActionListener(new java.awt.event.ActionListener() {
+        btnAutomoveisLocacao.setText("Automoveis");
+        btnAutomoveisLocacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAutomoveisActionPerformed(evt);
+                btnAutomoveisLocacaoActionPerformed(evt);
             }
         });
 
@@ -690,11 +721,11 @@ public class Frame extends javax.swing.JFrame {
                     .addComponent(paneVeiculoTable, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(tabLocacaoLayout.createSequentialGroup()
                         .addGap(132, 132, 132)
-                        .addComponent(btnVans)
+                        .addComponent(btnVansLocacao)
                         .addGap(72, 72, 72)
-                        .addComponent(btnMotocicletas)
+                        .addComponent(btnMotocicletasLocacao)
                         .addGap(18, 18, 18)
-                        .addComponent(btnAutomoveis)
+                        .addComponent(btnAutomoveisLocacao)
                         .addGap(38, 38, 38)
                         .addGroup(tabLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(cbxMarcaVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -714,9 +745,9 @@ public class Frame extends javax.swing.JFrame {
                     .addComponent(cboxCategoriaLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(tabLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnVans)
-                    .addComponent(btnMotocicletas)
-                    .addComponent(btnAutomoveis)
+                    .addComponent(btnVansLocacao)
+                    .addComponent(btnMotocicletasLocacao)
+                    .addComponent(btnAutomoveisLocacao)
                     .addComponent(cbxMarcaVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbxCategoriaVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPesquisarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -923,7 +954,7 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNomeClienteActionPerformed
 
     private void btnIncluirVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirVeiculoActionPerformed
-
+        String tipoVeiculo = (String) cboxTipo.getSelectedItem();
         ctrlVeiculos.newVeiculo();
         /*      Marca marca = (Marca) cbxMarca.getSelectedItem();
         Estado estado = (Estado) cbxEstado.getSelectedItem();
@@ -997,20 +1028,20 @@ public class Frame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_veiculoTableMousePressed
 
-    private void btnVansActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVansActionPerformed
+    private void btnVansLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVansLocacaoActionPerformed
         lvtm.setTipoVeiculo(1);
         lvtm.setListaVeiculos();
-    }//GEN-LAST:event_btnVansActionPerformed
+    }//GEN-LAST:event_btnVansLocacaoActionPerformed
 
-    private void btnMotocicletasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotocicletasActionPerformed
+    private void btnMotocicletasLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotocicletasLocacaoActionPerformed
         lvtm.setTipoVeiculo(2);
         lvtm.setListaVeiculos();
-    }//GEN-LAST:event_btnMotocicletasActionPerformed
+    }//GEN-LAST:event_btnMotocicletasLocacaoActionPerformed
 
-    private void btnAutomoveisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutomoveisActionPerformed
+    private void btnAutomoveisLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutomoveisLocacaoActionPerformed
         lvtm.setTipoVeiculo(3);
         lvtm.setListaVeiculos();
-    }//GEN-LAST:event_btnAutomoveisActionPerformed
+    }//GEN-LAST:event_btnAutomoveisLocacaoActionPerformed
 
     private void tabLocacaoComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabLocacaoComponentShown
         ClienteLocacaoTableModel modeloTabela = (ClienteLocacaoTableModel) clienteLocacaoTable.getModel();
@@ -1183,25 +1214,41 @@ public class Frame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cboxMarcaLocacaoActionPerformed
 
+    private void btnVansVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVansVeiculosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVansVeiculosActionPerformed
+
+    private void btnMotocicletasVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotocicletasVeiculosActionPerformed
+        vtm.setTipoVeiculo(1);//tipo 1 moto
+        ctrlVeiculos.showMotocicletas();
+    }//GEN-LAST:event_btnMotocicletasVeiculosActionPerformed
+
+    private void btnAutomoveisVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutomoveisVeiculosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAutomoveisVeiculosActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable DevolverTable;
     private javax.swing.JTable VendaTable;
     private javax.swing.JButton btnAtualizarCliente;
-    private javax.swing.JButton btnAutomoveis;
     private javax.swing.JButton btnAutomoveisDevolver;
+    private javax.swing.JButton btnAutomoveisLocacao;
+    private javax.swing.JButton btnAutomoveisVeiculos;
     private javax.swing.JButton btnAutomoveisVenda;
     private javax.swing.JButton btnIncluirCliente;
     private javax.swing.JButton btnIncluirVeiculo;
     private javax.swing.JButton btnLimparCliente;
     private javax.swing.JButton btnListarCliente;
     private javax.swing.JButton btnLocar;
-    private javax.swing.JButton btnMotocicletas;
     private javax.swing.JButton btnMotocicletasDevolver;
+    private javax.swing.JButton btnMotocicletasLocacao;
+    private javax.swing.JButton btnMotocicletasVeiculos;
     private javax.swing.JButton btnMotocicletasVenda;
     private javax.swing.JButton btnRemoverCliente;
-    private javax.swing.JButton btnVans;
     private javax.swing.JButton btnVansDevolver;
+    private javax.swing.JButton btnVansLocacao;
+    private javax.swing.JButton btnVansVeiculos;
     private javax.swing.JButton btnVansVenda;
     private javax.swing.JComboBox<String> cboxCategoria;
     private javax.swing.JComboBox<String> cboxCategoriaLocacao;
@@ -1228,7 +1275,6 @@ public class Frame extends javax.swing.JFrame {
     private javax.swing.JLabel lblCpfCliente;
     private javax.swing.JLabel lblDataLocacao;
     private javax.swing.JLabel lblEnderecoCliente;
-    private javax.swing.JLabel lblEstado;
     private javax.swing.JLabel lblMarca;
     private javax.swing.JLabel lblModelo;
     private javax.swing.JLabel lblNomeCliente;
@@ -1287,7 +1333,8 @@ public class Frame extends javax.swing.JFrame {
     }
 
     public void addVeiculoToVtm(Veiculo v) {
-        switch (v.getTipo()) {
+        vtm.addVeiculo(v);
+        /*switch (v.getTipo()) {
             case "Motocicleta" ->
                 vtm.addMotocicleta((Motocicleta) v);
             case "Automovel" ->
@@ -1296,7 +1343,7 @@ public class Frame extends javax.swing.JFrame {
                 vtm.addVan((Van) v);
             default -> {
             }
-        }
+        }*/
     }
 
     public Veiculo getVeiculoFormulario() throws NumberFormatException {
@@ -1304,6 +1351,7 @@ public class Frame extends javax.swing.JFrame {
         String marca = (String) cboxMarca.getSelectedItem();
         String categoria = (String) cboxCategoria.getSelectedItem();
         String modelo = (String) cboxModelo.getSelectedItem();
+
         Double valorDeCompra = Double.parseDouble(ftxtValorDeCompra.getText());
         String placa = ftxtPlaca.getText();
         int ano = Integer.parseInt(ftxtAno.getText());
@@ -1350,8 +1398,27 @@ public class Frame extends javax.swing.JFrame {
         txtNomeCliente.requestFocus();
     }
 
-    public void ShowCtm(ArrayList<Cliente> clientes) {
+    public void clearFieldsVeiculo() {
+        ftxtValorDeCompra.setText("");
+        ftxtPlaca.setText("");
+        ftxtAno.setText("");
+        //ftxtValorDeCompra.requestFocus();
+    }
+
+    public void showCtm(ArrayList<Cliente> clientes) {
         ctm.setListaCliente(clientes);
+    }
+
+    public void showVtmMotos(ArrayList<Motocicleta> motos) {
+        vtm.setListaMotos(motos);
+    }
+
+    public void showVtmAutos(ArrayList<Automovel> autos) {
+        vtm.setListaAutos(autos);
+    }
+
+    public void showVtmVans(ArrayList<Van> vans) {
+        vtm.setListaVans(vans);
     }
 
     private void filtrarPesquisa(String textoPesquisa) {

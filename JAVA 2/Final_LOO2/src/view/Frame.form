@@ -72,10 +72,7 @@
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="lblTipo" alignment="0" min="-2" pref="34" max="-2" attributes="0"/>
-                                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                          <Component id="lblEstado" min="-2" max="-2" attributes="0"/>
-                                          <Component id="lblModelo" min="-2" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="lblModelo" alignment="0" min="-2" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                                           <Component id="lblValorDaCompra" min="-2" max="-2" attributes="0"/>
@@ -122,8 +119,20 @@
                               <Component id="btnIncluirVeiculo" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
-                      <Component id="paneVeiculosTable" min="-2" pref="804" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+                              <Component id="paneVeiculosTable" min="-2" pref="804" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="144" max="-2" attributes="0"/>
+                              <Component id="btnMotocicletasVeiculos" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
+                              <Component id="btnAutomoveisVeiculos" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
+                              <Component id="btnVansVeiculos" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                       <EmptySpace pref="152" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -153,9 +162,7 @@
                                   <Component id="lblModelo" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="cboxModelo" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="lblEstado" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="lblValorDaCompra" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="ftxtValorDeCompra" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -174,7 +181,13 @@
                               <Component id="btnIncluirVeiculo" min="-2" pref="49" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="btnVansVeiculos" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnMotocicletasVeiculos" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnAutomoveisVeiculos" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="paneVeiculosTable" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -273,11 +286,6 @@
                 <Property name="text" type="java.lang.String" value="tipo"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblEstado">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="estado"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JFormattedTextField" name="ftxtPlaca">
               <Properties>
                 <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
@@ -326,6 +334,30 @@
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnVansVeiculos">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Vans"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVansVeiculosActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnMotocicletasVeiculos">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Motocicletas"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMotocicletasVeiculosActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnAutomoveisVeiculos">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Automoveis"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAutomoveisVeiculosActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>
@@ -633,11 +665,11 @@
                           <Component id="paneVeiculoTable" alignment="1" min="-2" pref="717" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="132" max="-2" attributes="0"/>
-                              <Component id="btnVans" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnVansLocacao" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
-                              <Component id="btnMotocicletas" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnMotocicletasLocacao" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="btnAutomoveis" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnAutomoveisLocacao" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="cbxMarcaVeiculos" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -664,9 +696,9 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="btnVans" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnMotocicletas" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnAutomoveis" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnVansLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnMotocicletasLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnAutomoveisLocacao" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cbxMarcaVeiculos" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="cbxCategoriaVeiculos" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtPesquisarClientes" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -701,20 +733,20 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="btnVans">
+            <Component class="javax.swing.JButton" name="btnVansLocacao">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Vans"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVansActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVansLocacaoActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnMotocicletas">
+            <Component class="javax.swing.JButton" name="btnMotocicletasLocacao">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Motocicletas"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMotocicletasActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnMotocicletasLocacaoActionPerformed"/>
               </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="paneVeiculoTable">
@@ -742,12 +774,12 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Component class="javax.swing.JButton" name="btnAutomoveis">
+            <Component class="javax.swing.JButton" name="btnAutomoveisLocacao">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Automoveis"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAutomoveisActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnAutomoveisLocacaoActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JComboBox" name="cbxMarcaVeiculos">
