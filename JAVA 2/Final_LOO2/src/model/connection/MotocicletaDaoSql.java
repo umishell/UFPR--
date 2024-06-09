@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
@@ -43,9 +44,10 @@ public class MotocicletaDaoSql implements MotocicletaDao {
 
     private final String insertVeiculo = "INSERT INTO veiculo (valorDeCompra, tipo, ano, placa) VALUES (?,?,?,?);";
     private final String insertMoto = """
-                                  INSERT INTO motocicleta (idveiculo, idmodeloMotocicleta) 
-                                  VALUES ((SELECT idveiculo FROM veiculo WHERE placa=?),
-                                  (SELECT idmodeloMotocicleta FROM modelomotocicleta WHERE modelo = ?));""";
+                                        INSERT INTO motocicleta (idveiculo, idmodeloMotocicleta) 
+                                        VALUES ((SELECT idveiculo FROM veiculo WHERE placa=?),
+                                        (SELECT idmodeloMotocicleta FROM modelomotocicleta WHERE modelo = ?));
+                                      """;
 
     @Override
     public void add(Motocicleta moto) {
@@ -71,33 +73,56 @@ public class MotocicletaDaoSql implements MotocicletaDao {
 
     }
 
-    private final String selectAll = "SELECT\n"
-            + "    veiculo.idveiculo,\n"
-            + "    veiculo.placa,\n"
-            + "    veiculo.ano ,\n"
-            + "    veiculo.valorDeCompra,\n"
-            + "    estado.estado,\n"
-            + "    modelomotocicleta.modelo,\n"
-            + "    categoria.categoria,\n"
-            + "    marca.marca\n"
-            + "FROM motocicleta\n"
-            + "INNER JOIN veiculo ON motocicleta.idveiculo = veiculo.idveiculo\n"
-            + "INNER JOIN estado ON veiculo.idestado = estado.idestado\n"
-            + "INNER JOIN modeloMotocicleta ON motocicleta.idmodeloMotocicleta = modelomotocicleta.idmodeloMotocicleta\n"
-            + "INNER JOIN categoria ON modelomotocicleta.idcategoria = categoria.idcategoria\n"
-            + "INNER JOIN marca ON modelomotocicleta.idmarca = marca.idmarca\n"
-            + "ORDER BY motocicleta.idveiculo;";
+    private final String selectAll = """
+                                     SELECT
+                                        veiculo.idveiculo,
+                                        marca.marca,
+                                        estado.estado,
+                                        categoria.categoria,
+                                        veiculo.valorDeCompra,
+                                        veiculo.placa,
+                                        veiculo.ano ,
+                                        modelomotocicleta.modelo
+                                     FROM motocicleta
+                                     INNER JOIN veiculo ON motocicleta.idveiculo = veiculo.idveiculo
+                                     INNER JOIN estado ON veiculo.idestado = estado.idestado
+                                     INNER JOIN modeloMotocicleta ON motocicleta.idmodeloMotocicleta = modelomotocicleta.idmodeloMotocicleta
+                                     INNER JOIN categoria ON modelomotocicleta.idcategoria = categoria.idcategoria
+                                     INNER JOIN marca ON modelomotocicleta.idmarca = marca.idmarca
+                                     ORDER BY motocicleta.idveiculo;
+                                     """;
 
     @Override
     public ArrayList<Motocicleta> getAll() {
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLista = conn.prepareStatement(selectAll); ResultSet rs = stmtLista.executeQuery();) {
+
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("select * from locacao where idveiculo = ?"); PreparedStatement stmtLista = conn.prepareStatement(selectAll); ResultSet rs = stmtLista.executeQuery();) {
+
             ArrayList<Motocicleta> motocicletas = new ArrayList<>();
+
             while (rs.next()) {
                 int idveiculo = rs.getInt("idveiculo");
                 String marca = rs.getString("marca");
                 String estado = rs.getString("estado");
-                LocacaoDaoSql l = new LocacaoDaoSql();
-                ArrayList<Locacao> locacoes = l.getAllwithVeiculo(idveiculo);
+
+                ArrayList<Locacao> locacoes = new ArrayList<>();
+                stmtLocacoes.setInt(1, idveiculo);//System.out.println("print0 "+idveiculo);
+                try (ResultSet rs0 = stmtLocacoes.executeQuery();) {
+                    if (!rs0.isBeforeFirst()) {
+                        System.out.println("veiculo " + idveiculo + " sem locacoes.");
+                        locacoes = null;
+                    } else {
+                        while (rs0.next()) {
+                            System.out.println("print1" + idveiculo);
+                            int dias = rs0.getInt("dias");
+                            double valor = rs0.getDouble("valor");
+                            LocalDate date = rs0.getDate("date").toLocalDate();
+                            int idCliente = rs0.getInt("idcliente");
+                            locacoes.add(new Locacao(dias, valor, date, idCliente, idveiculo));
+                            System.out.println(idveiculo + " " + idCliente + " " + valor + " " + date + " " + dias);
+                        }
+                    }
+
+                }
                 String categoria = rs.getString("categoria");
                 Double valorDeCompra = rs.getDouble("valorDeCompra");
                 String placa = rs.getString("placa");
@@ -115,22 +140,25 @@ public class MotocicletaDaoSql implements MotocicletaDao {
         return null;
     }
 
-    private final String selectById = "SELECT\n"
-            + "    veiculo.idveiculo,\n"
-            + "    veiculo.placa,\n"
-            + "    veiculo.ano ,\n"
-            + "    veiculo.valorDeCompra,\n"
-            + "    estado.estado,\n"
-            + "    modelomotocicleta.modelo,\n"
-            + "    categoria.categoria,\n"
-            + "    marca.marca\n"
-            + "FROM motocicleta\n"
-            + "INNER JOIN veiculo ON motocicleta.idveiculo = veiculo.idveiculo\n"
-            + "INNER JOIN estado ON veiculo.idestado = estado.idestado\n"
-            + "INNER JOIN modeloMotocicleta ON motocicleta.idmodeloMotocicleta = modelomotocicleta.idmodeloMotocicleta\n"
-            + "INNER JOIN categoria ON modelomotocicleta.idcategoria = categoria.idcategoria\n"
-            + "INNER JOIN marca ON modelomotocicleta.idmarca = marca.idmarca\n"
-            + "where veiculo.idveiculo = ?";
+    private final String selectById = """
+                                      SELECT
+                                        veiculo.idveiculo,
+                                        marca.marca,
+                                        estado.estado,
+                                        categoria.categoria,
+                                        veiculo.valorDeCompra,
+                                        veiculo.placa,
+                                        veiculo.ano,
+                                        modelomotocicleta.modelo
+                                      FROM motocicleta
+                                      INNER JOIN veiculo ON motocicleta.idveiculo = veiculo.idveiculo
+                                      INNER JOIN estado ON veiculo.idestado = estado.idestado
+                                      INNER JOIN modeloMotocicleta ON motocicleta.idmodeloMotocicleta = modelomotocicleta.idmodeloMotocicleta
+                                      INNER JOIN categoria ON modelomotocicleta.idcategoria = categoria.idcategoria
+                                      INNER JOIN marca ON modelomotocicleta.idmarca = marca.idmarca
+                                      WHERE veiculo.idveiculo = ?
+                                      ORDER BY motocicleta.idveiculo;
+                                      """;
 
     @Override
     public Motocicleta getById(int id) {
