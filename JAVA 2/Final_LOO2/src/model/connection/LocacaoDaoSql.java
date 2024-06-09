@@ -95,6 +95,7 @@ public class LocacaoDaoSql implements LocacaoDao {
         try (Connection conn = ConnectionFactory.getConnection(); 
                                PreparedStatement stmtLista = conn.prepareStatement(selectAllwithVeiculo); 
                                ResultSet rs = stmtLista.executeQuery();) {
+            ArrayList<Locacao> locacoes = new ArrayList<>();
             stmtLista.setInt(1, idveiculo);
             while (rs.next()) {
                 int dias = rs.getInt("dias");
