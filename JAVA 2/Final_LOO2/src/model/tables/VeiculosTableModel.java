@@ -18,28 +18,16 @@ public class VeiculosTableModel extends DefaultTableModel {
     private int tipoVeiculo; // 1 = Moto, 2 = Auto, 3 = Van
 
     public VeiculosTableModel() {
-        this.colunas = new String[]{"Placa", "Marca", "Modelo", "Ano", "Preço da diária"};
+        this.colunas = new String[]{"Placa", "Marca", "Categoria", "Modelo", "Ano"};
     }
 
     public VeiculosTableModel(ArrayList<Van> v, ArrayList<Motocicleta> m, ArrayList<Automovel> a) {
-        this.colunas = new String[]{"Placa", "Marca", "Modelo", "Ano", "Preço da diária"};
+        this.colunas = new String[]{"Placa", "Marca", "Categoria", "Modelo", "Ano"};
         this.listaMotocicletas = m;
         this.listaAutomoveis = a;
         this.listaVans = v;
     }
 
-    /*public void setTipoVeiculo(int tipoVeiculo) {
-        this.tipoVeiculo = tipoVeiculo;
-        switch (tipoVeiculo) {
-            case 1 ->
-                colunas = new String[]{"Marca", "Modelo", "Ano", "Preço da diária", "Placa"};
-            case 2 ->
-                colunas = new String[]{"Marca", "Modelo", "Ano", "Preço da diária", "Placa"};
-            case 3 ->
-                colunas = new String[]{"Marca", "Modelo", "Ano", "Preço da diária", "Placa"};
-        }
-        fireTableStructureChanged(); // notifica a JTable que a estrutura mudou
-    }*/
     public int getTipoVeiculo() {
         return tipoVeiculo;
     }
@@ -75,32 +63,14 @@ public class VeiculosTableModel extends DefaultTableModel {
         }
     }
 
-    public void addVan(Van v) {
-        this.listaVans.add(v);
-        this.fireTableDataChanged();
-        this.fireTableRowsInserted(listaVans.size() - 1, listaVans.size() - 1);//update JTable
-    }
-
-    public void addMotocicleta(Motocicleta m) {
-        this.listaMotocicletas.add(m);
-        this.fireTableDataChanged();
-        this.fireTableRowsInserted(listaMotocicletas.size() - 1, listaMotocicletas.size() - 1);//update JTable
-    }
-
-    public void addAutomovel(Automovel a) {
-        this.listaAutomoveis.add(a);
-        this.fireTableDataChanged();
-        this.fireTableRowsInserted(listaAutomoveis.size() - 1, listaAutomoveis.size() - 1);//update JTable
+    @Override
+    public String getColumnName(int column) {
+        return this.colunas[column];
     }
 
     @Override
     public int getColumnCount() {
-        return colunas.length;
-    }
-
-    @Override
-    public String getColumnName(int column) {
-        return colunas[column];
+        return this.colunas.length;
     }
 
     @Override
@@ -130,11 +100,11 @@ public class VeiculosTableModel extends DefaultTableModel {
                     case 1 ->
                         moto.getMarca();
                     case 2 ->
-                        moto.getModelo();
+                        moto.getCategoria();
                     case 3 ->
-                        moto.getAno();
+                        moto.getModelo();
                     case 4 ->
-                        moto.getValorDeCompra();
+                        moto.getAno();
                     default ->
                         null;
                 };
@@ -147,11 +117,11 @@ public class VeiculosTableModel extends DefaultTableModel {
                     case 1 ->
                         auto.getMarca();
                     case 2 ->
-                        auto.getModelo();
+                        auto.getCategoria();
                     case 3 ->
-                        auto.getAno();
+                        auto.getModelo();
                     case 4 ->
-                        auto.getValorDeCompra();
+                        auto.getAno();
                     default ->
                         null;
                 };
@@ -164,11 +134,11 @@ public class VeiculosTableModel extends DefaultTableModel {
                     case 1 ->
                         van.getMarca();
                     case 2 ->
-                        van.getModelo();
+                        van.getCategoria();
                     case 3 ->
-                        van.getAno();
+                        van.getModelo();
                     case 4 ->
-                        van.getValorDeCompra();
+                        van.getAno();
                     default ->
                         null;
                 };
@@ -264,7 +234,6 @@ public class VeiculosTableModel extends DefaultTableModel {
             case 1 -> {
                 for (int i = selectedRows.length - 1; i >= 0; i--) {
                     int row = selectedRows[i];
-                    //rep.apagarVan(row);
                     // Convert row index to model index
                     int modelRow = myJTable.convertRowIndexToModel(row);
                     tableModel.removeRow(modelRow);
@@ -273,7 +242,6 @@ public class VeiculosTableModel extends DefaultTableModel {
             case 2 -> {
                 for (int i = selectedRows.length - 1; i >= 0; i--) {
                     int row = selectedRows[i];
-                    //rep.apagarMotocicleta(row);
                     // Convert row index to model index
                     int modelRow = myJTable.convertRowIndexToModel(row);
                     tableModel.removeRow(modelRow);
@@ -282,7 +250,6 @@ public class VeiculosTableModel extends DefaultTableModel {
             case 3 -> {
                 for (int i = selectedRows.length - 1; i >= 0; i--) {
                     int row = selectedRows[i];
-                    //rep.apagarAutomovel(row);
                     // Convert row index to model index
                     int modelRow = myJTable.convertRowIndexToModel(row);
                     tableModel.removeRow(modelRow);
@@ -299,7 +266,7 @@ public class VeiculosTableModel extends DefaultTableModel {
             this.fireTableRowsInserted(0, listaMotocicletas.size() - 1);//update JTable
         }
     }
-    
+
     public void setListaAutos(ArrayList<Automovel> autos) {
         this.listaAutomoveis = autos;
         if (!listaAutomoveis.isEmpty()) {
@@ -307,7 +274,7 @@ public class VeiculosTableModel extends DefaultTableModel {
             this.fireTableRowsInserted(0, listaAutomoveis.size() - 1);//update JTable
         }
     }
-    
+
     public void setListaVans(ArrayList<Van> vans) {
         this.listaVans = vans;
         if (!listaVans.isEmpty()) {

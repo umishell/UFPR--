@@ -105,20 +105,19 @@ public class MotocicletaDaoSql implements MotocicletaDao {
                 String estado = rs.getString("estado");
 
                 ArrayList<Locacao> locacoes = new ArrayList<>();
-                stmtLocacoes.setInt(1, idveiculo);//System.out.println("print0 "+idveiculo);
+                stmtLocacoes.setInt(1, idveiculo);
                 try (ResultSet rs0 = stmtLocacoes.executeQuery();) {
-                    if (!rs0.isBeforeFirst()) {
+                    if (!rs0.isBeforeFirst()) { //if there are rows available{
                         System.out.println("veiculo " + idveiculo + " sem locacoes.");
                         locacoes = null;
                     } else {
                         while (rs0.next()) {
-                            System.out.println("print1" + idveiculo);
                             int dias = rs0.getInt("dias");
                             double valor = rs0.getDouble("valor");
                             LocalDate date = rs0.getDate("date").toLocalDate();
                             int idCliente = rs0.getInt("idcliente");
                             locacoes.add(new Locacao(dias, valor, date, idCliente, idveiculo));
-                            System.out.println(idveiculo + " " + idCliente + " " + valor + " " + date + " " + dias);
+System.out.println("veiculo-> "+idveiculo + ": " + idCliente + " " + valor + " " + date + " " + dias);
                         }
                     }
 

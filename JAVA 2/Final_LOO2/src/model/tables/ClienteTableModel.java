@@ -30,13 +30,8 @@ public class ClienteTableModel extends DefaultTableModel {
     }
 
     @Override
-    public int getRowCount() {
-        return (this.listaClientes != null) ? this.listaClientes.size() : 0;
-    }
-
-    @Override
-    public String getColumnName(int index) {
-        return this.colunas[index];
+    public String getColumnName(int column) {
+        return this.colunas[column];
     }
 
     @Override
@@ -44,6 +39,11 @@ public class ClienteTableModel extends DefaultTableModel {
         return this.colunas.length;
     }
 
+    @Override
+    public int getRowCount() {
+        return (this.listaClientes != null) ? this.listaClientes.size() : 0;
+    }
+    
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Cliente cliente = listaClientes.get(rowIndex);

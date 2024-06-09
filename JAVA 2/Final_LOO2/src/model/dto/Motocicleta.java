@@ -8,13 +8,13 @@ public class Motocicleta extends Veiculo {
     private String modelo;
 
     public Motocicleta(String marca, String categoria,
-            double valorDeCompra, String placa, int ano, String modelo) {
+        double valorDeCompra, String placa, int ano, String modelo) {
         super("Motocicleta", marca, categoria, valorDeCompra, placa, ano);
         this.modelo = modelo;
     }
 
     public Motocicleta(int id, String tipo, String marca, String estado, ArrayList<Locacao> locacoes, String categoria,
-            double valorDeCompra, String placa, int ano, String modelo) {
+        double valorDeCompra, String placa, int ano, String modelo) {
         super(id, tipo,  marca, estado, locacoes, categoria, valorDeCompra, placa, ano);
         this.modelo = modelo;
     }

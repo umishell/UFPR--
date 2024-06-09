@@ -2,7 +2,6 @@ package model.dto;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 public abstract class Veiculo implements VeiculoInterface {
 
