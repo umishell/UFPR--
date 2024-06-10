@@ -113,13 +113,14 @@ public class VeiculosTabController {
             vtm.setListaMotos(motos);//view.showVtmMotos(motos);
         } catch (NullPointerException e) {
             view.apresentaErro("Erro ao mostrar motocicletas na tabela.");
-            e.printStackTrace(); 
+            e.printStackTrace();
         }
     }
-    
-    public void resetFiltersVeiculosTable(){
+
+    public void resetFiltersVeiculosTable() {
         //filtroVeiculoTable.resetFilters(vtm.getTipoVeiculo(), vtm, ArrayList v);
     }
+
     /*
     public void showAutomoveis() {
         AutomovelDaoSql autoDao = new AutomovelDaoSql();
@@ -150,52 +151,83 @@ public class VeiculosTabController {
         ComboBox.loadCboxCategoria(view.getCboxCategoriaVeiculo());
         //...the rest of cboxes implement
     }
-    
-    public void setSingleSelectionOnVtm(){
+
+    public void setSingleSelectionOnVtm() {
         vtm.setSingleSelection(view.getVeiculoTable());
     }
 
-
-    public void activateCboxCategoriaVeiculos(){
-        String marca = (String) view.getCboxMarcaVeiculo().getSelectedItem();
+    public void activateCboxCategoriaVeiculos() {
         String categoria = (String) view.getCboxCategoriaVeiculo().getSelectedItem();
-
-        if (!categoria.isBlank() && (marca == null || marca.isBlank())) {
-            filtroVeiculoTable.filtrarPorCategoria(categoria);
-        } else if (!categoria.isBlank() && (marca != null || !marca.isBlank())) {
-            filtroVeiculoTable.filtrarPorMarcaECategoria(marca, categoria);
-        } else if (categoria.isBlank() && (marca != null || !marca.isBlank())) {
-            filtroVeiculoTable.filtrarPorMarca(marca);
-        } else if (categoria.isBlank() && marca.isBlank()) {
-            /*//veiculoTable.setRowSorter(null);
-            //filtroVeiculoTable.clearFilters();
-            //vtm.fireTableDataChanged();*/
-        }
-    }
-    public void activateCboxMarcaVeiculos(){
         String marca = (String) view.getCboxMarcaVeiculo().getSelectedItem();
-        String categoria = (String) view.getCboxCategoriaVeiculo().getSelectedItem();
 
-        if (!marca.isBlank() && (categoria == null || categoria.isBlank())) {
-            filtroVeiculoTable.filtrarPorMarca(marca);
-        } else if (!marca.isBlank() && (categoria != null || !categoria.isBlank())) {
-            filtroVeiculoTable.filtrarPorMarcaECategoria(marca, categoria);
-        } else if (marca.isBlank() && (categoria != null || !categoria.isBlank())) {
+        if (categoria != null && !categoria.isBlank() && (marca == null || marca.isBlank())) {
+            // Filter by category only
             filtroVeiculoTable.filtrarPorCategoria(categoria);
-        } else if (marca.isBlank() && categoria.isBlank()) {
-            //veiculoTable.setRowSorter(null);
-            /*
+        } else if (categoria != null && !categoria.isBlank() && marca != null && !marca.isBlank()) {
+            // Filter by both category and brand
+            filtroVeiculoTable.filtrarPorMarcaECategoria(marca, categoria);
+        } else if ((categoria == null || categoria.isBlank()) && marca != null && !marca.isBlank()) {
+            // Filter by brand only
+            filtroVeiculoTable.filtrarPorMarca(marca);
+        } else {
+            // Reset filters and repopulate the table
+           // view.getVeiculoTable().setRowSorter(null);
+            filtroVeiculoTable.getSorter().setRowFilter(null);
+            //vtm.setRowCount(0);
+
             switch (vtm.getTipoVeiculo()) {
                 case 1 -> {
-                    ctrlVeiculos.showMotocicletas();
+                    showMotocicletas();
+                    vtm.fireTableDataChanged();
                 }
                 case 2 -> {
-                    //ctrlVeiculos.showAutomoveis();
+                    //showAutomoveis();
+                    vtm.fireTableDataChanged();
                 }
                 case 3 -> {
-                    //ctrlVeiculos.showVans();
+                    //showVans();
+                    vtm.fireTableDataChanged();
                 }
-            }*/
+            }
+
+            view.getVeiculoTable().setRowSorter(filtroVeiculoTable.getSorter());
+        }
+    }
+
+    public void activateCboxMarcaVeiculos() {
+        String marca = (String) view.getCboxMarcaVeiculo().getSelectedItem();
+        String categoria = (String) view.getCboxCategoriaVeiculo().getSelectedItem();
+
+        if (marca != null && !marca.isBlank() && (categoria == null || categoria.isBlank())) {
+            // Filter by brand only
+            filtroVeiculoTable.filtrarPorMarca(marca);
+        } else if (marca != null && !marca.isBlank() && categoria != null && !categoria.isBlank()) {
+            // Filter by both brand and category
+            filtroVeiculoTable.filtrarPorMarcaECategoria(marca, categoria);
+        } else if ((marca == null || marca.isBlank()) && categoria != null && !categoria.isBlank()) {
+            // Filter by category only
+            filtroVeiculoTable.filtrarPorCategoria(categoria);
+        } else {
+            // Reset filters and repopulate the table
+            //view.getVeiculoTable().setRowSorter(null);
+            filtroVeiculoTable.getSorter().setRowFilter(null);
+            //vtm.setRowCount(0);
+            switch (vtm.getTipoVeiculo()) {
+                case 1 -> {
+                    showMotocicletas();
+                    vtm.fireTableDataChanged();
+                }
+                case 2 -> {
+                    //showAutomoveis();
+                    vtm.fireTableDataChanged();
+                }
+                case 3 -> {
+                    //showVans();
+                    vtm.fireTableDataChanged();
+                }
+            }
+
+            view.getVeiculoTable().setRowSorter(filtroVeiculoTable.getSorter());
         }
     }
 }
