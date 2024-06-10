@@ -12,8 +12,8 @@ import model.dto.Veiculo;
 public class VeiculosTableModel extends DefaultTableModel {
 
     private ArrayList<Van> listaVans = new ArrayList<>();
-    private ArrayList<Motocicleta> listaMotocicletas = new ArrayList<>();
-    private ArrayList<Automovel> listaAutomoveis = new ArrayList<>();
+    private ArrayList<Motocicleta> listaMotos = new ArrayList<>();
+    private ArrayList<Automovel> listaAutos = new ArrayList<>();
     private final String[] colunas;
     private int tipoVeiculo; // 1 = Moto, 2 = Auto, 3 = Van
 
@@ -23,8 +23,8 @@ public class VeiculosTableModel extends DefaultTableModel {
 
     public VeiculosTableModel(ArrayList<Van> v, ArrayList<Motocicleta> m, ArrayList<Automovel> a) {
         this.colunas = new String[]{"Placa", "Marca", "Categoria", "Modelo", "Ano"};
-        this.listaMotocicletas = m;
-        this.listaAutomoveis = a;
+        this.listaMotos = m;
+        this.listaAutos = a;
         this.listaVans = v;
     }
 
@@ -49,13 +49,13 @@ public class VeiculosTableModel extends DefaultTableModel {
 
     public void addVeiculo(Veiculo v) {
         if (v instanceof Motocicleta moto) {
-            this.listaMotocicletas.add(moto);
+            this.listaMotos.add(moto);
             this.fireTableDataChanged();
-            this.fireTableRowsInserted(listaMotocicletas.size() - 1, listaMotocicletas.size() - 1);//update JTable
+            this.fireTableRowsInserted(listaMotos.size() - 1, listaMotos.size() - 1);//update JTable
         } else if (v instanceof Automovel auto) {
-            this.listaAutomoveis.add(auto);
+            this.listaAutos.add(auto);
             this.fireTableDataChanged();
-            this.fireTableRowsInserted(listaAutomoveis.size() - 1, listaAutomoveis.size() - 1);//update JTable
+            this.fireTableRowsInserted(listaAutos.size() - 1, listaAutos.size() - 1);//update JTable
         } else if (v instanceof Van van) {
             this.listaVans.add(van);
             this.fireTableDataChanged();
@@ -77,10 +77,10 @@ public class VeiculosTableModel extends DefaultTableModel {
     public int getRowCount() {
         switch (tipoVeiculo) {
             case 1 -> {
-                return (this.listaMotocicletas != null) ? this.listaMotocicletas.size() : 0;
+                return (this.listaMotos != null) ? this.listaMotos.size() : 0;
             }
             case 2 -> {
-                return (this.listaAutomoveis != null) ? this.listaAutomoveis.size() : 0;
+                return (this.listaAutos != null) ? this.listaAutos.size() : 0;
             }
             case 3 -> {
                 return (this.listaVans != null) ? this.listaVans.size() : 0;
@@ -93,7 +93,7 @@ public class VeiculosTableModel extends DefaultTableModel {
     public Object getValueAt(int row, int col) {
         switch (tipoVeiculo) {
             case 1 -> {
-                Motocicleta moto = listaMotocicletas.get(row);
+                Motocicleta moto = listaMotos.get(row);
                 return switch (col) {
                     case 0 ->
                         moto.getPlaca();
@@ -110,7 +110,7 @@ public class VeiculosTableModel extends DefaultTableModel {
                 };
             }
             case 2 -> {
-                Automovel auto = listaAutomoveis.get(row);
+                Automovel auto = listaAutos.get(row);
                 return switch (col) {
                     case 0 ->
                         auto.getPlaca();
@@ -216,11 +216,11 @@ public class VeiculosTableModel extends DefaultTableModel {
                 fireTableRowsDeleted(row, row);
             }
             case 2 -> {
-                listaMotocicletas.remove(row);
+                listaMotos.remove(row);
                 fireTableRowsDeleted(row, row);
             }
             case 3 -> {
-                listaAutomoveis.remove(row);
+                listaAutos.remove(row);
                 fireTableRowsDeleted(row, row);
             }
         }
@@ -260,18 +260,18 @@ public class VeiculosTableModel extends DefaultTableModel {
     }
 
     public void setListaMotos(ArrayList<Motocicleta> motos) {
-        this.listaMotocicletas = motos;
-        if (!listaMotocicletas.isEmpty()) {
+        this.listaMotos = motos;
+        if (!listaMotos.isEmpty()) {
             this.fireTableDataChanged();
-            this.fireTableRowsInserted(0, listaMotocicletas.size() - 1);//update JTable
+            this.fireTableRowsInserted(0, listaMotos.size() - 1);//update JTable
         }
     }
 
     public void setListaAutos(ArrayList<Automovel> autos) {
-        this.listaAutomoveis = autos;
-        if (!listaAutomoveis.isEmpty()) {
+        this.listaAutos = autos;
+        if (!listaAutos.isEmpty()) {
             this.fireTableDataChanged();
-            this.fireTableRowsInserted(0, listaAutomoveis.size() - 1);//update JTable
+            this.fireTableRowsInserted(0, listaAutos.size() - 1);//update JTable
         }
     }
 
@@ -286,19 +286,19 @@ public class VeiculosTableModel extends DefaultTableModel {
     public void limpaTabela() {
         switch (tipoVeiculo) {
             case 1 -> {
-                int indice = listaMotocicletas.size() - 1;
+                int indice = listaMotos.size() - 1;
                 if (indice < 0) {
                     indice = 0;
                 }
-                this.listaMotocicletas = new ArrayList();
+                this.listaMotos = new ArrayList();
                 this.fireTableRowsDeleted(0, indice);//update JTable
             }
             case 2 -> {
-                int indice = listaAutomoveis.size() - 1;
+                int indice = listaAutos.size() - 1;
                 if (indice < 0) {
                     indice = 0;
                 }
-                this.listaAutomoveis = new ArrayList();
+                this.listaAutos = new ArrayList();
                 this.fireTableRowsDeleted(0, indice);//update JTable
             }
             case 3 -> {

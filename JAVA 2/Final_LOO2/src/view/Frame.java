@@ -38,11 +38,12 @@ public class Frame extends javax.swing.JFrame {
     //VendaTabController ctrlVenda;
 
     private ClienteTableModel ctm;
-    private LocarVeiculoTableModel lvtm;
+    private VeiculosTableModel vtm;
     private ClienteLocacaoTableModel cltm;
+    private LocarVeiculoTableModel lvtm;
     private VeiculoDevolverTableModel vdtm;
     private VeiculoVenderTableModel vvtm;
-    private VeiculosTableModel vtm;
+
     private TableFilter filtroVeiculoTable, f1;
 
     public Frame() {
@@ -50,23 +51,12 @@ public class Frame extends javax.swing.JFrame {
         //TABLE MODELS
         ctm = new ClienteTableModel();
         vtm = new VeiculosTableModel();
-        lvtm = new LocarVeiculoTableModel();
         cltm = new ClienteLocacaoTableModel();
+        lvtm = new LocarVeiculoTableModel();
         vdtm = new VeiculoDevolverTableModel();
         vvtm = new VeiculoVenderTableModel();
 
         initComponents();
-
-        loadAllCategoriaMarcaCboxes();//falta  cboxes!!!
-
-        //FILTERS
-        filtroVeiculoTable = new TableFilter();
-        filtroVeiculoTable.initFilter(veiculoTable);
-        //f1 = new FiltroDeTabela();
-        //f1.criarTabela(VendaTable);
-
-        //SET SINGLE SELECTION
-        vtm.setSingleSelection(veiculoTable);
 
     }
 
@@ -87,12 +77,40 @@ public class Frame extends javax.swing.JFrame {
         //this.ctrlVenda = ctrlVenda;
     }
 
-    //FOR TESTING
-    // public void setControllers(ClientesTabController ctrlClientes) {
-    //   this.ctrlClientes = ctrlClientes;
-    //}
+    ///TEST/// maybe unnecessary ?
+    public void setTableModels(ClienteTableModel ctm, VeiculosTableModel vtm, ClienteLocacaoTableModel cltm, LocarVeiculoTableModel lvtm,
+            VeiculoDevolverTableModel vdtm, VeiculoVenderTableModel vvtm) {
+        this.ctm = ctm;
+        this.vtm = vtm;
+        this.cltm = cltm;
+        this.lvtm = lvtm;
+        this.vdtm = vdtm;
+        this.vvtm = vvtm;
+
+    }
+
     public ClienteTableModel getCtm() {
         return ctm;
+    }
+
+    public VeiculosTableModel getVtm() {
+        return vtm;
+    }
+
+    public ClienteLocacaoTableModel getCltm() {
+        return cltm;
+    }
+
+    public LocarVeiculoTableModel getLvtm() {
+        return lvtm;
+    }
+
+    public VeiculoDevolverTableModel getVdtm() {
+        return vdtm;
+    }
+
+    public VeiculoVenderTableModel getVvtm() {
+        return vvtm;
     }
 
     @SuppressWarnings("unchecked")
@@ -121,8 +139,8 @@ public class Frame extends javax.swing.JFrame {
         btnVansVeiculos = new javax.swing.JButton();
         btnMotocicletasVeiculos = new javax.swing.JButton();
         btnAutomoveisVeiculos = new javax.swing.JButton();
-        cboxMarcaVeiculos = new javax.swing.JComboBox<>();
-        cboxCategoriaVeiculos = new javax.swing.JComboBox<>();
+        cboxMarcaVeiculo = new javax.swing.JComboBox<>();
+        cboxCategoriaVeiculo = new javax.swing.JComboBox<>();
         tabCliente = new javax.swing.JPanel();
         lblNomeCliente = new javax.swing.JLabel();
         lblSobrenomeCliente = new javax.swing.JLabel();
@@ -147,8 +165,6 @@ public class Frame extends javax.swing.JFrame {
         paneVeiculoTableLocacao = new javax.swing.JScrollPane();
         veiculoTableLocacao = new javax.swing.JTable();
         btnAutomoveisLocacao = new javax.swing.JButton();
-        cbxMarcaVeiculos = new javax.swing.JComboBox<>();
-        cbxCategoriaVeiculos = new javax.swing.JComboBox<>();
         txtPesquisarClientes = new javax.swing.JTextField();
         btnLocar = new javax.swing.JButton();
         paneClienteLocacaoTable = new javax.swing.JScrollPane();
@@ -169,8 +185,6 @@ public class Frame extends javax.swing.JFrame {
         tabVenda = new javax.swing.JPanel();
         paneVendaTable = new javax.swing.JScrollPane();
         VendaTable = new javax.swing.JTable();
-        cbxCategoriaVeiculosVenda = new javax.swing.JComboBox<>();
-        cbxMarcaVeiculosVenda = new javax.swing.JComboBox<>();
         btnAutomoveisVenda = new javax.swing.JButton();
         btnMotocicletasVenda = new javax.swing.JButton();
         btnVansVenda = new javax.swing.JButton();
@@ -299,17 +313,17 @@ public class Frame extends javax.swing.JFrame {
             }
         });
 
-        cboxMarcaVeiculos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
-        cboxMarcaVeiculos.addActionListener(new java.awt.event.ActionListener() {
+        cboxMarcaVeiculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        cboxMarcaVeiculo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboxMarcaVeiculosActionPerformed(evt);
+                cboxMarcaVeiculoActionPerformed(evt);
             }
         });
 
-        cboxCategoriaVeiculos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
-        cboxCategoriaVeiculos.addActionListener(new java.awt.event.ActionListener() {
+        cboxCategoriaVeiculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        cboxCategoriaVeiculo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboxCategoriaVeiculosActionPerformed(evt);
+                cboxCategoriaVeiculoActionPerformed(evt);
             }
         });
 
@@ -367,10 +381,10 @@ public class Frame extends javax.swing.JFrame {
                         .addComponent(btnAutomoveisVeiculos)
                         .addGap(69, 69, 69)
                         .addComponent(btnVansVeiculos)
-                        .addGap(72, 72, 72)
-                        .addComponent(cboxMarcaVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(cboxCategoriaVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(62, 62, 62)
+                        .addComponent(cboxMarcaVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36)
+                        .addComponent(cboxCategoriaVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(152, Short.MAX_VALUE))
         );
         tabVeiculosLayout.setVerticalGroup(
@@ -409,18 +423,21 @@ public class Frame extends javax.swing.JFrame {
                         .addGap(26, 26, 26)
                         .addComponent(btnIncluirVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(tabVeiculosLayout.createSequentialGroup()
-                        .addGap(14, 14, 14)
                         .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(cboxMarcaVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(cboxCategoriaVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnVansVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnMotocicletasVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnAutomoveisVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(tabVeiculosLayout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cboxCategoriaVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(tabVeiculosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(btnVansVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnMotocicletasVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnAutomoveisVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(tabVeiculosLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(cboxMarcaVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addComponent(paneVeiculoTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(152, Short.MAX_VALUE))
+                .addContainerGap(176, Short.MAX_VALUE))
         );
 
         paneAllTabs.addTab("Veículos", tabVeiculos);
@@ -650,18 +667,6 @@ public class Frame extends javax.swing.JFrame {
             }
         });
 
-        cbxMarcaVeiculos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxMarcaVeiculosActionPerformed(evt);
-            }
-        });
-
-        cbxCategoriaVeiculos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxCategoriaVeiculosActionPerformed(evt);
-            }
-        });
-
         txtPesquisarClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtPesquisarClientesActionPerformed(evt);
@@ -755,13 +760,9 @@ public class Frame extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(btnAutomoveisLocacao)
                         .addGap(38, 38, 38)
-                        .addGroup(tabLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cbxMarcaVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cboxMarcaLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cboxMarcaLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
-                        .addGroup(tabLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cboxCategoriaLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cbxCategoriaVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cboxCategoriaLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabLocacaoLayout.createSequentialGroup()
                         .addGap(46, 46, 46)
                         .addComponent(paneVeiculoTableLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -774,20 +775,18 @@ public class Frame extends javax.swing.JFrame {
                 .addGroup(tabLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cboxMarcaLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cboxCategoriaLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
+                .addGap(62, 62, 62)
                 .addGroup(tabLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVansLocacao)
                     .addComponent(btnMotocicletasLocacao)
                     .addComponent(btnAutomoveisLocacao)
-                    .addComponent(cbxMarcaVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxCategoriaVeiculos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtPesquisarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblPesquisarClientes))
                 .addGap(18, 18, 18)
                 .addGroup(tabLocacaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tabLocacaoLayout.createSequentialGroup()
                         .addComponent(paneVeiculoTableLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(86, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(tabLocacaoLayout.createSequentialGroup()
                         .addComponent(paneClienteLocacaoTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -867,7 +866,7 @@ public class Frame extends javax.swing.JFrame {
                     .addComponent(btnAutomoveisDevolver))
                 .addGap(18, 18, 18)
                 .addComponent(paneDevolverTable, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(92, Short.MAX_VALUE))
+                .addContainerGap(116, Short.MAX_VALUE))
         );
 
         paneAllTabs.addTab("Devolução", tabDevolucao);
@@ -878,18 +877,6 @@ public class Frame extends javax.swing.JFrame {
             }
         });
         paneVendaTable.setViewportView(VendaTable);
-
-        cbxCategoriaVeiculosVenda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxCategoriaVeiculosVendaActionPerformed(evt);
-            }
-        });
-
-        cbxMarcaVeiculosVenda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbxMarcaVeiculosVendaActionPerformed(evt);
-            }
-        });
 
         btnAutomoveisVenda.setText("Automoveis");
         btnAutomoveisVenda.addActionListener(new java.awt.event.ActionListener() {
@@ -921,26 +908,21 @@ public class Frame extends javax.swing.JFrame {
         tabVendaLayout.setHorizontalGroup(
             tabVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabVendaLayout.createSequentialGroup()
-                .addContainerGap(376, Short.MAX_VALUE)
                 .addGroup(tabVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(paneVendaTable, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(tabVendaLayout.createSequentialGroup()
-                        .addGap(176, 176, 176)
+                        .addContainerGap(576, Short.MAX_VALUE)
                         .addComponent(btnVansVenda)
                         .addGap(28, 28, 28)
                         .addComponent(btnMotocicletasVenda)
                         .addGap(18, 18, 18)
                         .addComponent(btnAutomoveisVenda)
                         .addGap(38, 38, 38)
-                        .addGroup(tabVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(tabVendaLayout.createSequentialGroup()
-                                .addComponent(cboxMarcaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cboxCategoriaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(tabVendaLayout.createSequentialGroup()
-                                .addComponent(cbxMarcaVeiculosVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
-                                .addComponent(cbxCategoriaVeiculosVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addComponent(cboxMarcaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(26, 26, 26)
+                        .addComponent(cboxCategoriaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabVendaLayout.createSequentialGroup()
+                        .addContainerGap(376, Short.MAX_VALUE)
+                        .addComponent(paneVendaTable, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(251, 251, 251))
         );
         tabVendaLayout.setVerticalGroup(
@@ -954,12 +936,10 @@ public class Frame extends javax.swing.JFrame {
                 .addGroup(tabVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnVansVenda)
                     .addComponent(btnMotocicletasVenda)
-                    .addComponent(btnAutomoveisVenda)
-                    .addComponent(cbxMarcaVeiculosVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbxCategoriaVeiculosVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAutomoveisVenda))
                 .addGap(18, 18, 18)
                 .addComponent(paneVendaTable, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(114, Short.MAX_VALUE))
+                .addContainerGap(138, Short.MAX_VALUE))
         );
 
         paneAllTabs.addTab("Venda", tabVenda);
@@ -985,58 +965,7 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNomeClienteActionPerformed
 
     private void btnIncluirVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirVeiculoActionPerformed
-        //String tipoVeiculo = (String) cboxTipo.getSelectedItem();
         ctrlVeiculos.newVeiculo();
-        /*      Marca marca = (Marca) cbxMarca.getSelectedItem();
-        Estado estado = (Estado) cbxEstado.getSelectedItem();
-        Locacao locacao = null;
-        Categoria categoria = (Categoria) cbxCategoria.getSelectedItem();
-        //valor de compra
-        String str = ftxtValorDeCompra.getText();
-        double valorDeCompra = 0;
-        try {
-            if (str != null && !str.isEmpty()) {
-                valorDeCompra = Double.parseDouble(str);
-            }
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Por favor, insira um número válido.");
-        }
-
-        String placa = ftxtPlaca.getText();
-        //ano
-        String str0 = ftxtAno.getText();
-        int ano = 0;
-        try {
-            if (str0 != null && !str0.isEmpty()) {
-                ano = Integer.parseInt(ftxtAno.getText());
-            }
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Por favor, insira um número válido.");
-        }
-
-        //model,contructors,adding
-        if ("Motocicleta".equals(cbxTipo.getSelectedItem())) {
-            ModeloMotocicleta modeloMoto = (ModeloMotocicleta) cboxModelo.getSelectedItem();
-            Motocicleta motocicleta = new Motocicleta(marca, estado, locacao, categoria, valorDeCompra, placa, ano, modeloMoto);
-            SwingUtilities.invokeLater(() -> {
-                lvtm.addMotocicleta(motocicleta);
-            });
-
-        } else if ("Automóvel".equals(cbxTipo.getSelectedItem())) {
-            ModeloAutomovel modeloAuto = (ModeloAutomovel) cboxModelo.getSelectedItem();
-            Automovel automovel = new Automovel(marca, estado, locacao, categoria, valorDeCompra, placa, ano, modeloAuto);
-            lvtm.addAutomovel(automovel);
-        } else if ("Van".equals(cbxTipo.getSelectedItem())) {
-            ModeloVan modeloVan = (ModeloVan) cboxModelo.getSelectedItem();
-            Van van = new Van(marca, estado, locacao, categoria, valorDeCompra, placa, ano, modeloVan);
-            lvtm.addVan(van);
-        }
-        ftxtValorDeCompra.setText("");
-        ftxtPlaca.setText("");
-        ftxtAno.setText("");
-         */
     }//GEN-LAST:event_btnIncluirVeiculoActionPerformed
 
     private void tabVeiculosComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabVeiculosComponentShown
@@ -1079,16 +1008,6 @@ public class Frame extends javax.swing.JFrame {
         modeloTabela.filtrarClientes("");
     }//GEN-LAST:event_tabLocacaoComponentShown
 
-    private void cbxMarcaVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxMarcaVeiculosActionPerformed
-        String marca = (String) cbxMarcaVeiculos.getSelectedItem();
-        filtroVeiculoTable.filtrarPorMarca(marca);
-    }//GEN-LAST:event_cbxMarcaVeiculosActionPerformed
-
-    private void cbxCategoriaVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCategoriaVeiculosActionPerformed
-        String categoria = (String) cbxCategoriaVeiculos.getSelectedItem();
-        filtroVeiculoTable.filtrarPorMarca(categoria);
-    }//GEN-LAST:event_cbxCategoriaVeiculosActionPerformed
-
     private void txtPesquisarClientesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarClientesKeyReleased
         String textoPesquisa = txtPesquisarClientes.getText();
         //filtrarPesquisa(textoPesquisa);
@@ -1127,16 +1046,6 @@ public class Frame extends javax.swing.JFrame {
     private void VendaTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VendaTableMousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_VendaTableMousePressed
-
-    private void cbxCategoriaVeiculosVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCategoriaVeiculosVendaActionPerformed
-        Marca marca = (Marca) cbxCategoriaVeiculosVenda.getSelectedItem();
-        f1.filtrarPorMarca(marca.name());
-    }//GEN-LAST:event_cbxCategoriaVeiculosVendaActionPerformed
-
-    private void cbxMarcaVeiculosVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxMarcaVeiculosVendaActionPerformed
-        Marca marca = (Marca) cbxMarcaVeiculosVenda.getSelectedItem();
-        f1.filtrarPorMarca(marca.name());
-    }//GEN-LAST:event_cbxMarcaVeiculosVendaActionPerformed
 
     private void btnAutomoveisVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutomoveisVendaActionPerformed
         //vvtm.setTipoVeiculo(3);
@@ -1258,48 +1167,17 @@ public class Frame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAutomoveisVeiculosActionPerformed
 
-    private void cboxMarcaVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxMarcaVeiculosActionPerformed
-        /*        if (cboxCategoriaVeiculos.getSelectedItem() == null){
-            String marca = (String) cbxMarcaVeiculos.getSelectedItem();
-            filtroVeiculoTable.filtrarPorMarca(marca);
-        }else{
-            String marca = (String) cbxMarcaVeiculos.getSelectedItem();
-             String categoria = (String) cbxCategoriaVeiculos.getSelectedItem();
-            filtroVeiculoTable.filtrarPorMarcaECategoria(marca,categoria);
-        }
-         */
-        String marca = (String) cbxMarcaVeiculos.getSelectedItem();
-        String categoria = (String) cbxCategoriaVeiculos.getSelectedItem();
-
-        if (marca != null && (categoria == null || categoria.isEmpty())) {
-            filtroVeiculoTable.filtrarPorMarca(marca);
-        } else if (marca != null && categoria != null) {
-            filtroVeiculoTable.filtrarPorMarcaECategoria(marca, categoria);
-        }
-    }//GEN-LAST:event_cboxMarcaVeiculosActionPerformed
-
     private void cboxModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxModeloActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cboxModeloActionPerformed
 
-    private void cboxCategoriaVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxCategoriaVeiculosActionPerformed
-        /*if (cboxMarcaVeiculos.getSelectedItem() == null) {
-            String categoria = (String) cbxCategoriaVeiculos.getSelectedItem();
-            filtroVeiculoTable.filtrarPorCategoria(categoria);
-        } else {
-            String categoria = (String) cbxCategoriaVeiculos.getSelectedItem();
-            String marca = (String) cbxMarcaVeiculos.getSelectedItem();
-            filtroVeiculoTable.filtrarPorMarcaECategoria(marca, categoria);
-        }*/
-        String marca = (String) cbxMarcaVeiculos.getSelectedItem();
-        String categoria = (String) cbxCategoriaVeiculos.getSelectedItem();
+    private void cboxCategoriaVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxCategoriaVeiculoActionPerformed
+        ctrlVeiculos.activateCboxCategoriaVeiculos();
+    }//GEN-LAST:event_cboxCategoriaVeiculoActionPerformed
 
-        if (categoria != null && (marca == null || marca.isEmpty())) {
-            filtroVeiculoTable.filtrarPorCategoria(categoria);
-        } else if (categoria != null && marca != null) {
-            filtroVeiculoTable.filtrarPorMarcaECategoria(marca, categoria);
-        }
-    }//GEN-LAST:event_cboxCategoriaVeiculosActionPerformed
+    private void cboxMarcaVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxMarcaVeiculoActionPerformed
+        ctrlVeiculos.activateCboxMarcaVeiculos();
+    }//GEN-LAST:event_cboxMarcaVeiculoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1326,18 +1204,14 @@ public class Frame extends javax.swing.JFrame {
     private javax.swing.JButton btnVansVenda;
     private javax.swing.JComboBox<String> cboxCategoria;
     private javax.swing.JComboBox<String> cboxCategoriaLocacao;
-    private javax.swing.JComboBox<String> cboxCategoriaVeiculos;
+    private javax.swing.JComboBox<String> cboxCategoriaVeiculo;
     private javax.swing.JComboBox<String> cboxCategoriaVenda;
     private javax.swing.JComboBox<String> cboxMarca;
     private javax.swing.JComboBox<String> cboxMarcaLocacao;
-    private javax.swing.JComboBox<String> cboxMarcaVeiculos;
+    private javax.swing.JComboBox<String> cboxMarcaVeiculo;
     private javax.swing.JComboBox<String> cboxMarcaVenda;
     private javax.swing.JComboBox<Object> cboxModelo;
     private javax.swing.JComboBox<String> cboxTipo;
-    private javax.swing.JComboBox<Categoria> cbxCategoriaVeiculos;
-    private javax.swing.JComboBox<Categoria> cbxCategoriaVeiculosVenda;
-    private javax.swing.JComboBox<Marca> cbxMarcaVeiculos;
-    private javax.swing.JComboBox<Marca> cbxMarcaVeiculosVenda;
     private javax.swing.JTable clienteLocacaoTable;
     private javax.swing.JTable clienteTable;
     private javax.swing.JFormattedTextField ftxtAno;
@@ -1382,6 +1256,22 @@ public class Frame extends javax.swing.JFrame {
     private javax.swing.JTable veiculoTableLocacao;
     // End of variables declaration//GEN-END:variables
 
+    public JComboBox<Object> getCboxModelo() {
+        return cboxModelo;
+    }
+
+    public javax.swing.JTable getVeiculoTable() {
+        return veiculoTable;
+    }
+
+    public javax.swing.JComboBox<String> getCboxCategoriaVeiculo() {
+        return cboxCategoriaVeiculo;
+    }
+
+    public javax.swing.JComboBox<String> getCboxMarcaVeiculo() {
+        return cboxMarcaVeiculo;
+    }
+
     public void apresentaInfo(String info) {
         JOptionPane.showMessageDialog(null, info + "\n", "Informação", JOptionPane.INFORMATION_MESSAGE);
     }
@@ -1408,10 +1298,9 @@ public class Frame extends javax.swing.JFrame {
         return null;
     }
 
-    public void addVeiculoToVtm(Veiculo v) {
-        vtm.addVeiculo(v);
-    }
-
+    //public void addVeiculoToVtm(Veiculo v) {
+    //   vtm.addVeiculo(v);
+    //}
     public Veiculo getVeiculoFormulario() throws NumberFormatException {
         String tipo = (String) cboxTipo.getSelectedItem();
         String marca = (String) cboxMarca.getSelectedItem();
@@ -1475,18 +1364,15 @@ public class Frame extends javax.swing.JFrame {
         ctm.setListaCliente(clientes);
     }
 
-    public void showVtmMotos(ArrayList<Motocicleta> motos) {
-        vtm.setListaMotos(motos);
-    }
-
-    public void showVtmAutos(ArrayList<Automovel> autos) {
-        vtm.setListaAutos(autos);
-    }
-
-    public void showVtmVans(ArrayList<Van> vans) {
-        vtm.setListaVans(vans);
-    }
-
+    //public void showVtmMotos(ArrayList<Motocicleta> motos) {
+    //   vtm.setListaMotos(motos);
+    //}
+    //public void showVtmAutos(ArrayList<Automovel> autos) {
+    // /  vtm.setListaAutos(autos);
+    //}
+    // public void showVtmVans(ArrayList<Van> vans) {
+    // /   vtm.setListaVans(vans);
+    //}
     private void filtrarPesquisa(String textoPesquisa) {
         ClienteLocacaoTableModel modeloTabela = (ClienteLocacaoTableModel) clienteLocacaoTable.getModel();
         modeloTabela.filtrarClientes(textoPesquisa);
@@ -1549,12 +1435,4 @@ public class Frame extends javax.swing.JFrame {
             }
         }
     }*/
-    public JComboBox<Object> getCboxModelo() {
-        return cboxModelo;
-    }
-
-    private void loadAllCategoriaMarcaCboxes() {
-        ComboBox.loadCboxMarca(cboxMarcaVeiculos);
-        ComboBox.loadCboxCategoria(cboxCategoriaVeiculos);
-    }
 }

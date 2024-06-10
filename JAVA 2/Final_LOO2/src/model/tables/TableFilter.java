@@ -44,22 +44,29 @@ public class FiltroDeTabela {
         });
     }
 }
-*/package model.tables;
+ */package model.tables;
 
+import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.table.*;
+import model.dto.Motocicleta;
+import model.dto.Veiculo;
 
 public class TableFilter {
 
     private TableRowSorter<TableModel> sorter;
-    private static final int COL_MARCA = 0;
-    private static final int COL_CATEGORIA = 1;
+    private static final int COL_MARCA = 1;
+    private static final int COL_CATEGORIA = 2;
 
     public void initFilter(JTable table) {
         TableModel model = table.getModel();
         sorter = new TableRowSorter<>(model);
         table.setRowSorter(sorter);
+    }
+
+    public TableRowSorter<TableModel> getSorter() {
+        return sorter;
     }
 
     public void filtrarPorMarcaECategoria(String marca, String categoria) {
@@ -110,11 +117,41 @@ public class TableFilter {
         });
     }
 
+    public void resetFilters(int tipoVeiculo, DefaultTableModel tableModel, ArrayList v) {
+        switch (tipoVeiculo) {
+            case 1 -> {
+                
+                ArrayList<Motocicleta> motos = new ArrayList<>(v);
+                tableModel.setRowCount(0);
+                for (Motocicleta moto : motos) {
+                    tableModel.addRow(new Object[]{moto.getPlaca(), moto.getMarca(), moto.getCategoria(), moto.getModelo(), moto.getAno()});
+                }
+            }
+            case 2 -> {
+
+            }
+            case 3 -> {
+
+            }
+
+        };
+
+    }
+/*
+    private void refreshTableModel() {
+        tableModel.setRowCount(0);
+
+        // Add rows from filteredVeiculos to the table model
+        for (Veiculo veiculo : filteredVeiculos) {
+            tableModel.addRow(new Object[]{veiculo.getMarca(), veiculo.getCategoria(), veiculo.getOtherProperty()});
+        }
+    }
+
     public void clearFilters() {
         if (sorter == null) {
             throw new IllegalStateException("Sorter has not been initialized. Call criarTabela() first.");
         }
         sorter.setRowFilter(null);
     }
+*/
 }
-
