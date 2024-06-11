@@ -4,8 +4,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import model.combo.ComboBox;
+import model.connection.AutomovelDaoSql;
 import model.connection.MotocicletaDaoSql;
+import model.connection.VanDaoSql;
+import model.dto.Automovel;
 import model.dto.Motocicleta;
+import model.dto.Van;
 import model.dto.Veiculo;
 import model.tables.TableFilter;
 import model.tables.VeiculosTableModel;
@@ -17,16 +21,17 @@ public class VeiculosTabController {
     private VeiculosTableModel vtm;
     private MotocicletaDaoSql motoDao;
     private TableFilter filtroVeiculoTable;
-    //private AutomovelDaoSql autoDao;
-    //private VanDaoSql vanDao;
+    private AutomovelDaoSql autoDao;
+    private VanDaoSql vanDao;
 
-    public VeiculosTabController(Frame view, VeiculosTableModel vtm, TableFilter f, MotocicletaDaoSql motoDao/*,AutomovelDaoSql autoDao, VanDaoSql vanDao*/) {
+    public VeiculosTabController(Frame view, VeiculosTableModel vtm, TableFilter f,
+            MotocicletaDaoSql motoDao, AutomovelDaoSql autoDao, VanDaoSql vanDao) {
         this.view = view;
         this.vtm = vtm;
         filtroVeiculoTable = f;
         this.motoDao = motoDao;
-        //this.autoDao = autoDao;
-        //this.vanDao = vanDao;
+        this.autoDao = autoDao;
+        this.vanDao = vanDao;
     }
 
     public VeiculosTabController() {
@@ -38,33 +43,32 @@ public class VeiculosTabController {
 
             if (v instanceof Motocicleta moto) {
                 if (!motoDao.motoExists(moto)) {
-                    showMotocicletas();
+                    showMotos();
                     vtm.addVeiculo(moto);//view.addVeiculoToVtm(moto);
                     motoDao.add(moto);
                     view.clearFieldsVeiculo();
                 } else {
                     view.apresentaInfo("vehicle already exists");
                 }
-            }
-            /* else if (v instanceof Automovel) {
-            Automovel auto = (Automovel) v;
-            if (!motoDao.automovelExists(auto)) {
-            vtm.addVeiculo(auto);//view.addVeiculoToVtm(auto);
-            autoDao.add(auto);
-            view.clearFieldsVeiculo();
-            } else {
-            view.apresentaInfo("vehicle already exists");
-            }
+            } else if (v instanceof Automovel) {
+                Automovel auto = (Automovel) v;
+                if (!autoDao.autoExists(auto)) {
+                    vtm.addVeiculo(auto);//view.addVeiculoToVtm(auto);
+                    autoDao.add(auto);
+                    view.clearFieldsVeiculo();
+                } else {
+                    view.apresentaInfo("vehicle already exists");
+                }
             } else if (v instanceof Van) {
-            Van van = (Van) v;
-            if (!motoDao.vanExists(van)) {
-            vtm.addVeiculo(van);//view.addVeiculoToVtm(van);
-            vanDao.add(van);
-            view.clearFieldsVeiculo();
-            } else {
-            view.apresentaInfo("vehicle already exists");
+                Van van = (Van) v;
+                if (!vanDao.vanExists(van)) {
+                    vtm.addVeiculo(van);//view.addVeiculoToVtm(van);
+                    vanDao.add(van);
+                    view.clearFieldsVeiculo();
+                } else {
+                    view.apresentaInfo("vehicle already exists");
+                }
             }
-            }*/
 
         } catch (IOException | SQLException | NullPointerException e) {
             view.apresentaErro("Erro ao incluir Veiculo.");
@@ -105,47 +109,71 @@ public class VeiculosTabController {
         }
     }
      */
-    public void showMotocicletas() {
-        MotocicletaDaoSql motoDao = new MotocicletaDaoSql();
-        ArrayList<Motocicleta> motos = new ArrayList<>();
+    public void showMotos() {
         try {
+            MotocicletaDaoSql motoDao = new MotocicletaDaoSql();
+            ArrayList<Motocicleta> motos = new ArrayList<>();
+            vtm.setListaMotos(motos);
+            vtm.fireTableDataChanged();
+            filtroVeiculoTable.getSorter().setRowFilter(null);
+            vtm.setRowCount(0);
             motos = motoDao.getAll();
-            vtm.setListaMotos(motos);//view.showVtmMotos(motos);
+            if (motos.isEmpty()) {
+                view.apresentaInfo("não há motocicletas");
+            } else {
+                vtm.setListaMotos(motos);
+                vtm.fireTableDataChanged();
+            }
         } catch (NullPointerException e) {
-            view.apresentaErro("Erro ao mostrar motocicletas na tabela.");
+            view.apresentaErro("Erro ao mostrar motos na tabela.");
             e.printStackTrace();
         }
+        // }
     }
 
-    public void resetFiltersVeiculosTable() {
-        //filtroVeiculoTable.resetFilters(vtm.getTipoVeiculo(), vtm, ArrayList v);
-    }
-
-    /*
-    public void showAutomoveis() {
-        AutomovelDaoSql autoDao = new AutomovelDaoSql();
-        ArrayList<Automovel> autos = new ArrayList<>();
+    public void showAutos() {
         try {
+            AutomovelDaoSql autoDao = new AutomovelDaoSql();
+            ArrayList<Automovel> autos = new ArrayList<>();
+            vtm.setListaAutos(autos);
+            vtm.fireTableDataChanged();
+            filtroVeiculoTable.getSorter().setRowFilter(null);
+            vtm.setRowCount(0);
             autos = autoDao.getAll();
-            view.showVtmAutos(autos);
-        } catch (NullPointerException e) {
-            view.apresentaErro("Erro ao mostrar automoveis na tabela.");
+            if (autos.isEmpty()) {
+                view.apresentaInfo("nao há automoveis");
+            } else {
+                vtm.setListaAutos(autos);
+                vtm.fireTableDataChanged();
+            }
+        } catch (NullPointerException | IndexOutOfBoundsException e) {
+            view.apresentaErro("Erro ao mostrar autos na tabela.");
             e.printStackTrace();
         }
+        //}
     }
-    
+
     public void showVans() {
-        MotocicletaDaoSql vanDao = new MotocicletaDaoSql();
-        ArrayList<Motocicleta> vans = new ArrayList<>();
         try {
+            VanDaoSql vanDao = new VanDaoSql();
+            ArrayList<Van> vans = new ArrayList<>();
+            vtm.setListaVans(vans);
+            vtm.fireTableDataChanged();
+            filtroVeiculoTable.getSorter().setRowFilter(null);
+            vtm.setRowCount(0);
             vans = vanDao.getAll();
-            view.showVtmVans(vans);
+            if (vans.isEmpty()) {
+                view.apresentaInfo("nao há vans");
+            } else {
+                vtm.setListaVans(vans);
+                vtm.fireTableDataChanged();
+            }
         } catch (NullPointerException e) {
             view.apresentaErro("Erro ao mostrar vans na tabela.");
             e.printStackTrace();
         }
     }
-     */
+
     public void loadAllCategoriaMarcaCboxes() {
         ComboBox.loadCboxMarca(view.getCboxMarcaVeiculo());
         ComboBox.loadCboxCategoria(view.getCboxCategoriaVeiculo());
@@ -171,13 +199,13 @@ public class VeiculosTabController {
             filtroVeiculoTable.filtrarPorMarca(marca);
         } else {
             // Reset filters and repopulate the table
-           // view.getVeiculoTable().setRowSorter(null);
+            // view.getVeiculoTable().setRowSorter(null);
             filtroVeiculoTable.getSorter().setRowFilter(null);
             //vtm.setRowCount(0);
 
             switch (vtm.getTipoVeiculo()) {
                 case 1 -> {
-                    showMotocicletas();
+                    showMotos();
                     vtm.fireTableDataChanged();
                 }
                 case 2 -> {
@@ -214,7 +242,7 @@ public class VeiculosTabController {
             //vtm.setRowCount(0);
             switch (vtm.getTipoVeiculo()) {
                 case 1 -> {
-                    showMotocicletas();
+                    showMotos();
                     vtm.fireTableDataChanged();
                 }
                 case 2 -> {

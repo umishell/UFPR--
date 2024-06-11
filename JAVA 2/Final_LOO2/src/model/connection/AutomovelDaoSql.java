@@ -11,30 +11,30 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import model.combo.ComboBox;
 import model.dto.Locacao;
-import model.dto.Motocicleta;
+import model.dto.Automovel;
 
-public class MotocicletaDaoSql implements MotocicletaDao {
+public class AutomovelDaoSql implements AutomovelDao {
 
     private final String selectByPlaca = "SELECT * FROM veiculo WHERE placa=?";
     private final String updateEstado = "UPDATE veiculo SET idestado=? WHERE idveiculo=?";
-    private final String delete = "DELETE FROM motocicleta WHERE idveiculo=?; "
-            + "DELETE FROM veiculo WHERE idveiculo=?";
-    private final String deleteAll = "TRUNCATE motocicleta;"
-            + "DELTE FROM veiculo WHERE tipo = 1";
+    private final String delete = "DELETE FROM automovel WHERE idveiculo=?;"
+            + "DELETE from veiculo WHERE idveiculo=?";
+    private final String deleteAll = "TRUNCATE automovel;"
+            + "DELETE FROM veiculo WHERE tipo = 2";
 
-    private static MotocicletaDaoSql dao;
+    private static AutomovelDaoSql dao;
 
-    public static MotocicletaDaoSql getMotocicletaDaoSql() {
+    public static AutomovelDaoSql getAutomovelDaoSql() {
         if (dao == null) {
-            return dao = new MotocicletaDaoSql();
+            return dao = new AutomovelDaoSql();
         } else {
             return dao;
         }
     }
 
-    public boolean motoExists(Motocicleta moto) throws SQLException, IOException, NullPointerException {
+    public boolean autoExists(Automovel auto) throws SQLException, IOException, NullPointerException {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(selectByPlaca)) {
-            stmt.setString(1, moto.getPlaca());
+            stmt.setString(1, auto.getPlaca());
             ResultSet rs = stmt.executeQuery();
             // Check if any row is returned (indicating Placa exists)
             return rs.next();
@@ -42,31 +42,31 @@ public class MotocicletaDaoSql implements MotocicletaDao {
     }
 
     private final String insertVeiculo = "INSERT INTO veiculo (valorDeCompra, tipo, ano, placa) VALUES (?,?,?,?);";
-    private final String insertMoto = """
-                                        INSERT INTO motocicleta (idveiculo, idmodeloMotocicleta) 
+    private final String insertAuto = """
+                                        INSERT INTO automovel (idveiculo, idmodeloAutomovel) 
                                         VALUES ((SELECT idveiculo FROM veiculo WHERE placa=?),
-                                        (SELECT idmodeloMotocicleta FROM modelomotocicleta WHERE modelo = ?));
+                                        (SELECT idmodeloAutomovel FROM modeloautomovel WHERE modelo = ?));
                                       """;
 
     @Override
-    public void add(Motocicleta moto) {
-//moto.to_String();
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtVeiculo = conn.prepareStatement(insertVeiculo, Statement.RETURN_GENERATED_KEYS); PreparedStatement stmtMoto = conn.prepareStatement(insertMoto);) {
-            stmtVeiculo.setDouble(1, moto.getValorDeCompra());
-            stmtVeiculo.setString(2, "Motocicleta");
-            stmtVeiculo.setInt(3, moto.getAno());
-            stmtVeiculo.setString(4, moto.getPlaca());
-            stmtMoto.setString(1, moto.getPlaca());
-            stmtMoto.setString(2, moto.getModelo());
+    public void add(Automovel auto) {
+//auto.to_String();
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtVeiculo = conn.prepareStatement(insertVeiculo, Statement.RETURN_GENERATED_KEYS); PreparedStatement stmtAuto = conn.prepareStatement(insertAuto);) {
+            stmtVeiculo.setDouble(1, auto.getValorDeCompra());
+            stmtVeiculo.setString(2, "Automovel");
+            stmtVeiculo.setInt(3, auto.getAno());
+            stmtVeiculo.setString(4, auto.getPlaca());
+            stmtAuto.setString(1, auto.getPlaca());
+            stmtAuto.setString(2, auto.getModelo());
             stmtVeiculo.execute();
-            stmtMoto.execute();
+            stmtAuto.execute();
 
             ResultSet rs = stmtVeiculo.getGeneratedKeys();
             rs.next();
             int i = rs.getInt(1);
-            moto.setIdveiculo(i);
+            auto.setIdveiculo(i);
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.add() Error adding moto: \n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@AutomovelDaoSql.add() Error adding auto: \n" + e.getMessage());
             e.printStackTrace();
         }
 
@@ -81,22 +81,22 @@ public class MotocicletaDaoSql implements MotocicletaDao {
                                         veiculo.valorDeCompra,
                                         veiculo.placa,
                                         veiculo.ano ,
-                                        modelomotocicleta.modelo
-                                     FROM motocicleta
-                                     INNER JOIN veiculo ON motocicleta.idveiculo = veiculo.idveiculo
+                                        modeloautomovel.modelo
+                                     FROM automovel
+                                     INNER JOIN veiculo ON automovel.idveiculo = veiculo.idveiculo
                                      INNER JOIN estado ON veiculo.idestado = estado.idestado
-                                     INNER JOIN modeloMotocicleta ON motocicleta.idmodeloMotocicleta = modelomotocicleta.idmodeloMotocicleta
-                                     INNER JOIN categoria ON modelomotocicleta.idcategoria = categoria.idcategoria
-                                     INNER JOIN marca ON modelomotocicleta.idmarca = marca.idmarca
-                                     ORDER BY motocicleta.idveiculo;
+                                     INNER JOIN modeloAutomovel ON automovel.idmodeloAutomovel = modeloautomovel.idmodeloAutomovel
+                                     INNER JOIN categoria ON modeloautomovel.idcategoria = categoria.idcategoria
+                                     INNER JOIN marca ON modeloautomovel.idmarca = marca.idmarca
+                                     ORDER BY automovel.idveiculo;
                                      """;
 
     @Override
-    public ArrayList<Motocicleta> getAll() {
+    public ArrayList<Automovel> getAll() {
 
-        ArrayList<Motocicleta> motos = new ArrayList<>();
+        ArrayList<Automovel> autos = new ArrayList<>();
 
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("select * from locacao where idveiculo = ?"); PreparedStatement stmtLista = conn.prepareStatement(selectAll); ResultSet rs = stmtLista.executeQuery();) {
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("SELECT * FROM locacao WHERE idveiculo = ?"); PreparedStatement stmtLista = conn.prepareStatement(selectAll); ResultSet rs = stmtLista.executeQuery();) {
 
             while (rs.next()) {
                 int idveiculo = rs.getInt("idveiculo");
@@ -116,7 +116,7 @@ public class MotocicletaDaoSql implements MotocicletaDao {
                             LocalDate date = rs0.getDate("date").toLocalDate();
                             int idCliente = rs0.getInt("idcliente");
                             locacoes.add(new Locacao(dias, valor, date, idCliente, idveiculo));
-//System.out.println("veiculo-> "+idveiculo + ": " + idCliente + " " + valor + " " + date + " " + dias);
+                            //System.out.println("veiculo-> " + idveiculo + ": " + idCliente + " " + valor + " " + date + " " + dias);
                         }
                     }
 
@@ -127,15 +127,15 @@ public class MotocicletaDaoSql implements MotocicletaDao {
                 int ano = rs.getInt("ano");
                 String modelo = rs.getString("modelo");
 
-                motos.add(new Motocicleta(idveiculo, "Motocicleta", marca, estado, locacoes, categoria, valorDeCompra, placa, ano, modelo));
+                autos.add(new Automovel(idveiculo, "Automovel", marca, estado, locacoes, categoria, valorDeCompra, placa, ano, modelo));
             }
-            return motos;
+            return autos;
 
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.getAll():  Error getting all motos: \n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@AutomovelDaoSql.getAll():  Error getting all autos: \n" + e.getMessage());
             e.printStackTrace();
         }
-        return motos;
+        return autos;
     }
 
     private final String selectById = """
@@ -147,19 +147,19 @@ public class MotocicletaDaoSql implements MotocicletaDao {
                                         veiculo.valorDeCompra,
                                         veiculo.placa,
                                         veiculo.ano,
-                                        modelomotocicleta.modelo
-                                      FROM motocicleta
-                                      INNER JOIN veiculo ON motocicleta.idveiculo = veiculo.idveiculo
+                                        modeloautomovel.modelo
+                                      FROM automovel
+                                      INNER JOIN veiculo ON automovel.idveiculo = veiculo.idveiculo
                                       INNER JOIN estado ON veiculo.idestado = estado.idestado
-                                      INNER JOIN modeloMotocicleta ON motocicleta.idmodeloMotocicleta = modelomotocicleta.idmodeloMotocicleta
-                                      INNER JOIN categoria ON modelomotocicleta.idcategoria = categoria.idcategoria
-                                      INNER JOIN marca ON modelomotocicleta.idmarca = marca.idmarca
+                                      INNER JOIN modeloAutomovel ON automovel.idmodeloAutomovel = modeloautomovel.idmodeloAutomovel
+                                      INNER JOIN categoria ON modeloautomovel.idcategoria = categoria.idcategoria
+                                      INNER JOIN marca ON modeloautomovel.idmarca = marca.idmarca
                                       WHERE veiculo.idveiculo = ?
-                                      ORDER BY motocicleta.idveiculo;
+                                      ORDER BY automovel.idveiculo;
                                       """;
 
     @Override
-    public Motocicleta getById(int id) {
+    public Automovel getById(int id) {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLista = conn.prepareStatement(selectById);) {
             stmtLista.setInt(1, id);
             try (ResultSet rs = stmtLista.executeQuery()) {
@@ -176,65 +176,65 @@ public class MotocicletaDaoSql implements MotocicletaDao {
                     int ano = rs.getInt("ano");
                     String modelo = rs.getString("modelo");
 
-                    return new Motocicleta(idveiculo, tipo, marca, estado, locacoes, categoria, valorDeCompra, placa, ano, modelo);
+                    return new Automovel(idveiculo, tipo, marca, estado, locacoes, categoria, valorDeCompra, placa, ano, modelo);
                 } else {
-                    throw new SQLException("Moto não encontrado com id=" + id);
+                    throw new SQLException("Auto não encontrado com id=" + id);
                 }
             }
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.getById():  Error getting moto by ID: \n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@AutomovelDaoSql.getById():  Error getting auto by ID: \n" + e.getMessage());
             e.printStackTrace();
         }
         return null;
     }
 
     private final String update = "UPDATE veiculo SET idestado=?, valorDeCompra=?, ano=?, placa=? WHERE idveiculo=?"
-            + "UPDATE  motocicleta set idmodeloMotocicleta=? WHERE idveiculo=?;";
+            + "UPDATE  automovel SET idmodeloAutomovel=? WHERE idveiculo=?;";
 
     @Override
-    public void update(Motocicleta moto) {
+    public void update(Automovel auto) {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtAtualiza = conn.prepareStatement(update);) {
-            int idveiculo = ComboBox.getIdVeiculo(moto.getPlaca());
-            stmtAtualiza.setInt(1, ComboBox.getIdEstado(moto.getEstado()));
-            stmtAtualiza.setDouble(2, moto.getValorDeCompra());
-            stmtAtualiza.setInt(3, moto.getAno());
-            stmtAtualiza.setString(4, moto.getPlaca());
+            int idveiculo = ComboBox.getIdVeiculo(auto.getPlaca());
+            stmtAtualiza.setInt(1, ComboBox.getIdEstado(auto.getEstado()));
+            stmtAtualiza.setDouble(2, auto.getValorDeCompra());
+            stmtAtualiza.setInt(3, auto.getAno());
+            stmtAtualiza.setString(4, auto.getPlaca());
             stmtAtualiza.setInt(5, idveiculo);
-            stmtAtualiza.setInt(6, ComboBox.getIdmodelo("Motocicleta", moto.getModelo()));
+            stmtAtualiza.setInt(6, ComboBox.getIdmodelo("Automovel", auto.getModelo()));
             stmtAtualiza.setInt(7, idveiculo);
 
             stmtAtualiza.executeUpdate();
 
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.update():  Error updating moto: \n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@AutomovelDaoSql.update():  Error updating auto: \n" + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    public void updateEstado(Motocicleta moto) {
+    public void updateEstado(Automovel auto) {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtAtualiza = conn.prepareStatement(updateEstado);) {
-            stmtAtualiza.setInt(1, ComboBox.getIdEstado(moto.getEstado()));
-            stmtAtualiza.setInt(2, ComboBox.getIdVeiculo(moto.getPlaca()));
+            stmtAtualiza.setInt(1, ComboBox.getIdEstado(auto.getEstado()));
+            stmtAtualiza.setInt(2, ComboBox.getIdVeiculo(auto.getPlaca()));
             stmtAtualiza.executeUpdate();
 
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.updateEstado():  "
+            JOptionPane.showMessageDialog(null, "@AutomovelDaoSql.updateEstado():  "
                     + "Error updating Estado of veiculo: \n" + e.getMessage());
             e.printStackTrace();
         }
     }
 
     @Override
-    public void delete(Motocicleta moto) {
+    public void delete(Automovel auto) {
 
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtExcluir = conn.prepareStatement(delete);) {
-            stmtExcluir.setInt(1, ComboBox.getIdVeiculo(moto.getPlaca()));
-            stmtExcluir.setInt(1, ComboBox.getIdVeiculo(moto.getPlaca()));
+            stmtExcluir.setInt(1, ComboBox.getIdVeiculo(auto.getPlaca()));
+            stmtExcluir.setInt(1, ComboBox.getIdVeiculo(auto.getPlaca()));
 
             stmtExcluir.executeUpdate();
 
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.delete():  Error deleting moto: \n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@AutomovelDaoSql.delete():  Error deleting auto: \n" + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -246,7 +246,7 @@ public class MotocicletaDaoSql implements MotocicletaDao {
             stmtExcluir.executeUpdate();
 
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.deleteAll():  Error deleting all motos: \n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@AutomovelDaoSql.deleteAll():  Error deleting all autos: \n" + e.getMessage());
             e.printStackTrace();
         }
     }

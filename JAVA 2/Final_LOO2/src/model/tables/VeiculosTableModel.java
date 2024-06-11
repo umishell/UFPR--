@@ -89,10 +89,23 @@ public class VeiculosTableModel extends DefaultTableModel {
         return 0;
     }
 
+    public void setRowCount(int rowCount) {
+        switch (tipoVeiculo) {
+            case 1 -> listaMotos = new ArrayList<>(rowCount);
+            case 2 -> listaAutos = new ArrayList<>(rowCount);
+            case 3 -> listaVans = new ArrayList<>(rowCount);
+        }
+        fireTableDataChanged();
+    }
+    
     @Override
     public Object getValueAt(int row, int col) {
+        if (row < 0 || row >= getRowCount()) {
+            throw new IndexOutOfBoundsException("Row index " + row + " out of bounds for length " + getRowCount());
+        }
+
         switch (tipoVeiculo) {
-            case 1 -> {
+            case 1: {
                 Motocicleta moto = listaMotos.get(row);
                 return switch (col) {
                     case 0 ->
@@ -109,7 +122,7 @@ public class VeiculosTableModel extends DefaultTableModel {
                         null;
                 };
             }
-            case 2 -> {
+            case 2: {
                 Automovel auto = listaAutos.get(row);
                 return switch (col) {
                     case 0 ->
@@ -126,7 +139,7 @@ public class VeiculosTableModel extends DefaultTableModel {
                         null;
                 };
             }
-            case 3 -> {
+            case 3: {
                 Van van = listaVans.get(row);
                 return switch (col) {
                     case 0 ->
@@ -143,71 +156,72 @@ public class VeiculosTableModel extends DefaultTableModel {
                         null;
                 };
             }
+            default:
+                return null;
         }
-        return null;
     }
 
-    /*
     @Override
     public void setValueAt(Object value, int row, int col) {
         switch (tipoVeiculo) {
             case 1 -> {
-                Van van = listaVans.get(row);
+                Motocicleta moto = listaMotos.get(row);
                 switch (col) {
                     case 0 ->
-                        van.setMarca(Marca.HONDA);
+                        moto.setPlaca((String) value);
                     case 1 ->
-                        van.getModelo();
+                        moto.setMarca((String) value);
                     case 2 ->
-                        van.getAno();
+                        moto.setCategoria((String) value);
                     case 3 ->
-                        van.getValorDeCompra();
+                        moto.setModelo((String) value);
                     case 4 ->
-                        van.getPlaca();
-                    default ->
-                        null;
+                        moto.setAno((int) value);
+
+                    default -> {
+                    }
                 };
                 this.fireTableCellUpdated(row, col);
             }
             case 2 -> {
-                Motocicleta moto = listaMotocicletas.get(row);
+                Automovel auto = listaAutos.get(row);
                 switch (col) {
                     case 0 ->
-                        moto.getMarca();
+                        auto.setPlaca((String) value);
                     case 1 ->
-                        moto.getModelo();
+                        auto.setMarca((String) value);
                     case 2 ->
-                        moto.getAno();
+                        auto.setCategoria((String) value);
                     case 3 ->
-                        moto.getValorDeCompra();
+                        auto.setModelo((String) value);
                     case 4 ->
-                        moto.getPlaca();
-                    default ->
-                        null;
+                        auto.setAno((int) value);
+                    default -> {
+                    }
                 };
                 this.fireTableCellUpdated(row, col);
             }
             case 3 -> {
-                Automovel auto = listaAutomoveis.get(row);
+                Van van = listaVans.get(row);
                 switch (col) {
                     case 0 ->
-                        auto.getMarca();
+                        van.setPlaca((String) value);
                     case 1 ->
-                        auto.getModelo();
+                        van.setMarca((String) value);
                     case 2 ->
-                        auto.getAno();
+                        van.setCategoria((String) value);
                     case 3 ->
-                        auto.getValorDeCompra();
+                        van.setModelo((String) value);
                     case 4 ->
-                        auto.getPlaca();
-                    default ->
-                        null;
+                        van.setAno((int) value);
+                    default -> {
+                    }
                 };
                 this.fireTableCellUpdated(row, col);
             }
         }
     }
-     */
+
     @Override
     public void removeRow(int row) {
         switch (tipoVeiculo) {
@@ -283,7 +297,7 @@ public class VeiculosTableModel extends DefaultTableModel {
         }
     }
 
-    public void limpaTabela() {
+    public void clearTable() {
         switch (tipoVeiculo) {
             case 1 -> {
                 int indice = listaMotos.size() - 1;
@@ -310,5 +324,17 @@ public class VeiculosTableModel extends DefaultTableModel {
                 this.fireTableRowsDeleted(0, indice);//update JTable
             }
         }
+    }
+
+    public ArrayList<Van> getListaVans() {
+        return listaVans;
+    }
+
+    public ArrayList<Motocicleta> getListaMotos() {
+        return listaMotos;
+    }
+
+    public ArrayList<Automovel> getListaAutos() {
+        return listaAutos;
     }
 }

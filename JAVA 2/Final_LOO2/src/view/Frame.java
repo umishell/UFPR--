@@ -3,9 +3,8 @@ package view;
 import controller.Main;
 import controller.ClientesTabController;
 import controller.VeiculosTabController;
+import java.awt.Color;
 import model.tables.ClienteLocacaoTableModel;
-import model.enums.Categoria;
-import model.enums.Marca;
 import model.tables.ClienteTableModel;
 import model.dto.Cliente;
 import model.tables.LocarVeiculoTableModel;
@@ -46,6 +45,8 @@ public class Frame extends javax.swing.JFrame {
 
     private TableFilter filtroVeiculoTable, f1;
 
+    private Color originalBtnColor;
+
     public Frame() {
 
         //TABLE MODELS
@@ -57,6 +58,8 @@ public class Frame extends javax.swing.JFrame {
         vvtm = new VeiculoVenderTableModel();
 
         initComponents();
+
+        originalBtnColor = btnMotocicletasVeiculos.getBackground();
 
     }
 
@@ -908,9 +911,9 @@ public class Frame extends javax.swing.JFrame {
         tabVendaLayout.setHorizontalGroup(
             tabVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabVendaLayout.createSequentialGroup()
+                .addContainerGap(376, Short.MAX_VALUE)
                 .addGroup(tabVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(tabVendaLayout.createSequentialGroup()
-                        .addContainerGap(576, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabVendaLayout.createSequentialGroup()
                         .addComponent(btnVansVenda)
                         .addGap(28, 28, 28)
                         .addComponent(btnMotocicletasVenda)
@@ -920,9 +923,7 @@ public class Frame extends javax.swing.JFrame {
                         .addComponent(cboxMarcaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
                         .addComponent(cboxCategoriaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabVendaLayout.createSequentialGroup()
-                        .addContainerGap(376, Short.MAX_VALUE)
-                        .addComponent(paneVendaTable, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(paneVendaTable, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(251, 251, 251))
         );
         tabVendaLayout.setVerticalGroup(
@@ -1155,16 +1156,20 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_cboxMarcaLocacaoActionPerformed
 
     private void btnVansVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVansVeiculosActionPerformed
-        // TODO add your handling code here:
+        vtm.setTipoVeiculo(3);//tipo 3 van
+        ctrlVeiculos.showVans();
     }//GEN-LAST:event_btnVansVeiculosActionPerformed
 
     private void btnMotocicletasVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotocicletasVeiculosActionPerformed
+
+        btnMotocicletasVeiculos.setBackground(new Color(118, 181, 197));
         vtm.setTipoVeiculo(1);//tipo 1 moto
-        ctrlVeiculos.showMotocicletas();
+        ctrlVeiculos.showMotos();
     }//GEN-LAST:event_btnMotocicletasVeiculosActionPerformed
 
     private void btnAutomoveisVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutomoveisVeiculosActionPerformed
-        // TODO add your handling code here:
+        vtm.setTipoVeiculo(2);//tipo 2 auto
+        ctrlVeiculos.showAutos();
     }//GEN-LAST:event_btnAutomoveisVeiculosActionPerformed
 
     private void cboxModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxModeloActionPerformed
@@ -1435,4 +1440,80 @@ public class Frame extends javax.swing.JFrame {
             }
         }
     }*/
+    private void setBtnColors(String tab, String btn) {
+        if (btnAutomoveisVeiculos.getBackground() != originalBtnColor || btnVansVeiculos.getBackground() != originalBtnColor) {
+            btnAutomoveisVeiculos.setBackground(originalBtnColor);
+            btnVansVeiculos.setBackground(originalBtnColor);
+        }
+        Color o = originalBtnColor;
+
+        switch (tab) {
+            case "Veiculos" -> {
+                Color m = btnMotocicletasVeiculos.getBackground();
+                Color a = btnAutomoveisVeiculos.getBackground();
+                Color v = btnVansVeiculos.getBackground();
+                switch (btn) {
+                    case "Motocicletas" -> {
+                        
+                        btnMotocicletasVeiculos.setBackground(new Color(118, 181, 197));
+
+                    }
+                    case "Automoveis" -> {
+                    }
+                    case "Vans" -> {
+                    }
+                    default -> {
+                    }
+                }
+            }
+            case "Locacao" -> {
+                Color m = btnMotocicletasLocacao.getBackground();
+                Color a = btnAutomoveisLocacao.getBackground();
+                Color v = btnVansLocacao.getBackground();
+                switch (btn) {
+                    case "Motocicletas" -> {
+                    }
+                    case "Automoveis" -> {
+                    }
+                    case "Vans" -> {
+                    }
+                    default -> {
+                    }
+                }
+            }
+            case "Devolucao" -> {
+                Color m = btnMotocicletasDevolver.getBackground();
+                Color a = btnAutomoveisDevolver.getBackground();
+                Color v = btnVansDevolver.getBackground();
+                switch (btn) {
+                    case "Motocicletas" -> {
+                    }
+                    case "Automoveis" -> {
+                    }
+                    case "Vans" -> {
+                    }
+                    default -> {
+                    }
+                }
+            }
+            case "Venda" -> {
+                Color m = btnMotocicletasVenda.getBackground();
+                Color a = btnAutomoveisVenda.getBackground();
+                Color v = btnVansVenda.getBackground();
+                switch (btn) {
+                    case "Motocicletas" -> {
+                    }
+                    case "Automoveis" -> {
+                    }
+                    case "Vans" -> {
+                    }
+                    default -> {
+                    }
+                }
+            }
+            default -> {
+            }
+        }
+
+    }
 }

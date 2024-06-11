@@ -19,8 +19,24 @@ public class Automovel extends Veiculo {
         this.modelo = modelo;
     }
 
+    public void to_String() {
+        System.out.println("id " + this.getIdveiculo()
+                + "\nano " + this.getAno()
+                + "\nvalorDeCompra " + this.getValorDeCompra()
+                + "\ncategoria " + this.getCategoria()
+                + "\nestado " + this.getEstado()
+                + "\ntipo " + this.getTipo()
+                + "\nplaca " + this.getPlaca()
+                + "\nmodelo " + this.getModelo()
+                + "\n marca " + this.getMarca());
+    }
+
     public String getModelo() {
         return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
     }
 
     @Override
@@ -56,10 +72,6 @@ public class Automovel extends Veiculo {
             }
         }
         return 0;
-    }
-
-    public void setModelo(String modelo) {
-        this.modelo = modelo;
     }
 
 }

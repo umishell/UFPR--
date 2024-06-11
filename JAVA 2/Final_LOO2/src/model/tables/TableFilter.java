@@ -73,7 +73,7 @@ public class TableFilter {
     public void resetFilters(int tipoVeiculo, DefaultTableModel tableModel, ArrayList v) {
         switch (tipoVeiculo) {
             case 1 -> {
-                
+
                 ArrayList<Motocicleta> motos = new ArrayList<>(v);
                 tableModel.setRowCount(0);
                 for (Motocicleta moto : motos) {
@@ -86,25 +86,6 @@ public class TableFilter {
             case 3 -> {
 
             }
-
-        };
-
-    }
-/*
-    private void refreshTableModel() {
-        tableModel.setRowCount(0);
-
-        // Add rows from filteredVeiculos to the table model
-        for (Veiculo veiculo : filteredVeiculos) {
-            tableModel.addRow(new Object[]{veiculo.getMarca(), veiculo.getCategoria(), veiculo.getOtherProperty()});
         }
     }
-
-    public void clearFilters() {
-        if (sorter == null) {
-            throw new IllegalStateException("Sorter has not been initialized. Call criarTabela() first.");
-        }
-        sorter.setRowFilter(null);
-    }
-*/
 }
