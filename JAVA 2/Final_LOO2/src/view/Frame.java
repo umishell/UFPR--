@@ -4,18 +4,22 @@ import controller.Main;
 import controller.ClientesTabController;
 import controller.VeiculosTabController;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Font;
 import model.tables.ClienteLocacaoTableModel;
-import model.tables.ClienteTableModel;
+import model.tables.ClientesTableModel;
 import model.dto.Cliente;
 import model.tables.LocarVeiculoTableModel;
 import model.tables.TableFilter;
 import java.awt.Point;
 import java.util.ArrayList;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import model.combo.ComboBox;
@@ -37,7 +41,7 @@ public class Frame extends javax.swing.JFrame {
     //DevolucaoTabController ctrlDevolucao;
     //VendaTabController ctrlVenda;
 
-    private ClienteTableModel ctm;
+    private ClientesTableModel ctm;
     private VeiculosTableModel vtm;
     private ClienteLocacaoTableModel cltm;
     private LocarVeiculoTableModel lvtm;
@@ -47,11 +51,12 @@ public class Frame extends javax.swing.JFrame {
     private TableFilter filtroVeiculoTable, f1;
 
     private Color originalBtnColor;
+    private Font monospace;
 
     public Frame() {
 
         //TABLE MODELS
-        ctm = new ClienteTableModel();
+        ctm = new ClientesTableModel();
         vtm = new VeiculosTableModel();
         cltm = new ClienteLocacaoTableModel();
         lvtm = new LocarVeiculoTableModel();
@@ -60,7 +65,10 @@ public class Frame extends javax.swing.JFrame {
 
         initComponents();
 
+        //BUTTON VISUALS
+        monospace = new Font("Monospace", Font.BOLD, 14);
         originalBtnColor = btnMotocicletasVeiculos.getBackground();
+        costumizeButtons();
 
     }
 
@@ -82,7 +90,7 @@ public class Frame extends javax.swing.JFrame {
     }
 
     ///TEST/// maybe unnecessary ?
-    public void setTableModels(ClienteTableModel ctm, VeiculosTableModel vtm, ClienteLocacaoTableModel cltm, LocarVeiculoTableModel lvtm,
+    public void setTableModels(ClientesTableModel ctm, VeiculosTableModel vtm, ClienteLocacaoTableModel cltm, LocarVeiculoTableModel lvtm,
             VeiculoDevolverTableModel vdtm, VeiculoVenderTableModel vvtm) {
         this.ctm = ctm;
         this.vtm = vtm;
@@ -93,7 +101,7 @@ public class Frame extends javax.swing.JFrame {
 
     }
 
-    public ClienteTableModel getCtm() {
+    public ClientesTableModel getCtm() {
         return ctm;
     }
 
@@ -1442,6 +1450,22 @@ public class Frame extends javax.swing.JFrame {
             }
         }
     }*/
+    
+    private void costumizeButtons() {
+        for (Component component : paneAllTabs.getComponents()) {
+            if (component instanceof JButton) {
+                String name = component.getName();
+                if (name != null) {
+                    System.out.println(name);
+                } else {
+                    System.out.println("Button has no name"); // Or handle the case without a name
+                }
+                ((JButton) component).setFont(monospace);
+                ((JButton) component).setFocusable(false);
+            }
+        }
+    }
+
     private void setBtnColors(String btn, String tab) {
         Color o = originalBtnColor;
         switch (tab) {

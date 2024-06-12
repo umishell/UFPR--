@@ -5,16 +5,16 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import model.dto.Cliente;
 
-public class ClienteTableModel extends DefaultTableModel {
+public class ClientesTableModel extends DefaultTableModel {
 
     private final String[] colunas;
     private ArrayList<Cliente> listaClientes = new ArrayList<>();
 
-    public ClienteTableModel() {
+    public ClientesTableModel() {
         this.colunas = new String[]{"Nome", "Sobrenome", "RG", "CPF", "Endereço"};
     }
 
-    public ClienteTableModel(ArrayList<Cliente> c) {
+    public ClientesTableModel(ArrayList<Cliente> c) {
         this.colunas = new String[]{"Nome", "Sobrenome", "RG", "CPF", "Endereço"};
         this.listaClientes = c;
     }
@@ -101,7 +101,7 @@ public class ClienteTableModel extends DefaultTableModel {
 
     public ArrayList<Cliente> removeSelectedRows(JTable myJTable) {
         int[] selectedRows = myJTable.getSelectedRows();
-        ClienteTableModel tableModel = (ClienteTableModel) myJTable.getModel();
+        ClientesTableModel tableModel = (ClientesTableModel) myJTable.getModel();
         ArrayList<Cliente> clientes = new ArrayList<>();
         for (int i = selectedRows.length - 1; i >= 0; i--) {
             int modelRow = myJTable.convertRowIndexToModel(selectedRows[i]);

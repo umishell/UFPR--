@@ -8,7 +8,7 @@ import model.connection.MotocicletaDao;
 import model.connection.MotocicletaDaoSql;
 import model.connection.VanDaoSql;
 import model.tables.ClienteLocacaoTableModel;
-import model.tables.ClienteTableModel;
+import model.tables.ClientesTableModel;
 import model.tables.LocarVeiculoTableModel;
 import model.tables.TableFilter;
 import model.tables.VeiculoDevolverTableModel;
@@ -23,7 +23,7 @@ public class Main {
         Frame view = new Frame();
 
         //TABLE MODELS
-        ClienteTableModel ctm = view.getCtm();
+        ClientesTableModel ctm = view.getCtm();
         VeiculosTableModel vtm = view.getVtm();
         ClienteLocacaoTableModel cltm = view.getCltm();
         LocarVeiculoTableModel lvtm = view.getLvtm();
