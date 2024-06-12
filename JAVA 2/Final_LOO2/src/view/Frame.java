@@ -225,14 +225,12 @@ public class Frame extends javax.swing.JFrame {
             }
         });
 
-        txtPesquisarClientes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPesquisarClientesActionPerformed(evt);
-            }
-        });
         txtPesquisarClientes.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPesquisarClientesKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPesquisarClientesKeyTyped(evt);
             }
         });
 
@@ -1046,15 +1044,6 @@ public class Frame extends javax.swing.JFrame {
         ctrlTransacoes.showAutos();
     }//GEN-LAST:event_btnAutomoveisTransacoesActionPerformed
 
-    private void txtPesquisarClientesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarClientesKeyReleased
-        String textoPesquisa = txtPesquisarClientes.getText();
-        //filtrarPesquisa(textoPesquisa);
-    }//GEN-LAST:event_txtPesquisarClientesKeyReleased
-
-    private void txtPesquisarClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPesquisarClientesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPesquisarClientesActionPerformed
-
     private void btnLocarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocarActionPerformed
         //setComVeiculoLocado
 /*      Cliente c = null;
@@ -1239,8 +1228,16 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnListarTransacoesActionPerformed
 
     private void tabTransacoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabTransacoesMouseClicked
- 
+
     }//GEN-LAST:event_tabTransacoesMouseClicked
+
+    private void txtPesquisarClientesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarClientesKeyTyped
+        
+    }//GEN-LAST:event_txtPesquisarClientesKeyTyped
+
+    private void txtPesquisarClientesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarClientesKeyReleased
+        ctrlTransacoes.filterCtt(txtPesquisarClientes.getText());
+    }//GEN-LAST:event_txtPesquisarClientesKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1434,6 +1431,7 @@ public class Frame extends javax.swing.JFrame {
     public void showCtm(ArrayList<Cliente> clientes) {
         ctm.setListaCliente(clientes);
     }
+
     public void showCttm(ArrayList<Cliente> clientes) {
         cttm.setListaCliente(clientes);
     }

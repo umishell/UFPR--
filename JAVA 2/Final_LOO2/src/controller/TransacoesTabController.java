@@ -26,16 +26,18 @@ public class TransacoesTabController {
     private ClientesTransacoesTableModel cttm;
     private MotocicletaDaoSql motoDao;
     private TableFilter filtroVeiculoTable;
+    private TableFilter filtroClientesTransacoesTable;
     private AutomovelDaoSql autoDao;
     private VanDaoSql vanDao;
     private LocacaoDaoSql locDao;
 
-    public TransacoesTabController(Frame view, TransacoesTableModel ttm, ClientesTransacoesTableModel cttm, TableFilter f,
+    public TransacoesTabController(Frame view, TransacoesTableModel ttm, ClientesTransacoesTableModel cttm, TableFilter f, TableFilter f1,
             MotocicletaDaoSql motoDao, AutomovelDaoSql autoDao, VanDaoSql vanDao, LocacaoDaoSql locDao) {
         this.view = view;
         this.ttm = ttm;
         this.cttm = cttm;
         filtroVeiculoTable = f;
+        filtroClientesTransacoesTable = f1;
         this.motoDao = motoDao;
         this.autoDao = autoDao;
         this.vanDao = vanDao;
@@ -44,7 +46,8 @@ public class TransacoesTabController {
 
     public TransacoesTabController() {
     }
-/*
+
+    /*
     public void newVeiculo() {
         try {
             Veiculo v = view.getVeiculoFormulario();
@@ -266,7 +269,7 @@ public class TransacoesTabController {
             view.getVeiculosTable().setRowSorter(filtroVeiculoTable.getSorter());
         }
     }
-    
+
     public void showClientes() {
         ClienteDaoSql c = new ClienteDaoSql();
         ArrayList<Cliente> clientes = new ArrayList<>();
@@ -277,5 +280,9 @@ public class TransacoesTabController {
             view.apresentaErro("Erro ao mostrar Clientes na tabela.");
             e.printStackTrace();
         }
+    }
+    
+    public void filterCtt(String filterText){
+        filtroClientesTransacoesTable.filtrarPorTexto(filterText);
     }
 }

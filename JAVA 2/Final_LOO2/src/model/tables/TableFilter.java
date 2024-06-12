@@ -70,6 +70,30 @@ public class TableFilter {
         });
     }
 
+    public void filtrarPorTexto(String text) {
+        if (sorter == null) {
+            throw new IllegalStateException("Sorter has not been initialized. Call initFilter() first.");
+        }
+        if (text == null || text.isEmpty()) {
+            sorter.setRowFilter(null); // Remove any existing filter
+            return;
+        }
+        sorter.setRowFilter(new RowFilter<TableModel, Integer>() {
+            @Override
+            public boolean include(Entry<? extends TableModel, ? extends Integer> entry) {
+                for (int i = 0; i < entry.getValueCount(); i++) {
+                    String value = entry.getStringValue(i).toLowerCase();
+                    if (value.contains(text.toLowerCase())) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        });
+    }
+
+
+    /*
     public void resetFilters(int tipoVeiculo, DefaultTableModel tableModel, ArrayList v) {
         switch (tipoVeiculo) {
             case 1 -> {
@@ -87,5 +111,5 @@ public class TableFilter {
 
             }
         }
-    }
+    }*/
 }

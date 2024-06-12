@@ -238,8 +238,8 @@
             </Component>
             <Component class="javax.swing.JTextField" name="txtPesquisarClientes">
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPesquisarClientesActionPerformed"/>
                 <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtPesquisarClientesKeyReleased"/>
+                <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtPesquisarClientesKeyTyped"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnLocar">
