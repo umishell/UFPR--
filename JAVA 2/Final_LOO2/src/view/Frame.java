@@ -11,6 +11,7 @@ import model.tables.LocarVeiculoTableModel;
 import model.tables.TableFilter;
 import java.awt.Point;
 import java.util.ArrayList;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -1156,18 +1157,19 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_cboxMarcaLocacaoActionPerformed
 
     private void btnVansVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVansVeiculosActionPerformed
+        setBtnColors("Vans", "Veiculos");
         vtm.setTipoVeiculo(3);//tipo 3 van
         ctrlVeiculos.showVans();
     }//GEN-LAST:event_btnVansVeiculosActionPerformed
 
     private void btnMotocicletasVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotocicletasVeiculosActionPerformed
-
-        btnMotocicletasVeiculos.setBackground(new Color(118, 181, 197));
+        setBtnColors("Motocicletas", "Veiculos");
         vtm.setTipoVeiculo(1);//tipo 1 moto
         ctrlVeiculos.showMotos();
     }//GEN-LAST:event_btnMotocicletasVeiculosActionPerformed
 
     private void btnAutomoveisVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutomoveisVeiculosActionPerformed
+        setBtnColors("Automoveis", "Veiculos");
         vtm.setTipoVeiculo(2);//tipo 2 auto
         ctrlVeiculos.showAutos();
     }//GEN-LAST:event_btnAutomoveisVeiculosActionPerformed
@@ -1440,13 +1442,8 @@ public class Frame extends javax.swing.JFrame {
             }
         }
     }*/
-    private void setBtnColors(String tab, String btn) {
-        if (btnAutomoveisVeiculos.getBackground() != originalBtnColor || btnVansVeiculos.getBackground() != originalBtnColor) {
-            btnAutomoveisVeiculos.setBackground(originalBtnColor);
-            btnVansVeiculos.setBackground(originalBtnColor);
-        }
+    private void setBtnColors(String btn, String tab) {
         Color o = originalBtnColor;
-
         switch (tab) {
             case "Veiculos" -> {
                 Color m = btnMotocicletasVeiculos.getBackground();
@@ -1454,15 +1451,28 @@ public class Frame extends javax.swing.JFrame {
                 Color v = btnVansVeiculos.getBackground();
                 switch (btn) {
                     case "Motocicletas" -> {
-                        
                         btnMotocicletasVeiculos.setBackground(new Color(118, 181, 197));
-
+                        if (a != o) {
+                            btnAutomoveisVeiculos.setBackground(o);
+                        } else if (v != o) {
+                            btnVansVeiculos.setBackground(o);
+                        }
                     }
                     case "Automoveis" -> {
+                        btnAutomoveisVeiculos.setBackground(new Color(118, 181, 197));
+                        if (m != o) {
+                            btnMotocicletasVeiculos.setBackground(o);
+                        } else if (v != o) {
+                            btnVansVeiculos.setBackground(o);
+                        }
                     }
                     case "Vans" -> {
-                    }
-                    default -> {
+                        btnVansVeiculos.setBackground(new Color(118, 181, 197));
+                        if (m != o) {
+                            btnMotocicletasVeiculos.setBackground(o);
+                        } else if (a != o) {
+                            btnAutomoveisVeiculos.setBackground(o);
+                        }
                     }
                 }
             }
@@ -1472,12 +1482,28 @@ public class Frame extends javax.swing.JFrame {
                 Color v = btnVansLocacao.getBackground();
                 switch (btn) {
                     case "Motocicletas" -> {
+                        btnMotocicletasLocacao.setBackground(new Color(118, 181, 197));
+                        if (a != o) {
+                            btnAutomoveisLocacao.setBackground(o);
+                        } else if (v != o) {
+                            btnVansLocacao.setBackground(o);
+                        }
                     }
                     case "Automoveis" -> {
+                        btnAutomoveisLocacao.setBackground(new Color(118, 181, 197));
+                        if (m != o) {
+                            btnMotocicletasLocacao.setBackground(o);
+                        } else if (v != o) {
+                            btnVansLocacao.setBackground(o);
+                        }
                     }
                     case "Vans" -> {
-                    }
-                    default -> {
+                        btnVansLocacao.setBackground(new Color(118, 181, 197));
+                        if (m != o) {
+                            btnMotocicletasLocacao.setBackground(o);
+                        } else if (a != o) {
+                            btnAutomoveisLocacao.setBackground(o);
+                        }
                     }
                 }
             }
@@ -1487,12 +1513,28 @@ public class Frame extends javax.swing.JFrame {
                 Color v = btnVansDevolver.getBackground();
                 switch (btn) {
                     case "Motocicletas" -> {
+                        btnMotocicletasDevolver.setBackground(new Color(118, 181, 197));
+                        if (a != o) {
+                            btnAutomoveisDevolver.setBackground(o);
+                        } else if (v != o) {
+                            btnVansDevolver.setBackground(o);
+                        }
                     }
                     case "Automoveis" -> {
+                        btnAutomoveisDevolver.setBackground(new Color(118, 181, 197));
+                        if (m != o) {
+                            btnMotocicletasDevolver.setBackground(o);
+                        } else if (v != o) {
+                            btnVansDevolver.setBackground(o);
+                        }
                     }
                     case "Vans" -> {
-                    }
-                    default -> {
+                        btnVansDevolver.setBackground(new Color(118, 181, 197));
+                        if (m != o) {
+                            btnMotocicletasDevolver.setBackground(o);
+                        } else if (a != o) {
+                            btnAutomoveisDevolver.setBackground(o);
+                        }
                     }
                 }
             }
@@ -1502,12 +1544,28 @@ public class Frame extends javax.swing.JFrame {
                 Color v = btnVansVenda.getBackground();
                 switch (btn) {
                     case "Motocicletas" -> {
+                        btnMotocicletasVenda.setBackground(new Color(118, 181, 197));
+                        if (a != o) {
+                            btnAutomoveisVenda.setBackground(o);
+                        } else if (v != o) {
+                            btnVansVenda.setBackground(o);
+                        }
                     }
                     case "Automoveis" -> {
+                        btnAutomoveisVenda.setBackground(new Color(118, 181, 197));
+                        if (m != o) {
+                            btnMotocicletasVenda.setBackground(o);
+                        } else if (v != o) {
+                            btnVansVenda.setBackground(o);
+                        }
                     }
                     case "Vans" -> {
-                    }
-                    default -> {
+                        btnVansVenda.setBackground(new Color(118, 181, 197));
+                        if (m != o) {
+                            btnMotocicletasVenda.setBackground(o);
+                        } else if (a != o) {
+                            btnAutomoveisVenda.setBackground(o);
+                        }
                     }
                 }
             }
