@@ -177,11 +177,10 @@ public class VeiculosTabController {
     public void loadAllCategoriaMarcaCboxes() {
         ComboBox.loadCboxMarca(view.getCboxMarcaVeiculo());
         ComboBox.loadCboxCategoria(view.getCboxCategoriaVeiculo());
-        //...the rest of cboxes implement
     }
 
     public void setSingleSelectionOnVtm() {
-        vtm.setSingleSelection(view.getVeiculoTable());
+        vtm.setSingleSelection(view.getVeiculosTable());
     }
 
     public void activateCboxCategoriaVeiculos() {
@@ -209,16 +208,16 @@ public class VeiculosTabController {
                     vtm.fireTableDataChanged();
                 }
                 case 2 -> {
-                    //showAutomoveis();
+                    showAutos();
                     vtm.fireTableDataChanged();
                 }
                 case 3 -> {
-                    //showVans();
+                    showVans();
                     vtm.fireTableDataChanged();
                 }
             }
 
-            view.getVeiculoTable().setRowSorter(filtroVeiculoTable.getSorter());
+            view.getVeiculosTable().setRowSorter(filtroVeiculoTable.getSorter());
         }
     }
 
@@ -246,16 +245,16 @@ public class VeiculosTabController {
                     vtm.fireTableDataChanged();
                 }
                 case 2 -> {
-                    //showAutomoveis();
+                    showAutos();
                     vtm.fireTableDataChanged();
                 }
                 case 3 -> {
-                    //showVans();
+                    showVans();
                     vtm.fireTableDataChanged();
                 }
             }
 
-            view.getVeiculoTable().setRowSorter(filtroVeiculoTable.getSorter());
+            view.getVeiculosTable().setRowSorter(filtroVeiculoTable.getSorter());
         }
     }
 }

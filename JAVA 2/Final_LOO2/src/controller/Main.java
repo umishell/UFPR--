@@ -4,15 +4,13 @@ import model.connection.AutomovelDaoSql;
 import model.connection.ClienteDaoSql;
 import model.connection.DaoFactory;
 import model.connection.DaoType;
-import model.connection.MotocicletaDao;
+import model.connection.LocacaoDaoSql;
 import model.connection.MotocicletaDaoSql;
 import model.connection.VanDaoSql;
-import model.tables.ClienteLocacaoTableModel;
 import model.tables.ClientesTableModel;
-import model.tables.LocarVeiculoTableModel;
+import model.tables.ClientesTransacoesTableModel;
 import model.tables.TableFilter;
-import model.tables.VeiculoDevolverTableModel;
-import model.tables.VeiculoVenderTableModel;
+import model.tables.TransacoesTableModel;
 import model.tables.VeiculosTableModel;
 import view.Frame;
 
@@ -25,14 +23,14 @@ public class Main {
         //TABLE MODELS
         ClientesTableModel ctm = view.getCtm();
         VeiculosTableModel vtm = view.getVtm();
-        ClienteLocacaoTableModel cltm = view.getCltm();
-        LocarVeiculoTableModel lvtm = view.getLvtm();
-        VeiculoDevolverTableModel vdtm = view.getVdtm();
-        VeiculoVenderTableModel vvtm = view.getVvtm();
-
+        ClientesTransacoesTableModel cttm = view.getCttm();
+        TransacoesTableModel ttm = view.getTtm();
+        
         //FILTERS
         TableFilter filtroVeiculoTable = new TableFilter();
-        filtroVeiculoTable.initFilter(view.getVeiculoTable());
+        filtroVeiculoTable.initFilter(view.getVeiculosTable());
+        TableFilter filtroTransacoesTable = new TableFilter();
+        filtroVeiculoTable.initFilter(view.getTransacoesTable());
 
         if (filtroVeiculoTable.getSorter() != null) {
             System.out.println("Sorter is initialized successfully!");
@@ -44,18 +42,18 @@ public class Main {
         MotocicletaDaoSql motoDao = MotocicletaDaoSql.getMotocicletaDaoSql();//DaoFactory.getMotocicletaDao(DaoType.SQL);
         AutomovelDaoSql autoDao = AutomovelDaoSql.getAutomovelDaoSql();//DaoFactory.getAutomovelDao(DaoType.SQL);
         VanDaoSql vanDao = VanDaoSql.getVanDaoSql();//DaoFactory.getVanDao(DaoType.SQL);
-        //LocacaoDao locDao = DaoFactory.getLocacaoDao(DaoType.SQL);
+        LocacaoDaoSql locDao = LocacaoDaoSql.getLocacaoDaoSql();
 
         ClientesTabController ctrlClientes = new ClientesTabController(view, cliDao);
         VeiculosTabController ctrlVeiculos = new VeiculosTabController(view, vtm, filtroVeiculoTable, motoDao, autoDao, vanDao);
-        //LocacaoTabController ctrlLocacao = new LocacaoTabController(frame,cliDao, motoDao, autoDao, vanDao, locDao);
-        //DevolucaoTabController ctrlDevolucao = new DevolucaoTabController(frame,cliDao, motoDao, autoDao, vanDao, locDao);
-        // VendaTabController ctrlVenda= new VendaTabController(frame,cliDao, motoDao, autoDao, vanDao, locDao);
+        TransacoesTabController ctrlTransacoes = new TransacoesTabController(view, ttm, cttm, filtroVeiculoTable, motoDao, autoDao, vanDao, locDao);
 
-        view.setControllers(ctrlClientes, ctrlVeiculos/*, ctrlLocacao, ctrlDevolucao, ctrlVenda*/);
+        view.setControllers(ctrlClientes, ctrlVeiculos, ctrlTransacoes);
         
-        ctrlVeiculos.loadAllCategoriaMarcaCboxes();//falta  cboxes!!!
+        ctrlVeiculos.loadAllCategoriaMarcaCboxes();
         ctrlVeiculos.setSingleSelectionOnVtm();
+        ctrlTransacoes.loadAllCategoriaMarcaCboxes();
+        ctrlTransacoes.setSingleSelectionOnVtm_Ttm();
         
 
         view.initView(view);

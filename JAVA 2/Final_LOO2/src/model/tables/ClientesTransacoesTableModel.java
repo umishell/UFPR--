@@ -1,33 +1,38 @@
 package model.tables;
 
 import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 import model.dto.Cliente;
 
-public class ClienteLocacaoTableModel extends DefaultTableModel {
+public class ClientesTransacoesTableModel extends DefaultTableModel {
 
-    private String[] colunas = new String[]{"Nome", "Sobrenome", "CPF"};
-    private List<Cliente> listaClientes = new ArrayList();
+    private final String[] colunas;
+    private ArrayList<Cliente> listaClientes = new ArrayList<>();
 
-
-
-    public ClienteLocacaoTableModel() {
+    public ClientesTransacoesTableModel() {
+        this.colunas = new String[]{"Nome", "Sobrenome", "RG", "CPF", "Endereço"};
     }
 
-    public ClienteLocacaoTableModel(List<Cliente> c) {
+    public ClientesTransacoesTableModel(ArrayList<Cliente> c) {
+        this.colunas = new String[]{"Nome", "Sobrenome", "RG", "CPF", "Endereço"};
         this.listaClientes = c;
     }
 
-    public List<Cliente> getListaClientes() {
+    public void add(Cliente c) {
+        this.listaClientes.add(c);
+        this.fireTableDataChanged();
+        this.fireTableRowsInserted(listaClientes.size(), listaClientes.size());//update JTable
+    }
+
+    public ArrayList<Cliente> getListaClientes() {
         return listaClientes;
     }
 
     @Override
-    public int getRowCount() {
-        return (this.listaClientes != null) ? this.listaClientes.size() : 0;
+    public String getColumnName(int column) {
+        return this.colunas[column];
     }
 
     @Override
@@ -36,10 +41,10 @@ public class ClienteLocacaoTableModel extends DefaultTableModel {
     }
 
     @Override
-    public String getColumnName(int index) {
-        return this.colunas[index];
+    public int getRowCount() {
+        return (this.listaClientes != null) ? this.listaClientes.size() : 0;
     }
-
+    
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Cliente cliente = listaClientes.get(rowIndex);
@@ -49,13 +54,16 @@ public class ClienteLocacaoTableModel extends DefaultTableModel {
             case 1 ->
                 cliente.getSobrenome();
             case 2 ->
+                cliente.getRg();
+            case 3 ->
                 cliente.getCpf();
+            case 4 ->
+                cliente.getEndereco();
             default ->
                 null;
         };
     }
 
-    /*
     @Override
     public void setValueAt(Object value, int row, int col) {
         Cliente cliente = listaClientes.get(row);
@@ -77,36 +85,36 @@ public class ClienteLocacaoTableModel extends DefaultTableModel {
         this.fireTableCellUpdated(row, col);
     }
 
+    public void setValuesAtRow(int row, Cliente c) {
+        this.setValueAt(c.getNome(), row, 0);
+        this.setValueAt(c.getSobrenome(), row, 1);
+        this.setValueAt(c.getRg(), row, 2);
+        this.setValueAt(c.getCpf(), row, 3);
+        this.setValueAt(c.getEndereco(), row, 4);
+    }
+
     @Override
     public void removeRow(int row) {
+
         listaClientes.remove(row);
         fireTableRowsDeleted(row, row);
     }
 
-    public void removeSelectedRows(JTable myJTable) {
+    public ArrayList<Cliente> removeSelectedRows(JTable myJTable) {
         int[] selectedRows = myJTable.getSelectedRows();
-        ClienteLocacaoTableModel tableModel = (ClienteLocacaoTableModel) myJTable.getModel();
-
+        ClientesTransacoesTableModel tableModel = (ClientesTransacoesTableModel) myJTable.getModel();
+        ArrayList<Cliente> clientes = new ArrayList<>();
         for (int i = selectedRows.length - 1; i >= 0; i--) {
-            int row = selectedRows[i];
-            rep.apagarCliente(row);
-            // Convert row index to model index
-            int modelRow = myJTable.convertRowIndexToModel(row);
+            int modelRow = myJTable.convertRowIndexToModel(selectedRows[i]);
+            clientes.add(this.getListaClientes().get(modelRow));
             tableModel.removeRow(modelRow);
         }
-        // Clear the selection after removal
         myJTable.clearSelection();
+        return clientes;
     }
 
-    public void addCliente(Cliente c) {
-        this.listaClientes.add(c);
-        rep.gravarCliente(c);
-        this.fireTableDataChanged();
-        this.fireTableRowsInserted(listaClientes.size(), listaClientes.size());//update JTable
-    }
-
-    public void setListaCliente() {
-        this.listaClientes = rep.getListaClientes();
+    public void setListaCliente(ArrayList<Cliente> clientes) {
+        this.listaClientes = clientes;
         if (!listaClientes.isEmpty()) {
             this.fireTableDataChanged();
             this.fireTableRowsInserted(0, listaClientes.size() - 1);//update JTable
@@ -121,34 +129,15 @@ public class ClienteLocacaoTableModel extends DefaultTableModel {
         this.listaClientes = new ArrayList();
         this.fireTableRowsDeleted(0, indice);//update JTable
     }
-     */
+
     @Override
     public boolean isCellEditable(int row, int column) {
         // permite a edição em todas as células
-        return false;
-    }
-
-    public void filtrarClientes(String textoPesquisa) {
-       /* if (textoPesquisa.isEmpty()) {
-            this.listaClientes = rep.getListaClientes();
-        } else {
-            List<Cliente> listaFiltrada = new ArrayList<>();
-            for (Cliente cliente : rep.getListaClientes()) {
-                if (!cliente.getComVeiculoLocado() && (textoPesquisa.isEmpty() || cliente.getNome().toLowerCase().contains(textoPesquisa.toLowerCase())
-                        || cliente.getSobrenome().toLowerCase().contains(textoPesquisa.toLowerCase())
-                        || cliente.getCpf().toLowerCase().contains(textoPesquisa.toLowerCase()))) {
-                    listaFiltrada.add(cliente);
-                }
-            }
-            this.listaClientes = listaFiltrada;
-        }
-        this.fireTableDataChanged();*/
+        return true;
     }
 
     public void setSingleSelection(JTable tabela) {
         ListSelectionModel selectionModel = tabela.getSelectionModel();
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
-    
-    
 }

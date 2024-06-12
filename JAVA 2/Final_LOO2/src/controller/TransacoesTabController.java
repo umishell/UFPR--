@@ -5,38 +5,46 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import model.combo.ComboBox;
 import model.connection.AutomovelDaoSql;
+import model.connection.ClienteDaoSql;
+import model.connection.LocacaoDaoSql;
 import model.connection.MotocicletaDaoSql;
 import model.connection.VanDaoSql;
 import model.dto.Automovel;
+import model.dto.Cliente;
 import model.dto.Motocicleta;
 import model.dto.Van;
 import model.dto.Veiculo;
+import model.tables.ClientesTransacoesTableModel;
 import model.tables.TableFilter;
-import model.tables.VeiculosTableModel;
+import model.tables.TransacoesTableModel;
 import view.Frame;
 
-public class DevolucaoTabController {
+public class TransacoesTabController {
 
     private Frame view;
-    private VeiculosTableModel vtm;
+    private TransacoesTableModel ttm;
+    private ClientesTransacoesTableModel cttm;
     private MotocicletaDaoSql motoDao;
     private TableFilter filtroVeiculoTable;
     private AutomovelDaoSql autoDao;
     private VanDaoSql vanDao;
+    private LocacaoDaoSql locDao;
 
-    public DevolucaoTabController(Frame view, VeiculosTableModel vtm, TableFilter f,
-            MotocicletaDaoSql motoDao, AutomovelDaoSql autoDao, VanDaoSql vanDao) {
+    public TransacoesTabController(Frame view, TransacoesTableModel ttm, ClientesTransacoesTableModel cttm, TableFilter f,
+            MotocicletaDaoSql motoDao, AutomovelDaoSql autoDao, VanDaoSql vanDao, LocacaoDaoSql locDao) {
         this.view = view;
-        this.vtm = vtm;
+        this.ttm = ttm;
+        this.cttm = cttm;
         filtroVeiculoTable = f;
         this.motoDao = motoDao;
         this.autoDao = autoDao;
         this.vanDao = vanDao;
+        this.locDao = locDao;
     }
 
-    public DevolucaoTabController() {
+    public TransacoesTabController() {
     }
-
+/*
     public void newVeiculo() {
         try {
             Veiculo v = view.getVeiculoFormulario();
@@ -44,7 +52,7 @@ public class DevolucaoTabController {
             if (v instanceof Motocicleta moto) {
                 if (!motoDao.motoExists(moto)) {
                     showMotos();
-                    vtm.addVeiculo(moto);//view.addVeiculoToVtm(moto);
+                    ttm.addVeiculo(moto);//view.addVeiculoToVtm(moto);
                     motoDao.add(moto);
                     view.clearFieldsVeiculo();
                 } else {
@@ -53,7 +61,7 @@ public class DevolucaoTabController {
             } else if (v instanceof Automovel) {
                 Automovel auto = (Automovel) v;
                 if (!autoDao.autoExists(auto)) {
-                    vtm.addVeiculo(auto);//view.addVeiculoToVtm(auto);
+                    ttm.addVeiculo(auto);//view.addVeiculoToVtm(auto);
                     autoDao.add(auto);
                     view.clearFieldsVeiculo();
                 } else {
@@ -62,7 +70,7 @@ public class DevolucaoTabController {
             } else if (v instanceof Van) {
                 Van van = (Van) v;
                 if (!vanDao.vanExists(van)) {
-                    vtm.addVeiculo(van);//view.addVeiculoToVtm(van);
+                    ttm.addVeiculo(van);//view.addVeiculoToVtm(van);
                     vanDao.add(van);
                     view.clearFieldsVeiculo();
                 } else {
@@ -79,7 +87,7 @@ public class DevolucaoTabController {
         }
     }
 
-    /*
+    
     public void updateVeiculo() {
         try {
             Cliente cliente = view.getClienteFormulario();
@@ -113,16 +121,16 @@ public class DevolucaoTabController {
         try {
             MotocicletaDaoSql motoDao = new MotocicletaDaoSql();
             ArrayList<Motocicleta> motos = new ArrayList<>();
-            vtm.setListaMotos(motos);
-            vtm.fireTableDataChanged();
+            ttm.setListaMotos(motos);
+            ttm.fireTableDataChanged();
             filtroVeiculoTable.getSorter().setRowFilter(null);
-            vtm.setRowCount(0);
+            ttm.setRowCount(0);
             motos = motoDao.getAll();
             if (motos.isEmpty()) {
                 view.apresentaInfo("não há motocicletas");
             } else {
-                vtm.setListaMotos(motos);
-                vtm.fireTableDataChanged();
+                ttm.setListaMotos(motos);
+                ttm.fireTableDataChanged();
             }
         } catch (NullPointerException e) {
             view.apresentaErro("Erro ao mostrar motos na tabela.");
@@ -135,16 +143,16 @@ public class DevolucaoTabController {
         try {
             AutomovelDaoSql autoDao = new AutomovelDaoSql();
             ArrayList<Automovel> autos = new ArrayList<>();
-            vtm.setListaAutos(autos);
-            vtm.fireTableDataChanged();
+            ttm.setListaAutos(autos);
+            ttm.fireTableDataChanged();
             filtroVeiculoTable.getSorter().setRowFilter(null);
-            vtm.setRowCount(0);
+            ttm.setRowCount(0);
             autos = autoDao.getAll();
             if (autos.isEmpty()) {
                 view.apresentaInfo("nao há automoveis");
             } else {
-                vtm.setListaAutos(autos);
-                vtm.fireTableDataChanged();
+                ttm.setListaAutos(autos);
+                ttm.fireTableDataChanged();
             }
         } catch (NullPointerException | IndexOutOfBoundsException e) {
             view.apresentaErro("Erro ao mostrar autos na tabela.");
@@ -157,16 +165,16 @@ public class DevolucaoTabController {
         try {
             VanDaoSql vanDao = new VanDaoSql();
             ArrayList<Van> vans = new ArrayList<>();
-            vtm.setListaVans(vans);
-            vtm.fireTableDataChanged();
+            ttm.setListaVans(vans);
+            ttm.fireTableDataChanged();
             filtroVeiculoTable.getSorter().setRowFilter(null);
-            vtm.setRowCount(0);
+            ttm.setRowCount(0);
             vans = vanDao.getAll();
             if (vans.isEmpty()) {
                 view.apresentaInfo("nao há vans");
             } else {
-                vtm.setListaVans(vans);
-                vtm.fireTableDataChanged();
+                ttm.setListaVans(vans);
+                ttm.fireTableDataChanged();
             }
         } catch (NullPointerException e) {
             view.apresentaErro("Erro ao mostrar vans na tabela.");
@@ -175,18 +183,18 @@ public class DevolucaoTabController {
     }
 
     public void loadAllCategoriaMarcaCboxes() {
-        ComboBox.loadCboxMarca(view.getCboxMarcaVeiculo());
-        ComboBox.loadCboxCategoria(view.getCboxCategoriaVeiculo());
-        //...the rest of cboxes implement
+        ComboBox.loadCboxMarca(view.getCboxMarcaTransacoes());
+        ComboBox.loadCboxCategoria(view.getCboxCategoriaTransacoes());
     }
 
-    public void setSingleSelectionOnVtm() {
-        vtm.setSingleSelection(view.getVeiculoTable());
+    public void setSingleSelectionOnVtm_Ttm() {
+        ttm.setSingleSelection(view.getTransacoesTable());
+        cttm.setSingleSelection(view.getClientesTransacoesTable());
     }
 
-    public void activateCboxCategoriaVeiculos() {
-        String categoria = (String) view.getCboxCategoriaVeiculo().getSelectedItem();
-        String marca = (String) view.getCboxMarcaVeiculo().getSelectedItem();
+    public void activateCboxCategoriaTransacoes() {
+        String categoria = (String) view.getCboxCategoriaTransacoes().getSelectedItem();
+        String marca = (String) view.getCboxMarcaTransacoes().getSelectedItem();
 
         if (categoria != null && !categoria.isBlank() && (marca == null || marca.isBlank())) {
             // Filter by category only
@@ -201,30 +209,30 @@ public class DevolucaoTabController {
             // Reset filters and repopulate the table
             // view.getVeiculoTable().setRowSorter(null);
             filtroVeiculoTable.getSorter().setRowFilter(null);
-            //vtm.setRowCount(0);
+            //ttm.setRowCount(0);
 
-            switch (vtm.getTipoVeiculo()) {
+            switch (ttm.getTipoVeiculo()) {
                 case 1 -> {
                     showMotos();
-                    vtm.fireTableDataChanged();
+                    ttm.fireTableDataChanged();
                 }
                 case 2 -> {
-                    //showAutomoveis();
-                    vtm.fireTableDataChanged();
+                    showAutos();
+                    ttm.fireTableDataChanged();
                 }
                 case 3 -> {
-                    //showVans();
-                    vtm.fireTableDataChanged();
+                    showVans();
+                    ttm.fireTableDataChanged();
                 }
             }
 
-            view.getVeiculoTable().setRowSorter(filtroVeiculoTable.getSorter());
+            view.getVeiculosTable().setRowSorter(filtroVeiculoTable.getSorter());
         }
     }
 
-    public void activateCboxMarcaVeiculos() {
-        String marca = (String) view.getCboxMarcaVeiculo().getSelectedItem();
-        String categoria = (String) view.getCboxCategoriaVeiculo().getSelectedItem();
+    public void activateCboxMarcaTransacoes() {
+        String marca = (String) view.getCboxMarcaTransacoes().getSelectedItem();
+        String categoria = (String) view.getCboxCategoriaTransacoes().getSelectedItem();
 
         if (marca != null && !marca.isBlank() && (categoria == null || categoria.isBlank())) {
             // Filter by brand only
@@ -239,23 +247,35 @@ public class DevolucaoTabController {
             // Reset filters and repopulate the table
             //view.getVeiculoTable().setRowSorter(null);
             filtroVeiculoTable.getSorter().setRowFilter(null);
-            //vtm.setRowCount(0);
-            switch (vtm.getTipoVeiculo()) {
+            //ttm.setRowCount(0);
+            switch (ttm.getTipoVeiculo()) {
                 case 1 -> {
                     showMotos();
-                    vtm.fireTableDataChanged();
+                    ttm.fireTableDataChanged();
                 }
                 case 2 -> {
-                    //showAutomoveis();
-                    vtm.fireTableDataChanged();
+                    showAutos();
+                    ttm.fireTableDataChanged();
                 }
                 case 3 -> {
-                    //showVans();
-                    vtm.fireTableDataChanged();
+                    showVans();
+                    ttm.fireTableDataChanged();
                 }
             }
 
-            view.getVeiculoTable().setRowSorter(filtroVeiculoTable.getSorter());
+            view.getVeiculosTable().setRowSorter(filtroVeiculoTable.getSorter());
+        }
+    }
+    
+    public void showClientes() {
+        ClienteDaoSql c = new ClienteDaoSql();
+        ArrayList<Cliente> clientes = new ArrayList<>();
+        try {
+            clientes = c.getAll();
+            view.showCttm(clientes);
+        } catch (IOException | SQLException | NullPointerException e) {
+            view.apresentaErro("Erro ao mostrar Clientes na tabela.");
+            e.printStackTrace();
         }
     }
 }
