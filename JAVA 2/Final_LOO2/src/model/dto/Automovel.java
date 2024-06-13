@@ -1,7 +1,6 @@
 package model.dto;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 public class Automovel extends Veiculo {
 
@@ -31,6 +30,11 @@ public class Automovel extends Veiculo {
                 + "\n marca " + this.getMarca());
     }
 
+    @Override
+    public String toString() {
+        return "Automovel{" + "modelo=" + modelo + '}';
+    }
+
     public String getModelo() {
         return modelo;
     }
@@ -40,10 +44,8 @@ public class Automovel extends Veiculo {
     }
 
     @Override
-    public void locar(int dias, Calendar data, Cliente cliente) {
-        // super.setEstado("locado");
-        //super.setLocacao(new Locacao(dias, this.getValorDiariaLocacao(), data, cliente));
-
+    public void setEstadoLocado() {
+        super.setEstado("locado");
     }
 
     @Override
@@ -58,9 +60,9 @@ public class Automovel extends Veiculo {
         //}
     }
 
-    public double getValorDiariaLocacao(String s) {
+    public double getValorDiariaLocacao(String categoria) {
 
-        switch (s) {
+        switch (categoria) {
             case "popular" -> {
                 return 70;
             }

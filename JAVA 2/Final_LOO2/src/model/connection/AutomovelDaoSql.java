@@ -111,11 +111,12 @@ public class AutomovelDaoSql implements AutomovelDao {
                         locacoes = null;
                     } else {
                         while (rs0.next()) {
+                            boolean active = rs0.getBoolean("active");
                             int dias = rs0.getInt("dias");
                             double valor = rs0.getDouble("valor");
                             LocalDate date = rs0.getDate("date").toLocalDate();
                             int idCliente = rs0.getInt("idcliente");
-                            locacoes.add(new Locacao(dias, valor, date, idCliente, idveiculo));
+                            locacoes.add(new Locacao(active, dias, valor, date, idCliente, idveiculo));
                             //System.out.println("veiculo-> " + idveiculo + ": " + idCliente + " " + valor + " " + date + " " + dias);
                         }
                     }

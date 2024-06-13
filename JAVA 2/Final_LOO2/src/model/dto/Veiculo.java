@@ -27,6 +27,11 @@ public abstract class Veiculo implements VeiculoInterface {
         this.ano = ano;
     }
 
+    @Override
+    public String toString() {
+        return "Veiculo{" + "idveiculo=" + idveiculo + ", tipo=" + tipo + ", marca=" + marca + ", estado=" + estado + ", locacoes=" + locacoes + ", categoria=" + categoria + ", valorDeCompra=" + valorDeCompra + ", placa=" + placa + ", ano=" + ano + '}';
+    }
+
     public Veiculo(int id, String tipo, String marca, String estado, ArrayList<Locacao> locacoes, String categoria, double valorDeCompra, String placa, int ano) {
         idveiculo = id;
         this.tipo = tipo;
@@ -53,7 +58,7 @@ public abstract class Veiculo implements VeiculoInterface {
     public abstract void vender();
 
     @Override
-    public abstract void locar(int dias, Calendar data, Cliente cliente);
+    public abstract void setEstadoLocado();
 
     @Override
     public String getMarca() {

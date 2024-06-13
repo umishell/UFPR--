@@ -44,7 +44,7 @@ public class ClientesTransacoesTableModel extends DefaultTableModel {
     public int getRowCount() {
         return (this.listaClientes != null) ? this.listaClientes.size() : 0;
     }
-    
+
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
         Cliente cliente = listaClientes.get(rowIndex);
@@ -139,5 +139,18 @@ public class ClientesTransacoesTableModel extends DefaultTableModel {
     public void setSingleSelection(JTable tabela) {
         ListSelectionModel selectionModel = tabela.getSelectionModel();
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
+
+    public String getCpfLocacao(JTable table) {
+        int selectedRow = table.getSelectedRow();
+
+        // Check for valid selection
+        if (selectedRow < 0) {
+            return null; // No row selected
+        }
+        // Convert row index to model index (consider sorting)
+        int modelRow = table.convertRowIndexToModel(selectedRow);
+
+        return listaClientes.get(modelRow).getCpf();
     }
 }

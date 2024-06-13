@@ -81,6 +81,11 @@ public class Cliente {
         this.endereco = endereco;
     }
 
+    @Override
+    public String toString() {
+        return "Cliente{" + "id=" + id + ", nome=" + nome + ", sobrenome=" + sobrenome + ", rg=" + rg + ", cpf=" + cpf + ", endereco=" + endereco + ", comVeiculoLocado=" + comVeiculoLocado + '}';
+    }
+
     public boolean getComVeiculoLocado() {
         return comVeiculoLocado;
     }

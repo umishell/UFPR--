@@ -19,6 +19,11 @@ public class Motocicleta extends Veiculo {
         this.modelo = modelo;
     }
 
+    @Override
+    public String toString() {
+        return "Motocicleta{" + "modelo=" + modelo + '}';
+    }
+
     
     public void to_String(){
         System.out.println("id "+this.getIdveiculo()
@@ -37,10 +42,8 @@ public class Motocicleta extends Veiculo {
     }
 
     @Override
-    public void locar(int dias, Calendar data, Cliente cliente) {
-        // super.setEstado("locado");
-        //super.setLocacao(new Locacao(dias, this.getValorDiariaLocacao(), data, cliente));
-
+    public void setEstadoLocado() {
+        super.setEstado("locado");
     }
 
     @Override
@@ -55,9 +58,9 @@ public class Motocicleta extends Veiculo {
         //}
     }
 
-    public double getValorDiariaLocacao(String s) {
+    public double getValorDiariaLocacao(String categoria) {
 
-        switch (s) {
+        switch (categoria) {
             case "popular" -> {
                 return 70;
             }

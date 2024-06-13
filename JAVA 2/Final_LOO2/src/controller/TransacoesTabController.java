@@ -11,6 +11,7 @@ import model.connection.MotocicletaDaoSql;
 import model.connection.VanDaoSql;
 import model.dto.Automovel;
 import model.dto.Cliente;
+import model.dto.Locacao;
 import model.dto.Motocicleta;
 import model.dto.Van;
 import model.dto.Veiculo;
@@ -47,6 +48,24 @@ public class TransacoesTabController {
     public TransacoesTabController() {
     }
 
+    public void newLocacao() {
+        try {
+            Locacao loc = view.getLocacaoFormulario();
+            System.out.println(loc.toString());
+            String cpf = cttm.getCpfLocacao(view.getClientesTransacoesTable());
+            String placa = ttm.getPlacaLocacao(view.getTransacoesTable());
+            if (!locDao.locacaoIsActive(loc.getDate(), placa)) {
+                locDao.add(loc, cpf, placa);
+                view.clearFieldsLocacao();
+            } else {
+                view.apresentaInfo("Veiculo Alugado.");
+            }
+        } catch (IOException | SQLException | NullPointerException e) {
+            view.apresentaErro("Erro ao criar locação.");
+            e.printStackTrace();
+        }
+    }
+    
     /*
     public void newVeiculo() {
         try {

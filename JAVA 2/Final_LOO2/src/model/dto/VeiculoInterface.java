@@ -9,7 +9,7 @@ public interface VeiculoInterface {
 
 	// Muda estado para LOCADO. Cria uma instância de Locacao e armazena no atributo
 	// locacao.Chama ométodo getValorDiariaLocacaopara calcularo valor da locação.
-	public void locar(int dias, Calendar data, Cliente cliente);
+	public void setEstadoLocado();
 
 	// Muda estado para VENDIDO e não pode mais ser alugado
 	public void vender();

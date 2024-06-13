@@ -11,6 +11,9 @@ import model.tables.ClientesTableModel;
 import model.dto.Cliente;
 import model.tables.TableFilter;
 import java.awt.Point;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -23,6 +26,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import model.combo.ComboBox;
 import model.dto.Automovel;
+import model.dto.Locacao;
 import model.dto.Motocicleta;
 import model.dto.Van;
 import model.dto.Veiculo;
@@ -123,13 +127,13 @@ public class Frame extends javax.swing.JFrame {
         ftxtDataTransacoes = new javax.swing.JFormattedTextField();
         lblNumDiasTransacoes = new javax.swing.JLabel();
         lblDataTransacoes = new javax.swing.JLabel();
-        txtDiasTransacoes = new javax.swing.JFormattedTextField();
         cboxMarcaTransacoes = new javax.swing.JComboBox<>();
         cboxCategoriaTransacoes = new javax.swing.JComboBox<>();
         btnLocacao = new javax.swing.JButton();
         btnDevolucao = new javax.swing.JButton();
         btnVenda = new javax.swing.JButton();
         btnListarTransacoes = new javax.swing.JButton();
+        txtDiasTransacoes = new javax.swing.JTextField();
         tabVeiculos = new javax.swing.JPanel();
         paneVeiculoTable = new javax.swing.JScrollPane();
         veiculosTable = new javax.swing.JTable();
@@ -247,10 +251,11 @@ public class Frame extends javax.swing.JFrame {
         lblPesquisarClientes.setText("Pesquisar Clientes");
 
         try {
-            ftxtDataTransacoes.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/##")));
+            ftxtDataTransacoes.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-##-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        ftxtDataTransacoes.setActionCommand("<Not Set>");
         ftxtDataTransacoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ftxtDataTransacoesActionPerformed(evt);
@@ -260,12 +265,6 @@ public class Frame extends javax.swing.JFrame {
         lblNumDiasTransacoes.setText("numDiasLocacao");
 
         lblDataTransacoes.setText("data");
-
-        try {
-            txtDiasTransacoes.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
 
         cboxMarcaTransacoes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
         cboxMarcaTransacoes.addActionListener(new java.awt.event.ActionListener() {
@@ -304,6 +303,12 @@ public class Frame extends javax.swing.JFrame {
             }
         });
 
+        txtDiasTransacoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDiasTransacoesActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout tabTransacoesLayout = new javax.swing.GroupLayout(tabTransacoes);
         tabTransacoes.setLayout(tabTransacoesLayout);
         tabTransacoesLayout.setHorizontalGroup(
@@ -328,9 +333,9 @@ public class Frame extends javax.swing.JFrame {
                                 .addGap(43, 43, 43)))
                         .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(tabTransacoesLayout.createSequentialGroup()
-                                .addGap(2, 2, 2)
-                                .addComponent(txtDiasTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(126, 126, 126)
+                                .addGap(32, 32, 32)
+                                .addComponent(txtDiasTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(175, 175, 175)
                                 .addComponent(btnLocar))
                             .addGroup(tabTransacoesLayout.createSequentialGroup()
                                 .addGap(12, 12, 12)
@@ -398,7 +403,7 @@ public class Frame extends javax.swing.JFrame {
                             .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(lblNumDiasTransacoes)
                                 .addComponent(txtDiasTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(23, 23, 23)
+                        .addGap(20, 20, 20)
                         .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(ftxtDataTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblDataTransacoes))
@@ -1045,8 +1050,9 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAutomoveisTransacoesActionPerformed
 
     private void btnLocarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocarActionPerformed
-        //setComVeiculoLocado
-/*      Cliente c = null;
+        ctrlTransacoes.newLocacao();
+
+        /*      Cliente c = null;
         int lscliente = clienteLocacaoTable.getSelectedRow();
         if (lscliente != -1) {
             Cliente clienteSelecionado = rep.getListaClientes().get(lscliente);
@@ -1232,12 +1238,16 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_tabTransacoesMouseClicked
 
     private void txtPesquisarClientesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarClientesKeyTyped
-        
+
     }//GEN-LAST:event_txtPesquisarClientesKeyTyped
 
     private void txtPesquisarClientesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarClientesKeyReleased
         ctrlTransacoes.filterCtt(txtPesquisarClientes.getText());
     }//GEN-LAST:event_txtPesquisarClientesKeyReleased
+
+    private void txtDiasTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDiasTransacoesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDiasTransacoesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1312,7 +1322,7 @@ public class Frame extends javax.swing.JFrame {
     private javax.swing.JPanel tabTransacoes;
     private javax.swing.JPanel tabVeiculos;
     private javax.swing.JPanel tabVenda;
-    private javax.swing.JFormattedTextField txtDiasTransacoes;
+    private javax.swing.JTextField txtDiasTransacoes;
     private javax.swing.JTextField txtEndereco;
     private javax.swing.JTextField txtNomeCliente;
     private javax.swing.JTextField txtPesquisarClientes;
@@ -1374,7 +1384,6 @@ public class Frame extends javax.swing.JFrame {
         String marca = (String) cboxMarca.getSelectedItem();
         String categoria = (String) cboxCategoria.getSelectedItem();
         String modelo = (String) cboxModelo.getSelectedItem();
-
         Double valorDeCompra = Double.parseDouble(ftxtValorDeCompra.getText());
         String placa = ftxtPlaca.getText();
         int ano = Integer.parseInt(ftxtAno.getText());
@@ -1425,7 +1434,10 @@ public class Frame extends javax.swing.JFrame {
         ftxtValorDeCompra.setText("");
         ftxtPlaca.setText("");
         ftxtAno.setText("");
-        //ftxtValorDeCompra.requestFocus();
+    }
+    public void clearFieldsLocacao() {
+        txtDiasTransacoes.setText("");
+        ftxtDataTransacoes.setText("");
     }
 
     public void showCtm(ArrayList<Cliente> clientes) {
@@ -1653,6 +1665,25 @@ public class Frame extends javax.swing.JFrame {
 
     public javax.swing.JTable getClientesTransacoesTable() {
         return clientesTransacoesTable;
+    }
+
+    public Locacao getLocacaoFormulario() {
+        try {
+            int dias = Integer.parseInt(txtDiasTransacoes.getText());
+            String dateString = ftxtDataTransacoes.getText();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate localDate = LocalDate.parse(dateString, formatter);
+            double valorDiariaLocacao = ttm.getValorDiariaLocacao(TransacoesTable);
+            double valor = valorDiariaLocacao * dias;
+            if (dias == 0 || localDate == null) {
+                apresentaErro("Preencha a data e a quantidade de dias.");
+            } else {
+                return new Locacao(dias, valor, localDate);
+            }
+        } catch (DateTimeParseException e) {
+            apresentaErro("Invalid date format. Please use YYYY-MM-DD.");
+        }
+        return null;
     }
 
 }

@@ -96,7 +96,10 @@ public class MotocicletaDaoSql implements MotocicletaDao {
 
         ArrayList<Motocicleta> motos = new ArrayList<>();
 
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("select * from locacao where idveiculo = ?"); PreparedStatement stmtLista = conn.prepareStatement(selectAll); ResultSet rs = stmtLista.executeQuery();) {
+        try (Connection conn = ConnectionFactory.getConnection();
+                PreparedStatement stmtLocacoes = conn.prepareStatement("select * from locacao where idveiculo = ?");
+                PreparedStatement stmtLista = conn.prepareStatement(selectAll); 
+                ResultSet rs = stmtLista.executeQuery();) {
 
             while (rs.next()) {
                 int idveiculo = rs.getInt("idveiculo");
@@ -111,11 +114,12 @@ public class MotocicletaDaoSql implements MotocicletaDao {
                         locacoes = null;
                     } else {
                         while (rs0.next()) {
+                            boolean active = rs0.getBoolean("active");
                             int dias = rs0.getInt("dias");
                             double valor = rs0.getDouble("valor");
                             LocalDate date = rs0.getDate("date").toLocalDate();
                             int idCliente = rs0.getInt("idcliente");
-                            locacoes.add(new Locacao(dias, valor, date, idCliente, idveiculo));
+                            locacoes.add(new Locacao(active, dias, valor, date, idCliente, idveiculo));
 //System.out.println("veiculo-> "+idveiculo + ": " + idCliente + " " + valor + " " + date + " " + dias);
                         }
                     }

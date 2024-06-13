@@ -97,13 +97,16 @@ public class TransacoesTableModel extends DefaultTableModel {
     @Override
     public void setRowCount(int rowCount) {
         switch (tipoVeiculo) {
-            case 1 -> listaMotos = new ArrayList<>(rowCount);
-            case 2 -> listaAutos = new ArrayList<>(rowCount);
-            case 3 -> listaVans = new ArrayList<>(rowCount);
+            case 1 ->
+                listaMotos = new ArrayList<>(rowCount);
+            case 2 ->
+                listaAutos = new ArrayList<>(rowCount);
+            case 3 ->
+                listaVans = new ArrayList<>(rowCount);
         }
         fireTableDataChanged();
     }
-    
+
     @Override
     public Object getValueAt(int row, int col) {
         if (row < 0 || row >= getRowCount()) {
@@ -351,4 +354,76 @@ public class TransacoesTableModel extends DefaultTableModel {
     public void setTipoTransacao(int tipoTransacao) {
         this.tipoTransacao = tipoTransacao;
     }
+
+    public Veiculo getSelectedVeiculo(JTable table) {
+        int selectedRow = table.getSelectedRow();
+
+        // Check for valid selection
+        if (selectedRow < 0) {
+            return null; // No row selected
+        }
+
+        // Convert row index to model index (consider sorting)
+        int modelRow = table.convertRowIndexToModel(selectedRow);
+
+        return switch (tipoVeiculo) {
+            case 1 ->
+                listaMotos.get(modelRow);
+            case 2 ->
+                listaAutos.get(modelRow);
+            case 3 ->
+                listaVans.get(modelRow);
+            default ->
+                null;
+        }; // Unexpected vehicle type
+    }
+
+    public double getValorDiariaLocacao(JTable table) {
+        int selectedRow = table.getSelectedRow();
+
+        // Check for valid selection
+        if (selectedRow < 0) {
+            return 0; // No row selected
+        }
+
+        // Convert row index to model index (consider sorting)
+        int modelRow = table.convertRowIndexToModel(selectedRow);
+
+        return switch (tipoVeiculo) {
+            case 1 ->
+                listaMotos.get(modelRow).getValorDiariaLocacao(listaMotos.get(modelRow).getCategoria());
+            case 2 ->
+                listaAutos.get(modelRow).getValorDiariaLocacao(listaAutos.get(modelRow).getCategoria());
+            case 3 ->
+                listaVans.get(modelRow).getValorDiariaLocacao(listaVans.get(modelRow).getCategoria());
+            default ->
+                0;
+        }; // Unexpected vehicle type
+    }
+
+    public String getPlacaLocacao(JTable table) {
+        int selectedRow = table.getSelectedRow();
+
+        // Check for valid selection
+        if (selectedRow < 0) {
+            return null; // No row selected
+        }
+
+        // Convert row index to model index (consider sorting)
+        int modelRow = table.convertRowIndexToModel(selectedRow);
+
+        return switch (tipoVeiculo) {
+            case 1 ->
+                listaMotos.get(modelRow).getPlaca();
+            case 2 ->
+                listaAutos.get(modelRow).getPlaca();
+            case 3 ->
+                listaVans.get(modelRow).getPlaca();
+            default ->
+                null;
+        }; // Unexpected vehicle type
+    }
+    
+    
+
 }

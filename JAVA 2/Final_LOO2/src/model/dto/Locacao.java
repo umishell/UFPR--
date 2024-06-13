@@ -11,8 +11,22 @@ public class Locacao {
     private final int idCliente;
     private final int idVeiculo;
 
-    public Locacao(int dias, double valor, LocalDate date, int idCliente, int idVeiculo) {
+    public Locacao(int dias, double valor, LocalDate date) {
         active = true;
+        this.dias = dias;
+        this.valor = valor;
+        this.date = date;
+        this.idCliente = -1;
+        this.idVeiculo = -1;
+    }
+
+    @Override
+    public String toString() {
+        return "Locacao{" + "active=" + active + ", dias=" + dias + ", valor=" + valor + ", date=" + date + ", idCliente=" + idCliente + ", idVeiculo=" + idVeiculo + '}';
+    }
+    
+    public Locacao(boolean active, int dias, double valor, LocalDate date, int idCliente, int idVeiculo) {
+        active = active;
         this.dias = dias;
         this.valor = valor;
         this.date = date;
