@@ -16,7 +16,7 @@ public class TransacoesTableModel extends DefaultTableModel {
     private ArrayList<Automovel> listaAutos = new ArrayList<>();
     private final String[] colunas;
     private int tipoVeiculo; // 1 = Moto, 2 = Auto, 3 = Van
-    private int tipoTransacao;
+    private int tipoTransacao; // 1 = Locacao, 2 = Devolução, 3 = Venda
 
     public TransacoesTableModel() {
         this.colunas = new String[]{"Placa", "Marca", "Categoria", "Modelo", "Ano"};

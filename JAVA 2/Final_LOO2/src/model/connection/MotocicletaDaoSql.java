@@ -96,10 +96,7 @@ public class MotocicletaDaoSql implements MotocicletaDao {
 
         ArrayList<Motocicleta> motos = new ArrayList<>();
 
-        try (Connection conn = ConnectionFactory.getConnection();
-                PreparedStatement stmtLocacoes = conn.prepareStatement("select * from locacao where idveiculo = ?");
-                PreparedStatement stmtLista = conn.prepareStatement(selectAll); 
-                ResultSet rs = stmtLista.executeQuery();) {
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("select * from locacao where idveiculo = ?"); PreparedStatement stmtLista = conn.prepareStatement(selectAll); ResultSet rs = stmtLista.executeQuery();) {
 
             while (rs.next()) {
                 int idveiculo = rs.getInt("idveiculo");
@@ -123,7 +120,6 @@ public class MotocicletaDaoSql implements MotocicletaDao {
 //System.out.println("veiculo-> "+idveiculo + ": " + idCliente + " " + valor + " " + date + " " + dias);
                         }
                     }
-
                 }
                 String categoria = rs.getString("categoria");
                 Double valorDeCompra = rs.getDouble("valorDeCompra");
@@ -137,6 +133,74 @@ public class MotocicletaDaoSql implements MotocicletaDao {
 
         } catch (SQLException | IOException e) {
             JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.getAll():  Error getting all motos: \n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return motos;
+    }
+    private final String selectAllNaoLocadas = """
+                                     SELECT
+                                        veiculo.idveiculo,
+                                        marca.marca,
+                                        estado.estado,
+                                        categoria.categoria,
+                                        veiculo.valorDeCompra,
+                                        veiculo.placa,
+                                        veiculo.ano ,
+                                        modelomotocicleta.modelo,
+                                        locacao.active
+                                     FROM motocicleta
+                                     INNER JOIN veiculo ON motocicleta.idveiculo = veiculo.idveiculo
+                                     INNER JOIN locacao ON motocicleta.idveiculo = locacao.idveiculo
+                                     INNER JOIN estado ON veiculo.idestado = estado.idestado
+                                     INNER JOIN modeloMotocicleta ON motocicleta.idmodeloMotocicleta = modelomotocicleta.idmodeloMotocicleta
+                                     INNER JOIN categoria ON modelomotocicleta.idcategoria = categoria.idcategoria
+                                     INNER JOIN marca ON modelomotocicleta.idmarca = marca.idmarca
+                                     WHERE locacao.idcliente = (SELECT id FROM cliente WHERE cpf = ?) AND locacao.active = 0
+                                     ORDER BY motocicleta.idveiculo;
+                                     """;
+
+    public ArrayList<Motocicleta> getAllNaoLocadas(String cpf) {
+
+        ArrayList<Motocicleta> motos = new ArrayList<>();
+
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("select * from locacao where idveiculo = ?"); PreparedStatement stmtLista = conn.prepareStatement(selectAllNaoLocadas);) {
+            stmtLista.setString(1, cpf);
+            try (ResultSet rs = stmtLista.executeQuery();) {
+                while (rs.next()) {
+                    int idveiculo = rs.getInt("idveiculo");
+                    String marca = rs.getString("marca");
+                    String estado = rs.getString("estado");
+
+                    ArrayList<Locacao> locacoes = new ArrayList<>();
+                    stmtLocacoes.setInt(1, idveiculo);
+                    try (ResultSet rs0 = stmtLocacoes.executeQuery();) {
+                        if (!rs0.isBeforeFirst()) { //if there are rows available{
+                            System.out.println("veiculo " + idveiculo + " sem locacoes.");
+                            locacoes = null;
+                        } else {
+                            while (rs0.next()) {
+                                boolean active = rs0.getBoolean("active");
+                                int dias = rs0.getInt("dias");
+                                double valor = rs0.getDouble("valor");
+                                LocalDate date = rs0.getDate("date").toLocalDate();
+                                int idCliente = rs0.getInt("idcliente");
+                                locacoes.add(new Locacao(active, dias, valor, date, idCliente, idveiculo));
+                            }
+                        }
+                    }
+                    String categoria = rs.getString("categoria");
+                    Double valorDeCompra = rs.getDouble("valorDeCompra");
+                    String placa = rs.getString("placa");
+                    int ano = rs.getInt("ano");
+                    String modelo = rs.getString("modelo");
+
+                    motos.add(new Motocicleta(idveiculo, "Motocicleta", marca, estado, locacoes, categoria, valorDeCompra, placa, ano, modelo));
+                }
+            }
+            return motos;
+
+        } catch (SQLException | IOException e) {
+            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.getAllNaoLocados():  Error getting all motos nao locadas: \n" + e.getMessage());
             e.printStackTrace();
         }
         return motos;

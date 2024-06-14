@@ -26,6 +26,8 @@ public class Main {
         ClientesTransacoesTableModel cttm = view.getCttm();
         TransacoesTableModel ttm = view.getTtm();
         
+        ttm.setTipoTransacao(1);//tipo 1 locacao
+        
         //FILTERS
         TableFilter filtroVeiculoTable = new TableFilter();
         filtroVeiculoTable.initFilter(view.getVeiculosTable());
@@ -34,7 +36,7 @@ public class Main {
         TableFilter filtroClientesTransacoesTable = new TableFilter();
         filtroClientesTransacoesTable.initFilter(view.getClientesTransacoesTable());
 
-        //TESTING
+        /*//TESTING
         if (filtroVeiculoTable.getSorter() != null) {
             System.out.println("Sorter is initialized successfully!");
         } else {
@@ -49,7 +51,7 @@ public class Main {
             System.out.println("Sorter is initialized successfully!");
         } else {
             System.out.println("Something went wrong during initialization.");
-        }
+        }*/
 
         ClienteDaoSql cliDao = DaoFactory.getClienteDao(DaoType.SQL);
         MotocicletaDaoSql motoDao = MotocicletaDaoSql.getMotocicletaDaoSql();//DaoFactory.getMotocicletaDao(DaoType.SQL);
@@ -59,16 +61,18 @@ public class Main {
 
         ClientesTabController ctrlClientes = new ClientesTabController(view, cliDao);
         VeiculosTabController ctrlVeiculos = new VeiculosTabController(view, vtm, filtroVeiculoTable, motoDao, autoDao, vanDao);
-        TransacoesTabController ctrlTransacoes = new TransacoesTabController(view, ttm, cttm, filtroVeiculoTable, filtroClientesTransacoesTable, motoDao, autoDao, vanDao, locDao);
+        TransacoesTabController ctrlTransacoes = new TransacoesTabController(view, ttm, cttm, filtroTransacoesTable, filtroClientesTransacoesTable, motoDao, autoDao, vanDao, locDao);
 
         view.setControllers(ctrlClientes, ctrlVeiculos, ctrlTransacoes);
         
         ctrlVeiculos.loadAllCategoriaMarcaCboxes();
         ctrlVeiculos.setSingleSelectionOnVtm();
         ctrlTransacoes.loadAllCategoriaMarcaCboxes();
-        ctrlTransacoes.setSingleSelectionOnVtm_Ttm();
+        ctrlTransacoes.setSingleSelectionOnCttm_Ttm();
         
-
+        view.getBtnMotocicletasTransacoes().setEnabled(true);
+        view.getBtnMotocicletasVeiculos().setEnabled(true);
+        
         view.initView(view);
 
     }

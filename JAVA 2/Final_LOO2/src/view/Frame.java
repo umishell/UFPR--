@@ -47,7 +47,7 @@ public class Frame extends javax.swing.JFrame {
     private ClientesTransacoesTableModel cttm;
     private TransacoesTableModel ttm;
 
-    private TableFilter filtroVeiculoTable, f1;
+    //private TableFilter filtroVeiculoTable, filtroClientesTransacoesTable;
 
     private Color originalBtnColor;
     private Font monospace;
@@ -66,6 +66,10 @@ public class Frame extends javax.swing.JFrame {
         monospace = new Font("Monospace", Font.BOLD, 14);
         originalBtnColor = btnMotocicletasVeiculos.getBackground();
         costumizeButtons();
+        
+        //vtm.setTipoVeiculo(1);//tipo 1 moto
+        ttm.setTipoVeiculo(1);//tipo 1 moto
+        ttm.setTipoTransacao(1);//tipo 1 locacao
 
     }
 
@@ -201,6 +205,7 @@ public class Frame extends javax.swing.JFrame {
         });
 
         btnVansTransacoes.setText("Vans");
+        btnVansTransacoes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnVansTransacoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVansTransacoesActionPerformed(evt);
@@ -208,6 +213,7 @@ public class Frame extends javax.swing.JFrame {
         });
 
         btnMotocicletasTransacoes.setText("Motocicletas");
+        btnMotocicletasTransacoes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnMotocicletasTransacoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMotocicletasTransacoesActionPerformed(evt);
@@ -223,6 +229,7 @@ public class Frame extends javax.swing.JFrame {
         paneVeiculoTableLocacao.setViewportView(TransacoesTable);
 
         btnAutomoveisTransacoes.setText("Automoveis");
+        btnAutomoveisTransacoes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnAutomoveisTransacoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAutomoveisTransacoesActionPerformed(evt);
@@ -232,9 +239,6 @@ public class Frame extends javax.swing.JFrame {
         txtPesquisarClientes.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPesquisarClientesKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtPesquisarClientesKeyTyped(evt);
             }
         });
 
@@ -246,6 +250,11 @@ public class Frame extends javax.swing.JFrame {
         });
 
         clientesTransacoesTable.setModel(cttm);
+        clientesTransacoesTable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                clientesTransacoesTableMouseClicked(evt);
+            }
+        });
         paneClientesTransacoesTable.setViewportView(clientesTransacoesTable);
 
         lblPesquisarClientes.setText("Pesquisar Clientes");
@@ -267,6 +276,7 @@ public class Frame extends javax.swing.JFrame {
         lblDataTransacoes.setText("data");
 
         cboxMarcaTransacoes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        cboxMarcaTransacoes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         cboxMarcaTransacoes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboxMarcaTransacoesActionPerformed(evt);
@@ -274,8 +284,15 @@ public class Frame extends javax.swing.JFrame {
         });
 
         cboxCategoriaTransacoes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        cboxCategoriaTransacoes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        cboxCategoriaTransacoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboxCategoriaTransacoesActionPerformed(evt);
+            }
+        });
 
         btnLocacao.setText("Locação");
+        btnLocacao.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnLocacao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLocacaoActionPerformed(evt);
@@ -283,6 +300,7 @@ public class Frame extends javax.swing.JFrame {
         });
 
         btnDevolucao.setText("Devolução");
+        btnDevolucao.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnDevolucao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDevolucaoActionPerformed(evt);
@@ -290,6 +308,7 @@ public class Frame extends javax.swing.JFrame {
         });
 
         btnVenda.setText("Venda");
+        btnVenda.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnVenda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVendaActionPerformed(evt);
@@ -315,43 +334,42 @@ public class Frame extends javax.swing.JFrame {
             tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabTransacoesLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(tabTransacoesLayout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(paneClientesTransacoesTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(tabTransacoesLayout.createSequentialGroup()
-                        .addComponent(lblPesquisarClientes)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPesquisarClientes))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabTransacoesLayout.createSequentialGroup()
-                        .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(tabTransacoesLayout.createSequentialGroup()
-                                .addComponent(lblNumDiasTransacoes)
-                                .addGap(33, 33, 33))
-                            .addGroup(tabTransacoesLayout.createSequentialGroup()
-                                .addComponent(lblDataTransacoes)
-                                .addGap(43, 43, 43)))
-                        .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(tabTransacoesLayout.createSequentialGroup()
-                                .addGap(32, 32, 32)
-                                .addComponent(txtDiasTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(175, 175, 175)
-                                .addComponent(btnLocar))
-                            .addGroup(tabTransacoesLayout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(ftxtDataTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(tabTransacoesLayout.createSequentialGroup()
+                            .addComponent(lblPesquisarClientes)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(txtPesquisarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabTransacoesLayout.createSequentialGroup()
+                            .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(tabTransacoesLayout.createSequentialGroup()
+                                    .addComponent(lblNumDiasTransacoes)
+                                    .addGap(33, 33, 33))
+                                .addGroup(tabTransacoesLayout.createSequentialGroup()
+                                    .addComponent(lblDataTransacoes)
+                                    .addGap(43, 43, 43)))
+                            .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(tabTransacoesLayout.createSequentialGroup()
+                                    .addGap(32, 32, 32)
+                                    .addComponent(txtDiasTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(175, 175, 175)
+                                    .addComponent(btnLocar))
+                                .addGroup(tabTransacoesLayout.createSequentialGroup()
+                                    .addGap(12, 12, 12)
+                                    .addComponent(ftxtDataTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addComponent(paneClientesTransacoesTable, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(tabTransacoesLayout.createSequentialGroup()
-                        .addGap(102, 102, 102)
-                        .addComponent(btnMotocicletasTransacoes)
-                        .addGap(45, 45, 45)
-                        .addComponent(btnAutomoveisTransacoes)
-                        .addGap(30, 30, 30)
-                        .addComponent(btnVansTransacoes))
+                        .addGap(93, 93, 93)
+                        .addComponent(btnMotocicletasTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(btnAutomoveisTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(btnVansTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(tabTransacoesLayout.createSequentialGroup()
-                        .addGap(39, 39, 39)
+                        .addGap(40, 40, 40)
                         .addComponent(paneVeiculoTableLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(115, 115, 115))
+                .addGap(114, 114, 114))
             .addGroup(tabTransacoesLayout.createSequentialGroup()
                 .addGap(411, 411, 411)
                 .addComponent(btnLocacao)
@@ -377,37 +395,37 @@ public class Frame extends javax.swing.JFrame {
                     .addComponent(btnDevolucao)
                     .addComponent(btnLocacao)
                     .addComponent(btnVenda))
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
                 .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cboxMarcaTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cboxCategoriaTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnListarTransacoes))
                 .addGap(18, 18, 18)
-                .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(tabTransacoesLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(btnMotocicletasTransacoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnMotocicletasTransacoes)
-                        .addComponent(btnAutomoveisTransacoes)
                         .addComponent(txtPesquisarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(lblPesquisarClientes))
-                    .addComponent(btnVansTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnVansTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAutomoveisTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(32, 32, 32)
                 .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(tabTransacoesLayout.createSequentialGroup()
-                        .addComponent(paneVeiculoTableLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(tabTransacoesLayout.createSequentialGroup()
-                        .addComponent(paneClientesTransacoesTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnLocar)
-                            .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(lblNumDiasTransacoes)
-                                .addComponent(txtDiasTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(20, 20, 20)
-                        .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(ftxtDataTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblDataTransacoes))
-                        .addGap(54, 54, 54))))
+                    .addComponent(paneClientesTransacoesTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(paneVeiculoTableLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnLocar)
+                    .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblNumDiasTransacoes)
+                        .addComponent(txtDiasTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(20, 20, 20)
+                .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(ftxtDataTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDataTransacoes))
+                .addGap(54, 54, 54))
         );
 
         paneAllTabs.addTab("Transacoes", tabTransacoes);
@@ -531,6 +549,7 @@ public class Frame extends javax.swing.JFrame {
         });
 
         cboxMarcaVeiculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        cboxMarcaVeiculo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         cboxMarcaVeiculo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboxMarcaVeiculoActionPerformed(evt);
@@ -538,6 +557,7 @@ public class Frame extends javax.swing.JFrame {
         });
 
         cboxCategoriaVeiculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
+        cboxCategoriaVeiculo.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         cboxCategoriaVeiculo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cboxCategoriaVeiculoActionPerformed(evt);
@@ -654,7 +674,7 @@ public class Frame extends javax.swing.JFrame {
                                 .addComponent(cboxMarcaVeiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addComponent(paneVeiculoTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(192, Short.MAX_VALUE))
+                .addContainerGap(268, Short.MAX_VALUE))
         );
 
         paneAllTabs.addTab("Veículos", tabVeiculos);
@@ -911,7 +931,7 @@ public class Frame extends javax.swing.JFrame {
                     .addComponent(btnAutomoveisDevolver))
                 .addGap(18, 18, 18)
                 .addComponent(paneDevolverTable, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(132, Short.MAX_VALUE))
+                .addContainerGap(208, Short.MAX_VALUE))
         );
 
         paneAllTabs.addTab("Devolução", tabDevolucao);
@@ -982,7 +1002,7 @@ public class Frame extends javax.swing.JFrame {
                     .addComponent(btnAutomoveisVenda))
                 .addGap(18, 18, 18)
                 .addComponent(paneVendaTable, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addContainerGap(230, Short.MAX_VALUE))
         );
 
         paneAllTabs.addTab("Venda", tabVenda);
@@ -1234,12 +1254,8 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnListarTransacoesActionPerformed
 
     private void tabTransacoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabTransacoesMouseClicked
-
+        
     }//GEN-LAST:event_tabTransacoesMouseClicked
-
-    private void txtPesquisarClientesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarClientesKeyTyped
-
-    }//GEN-LAST:event_txtPesquisarClientesKeyTyped
 
     private void txtPesquisarClientesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarClientesKeyReleased
         ctrlTransacoes.filterCtt(txtPesquisarClientes.getText());
@@ -1248,6 +1264,14 @@ public class Frame extends javax.swing.JFrame {
     private void txtDiasTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDiasTransacoesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDiasTransacoesActionPerformed
+
+    private void clientesTransacoesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clientesTransacoesTableMouseClicked
+        ctrlTransacoes.showAllMotos();
+    }//GEN-LAST:event_clientesTransacoesTableMouseClicked
+
+    private void cboxCategoriaTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxCategoriaTransacoesActionPerformed
+        ctrlTransacoes.activateCboxCategoriaTransacoes();
+    }//GEN-LAST:event_cboxCategoriaTransacoesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1435,6 +1459,7 @@ public class Frame extends javax.swing.JFrame {
         ftxtPlaca.setText("");
         ftxtAno.setText("");
     }
+
     public void clearFieldsLocacao() {
         txtDiasTransacoes.setText("");
         ftxtDataTransacoes.setText("");
@@ -1684,6 +1709,14 @@ public class Frame extends javax.swing.JFrame {
             apresentaErro("Invalid date format. Please use YYYY-MM-DD.");
         }
         return null;
+    }
+
+    public javax.swing.JButton getBtnMotocicletasTransacoes() {
+        return btnMotocicletasTransacoes;
+    }
+
+    public javax.swing.JButton getBtnMotocicletasVeiculos() {
+        return btnMotocicletasVeiculos;
     }
 
 }

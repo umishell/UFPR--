@@ -14,7 +14,6 @@ import model.dto.Cliente;
 import model.dto.Locacao;
 import model.dto.Motocicleta;
 import model.dto.Van;
-import model.dto.Veiculo;
 import model.tables.ClientesTransacoesTableModel;
 import model.tables.TableFilter;
 import model.tables.TransacoesTableModel;
@@ -26,7 +25,7 @@ public class TransacoesTabController {
     private TransacoesTableModel ttm;
     private ClientesTransacoesTableModel cttm;
     private MotocicletaDaoSql motoDao;
-    private TableFilter filtroVeiculoTable;
+    private TableFilter filtroTransacoesTable;
     private TableFilter filtroClientesTransacoesTable;
     private AutomovelDaoSql autoDao;
     private VanDaoSql vanDao;
@@ -37,7 +36,7 @@ public class TransacoesTabController {
         this.view = view;
         this.ttm = ttm;
         this.cttm = cttm;
-        filtroVeiculoTable = f;
+        filtroTransacoesTable = f;
         filtroClientesTransacoesTable = f1;
         this.motoDao = motoDao;
         this.autoDao = autoDao;
@@ -52,7 +51,7 @@ public class TransacoesTabController {
         try {
             Locacao loc = view.getLocacaoFormulario();
             System.out.println(loc.toString());
-            String cpf = cttm.getCpfLocacao(view.getClientesTransacoesTable());
+            String cpf = cttm.getCpfSelectedClient(view.getClientesTransacoesTable());
             String placa = ttm.getPlacaLocacao(view.getTransacoesTable());
             if (!locDao.locacaoIsActive(loc.getDate(), placa)) {
                 locDao.add(loc, cpf, placa);
@@ -65,7 +64,7 @@ public class TransacoesTabController {
             e.printStackTrace();
         }
     }
-    
+
     /*
     public void newVeiculo() {
         try {
@@ -145,9 +144,40 @@ public class TransacoesTabController {
             ArrayList<Motocicleta> motos = new ArrayList<>();
             ttm.setListaMotos(motos);
             ttm.fireTableDataChanged();
-            filtroVeiculoTable.getSorter().setRowFilter(null);
+            filtroTransacoesTable.getSorter().setRowFilter(null);
             ttm.setRowCount(0);
             motos = motoDao.getAll();
+            if (motos.isEmpty()) {
+                view.apresentaInfo("não há motocicletas");
+            } else {
+                ttm.setListaMotos(motos);
+                ttm.fireTableDataChanged();
+            }
+        } catch (NullPointerException e) {
+            view.apresentaErro("Erro ao mostrar motos na tabela.");
+            e.printStackTrace();
+        }
+    }
+
+    public void showAllMotos() {
+        try {
+            MotocicletaDaoSql motoDao = new MotocicletaDaoSql();
+            ArrayList<Motocicleta> motos = new ArrayList<>();
+            ttm.setListaMotos(motos);
+            ttm.fireTableDataChanged();
+            filtroTransacoesTable.getSorter().setRowFilter(null);
+            ttm.setRowCount(0);
+            switch (ttm.getTipoTransacao()) {
+
+                case 1 /*Locacao*/ -> {
+                    String cpf = cttm.getCpfSelectedClient(view.getClientesTransacoesTable());
+                    motos = motoDao.getAllNaoLocadas(cpf);
+                }
+                case 2 /*Devolução*/ -> {
+                }
+                case 3 /*Venda*/ -> {
+                }
+            }
             if (motos.isEmpty()) {
                 view.apresentaInfo("não há motocicletas");
             } else {
@@ -167,7 +197,7 @@ public class TransacoesTabController {
             ArrayList<Automovel> autos = new ArrayList<>();
             ttm.setListaAutos(autos);
             ttm.fireTableDataChanged();
-            filtroVeiculoTable.getSorter().setRowFilter(null);
+            filtroTransacoesTable.getSorter().setRowFilter(null);
             ttm.setRowCount(0);
             autos = autoDao.getAll();
             if (autos.isEmpty()) {
@@ -189,7 +219,7 @@ public class TransacoesTabController {
             ArrayList<Van> vans = new ArrayList<>();
             ttm.setListaVans(vans);
             ttm.fireTableDataChanged();
-            filtroVeiculoTable.getSorter().setRowFilter(null);
+            filtroTransacoesTable.getSorter().setRowFilter(null);
             ttm.setRowCount(0);
             vans = vanDao.getAll();
             if (vans.isEmpty()) {
@@ -209,7 +239,7 @@ public class TransacoesTabController {
         ComboBox.loadCboxCategoria(view.getCboxCategoriaTransacoes());
     }
 
-    public void setSingleSelectionOnVtm_Ttm() {
+    public void setSingleSelectionOnCttm_Ttm() {
         ttm.setSingleSelection(view.getTransacoesTable());
         cttm.setSingleSelection(view.getClientesTransacoesTable());
     }
@@ -220,35 +250,52 @@ public class TransacoesTabController {
 
         if (categoria != null && !categoria.isBlank() && (marca == null || marca.isBlank())) {
             // Filter by category only
-            filtroVeiculoTable.filtrarPorCategoria(categoria);
+            filtroTransacoesTable.filtrarPorCategoria(categoria);
         } else if (categoria != null && !categoria.isBlank() && marca != null && !marca.isBlank()) {
             // Filter by both category and brand
-            filtroVeiculoTable.filtrarPorMarcaECategoria(marca, categoria);
+            filtroTransacoesTable.filtrarPorMarcaECategoria(marca, categoria);
         } else if ((categoria == null || categoria.isBlank()) && marca != null && !marca.isBlank()) {
             // Filter by brand only
-            filtroVeiculoTable.filtrarPorMarca(marca);
+            filtroTransacoesTable.filtrarPorMarca(marca);
         } else {
             // Reset filters and repopulate the table
             // view.getVeiculoTable().setRowSorter(null);
-            filtroVeiculoTable.getSorter().setRowFilter(null);
+            filtroTransacoesTable.getSorter().setRowFilter(null);
             //ttm.setRowCount(0);
 
-            switch (ttm.getTipoVeiculo()) {
-                case 1 -> {
-                    showMotos();
-                    ttm.fireTableDataChanged();
+            if (view.getClientesTransacoesTable().getSelectionModel().isSelectionEmpty()) {
+                switch (ttm.getTipoVeiculo()) {
+                    case 1 -> {
+                        showMotos();
+                        ttm.fireTableDataChanged();
+                    }
+                    case 2 -> {
+                        showAutos();
+                        ttm.fireTableDataChanged();
+                    }
+                    case 3 -> {
+                        showVans();
+                        ttm.fireTableDataChanged();
+                    }
                 }
-                case 2 -> {
-                    showAutos();
-                    ttm.fireTableDataChanged();
-                }
-                case 3 -> {
-                    showVans();
-                    ttm.fireTableDataChanged();
+            } else {
+                switch (ttm.getTipoVeiculo()) {
+                    case 1 -> {
+                        showAllMotos();
+                        ttm.fireTableDataChanged();
+                    }
+                    case 2 -> {
+                        //showAllAutos();
+                        ttm.fireTableDataChanged();
+                    }
+                    case 3 -> {
+                        //showAllVans();
+                        ttm.fireTableDataChanged();
+                    }
                 }
             }
 
-            view.getVeiculosTable().setRowSorter(filtroVeiculoTable.getSorter());
+            view.getVeiculosTable().setRowSorter(filtroTransacoesTable.getSorter());
         }
     }
 
@@ -258,34 +305,51 @@ public class TransacoesTabController {
 
         if (marca != null && !marca.isBlank() && (categoria == null || categoria.isBlank())) {
             // Filter by brand only
-            filtroVeiculoTable.filtrarPorMarca(marca);
+            filtroTransacoesTable.filtrarPorMarca(marca);
         } else if (marca != null && !marca.isBlank() && categoria != null && !categoria.isBlank()) {
             // Filter by both brand and category
-            filtroVeiculoTable.filtrarPorMarcaECategoria(marca, categoria);
+            filtroTransacoesTable.filtrarPorMarcaECategoria(marca, categoria);
         } else if ((marca == null || marca.isBlank()) && categoria != null && !categoria.isBlank()) {
             // Filter by category only
-            filtroVeiculoTable.filtrarPorCategoria(categoria);
+            filtroTransacoesTable.filtrarPorCategoria(categoria);
         } else {
             // Reset filters and repopulate the table
             //view.getVeiculoTable().setRowSorter(null);
-            filtroVeiculoTable.getSorter().setRowFilter(null);
+            filtroTransacoesTable.getSorter().setRowFilter(null);
             //ttm.setRowCount(0);
-            switch (ttm.getTipoVeiculo()) {
-                case 1 -> {
-                    showMotos();
-                    ttm.fireTableDataChanged();
+            if (view.getClientesTransacoesTable().getSelectionModel().isSelectionEmpty()) {
+                switch (ttm.getTipoVeiculo()) {
+                    case 1 -> {
+                        showMotos();
+                        ttm.fireTableDataChanged();
+                    }
+                    case 2 -> {
+                        showAutos();
+                        ttm.fireTableDataChanged();
+                    }
+                    case 3 -> {
+                        showVans();
+                        ttm.fireTableDataChanged();
+                    }
                 }
-                case 2 -> {
-                    showAutos();
-                    ttm.fireTableDataChanged();
-                }
-                case 3 -> {
-                    showVans();
-                    ttm.fireTableDataChanged();
+            } else {
+                switch (ttm.getTipoVeiculo()) {
+                    case 1 -> {
+                        showAllMotos();
+                        ttm.fireTableDataChanged();
+                    }
+                    case 2 -> {
+                        //showAllAutos();
+                        ttm.fireTableDataChanged();
+                    }
+                    case 3 -> {
+                        //showAllVans();
+                        ttm.fireTableDataChanged();
+                    }
                 }
             }
 
-            view.getVeiculosTable().setRowSorter(filtroVeiculoTable.getSorter());
+            view.getVeiculosTable().setRowSorter(filtroTransacoesTable.getSorter());
         }
     }
 
@@ -300,8 +364,12 @@ public class TransacoesTabController {
             e.printStackTrace();
         }
     }
-    
-    public void filterCtt(String filterText){
+
+    public void filterCtt(String filterText) {
         filtroClientesTransacoesTable.filtrarPorTexto(filterText);
+    }
+    
+    public void setLocacaoOptionsVisible(boolean b){
+        
     }
 }

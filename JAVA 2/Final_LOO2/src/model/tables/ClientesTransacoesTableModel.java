@@ -141,7 +141,7 @@ public class ClientesTransacoesTableModel extends DefaultTableModel {
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
-    public String getCpfLocacao(JTable table) {
+    public String getCpfSelectedClient(JTable table) {
         int selectedRow = table.getSelectedRow();
 
         // Check for valid selection
