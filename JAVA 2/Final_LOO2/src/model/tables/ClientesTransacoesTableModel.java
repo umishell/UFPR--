@@ -141,16 +141,16 @@ public class ClientesTransacoesTableModel extends DefaultTableModel {
         selectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
-    public String getCpfSelectedClient(JTable table) {
+    public int getIdOfSelectedClient(JTable table) {
         int selectedRow = table.getSelectedRow();
 
         // Check for valid selection
         if (selectedRow < 0) {
-            return null; // No row selected
+            return 0; // No row selected
         }
         // Convert row index to model index (consider sorting)
         int modelRow = table.convertRowIndexToModel(selectedRow);
 
-        return listaClientes.get(modelRow).getCpf();
+        return listaClientes.get(modelRow).getId();
     }
 }

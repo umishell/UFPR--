@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import model.combo.ComboBox;
 import model.connection.AutomovelDaoSql;
@@ -48,20 +49,28 @@ public class TransacoesTabController {
     }
 
     public void newLocacao() {
-        try {
-            Locacao loc = view.getLocacaoFormulario();
-            System.out.println(loc.toString());
-            String cpf = cttm.getCpfSelectedClient(view.getClientesTransacoesTable());
-            String placa = ttm.getPlacaLocacao(view.getTransacoesTable());
-            if (!locDao.locacaoIsActive(loc.getDate(), placa)) {
-                locDao.add(loc, cpf, placa);
-                view.clearFieldsLocacao();
-            } else {
-                view.apresentaInfo("Veiculo Alugado.");
+        if (!view.getClientesTransacoesTable().getSelectionModel().isSelectionEmpty() && !view.getTransacoesTable().getSelectionModel().isSelectionEmpty()) {
+            try {
+                Locacao loc = view.getLocacaoFormulario();
+                //System.out.println(loc.toString());
+                
+                int idcliente = cttm.getIdOfSelectedClient(view.getClientesTransacoesTable());
+                int idveiculo = ttm.getIdOfSelectedVeiculo(view.getTransacoesTable());
+                if (!locDao.locacaoIsActive(loc.getDate(), idveiculo)) {
+                    locDao.add(loc, idcliente, idveiculo);
+                    view.clearFieldsLocacao();
+                } else {
+                    view.apresentaInfo("Veiculo Alugado.");
+                }
+            } catch (IOException | SQLException | NullPointerException e) {
+                view.apresentaErro("Erro ao criar locação.");
+            } catch (DateTimeParseException e) {
+                view.apresentaInfo("Invalid date format. Please use YYYY-MM-DD.");
+            } catch (NumberFormatException e) {
+                view.apresentaInfo("Preencha o numero de dias.");
             }
-        } catch (IOException | SQLException | NullPointerException e) {
-            view.apresentaErro("Erro ao criar locação.");
-            e.printStackTrace();
+        } else {
+            view.apresentaInfo("Selecione Cliente e Veiculo para locar.");
         }
     }
 
@@ -170,12 +179,14 @@ public class TransacoesTabController {
             switch (ttm.getTipoTransacao()) {
 
                 case 1 /*Locacao*/ -> {
-                    String cpf = cttm.getCpfSelectedClient(view.getClientesTransacoesTable());
-                    motos = motoDao.getAllNaoLocadas(cpf);
+                    motos = motoDao.getAllWithEstado("disponivel");
                 }
                 case 2 /*Devolução*/ -> {
+                    int idcliente = cttm.getIdOfSelectedClient(view.getClientesTransacoesTable());
+                    motos = motoDao.getAllLocadasPorCliente(idcliente);
                 }
                 case 3 /*Venda*/ -> {
+                    motos = motoDao.getAllWithEstado("disponivel");
                 }
             }
             if (motos.isEmpty()) {
@@ -368,8 +379,12 @@ public class TransacoesTabController {
     public void filterCtt(String filterText) {
         filtroClientesTransacoesTable.filtrarPorTexto(filterText);
     }
-    
-    public void setLocacaoOptionsVisible(boolean b){
-        
+
+    public void setVisibilityLocacaoOptions(boolean b) {
+        view.getLblNumDiasTransacoes().setVisible(b);
+        view.getTxtDiasTransacoes().setVisible(b);
+        view.getLblDataTransacoes().setVisible(b);
+        view.getFtxtDataTransacoes().setVisible(b);
+        view.getBtnLocar().setVisible(b);
     }
 }

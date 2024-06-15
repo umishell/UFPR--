@@ -9,18 +9,10 @@ import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-import model.combo.ComboBox;
 import model.dto.Locacao;
 import model.dto.Motocicleta;
 
 public class MotocicletaDaoSql implements MotocicletaDao {
-
-    private final String selectByPlaca = "SELECT * FROM veiculo WHERE placa=?";
-    private final String updateEstado = "UPDATE veiculo SET idestado=? WHERE idveiculo=?";
-    private final String delete = "DELETE FROM motocicleta WHERE idveiculo=?; "
-            + "DELETE FROM veiculo WHERE idveiculo=?";
-    private final String deleteAll = "TRUNCATE motocicleta;"
-            + "DELTE FROM veiculo WHERE tipo = 1";
 
     private static MotocicletaDaoSql dao;
 
@@ -32,6 +24,8 @@ public class MotocicletaDaoSql implements MotocicletaDao {
         }
     }
 
+    private final String selectByPlaca = "SELECT * FROM veiculo WHERE placa=?";
+
     public boolean motoExists(Motocicleta moto) throws SQLException, IOException, NullPointerException {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(selectByPlaca)) {
             stmt.setString(1, moto.getPlaca());
@@ -42,11 +36,7 @@ public class MotocicletaDaoSql implements MotocicletaDao {
     }
 
     private final String insertVeiculo = "INSERT INTO veiculo (valorDeCompra, tipo, ano, placa) VALUES (?,?,?,?);";
-    private final String insertMoto = """
-                                        INSERT INTO motocicleta (idveiculo, idmodeloMotocicleta) 
-                                        VALUES ((SELECT idveiculo FROM veiculo WHERE placa=?),
-                                        (SELECT idmodeloMotocicleta FROM modelomotocicleta WHERE modelo = ?));
-                                      """;
+    private final String insertMoto = "INSERT INTO motocicleta (idveiculo, idmodeloMotocicleta) VALUES (?,?))";
 
     @Override
     public void add(Motocicleta moto) {
@@ -56,8 +46,8 @@ public class MotocicletaDaoSql implements MotocicletaDao {
             stmtVeiculo.setString(2, "Motocicleta");
             stmtVeiculo.setInt(3, moto.getAno());
             stmtVeiculo.setString(4, moto.getPlaca());
-            stmtMoto.setString(1, moto.getPlaca());
-            stmtMoto.setString(2, moto.getModelo());
+            stmtMoto.setInt(1, GetId.getIdVeiculo(conn, moto.getPlaca()));
+            stmtMoto.setInt(2, GetId.getIdmodelo(conn, "Motocicleta", moto.getModelo()));
             stmtVeiculo.execute();
             stmtMoto.execute();
 
@@ -137,7 +127,7 @@ public class MotocicletaDaoSql implements MotocicletaDao {
         }
         return motos;
     }
-    private final String selectAllNaoLocadas = """
+    /*private final String selectAllLocadas = """
                                      SELECT
                                         veiculo.idveiculo,
                                         marca.marca,
@@ -155,16 +145,40 @@ public class MotocicletaDaoSql implements MotocicletaDao {
                                      INNER JOIN modeloMotocicleta ON motocicleta.idmodeloMotocicleta = modelomotocicleta.idmodeloMotocicleta
                                      INNER JOIN categoria ON modelomotocicleta.idcategoria = categoria.idcategoria
                                      INNER JOIN marca ON modelomotocicleta.idmarca = marca.idmarca
-                                     WHERE locacao.idcliente = (SELECT id FROM cliente WHERE cpf = ?) AND locacao.active = 0
+                                     WHERE locacao.idcliente = ? AND locacao.active = 1
                                      ORDER BY motocicleta.idveiculo;
+                                     """;*/
+    private final String selectAllLocadas = """
+                                     SELECT
+                                        veiculo.idveiculo,
+                                        marca.marca,
+                                        estado.estado,
+                                        categoria.categoria,
+                                        veiculo.valorDeCompra,
+                                        veiculo.placa,
+                                        veiculo.ano,
+                                        modelomotocicleta.modelo,
+                                        locacao.idcliente
+                                      FROM motocicleta
+                                      INNER JOIN veiculo ON motocicleta.idveiculo = veiculo.idveiculo
+                                      INNER JOIN locacao ON motocicleta.idveiculo = locacao.idveiculo
+                                     
+                                      INNER JOIN estado ON veiculo.idestado = estado.idestado
+                                      INNER JOIN modeloMotocicleta ON motocicleta.idmodeloMotocicleta = modelomotocicleta.idmodeloMotocicleta
+                                      INNER JOIN categoria ON modelomotocicleta.idcategoria = categoria.idcategoria
+                                      INNER JOIN marca ON modelomotocicleta.idmarca = marca.idmarca
+                                      WHERE estado.estado = 'locado' AND locacao.idcliente = ?
+                                      GROUP BY veiculo.idveiculo, marca.marca, estado.estado, categoria.categoria,
+                                     		  veiculo.valorDeCompra, veiculo.placa, veiculo.ano, modelomotocicleta.modelo;
                                      """;
 
-    public ArrayList<Motocicleta> getAllNaoLocadas(String cpf) {
+    public ArrayList<Motocicleta> getAllLocadasPorCliente(int idcliente) {
 
         ArrayList<Motocicleta> motos = new ArrayList<>();
 
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("select * from locacao where idveiculo = ?"); PreparedStatement stmtLista = conn.prepareStatement(selectAllNaoLocadas);) {
-            stmtLista.setString(1, cpf);
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("select * from locacao where idveiculo = ?"); 
+                PreparedStatement stmtLista = conn.prepareStatement(selectAllLocadas);) {
+            stmtLista.setInt(1, idcliente);
             try (ResultSet rs = stmtLista.executeQuery();) {
                 while (rs.next()) {
                     int idveiculo = rs.getInt("idveiculo");
@@ -175,11 +189,85 @@ public class MotocicletaDaoSql implements MotocicletaDao {
                     stmtLocacoes.setInt(1, idveiculo);
                     try (ResultSet rs0 = stmtLocacoes.executeQuery();) {
                         if (!rs0.isBeforeFirst()) { //if there are rows available{
-                            System.out.println("veiculo " + idveiculo + " sem locacoes.");
+                            //System.out.println("veiculo " + idveiculo + " sem locacoes.");
                             locacoes = null;
                         } else {
                             while (rs0.next()) {
                                 boolean active = rs0.getBoolean("active");
+                                int dias = rs0.getInt("dias");
+                                double valor = rs0.getDouble("valor");
+                                LocalDate date = rs0.getDate("date").toLocalDate();
+                                int idCliente = rs0.getInt("idcliente");
+                                locacoes.add(new Locacao(active, dias, valor, date, idCliente, idveiculo));
+                            }
+                        }
+                    }
+                    String categoria = rs.getString("categoria");
+                    Double valorDeCompra = rs.getDouble("valorDeCompra");
+                    String placa = rs.getString("placa");
+                    int ano = rs.getInt("ano");
+                    String modelo = rs.getString("modelo");
+
+                    motos.add(new Motocicleta(idveiculo, "Motocicleta", marca, estado, locacoes, categoria, valorDeCompra, placa, ano, modelo));
+                }
+            }
+            return motos;
+
+        } catch (SQLException | IOException e) {
+            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.getAllNaoLocados():  Error getting all motos nao locadas: \n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return motos;
+    }
+
+    private final String selectAllDisponiveis = """
+                                     SELECT
+                                       veiculo.idveiculo,
+                                       marca.marca,
+                                       estado.estado,
+                                       categoria.categoria,
+                                       veiculo.valorDeCompra,
+                                       veiculo.placa,
+                                       veiculo.ano,
+                                       modelomotocicleta.modelo
+                                     FROM motocicleta
+                                     INNER JOIN veiculo ON motocicleta.idveiculo = veiculo.idveiculo
+                                     INNER JOIN estado ON veiculo.idestado = estado.idestado
+                                     INNER JOIN modeloMotocicleta ON motocicleta.idmodeloMotocicleta = modelomotocicleta.idmodeloMotocicleta
+                                     INNER JOIN categoria ON modelomotocicleta.idcategoria = categoria.idcategoria
+                                     INNER JOIN marca ON modelomotocicleta.idmarca = marca.idmarca
+                                     WHERE estado.estado = ?
+                                     GROUP BY veiculo.idveiculo, marca.marca, estado.estado, categoria.categoria,
+                                              veiculo.valorDeCompra, veiculo.placa, veiculo.ano, modelomotocicleta.modelo;
+                                     """;
+
+    public ArrayList<Motocicleta> getAllWithEstado(String estado) {
+
+        ArrayList<Motocicleta> motos = new ArrayList<>();
+
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("select * from locacao where idveiculo = ?"); 
+                PreparedStatement stmtLista = conn.prepareStatement(selectAllDisponiveis);) {
+            stmtLista.setString(1, estado);
+            try (ResultSet rs = stmtLista.executeQuery();) {
+                while (rs.next()) {
+                    int idveiculo = rs.getInt("idveiculo");
+                    String marca = rs.getString("marca");
+                    //String estado = rs.getString("estado");
+
+                    ArrayList<Locacao> locacoes = new ArrayList<>();
+                    stmtLocacoes.setInt(1, idveiculo);
+                    try (ResultSet rs0 = stmtLocacoes.executeQuery();) {
+                        if (!rs0.isBeforeFirst()) { //if there are rows available{
+                            //System.out.println("veiculo " + idveiculo + " sem locacoes.");
+                            locacoes = null;
+                        } else {
+                            while (rs0.next()) {
+                                boolean active;
+                                if (estado == "disponivel") {
+                                    active = true;
+                                } else {
+                                    active = false;
+                                }
                                 int dias = rs0.getInt("dias");
                                 double valor = rs0.getDouble("valor");
                                 LocalDate date = rs0.getDate("date").toLocalDate();
@@ -262,13 +350,13 @@ public class MotocicletaDaoSql implements MotocicletaDao {
     @Override
     public void update(Motocicleta moto) {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtAtualiza = conn.prepareStatement(update);) {
-            int idveiculo = ComboBox.getIdVeiculo(moto.getPlaca());
-            stmtAtualiza.setInt(1, ComboBox.getIdEstado(moto.getEstado()));
+            int idveiculo = GetId.getIdVeiculo(conn, moto.getPlaca());
+            stmtAtualiza.setInt(1, GetId.getIdEstado(conn, moto.getEstado()));
             stmtAtualiza.setDouble(2, moto.getValorDeCompra());
             stmtAtualiza.setInt(3, moto.getAno());
             stmtAtualiza.setString(4, moto.getPlaca());
             stmtAtualiza.setInt(5, idveiculo);
-            stmtAtualiza.setInt(6, ComboBox.getIdmodelo("Motocicleta", moto.getModelo()));
+            stmtAtualiza.setInt(6, GetId.getIdmodelo(conn, "Motocicleta", moto.getModelo()));
             stmtAtualiza.setInt(7, idveiculo);
 
             stmtAtualiza.executeUpdate();
@@ -279,10 +367,12 @@ public class MotocicletaDaoSql implements MotocicletaDao {
         }
     }
 
+    private final String updateEstado = "UPDATE veiculo SET idestado=? WHERE idveiculo=?";
+
     public void updateEstado(Motocicleta moto) {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtAtualiza = conn.prepareStatement(updateEstado);) {
-            stmtAtualiza.setInt(1, ComboBox.getIdEstado(moto.getEstado()));
-            stmtAtualiza.setInt(2, ComboBox.getIdVeiculo(moto.getPlaca()));
+            stmtAtualiza.setInt(1, GetId.getIdEstado(conn, moto.getEstado()));
+            stmtAtualiza.setInt(2, GetId.getIdVeiculo(conn, moto.getPlaca()));
             stmtAtualiza.executeUpdate();
 
         } catch (SQLException | IOException e) {
@@ -292,12 +382,15 @@ public class MotocicletaDaoSql implements MotocicletaDao {
         }
     }
 
+    private final String delete = "DELETE FROM motocicleta WHERE idveiculo=?; "
+            + "DELETE FROM veiculo WHERE idveiculo=?";
+
     @Override
     public void delete(Motocicleta moto) {
 
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtExcluir = conn.prepareStatement(delete);) {
-            stmtExcluir.setInt(1, ComboBox.getIdVeiculo(moto.getPlaca()));
-            stmtExcluir.setInt(1, ComboBox.getIdVeiculo(moto.getPlaca()));
+            stmtExcluir.setInt(1, GetId.getIdVeiculo(conn, moto.getPlaca()));
+            stmtExcluir.setInt(1, GetId.getIdVeiculo(conn, moto.getPlaca()));
 
             stmtExcluir.executeUpdate();
 
@@ -306,6 +399,9 @@ public class MotocicletaDaoSql implements MotocicletaDao {
             e.printStackTrace();
         }
     }
+
+    private final String deleteAll = "TRUNCATE motocicleta;"
+            + "DELTE FROM veiculo WHERE tipo = 1";
 
     @Override
     public void deleteAll() throws SQLException, IOException {

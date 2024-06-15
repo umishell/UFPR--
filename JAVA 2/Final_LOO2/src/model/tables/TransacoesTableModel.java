@@ -401,12 +401,12 @@ public class TransacoesTableModel extends DefaultTableModel {
         }; // Unexpected vehicle type
     }
 
-    public String getPlacaLocacao(JTable table) {
+    public int getIdOfSelectedVeiculo(JTable table) {
         int selectedRow = table.getSelectedRow();
 
         // Check for valid selection
         if (selectedRow < 0) {
-            return null; // No row selected
+            return 0; // No row selected
         }
 
         // Convert row index to model index (consider sorting)
@@ -414,13 +414,13 @@ public class TransacoesTableModel extends DefaultTableModel {
 
         return switch (tipoVeiculo) {
             case 1 ->
-                listaMotos.get(modelRow).getPlaca();
+                listaMotos.get(modelRow).getIdveiculo();
             case 2 ->
-                listaAutos.get(modelRow).getPlaca();
+                listaAutos.get(modelRow).getIdveiculo();
             case 3 ->
-                listaVans.get(modelRow).getPlaca();
+                listaVans.get(modelRow).getIdveiculo();
             default ->
-                null;
+                0;
         }; // Unexpected vehicle type
     }
     

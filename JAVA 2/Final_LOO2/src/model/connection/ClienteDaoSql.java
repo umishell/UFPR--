@@ -11,16 +11,6 @@ import java.util.ArrayList;
 
 public class ClienteDaoSql implements ClienteDao {
 
-    private final String insert = "INSERT INTO cliente (nome,sobrenome,rg,cpf,endereco) VALUES (?,?,?,?,?)";
-    private final String selectAll = "SELECT * FROM cliente";
-    private final String selectById = "SELECT * FROM cliente WHERE id=?";
-    private final String selectByCpf = "SELECT * from cliente WHERE cpf=?";
-    private final String update = "UPDATE cliente SET nome=?, sobrenome=?, rg=?, cpf=?, endereco=? WHERE cpf=?";
-    private final String updateComVeiculoLocado = "UPDATE cliente set comVeiculoLocado=? WHERE cpf=?";
-    private final String deleteLocacaoIdCliente = "DELETE FROM locacao WHERE idcliente= (SELECT id FROM cliente WHERE cpf=?)";
-    private final String delete = "DELETE FROM cliente WHERE cpf=?";
-    private final String deleteAll = "TRUNCATE cliente";
-
     private static ClienteDaoSql dao;
 
     public static ClienteDaoSql getClienteDaoSql() {
@@ -31,6 +21,8 @@ public class ClienteDaoSql implements ClienteDao {
         }
     }
 
+    private final String selectByCpf = "SELECT * from cliente WHERE cpf=?";
+
     public boolean clienteExists(Cliente cliente) throws SQLException, IOException, NullPointerException {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(selectByCpf)) {
             stmt.setString(1, cliente.getCpf());
@@ -39,6 +31,8 @@ public class ClienteDaoSql implements ClienteDao {
             return rs.next();
         }
     }
+
+    private final String insert = "INSERT INTO cliente (nome,sobrenome,rg,cpf,endereco) VALUES (?,?,?,?,?)";
 
     @Override
     public void add(Cliente cliente) throws SQLException, IOException {
@@ -58,6 +52,8 @@ public class ClienteDaoSql implements ClienteDao {
             cliente.setId(i);
         }
     }
+
+    private final String selectAll = "SELECT * FROM cliente";
 
     @Override
     public ArrayList<Cliente> getAll() throws SQLException, IOException {
@@ -79,6 +75,8 @@ public class ClienteDaoSql implements ClienteDao {
 
         }
     }
+
+    private final String selectById = "SELECT * FROM cliente WHERE id=?";
 
     @Override
     public Cliente getById(int id) throws SQLException, IOException {
@@ -124,6 +122,8 @@ public class ClienteDaoSql implements ClienteDao {
         }
     }
 
+    private final String update = "UPDATE cliente SET nome=?, sobrenome=?, rg=?, cpf=?, endereco=? WHERE cpf=?";
+
     @Override
     public void update(Cliente cliente) throws SQLException, IOException {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(update);) {
@@ -137,6 +137,8 @@ public class ClienteDaoSql implements ClienteDao {
         }
     }
 
+    private final String updateComVeiculoLocado = "UPDATE cliente set comVeiculoLocado=? WHERE cpf=?";
+
     public void updateComVeiculoLocado(Cliente cliente) throws SQLException, IOException {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(updateComVeiculoLocado);) {
             int bool = (cliente.getComVeiculoLocado()) ? 1 : 0;
@@ -146,17 +148,21 @@ public class ClienteDaoSql implements ClienteDao {
         }
     }
 
+    private final String deleteLocacaoIdCliente = "DELETE FROM locacao WHERE idcliente= (SELECT id FROM cliente WHERE cpf=?)";
+    private final String delete = "DELETE FROM cliente WHERE cpf=?";
+
     @Override
     public void delete(Cliente cliente) throws SQLException, IOException {
         String cpf = cliente.getCpf();
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt0 = conn.prepareStatement(deleteLocacaoIdCliente);
-                                                                  PreparedStatement stmt1 = conn.prepareStatement(delete);) {
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt0 = conn.prepareStatement(deleteLocacaoIdCliente); PreparedStatement stmt1 = conn.prepareStatement(delete);) {
             stmt0.setString(1, cpf);
             stmt0.executeUpdate();
             stmt1.setString(1, cpf);
             stmt1.executeUpdate();
         }
     }
+
+    private final String deleteAll = "TRUNCATE cliente";
 
     @Override
     public void deleteAll() throws SQLException, IOException {

@@ -48,7 +48,6 @@ public class Frame extends javax.swing.JFrame {
     private TransacoesTableModel ttm;
 
     //private TableFilter filtroVeiculoTable, filtroClientesTransacoesTable;
-
     private Color originalBtnColor;
     private Font monospace;
 
@@ -66,7 +65,7 @@ public class Frame extends javax.swing.JFrame {
         monospace = new Font("Monospace", Font.BOLD, 14);
         originalBtnColor = btnMotocicletasVeiculos.getBackground();
         costumizeButtons();
-        
+
         //vtm.setTipoVeiculo(1);//tipo 1 moto
         ttm.setTipoVeiculo(1);//tipo 1 moto
         ttm.setTipoTransacao(1);//tipo 1 locacao
@@ -121,7 +120,7 @@ public class Frame extends javax.swing.JFrame {
         btnVansTransacoes = new javax.swing.JButton();
         btnMotocicletasTransacoes = new javax.swing.JButton();
         paneVeiculoTableLocacao = new javax.swing.JScrollPane();
-        TransacoesTable = new javax.swing.JTable();
+        transacoesTable = new javax.swing.JTable();
         btnAutomoveisTransacoes = new javax.swing.JButton();
         txtPesquisarClientes = new javax.swing.JTextField();
         btnLocar = new javax.swing.JButton();
@@ -220,13 +219,13 @@ public class Frame extends javax.swing.JFrame {
             }
         });
 
-        TransacoesTable.setModel(ttm);
-        TransacoesTable.addMouseListener(new java.awt.event.MouseAdapter() {
+        transacoesTable.setModel(ttm);
+        transacoesTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                TransacoesTableMousePressed(evt);
+                transacoesTableMousePressed(evt);
             }
         });
-        paneVeiculoTableLocacao.setViewportView(TransacoesTable);
+        paneVeiculoTableLocacao.setViewportView(transacoesTable);
 
         btnAutomoveisTransacoes.setText("Automoveis");
         btnAutomoveisTransacoes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -239,6 +238,9 @@ public class Frame extends javax.swing.JFrame {
         txtPesquisarClientes.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtPesquisarClientesKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPesquisarClientesKeyTyped(evt);
             }
         });
 
@@ -371,7 +373,7 @@ public class Frame extends javax.swing.JFrame {
                         .addComponent(paneVeiculoTableLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(114, 114, 114))
             .addGroup(tabTransacoesLayout.createSequentialGroup()
-                .addGap(411, 411, 411)
+                .addGap(424, 424, 424)
                 .addComponent(btnLocacao)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDevolucao)
@@ -1042,31 +1044,31 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_ftxtCpfClienteActionPerformed
 
 
-    private void TransacoesTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TransacoesTableMousePressed
+    private void transacoesTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transacoesTableMousePressed
         JTable table = (JTable) evt.getSource();
         Point p = evt.getPoint();
         int row = table.rowAtPoint(p);
         if (evt.getClickCount() == 2) {
             // Your code here
         }
-    }//GEN-LAST:event_TransacoesTableMousePressed
+    }//GEN-LAST:event_transacoesTableMousePressed
 
     private void btnVansTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVansTransacoesActionPerformed
         setBtnColors("Vans", "Transacoes");
         ttm.setTipoVeiculo(3);//tipo 3 van
-        ctrlTransacoes.showVans();
+        //ctrlTransacoes.showAllVans();
     }//GEN-LAST:event_btnVansTransacoesActionPerformed
 
     private void btnMotocicletasTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotocicletasTransacoesActionPerformed
         setBtnColors("Motocicletas", "Transacoes");
         ttm.setTipoVeiculo(1);//tipo 1 moto
-        ctrlTransacoes.showMotos();
+        ctrlTransacoes.showAllMotos();
     }//GEN-LAST:event_btnMotocicletasTransacoesActionPerformed
 
     private void btnAutomoveisTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutomoveisTransacoesActionPerformed
         setBtnColors("Automoveis", "Transacoes");
         ttm.setTipoVeiculo(2);//tipo 2 auto
-        ctrlTransacoes.showAutos();
+        //ctrlTransacoes.showAllAutos();
     }//GEN-LAST:event_btnAutomoveisTransacoesActionPerformed
 
     private void btnLocarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocarActionPerformed
@@ -1239,14 +1241,17 @@ public class Frame extends javax.swing.JFrame {
 
     private void btnLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocacaoActionPerformed
         ttm.setTipoTransacao(1);//tipo 1 locacao
+        ctrlTransacoes.setVisibilityLocacaoOptions(true);
     }//GEN-LAST:event_btnLocacaoActionPerformed
 
     private void btnDevolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolucaoActionPerformed
         ttm.setTipoTransacao(2);//tipo 2 devolução
+        ctrlTransacoes.setVisibilityLocacaoOptions(false);
     }//GEN-LAST:event_btnDevolucaoActionPerformed
 
     private void btnVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendaActionPerformed
         ttm.setTipoTransacao(3);//tipo 3 venda
+        ctrlTransacoes.setVisibilityLocacaoOptions(false);
     }//GEN-LAST:event_btnVendaActionPerformed
 
     private void btnListarTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarTransacoesActionPerformed
@@ -1254,7 +1259,14 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnListarTransacoesActionPerformed
 
     private void tabTransacoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabTransacoesMouseClicked
-        
+        if (evt.getSource() != clientesTransacoesTable) {
+            clientesTransacoesTable.getSelectionModel().clearSelection();
+        }
+        if (evt.getSource() != transacoesTable) {
+            transacoesTable.getSelectionModel().clearSelection();
+        }
+
+
     }//GEN-LAST:event_tabTransacoesMouseClicked
 
     private void txtPesquisarClientesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarClientesKeyReleased
@@ -1273,10 +1285,13 @@ public class Frame extends javax.swing.JFrame {
         ctrlTransacoes.activateCboxCategoriaTransacoes();
     }//GEN-LAST:event_cboxCategoriaTransacoesActionPerformed
 
+    private void txtPesquisarClientesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarClientesKeyTyped
+
+    }//GEN-LAST:event_txtPesquisarClientesKeyTyped
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable DevolverTable;
-    private javax.swing.JTable TransacoesTable;
     private javax.swing.JTable VendaTable;
     private javax.swing.JButton btnAtualizarCliente;
     private javax.swing.JButton btnAutomoveisDevolver;
@@ -1346,6 +1361,7 @@ public class Frame extends javax.swing.JFrame {
     private javax.swing.JPanel tabTransacoes;
     private javax.swing.JPanel tabVeiculos;
     private javax.swing.JPanel tabVenda;
+    private javax.swing.JTable transacoesTable;
     private javax.swing.JTextField txtDiasTransacoes;
     private javax.swing.JTextField txtEndereco;
     private javax.swing.JTextField txtNomeCliente;
@@ -1363,7 +1379,7 @@ public class Frame extends javax.swing.JFrame {
     }
 
     public JTable getTransacoesTable() {
-        return TransacoesTable;
+        return transacoesTable;
     }
 
     public JComboBox<String> getCboxCategoriaVeiculo() {
@@ -1692,22 +1708,21 @@ public class Frame extends javax.swing.JFrame {
         return clientesTransacoesTable;
     }
 
-    public Locacao getLocacaoFormulario() {
-        try {
+    public Locacao getLocacaoFormulario() throws DateTimeParseException,NumberFormatException {
+        //try {
             int dias = Integer.parseInt(txtDiasTransacoes.getText());
             String dateString = ftxtDataTransacoes.getText();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate localDate = LocalDate.parse(dateString, formatter);
-            double valorDiariaLocacao = ttm.getValorDiariaLocacao(TransacoesTable);
+            double valorDiariaLocacao = ttm.getValorDiariaLocacao(transacoesTable);
             double valor = valorDiariaLocacao * dias;
             if (dias == 0 || localDate == null) {
                 apresentaErro("Preencha a data e a quantidade de dias.");
             } else {
+                System.out.println("valor locacao : "+valor);
                 return new Locacao(dias, valor, localDate);
             }
-        } catch (DateTimeParseException e) {
-            apresentaErro("Invalid date format. Please use YYYY-MM-DD.");
-        }
+        //} 
         return null;
     }
 
@@ -1717,6 +1732,26 @@ public class Frame extends javax.swing.JFrame {
 
     public javax.swing.JButton getBtnMotocicletasVeiculos() {
         return btnMotocicletasVeiculos;
+    }
+
+    public javax.swing.JButton getBtnLocar() {
+        return btnLocar;
+    }
+
+    public javax.swing.JFormattedTextField getFtxtDataTransacoes() {
+        return ftxtDataTransacoes;
+    }
+
+    public javax.swing.JLabel getLblDataTransacoes() {
+        return lblDataTransacoes;
+    }
+
+    public javax.swing.JLabel getLblNumDiasTransacoes() {
+        return lblNumDiasTransacoes;
+    }
+
+    public javax.swing.JTextField getTxtDiasTransacoes() {
+        return txtDiasTransacoes;
     }
 
 }

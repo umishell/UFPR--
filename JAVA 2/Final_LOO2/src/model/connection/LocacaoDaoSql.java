@@ -10,22 +10,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.sql.Date;
 import javax.swing.JOptionPane;
-import model.combo.ComboBox;
 import model.dto.Locacao;
 
-public class LocacaoDaoSql implements LocacaoDao {
 
-    private final String insert = "insert into locacao (int dias, double valor, Date date, int idcliente, int idveiculo) values (?,?,?,"
-            + "(SELECT idcliente FROM cliente WHERE cpf = ?),"
-            + "(SELECT idveiculo FROM veiculo WHERE placa = ?))";
-    private final String selectAll = "select * from locacao";
-    private final String selectAllwithCliente = "select * from locacao where idcliente = ?";
-    private final String locacaoIsActive = "SELECT * FROM locacao WHERE idveiculo = (select * FROM veiculo WHERE placa = ?) AND date = ? AND active = 1";
-    private final String selectAllwithVeiculo = "select * from locacao where idveiculo = ?";
-    private final String selectById = "select * from locacao where idlocacao = ?";
-    //private final String update = "update locacao set dias=?, valor=?, date=? where idlocacao = ?";
-    private final String delete = "delete from locacao where idlocacao = ?";
-    private final String deleteAll = "TRUNCATE locacao";
+public class LocacaoDaoSql implements LocacaoDao {
 
     private static LocacaoDaoSql dao;
 
@@ -41,9 +29,11 @@ public class LocacaoDaoSql implements LocacaoDao {
     public void add(Locacao locacao) {
     }
 
-    public boolean locacaoIsActive(LocalDate date, String placa) throws SQLException, IOException, NullPointerException {
+    private final String locacaoIsActive = "SELECT * FROM locacao WHERE idveiculo = ? AND date = ? AND active = 1";
+
+    public boolean locacaoIsActive(LocalDate date, int idveiculo) throws SQLException, IOException, NullPointerException {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(locacaoIsActive)) {
-            stmt.setString(1, placa);
+            stmt.setInt(1, idveiculo);
             stmt.setDate(2, Date.valueOf(date));
             ResultSet rs = stmt.executeQuery();
             // Check if any row is returned (indicating locacao exists and is active)
@@ -51,20 +41,26 @@ public class LocacaoDaoSql implements LocacaoDao {
         }
     }
 
-    public void add(Locacao locacao, String cpf, String placa) {
+        private final String insert = "INSERT INTO locacao (dias, valor, date, idcliente, idveiculo) VALUES (?,?,?,?,?)";
 
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtAdiciona = conn.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);) {
-            stmtAdiciona.setInt(1, locacao.getDias());
-            stmtAdiciona.setDouble(2, locacao.getValor());
-            stmtAdiciona.setDate(3, Date.valueOf(locacao.getDate()));
-            stmtAdiciona.setString(4, cpf);
-            stmtAdiciona.setString(5, placa);
-            stmtAdiciona.execute();
-        } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@LocacaoDaoSql.add():  Error adding locacao: " + e.getMessage());
+        public void add(Locacao locacao, int idcliente, int idveiculo) {
+
+            try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtAdiciona = conn.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);) {
+                stmtAdiciona.setInt(1, locacao.getDias());
+                stmtAdiciona.setDouble(2, locacao.getValor());
+                stmtAdiciona.setDate(3, Date.valueOf(locacao.getDate()));
+                System.out.println("@LocacaoDaoSql.add(), idcliente: "+idcliente);
+                stmtAdiciona.setInt(4, idcliente/*GetId.getIdCliente(conn, cpf)*/);
+                stmtAdiciona.setInt(5, idveiculo/*GetId.getIdVeiculo(conn, placa)*/);
+                stmtAdiciona.execute();
+            } catch (SQLException | IOException e) {
+                JOptionPane.showMessageDialog(null, "@LocacaoDaoSql.add():  Error adding locacao: " + e.getMessage());
+                e.printStackTrace();
+            }
+
         }
 
-    }
+    private final String selectAll = "select * from locacao";
 
     @Override
     public ArrayList<Locacao> getAll() {
@@ -88,6 +84,8 @@ public class LocacaoDaoSql implements LocacaoDao {
         return null;
     }
 
+    private final String selectAllwithCliente = "select * from locacao where idcliente = ?";
+
     public ArrayList<Locacao> getAllwithCliente(int idcliente) {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLista = conn.prepareStatement(selectAllwithCliente); ResultSet rs = stmtLista.executeQuery();) {
             ArrayList<Locacao> locacoes = new ArrayList();
@@ -110,6 +108,8 @@ public class LocacaoDaoSql implements LocacaoDao {
         return null;
     }
 
+    private final String selectAllwithVeiculo = "select * from locacao where idveiculo = ?";
+
     public ArrayList<Locacao> getAllwithVeiculo(int idveiculo) /*throws SQLException, IOException*/ {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLista = conn.prepareStatement(selectAllwithVeiculo); ResultSet rs = stmtLista.executeQuery();) {
             ArrayList<Locacao> locacoes = new ArrayList<>();
@@ -131,6 +131,8 @@ public class LocacaoDaoSql implements LocacaoDao {
         }
         return null;
     }
+
+    private final String selectById = "select * from locacao where idlocacao = ?";
 
     @Override
     public Locacao getById(int idlocacao) {
@@ -166,7 +168,7 @@ public class LocacaoDaoSql implements LocacaoDao {
             stmtAtualiza.setDate(3, java.sql.Date.valueOf(locacao.getDate()));
             stmtAtualiza.setInt(4, locacao.getIdCliente());
             stmtAtualiza.setInt(5, locacao.getIdVeiculo());
-            stmtAtualiza.setInt(6, ComboBox.getIdLocacao(locacao.getIdVeiculo(), locacao.getDate()));
+            stmtAtualiza.setInt(6, GetId.getIdLocacao(conn, locacao.getIdVeiculo(), locacao.getDate()));
 
             stmtAtualiza.executeUpdate();
 
@@ -175,17 +177,21 @@ public class LocacaoDaoSql implements LocacaoDao {
         }
     }
 
+    private final String delete = "delete from locacao where idlocacao = ?";
+
     @Override
     public void delete(Locacao locacao) {
 
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtExcluir = conn.prepareStatement(delete);) {
-            stmtExcluir.setInt(1, ComboBox.getIdLocacao(locacao.getIdVeiculo(), locacao.getDate()));
+            stmtExcluir.setInt(1, GetId.getIdLocacao(conn, locacao.getIdVeiculo(), locacao.getDate()));
             stmtExcluir.executeUpdate();
 
         } catch (SQLException | IOException e) {
             JOptionPane.showMessageDialog(null, "@LocacaoDaoSql.delete():  Error deleting locacao: " + e.getMessage());
         }
     }
+
+    private final String deleteAll = "TRUNCATE locacao";
 
     @Override
     public void deleteAll() {
