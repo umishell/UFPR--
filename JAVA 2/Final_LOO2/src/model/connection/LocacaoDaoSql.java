@@ -41,13 +41,13 @@ public class LocacaoDaoSql implements LocacaoDao {
     }
 
     private final String insert = "INSERT INTO locacao (dias, valor, date, idcliente, idveiculo) VALUES (?,?,?,?,?)";
-    private final String updateCategoriaVeiculo = "UPDATE veiculo SET idestado=2 WHERE idveiculo=?";
+    private final String updateEstadoLocar = "UPDATE veiculo SET idestado=2 WHERE idveiculo=?";
 
 
-    public void add(Locacao locacao, int idcliente, int idveiculo) {
+    public void locar(Locacao locacao, int idcliente, int idveiculo) {
 
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtAdiciona = conn.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
-                PreparedStatement stmt0 = conn.prepareStatement(updateCategoriaVeiculo);) {
+                PreparedStatement stmt0 = conn.prepareStatement(updateEstadoLocar);) {
             stmtAdiciona.setInt(1, locacao.getDias());
             stmtAdiciona.setDouble(2, locacao.getValor());
             stmtAdiciona.setDate(3, Date.valueOf(locacao.getDate()));
@@ -62,6 +62,22 @@ public class LocacaoDaoSql implements LocacaoDao {
             e.printStackTrace();
         }
 
+    }
+    
+    private final String devolver = "UPDATE locacao SET active=0 WHERE idlocacao = ?";
+    private final String updateEstadoDevolver = "UPDATE veiculo SET idestado=1 WHERE idveiculo=?";
+
+    public void devolver(int idlocacao, int idveiculo) {
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(devolver);
+                PreparedStatement stmt0 = conn.prepareStatement(updateEstadoDevolver);) {
+            stmt.setInt(1, idlocacao);
+            stmt0.setInt(1, idveiculo);
+            stmt.executeUpdate();
+            stmt0.executeUpdate();
+
+        } catch (SQLException | IOException e) {
+            JOptionPane.showMessageDialog(null, "@LocacaoDaoSql.update():  Error updating locacao: " + e.getMessage());
+        }
     }
 
     private final String selectAll = "select * from locacao";
@@ -180,7 +196,7 @@ public class LocacaoDaoSql implements LocacaoDao {
             JOptionPane.showMessageDialog(null, "@LocacaoDaoSql.update():  Error updating locacao: " + e.getMessage());
         }
     }
-
+    
     private final String delete = "delete from locacao where idlocacao = ?";
 
     @Override

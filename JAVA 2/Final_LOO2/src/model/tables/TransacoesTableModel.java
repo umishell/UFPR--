@@ -426,6 +426,29 @@ public class TransacoesTableModel extends DefaultTableModel {
         }; // Unexpected vehicle type
     }
     
+    public int getDateOfSelectedVeiculo(JTable table) {
+        int selectedRow = table.getSelectedRow();
+
+        // Check for valid selection
+        if (selectedRow < 0) {
+            return 0; // No row selected
+        }
+
+        // Convert row index to model index (consider sorting)
+        int modelRow = table.convertRowIndexToModel(selectedRow);
+
+        return switch (tipoVeiculo) {
+            case 1 ->
+                listaMotos.get(modelRow).getIdveiculo();
+            case 2 ->
+                listaAutos.get(modelRow).getIdveiculo();
+            case 3 ->
+                listaVans.get(modelRow).getIdveiculo();
+            default ->
+                0;
+        }; // Unexpected vehicle type
+    }
+    
     
 
 }

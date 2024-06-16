@@ -9,7 +9,6 @@ import java.sql.Date;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
 
-
 public class GetId {
 
     private static final String sqlGetidVeiculo = "SELECT idveiculo FROM veiculo WHERE placa = ?";
@@ -74,7 +73,32 @@ public class GetId {
         }
         return 0;
     }
-    
+
+    private static final String sqlGetidLocacao0 = "select idlocacao from locacao where idveiculo = ? && data = ?";
+    private static final String sqlGetidLocacao0 = """
+                                                   SELECT idlocacao
+                                                   FROM locacao
+                                                   WHERE idveiculo = ? AND date = (
+                                                      SELECT MAX(date)
+                                                      FROM locacao
+                                                      WHERE idveiculo = ? ) AND active = 1
+                                                   );""";
+
+    public static int getIdLocacaoFromRented(int idveiculo) {
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sqlGetidLocacao0);) {
+            stmt.setInt(1, idveiculo);
+            Date sqldate = java.sql.Date.valueOf(date);
+            stmt.setDate(2, sqldate);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                return rs.getInt("idlocacao");
+            }
+        } catch (SQLException | IOException e) {
+            JOptionPane.showMessageDialog(null, "@GetId.getIdLocacao(): " + e.getMessage());
+        }
+        return 0;
+    }
+
     private static final String sqlGetidModeloMotocicleta = "select idmodeloMotocicleta from modeloMotocicleta where modelo=?";
     private static final String sqlGetidModeloAutomovel = "select idmodeloAutomovel from modeloAutomovel where modelo=?";
     private static final String sqlGetidModeloVan = "select idmodeloVan from modeloVan where modelo=?";
@@ -119,7 +143,7 @@ public class GetId {
         }
         return 0;
     }
-    
+
     private static final String sqlGetidMarca = "select idmarca from marca where marca=?";
 
     public static int getIdMarca(String marca) {
@@ -134,7 +158,7 @@ public class GetId {
         }
         return 0;
     }
-    
+
     private static final String sqlGetidCategoria = "select idCategoria from categoria where categoria=?";
 
     public static int getIdCategoria(String categoria) {

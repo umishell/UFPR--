@@ -42,15 +42,15 @@ public class VanDaoSql implements VanDao {
     @Override
     public void add(Van van) {
 //van.to_String();
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtVeiculo = conn.prepareStatement(insertVeiculo, Statement.RETURN_GENERATED_KEYS); PreparedStatement stmtMoto = conn.prepareStatement(insertVan);) {
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtVeiculo = conn.prepareStatement(insertVeiculo, Statement.RETURN_GENERATED_KEYS); PreparedStatement stmtVan = conn.prepareStatement(insertVan);) {
             stmtVeiculo.setDouble(1, van.getValorDeCompra());
             stmtVeiculo.setString(2, "Van");
             stmtVeiculo.setInt(3, van.getAno());
             stmtVeiculo.setString(4, van.getPlaca());
-            stmtMoto.setInt(1, GetId.getIdVeiculo(conn, van.getPlaca()));
-            stmtMoto.setInt(2, GetId.getIdmodelo(conn, "Van", van.getModelo()));
+            stmtVan.setInt(1, GetId.getIdVeiculo(conn, van.getPlaca()));
+            stmtVan.setInt(2, GetId.getIdmodelo(conn, "Van", van.getModelo()));
             stmtVeiculo.execute();
-            stmtMoto.execute();
+            stmtVan.execute();
 
             ResultSet rs = stmtVeiculo.getGeneratedKeys();
             rs.next();
@@ -86,7 +86,7 @@ public class VanDaoSql implements VanDao {
 
         ArrayList<Van> vans = new ArrayList<>();
 
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("select * from locacao where idveiculo = ?"); PreparedStatement stmtLista = conn.prepareStatement(selectAll); ResultSet rs = stmtLista.executeQuery();) {
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("SELECT * FROM locacao WHERE idveiculo = ?"); PreparedStatement stmtLista = conn.prepareStatement(selectAll); ResultSet rs = stmtLista.executeQuery();) {
 
             while (rs.next()) {
                 int idveiculo = rs.getInt("idveiculo");
@@ -129,7 +129,7 @@ public class VanDaoSql implements VanDao {
         return vans;
     }
     
-    private final String selectAllNaoLocadas = """
+    private final String selectAllLocadas = """
                                      SELECT
                                         veiculo.idveiculo,
                                         marca.marca,
@@ -137,24 +137,28 @@ public class VanDaoSql implements VanDao {
                                         categoria.categoria,
                                         veiculo.valorDeCompra,
                                         veiculo.placa,
-                                        veiculo.ano ,
-                                        modelomotocicleta.modelo,
-                                        locacao.active
-                                     FROM motocicleta
-                                     INNER JOIN veiculo ON motocicleta.idveiculo = veiculo.idveiculo
-                                     INNER JOIN locacao ON motocicleta.idveiculo = locacao.idveiculo
-                                     INNER JOIN estado ON veiculo.idestado = estado.idestado
-                                     INNER JOIN modeloMotocicleta ON motocicleta.idmodeloMotocicleta = modelomotocicleta.idmodeloMotocicleta
-                                     INNER JOIN categoria ON modelomotocicleta.idcategoria = categoria.idcategoria
-                                     INNER JOIN marca ON modelomotocicleta.idmarca = marca.idmarca
-                                     WHERE locacao.idcliente = ? AND locacao.active = 0
-                                     ORDER BY motocicleta.idveiculo;
+                                        veiculo.ano,
+                                        modelovan.modelo,
+                                        locacao.idcliente
+                                      FROM van
+                                      INNER JOIN veiculo ON van.idveiculo = veiculo.idveiculo
+                                      INNER JOIN locacao ON van.idveiculo = locacao.idveiculo
+                                     
+                                      INNER JOIN estado ON veiculo.idestado = estado.idestado
+                                      INNER JOIN modeloVan ON van.idmodeloVan = modelovan.idmodeloVan
+                                      INNER JOIN categoria ON modelovan.idcategoria = categoria.idcategoria
+                                      INNER JOIN marca ON modelovan.idmarca = marca.idmarca
+                                      WHERE estado.estado = 'locado' AND locacao.idcliente = ?
+                                      GROUP BY veiculo.idveiculo, marca.marca, estado.estado, categoria.categoria,
+                                     		  veiculo.valorDeCompra, veiculo.placa, veiculo.ano, modelovan.modelo;
                                      """;
-    public ArrayList<Van> getAllNaoLocadas(int idcliente) {
+
+    public ArrayList<Van> getAllLocadasPorCliente(int idcliente) {
 
         ArrayList<Van> vans = new ArrayList<>();
 
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("select * from locacao where idveiculo = ?"); PreparedStatement stmtLista = conn.prepareStatement(selectAllNaoLocadas);) {
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("SELECT * FROM locacao WHERE idveiculo = ?"); 
+                PreparedStatement stmtLista = conn.prepareStatement(selectAllLocadas);) {
             stmtLista.setInt(1, idcliente);
             try (ResultSet rs = stmtLista.executeQuery();) {
                 while (rs.next()) {
@@ -165,8 +169,7 @@ public class VanDaoSql implements VanDao {
                     ArrayList<Locacao> locacoes = new ArrayList<>();
                     stmtLocacoes.setInt(1, idveiculo);
                     try (ResultSet rs0 = stmtLocacoes.executeQuery();) {
-                        if (!rs0.isBeforeFirst()) { //if there are rows available{
-                            //System.out.println("veiculo " + idveiculo + " sem locacoes.");
+                        if (!rs0.isBeforeFirst()) { 
                             locacoes = null;
                         } else {
                             while (rs0.next()) {
@@ -191,11 +194,86 @@ public class VanDaoSql implements VanDao {
             return vans;
 
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.getAllNaoLocados():  Error getting all vans nao locadas: \n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@VanDaoSql.getAllNaoLocados():  Error getting all vans nao locadas: \n" + e.getMessage());
             e.printStackTrace();
         }
         return vans;
     }
+
+    private final String selectAllDisponiveis = """
+                                     SELECT
+                                       veiculo.idveiculo,
+                                       marca.marca,
+                                       estado.estado,
+                                       categoria.categoria,
+                                       veiculo.valorDeCompra,
+                                       veiculo.placa,
+                                       veiculo.ano,
+                                       modelovan.modelo
+                                     FROM van
+                                     INNER JOIN veiculo ON van.idveiculo = veiculo.idveiculo
+                                     INNER JOIN estado ON veiculo.idestado = estado.idestado
+                                     INNER JOIN modeloVan ON van.idmodeloVan = modelovan.idmodeloVan
+                                     INNER JOIN categoria ON modelovan.idcategoria = categoria.idcategoria
+                                     INNER JOIN marca ON modelovan.idmarca = marca.idmarca
+                                     WHERE estado.estado = ?
+                                     GROUP BY veiculo.idveiculo, marca.marca, estado.estado, categoria.categoria,
+                                              veiculo.valorDeCompra, veiculo.placa, veiculo.ano, modelovan.modelo;
+                                     """;
+
+    public ArrayList<Van> getAllWithEstado(String estado) {
+
+        ArrayList<Van> vans = new ArrayList<>();
+
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("SELECT * FROM locacao WHERE idveiculo = ?"); 
+                PreparedStatement stmtLista = conn.prepareStatement(selectAllDisponiveis);) {
+            stmtLista.setString(1, estado);
+            try (ResultSet rs = stmtLista.executeQuery();) {
+                while (rs.next()) {
+                    int idveiculo = rs.getInt("idveiculo");
+                    String marca = rs.getString("marca");
+                    //String estado = rs.getString("estado");
+
+                    ArrayList<Locacao> locacoes = new ArrayList<>();
+                    stmtLocacoes.setInt(1, idveiculo);
+                    try (ResultSet rs0 = stmtLocacoes.executeQuery();) {
+                        if (!rs0.isBeforeFirst()) { //if there are rows available{
+                            //System.out.println("veiculo " + idveiculo + " sem locacoes.");
+                            locacoes = null;
+                        } else {
+                            while (rs0.next()) {
+                                boolean active;
+                                if (estado == "disponivel") {
+                                    active = true;
+                                } else {
+                                    active = false;
+                                }
+                                int dias = rs0.getInt("dias");
+                                double valor = rs0.getDouble("valor");
+                                LocalDate date = rs0.getDate("date").toLocalDate();
+                                int idCliente = rs0.getInt("idcliente");
+                                locacoes.add(new Locacao(active, dias, valor, date, idCliente, idveiculo));
+                            }
+                        }
+                    }
+                    String categoria = rs.getString("categoria");
+                    Double valorDeCompra = rs.getDouble("valorDeCompra");
+                    String placa = rs.getString("placa");
+                    int ano = rs.getInt("ano");
+                    String modelo = rs.getString("modelo");
+
+                    vans.add(new Van(idveiculo, "Van", marca, estado, locacoes, categoria, valorDeCompra, placa, ano, modelo));
+                }
+            }
+            return vans;
+
+        } catch (SQLException | IOException e) {
+            JOptionPane.showMessageDialog(null, "@VanDaoSql.getAllNaoLocados():  Error getting all vans nao locadas: \n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return vans;
+    }
+
 
     private final String selectById = """
                                       SELECT
@@ -236,7 +314,7 @@ public class VanDaoSql implements VanDao {
 
                     return new Van(idveiculo, tipo, marca, estado, locacoes, categoria, valorDeCompra, placa, ano, modelo);
                 } else {
-                    throw new SQLException("Moto não encontrado com id=" + id);
+                    throw new SQLException("Van não encontrada com id=" + id);
                 }
             }
         } catch (SQLException | IOException e) {

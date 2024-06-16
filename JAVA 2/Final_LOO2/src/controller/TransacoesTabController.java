@@ -2,11 +2,13 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import model.combo.ComboBox;
 import model.connection.AutomovelDaoSql;
 import model.connection.ClienteDaoSql;
+import model.connection.GetId;
 import model.connection.LocacaoDaoSql;
 import model.connection.MotocicletaDaoSql;
 import model.connection.VanDaoSql;
@@ -57,14 +59,14 @@ public class TransacoesTabController {
                 int idcliente = cttm.getIdOfSelectedClient(view.getClientesTransacoesTable());  System.out.println("idcliente: "+idcliente);
                 int idveiculo = ttm.getIdOfSelectedVeiculo(view.getTransacoesTable());System.out.println("idveiculo: "+idveiculo);
                 if (!locDao.locacaoIsActive(loc.getDate(), idveiculo)) {
-                    locDao.add(loc, idcliente, idveiculo);
+                    locDao.locar(loc, idcliente, idveiculo);
                     view.clearFieldsLocacao();
                     switch (ttm.getTipoVeiculo()){
                         case 1 -> showAllMotos();
-                        //case 2 -> showAllAutos();
-                        //case 3 -> showAllVans();
-                    }
-                    view.apresentaInfo("Locação Concluida.");
+                        case 2 -> showAllAutos();
+                        case 3 -> showAllVans();
+                    }view.apresentaInfo("Locação Concluida.");
+                    
                 } else {
                     view.apresentaInfo("Veiculo Alugado.");
                 }
@@ -80,6 +82,19 @@ public class TransacoesTabController {
         }
     }
 
+    public void devolverLocacao(){
+        if (!view.getTransacoesTable().getSelectionModel().isSelectionEmpty()) {
+            int idveiculo = ttm.getIdOfSelectedVeiculo(view.getTransacoesTable());
+            int idlocacao = GetId.getIdLocacaoFromRented(idveiculo);
+            //if (idlocacao == 0) view.apresentaInfo("Esse veiculo não possui locação ativa");
+            locDao.devolver(idlocacao, idveiculo);
+            switch (ttm.getTipoVeiculo()){
+                case 1 -> showAllMotos();
+                case 2 -> showAllAutos();
+                case 3 -> showAllVans();
+            }view.apresentaInfo("Veículo devolvido.");
+        }
+    }
     /*
     public void newVeiculo() {
         try {
@@ -222,7 +237,7 @@ public class TransacoesTabController {
                 }
                 case 2 /*Devolução*/ -> {
                     int idcliente = cttm.getIdOfSelectedClient(view.getClientesTransacoesTable());
-                    autos = autoDao.getAllLocadasPorCliente(idcliente);
+                    autos = autoDao.getAllLocadosPorCliente(idcliente);
                 }
                 case 3 /*Venda*/ -> {
                     autos = autoDao.getAllWithEstado("disponivel");

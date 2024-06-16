@@ -137,6 +137,7 @@ public class Frame extends javax.swing.JFrame {
         btnVenda = new javax.swing.JButton();
         btnListarTransacoes = new javax.swing.JButton();
         txtDiasTransacoes = new javax.swing.JTextField();
+        btnDevolver = new javax.swing.JButton();
         tabVeiculos = new javax.swing.JPanel();
         paneVeiculoTable = new javax.swing.JScrollPane();
         veiculosTable = new javax.swing.JTable();
@@ -178,20 +179,6 @@ public class Frame extends javax.swing.JFrame {
         btnAtualizarCliente = new javax.swing.JButton();
         paneClienteTable = new javax.swing.JScrollPane();
         clienteTable = new javax.swing.JTable();
-        tabDevolucao = new javax.swing.JPanel();
-        paneDevolverTable = new javax.swing.JScrollPane();
-        DevolverTable = new javax.swing.JTable();
-        btnVansDevolver = new javax.swing.JButton();
-        btnMotocicletasDevolver = new javax.swing.JButton();
-        btnAutomoveisDevolver = new javax.swing.JButton();
-        tabVenda = new javax.swing.JPanel();
-        paneVendaTable = new javax.swing.JScrollPane();
-        VendaTable = new javax.swing.JTable();
-        btnAutomoveisVenda = new javax.swing.JButton();
-        btnMotocicletasVenda = new javax.swing.JButton();
-        btnVansVenda = new javax.swing.JButton();
-        cboxMarcaVenda = new javax.swing.JComboBox<>();
-        cboxCategoriaVenda = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -330,6 +317,13 @@ public class Frame extends javax.swing.JFrame {
             }
         });
 
+        btnDevolver.setText("Devolver");
+        btnDevolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDevolverActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout tabTransacoesLayout = new javax.swing.GroupLayout(tabTransacoes);
         tabTransacoes.setLayout(tabTransacoesLayout);
         tabTransacoesLayout.setHorizontalGroup(
@@ -387,12 +381,17 @@ public class Frame extends javax.swing.JFrame {
                                 .addComponent(txtPesquisarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(870, 870, 870))))
             .addGroup(tabTransacoesLayout.createSequentialGroup()
-                .addGap(418, 418, 418)
-                .addComponent(btnLocacao)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnDevolucao)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnVenda)
+                .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(tabTransacoesLayout.createSequentialGroup()
+                        .addGap(418, 418, 418)
+                        .addComponent(btnLocacao)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDevolucao)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnVenda))
+                    .addGroup(tabTransacoesLayout.createSequentialGroup()
+                        .addGap(440, 440, 440)
+                        .addComponent(btnDevolver)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         tabTransacoesLayout.setVerticalGroup(
@@ -424,7 +423,9 @@ public class Frame extends javax.swing.JFrame {
                                 .addComponent(cboxCategoriaTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(paneVeiculoTableLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
+                .addGap(16, 16, 16)
+                .addComponent(btnDevolver)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                 .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnLocar)
                     .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -878,144 +879,6 @@ public class Frame extends javax.swing.JFrame {
 
         paneAllTabs.addTab("Clientes", tabCliente);
 
-        tabDevolucao.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                tabDevolucaoComponentShown(evt);
-            }
-        });
-
-        DevolverTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                DevolverTableMousePressed(evt);
-            }
-        });
-        paneDevolverTable.setViewportView(DevolverTable);
-
-        btnVansDevolver.setText("Vans");
-        btnVansDevolver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVansDevolverActionPerformed(evt);
-            }
-        });
-
-        btnMotocicletasDevolver.setText("Motocicletas");
-        btnMotocicletasDevolver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMotocicletasDevolverActionPerformed(evt);
-            }
-        });
-
-        btnAutomoveisDevolver.setText("Automoveis");
-        btnAutomoveisDevolver.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAutomoveisDevolverActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout tabDevolucaoLayout = new javax.swing.GroupLayout(tabDevolucao);
-        tabDevolucao.setLayout(tabDevolucaoLayout);
-        tabDevolucaoLayout.setHorizontalGroup(
-            tabDevolucaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabDevolucaoLayout.createSequentialGroup()
-                .addContainerGap(375, Short.MAX_VALUE)
-                .addGroup(tabDevolucaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(paneDevolverTable, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(tabDevolucaoLayout.createSequentialGroup()
-                        .addGap(176, 176, 176)
-                        .addComponent(btnVansDevolver)
-                        .addGap(28, 28, 28)
-                        .addComponent(btnMotocicletasDevolver)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnAutomoveisDevolver)
-                        .addGap(231, 231, 231)))
-                .addGap(270, 270, 270))
-        );
-        tabDevolucaoLayout.setVerticalGroup(
-            tabDevolucaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tabDevolucaoLayout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addGroup(tabDevolucaoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnVansDevolver)
-                    .addComponent(btnMotocicletasDevolver)
-                    .addComponent(btnAutomoveisDevolver))
-                .addGap(18, 18, 18)
-                .addComponent(paneDevolverTable, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(208, Short.MAX_VALUE))
-        );
-
-        paneAllTabs.addTab("Devolução", tabDevolucao);
-
-        VendaTable.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                VendaTableMousePressed(evt);
-            }
-        });
-        paneVendaTable.setViewportView(VendaTable);
-
-        btnAutomoveisVenda.setText("Automoveis");
-        btnAutomoveisVenda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAutomoveisVendaActionPerformed(evt);
-            }
-        });
-
-        btnMotocicletasVenda.setText("Motocicletas");
-        btnMotocicletasVenda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMotocicletasVendaActionPerformed(evt);
-            }
-        });
-
-        btnVansVenda.setText("Vans");
-        btnVansVenda.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVansVendaActionPerformed(evt);
-            }
-        });
-
-        cboxMarcaVenda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
-
-        cboxCategoriaVenda.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " " }));
-
-        javax.swing.GroupLayout tabVendaLayout = new javax.swing.GroupLayout(tabVenda);
-        tabVenda.setLayout(tabVendaLayout);
-        tabVendaLayout.setHorizontalGroup(
-            tabVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabVendaLayout.createSequentialGroup()
-                .addContainerGap(394, Short.MAX_VALUE)
-                .addGroup(tabVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabVendaLayout.createSequentialGroup()
-                        .addComponent(btnVansVenda)
-                        .addGap(28, 28, 28)
-                        .addComponent(btnMotocicletasVenda)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnAutomoveisVenda)
-                        .addGap(38, 38, 38)
-                        .addComponent(cboxMarcaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(26, 26, 26)
-                        .addComponent(cboxCategoriaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(paneVendaTable, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 717, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(251, 251, 251))
-        );
-        tabVendaLayout.setVerticalGroup(
-            tabVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tabVendaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(tabVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cboxMarcaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboxCategoriaVenda, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(tabVendaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnVansVenda)
-                    .addComponent(btnMotocicletasVenda)
-                    .addComponent(btnAutomoveisVenda))
-                .addGap(18, 18, 18)
-                .addComponent(paneVendaTable, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(230, Short.MAX_VALUE))
-        );
-
-        paneAllTabs.addTab("Venda", tabVenda);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -1032,51 +895,167 @@ public class Frame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNomeClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeClienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNomeClienteActionPerformed
+    private void btnAtualizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarClienteActionPerformed
+        ctrlClientes.updateCliente();
+    }//GEN-LAST:event_btnAtualizarClienteActionPerformed
 
-    private void btnIncluirVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirVeiculoActionPerformed
-        ctrlVeiculos.newVeiculo();
-    }//GEN-LAST:event_btnIncluirVeiculoActionPerformed
+    private void btnLimparClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparClienteActionPerformed
+        ctm.limpaTabela();
+        clearFieldsCliente();
+    }//GEN-LAST:event_btnLimparClienteActionPerformed
 
-    private void tabVeiculosComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabVeiculosComponentShown
-        // Cmarca.setModel(cm.getMarcaModel());
-        //Ccategoria.setModel(cm.getCategoriaModel());
+    private void btnRemoverClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverClienteActionPerformed
+        ctrlClientes.deleteCliente();
+    }//GEN-LAST:event_btnRemoverClienteActionPerformed
 
-    }//GEN-LAST:event_tabVeiculosComponentShown
+    private void btnListarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarClienteActionPerformed
+        ctrlClientes.showClientes();
+    }//GEN-LAST:event_btnListarClienteActionPerformed
+
+    private void btnIncluirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirClienteActionPerformed
+        ctrlClientes.newCliente();
+    }//GEN-LAST:event_btnIncluirClienteActionPerformed
 
     private void ftxtCpfClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ftxtCpfClienteActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_ftxtCpfClienteActionPerformed
 
+    private void ftxtRgClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ftxtRgClienteActionPerformed
 
-    private void transacoesTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transacoesTableMousePressed
-        JTable table = (JTable) evt.getSource();
-        Point p = evt.getPoint();
-        int row = table.rowAtPoint(p);
-        if (evt.getClickCount() == 2) {
-            // Your code here
+    }//GEN-LAST:event_ftxtRgClienteActionPerformed
+
+    private void txtNomeClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNomeClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNomeClienteActionPerformed
+
+    private void tabVeiculosComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabVeiculosComponentShown
+        // Cmarca.setModel(cm.getMarcaModel());
+        //Ccategoria.setModel(cm.getCategoriaModel());
+    }//GEN-LAST:event_tabVeiculosComponentShown
+
+    private void cboxCategoriaVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxCategoriaVeiculoActionPerformed
+        ctrlVeiculos.activateCboxCategoriaVeiculos();
+    }//GEN-LAST:event_cboxCategoriaVeiculoActionPerformed
+
+    private void cboxMarcaVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxMarcaVeiculoActionPerformed
+        ctrlVeiculos.activateCboxMarcaVeiculos();
+    }//GEN-LAST:event_cboxMarcaVeiculoActionPerformed
+
+    private void btnAutomoveisVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutomoveisVeiculosActionPerformed
+        setBtnColors("Automoveis", "Veiculos");
+        vtm.setTipoVeiculo(2);//tipo 2 auto
+        ctrlVeiculos.showAutos();
+    }//GEN-LAST:event_btnAutomoveisVeiculosActionPerformed
+
+    private void btnMotocicletasVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotocicletasVeiculosActionPerformed
+        setBtnColors("Motocicletas", "Veiculos");
+        vtm.setTipoVeiculo(1);//tipo 1 moto
+        ctrlVeiculos.showMotos();
+    }//GEN-LAST:event_btnMotocicletasVeiculosActionPerformed
+
+    private void btnVansVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVansVeiculosActionPerformed
+        setBtnColors("Vans", "Veiculos");
+        vtm.setTipoVeiculo(3);//tipo 3 van
+        ctrlVeiculos.showVans();
+    }//GEN-LAST:event_btnVansVeiculosActionPerformed
+
+    private void cboxCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxCategoriaActionPerformed
+        String type = (String) cboxTipo.getSelectedItem();
+        String marca = (String) cboxMarca.getSelectedItem();
+        String categoria = (String) cboxCategoria.getSelectedItem();
+        if (!"".equals(type) && !"".equals(marca)) {
+            ComboBox.loadCboxModelo(cboxModelo, type, marca, categoria);
         }
-    }//GEN-LAST:event_transacoesTableMousePressed
+    }//GEN-LAST:event_cboxCategoriaActionPerformed
 
-    private void btnVansTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVansTransacoesActionPerformed
-        setBtnColors("Vans", "Transacoes");
-        ttm.setTipoVeiculo(3);//tipo 3 van
-        //ctrlTransacoes.showAllVans();
-    }//GEN-LAST:event_btnVansTransacoesActionPerformed
+    private void cboxMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxMarcaActionPerformed
+        boolean cboxCategoriaIsEmpty = cboxMarca.getModel().getSize() == 0;
+        if (!cboxCategoriaIsEmpty) {
+            String type = (String) cboxTipo.getSelectedItem();
+            String marca = (String) cboxMarca.getSelectedItem();
+            String categoria = (String) cboxCategoria.getSelectedItem();
+            if (!"".equals(type) && !"".equals(marca)) {
+                ComboBox.loadCboxModelo(cboxModelo, type, marca, categoria);
+            }
+        }
+    }//GEN-LAST:event_cboxMarcaActionPerformed
 
-    private void btnMotocicletasTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotocicletasTransacoesActionPerformed
-        setBtnColors("Motocicletas", "Transacoes");
-        ttm.setTipoVeiculo(1);//tipo 1 moto
-        ctrlTransacoes.showAllMotos();
-    }//GEN-LAST:event_btnMotocicletasTransacoesActionPerformed
+    private void cboxModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxModeloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cboxModeloActionPerformed
 
-    private void btnAutomoveisTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutomoveisTransacoesActionPerformed
-        setBtnColors("Automoveis", "Transacoes");
-        ttm.setTipoVeiculo(2);//tipo 2 auto
-        //ctrlTransacoes.showAllAutos();
-    }//GEN-LAST:event_btnAutomoveisTransacoesActionPerformed
+    private void cboxModeloMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboxModeloMouseReleased
+
+    }//GEN-LAST:event_cboxModeloMouseReleased
+
+    private void cboxTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxTipoActionPerformed
+        boolean cboxMarcaIsEmpty = cboxMarca.getModel().getSize() == 0;
+        boolean cboxCategoriaIsEmpty = cboxMarca.getModel().getSize() == 0;
+
+        if (cboxMarcaIsEmpty) {
+            ComboBox.loadCboxMarca(cboxMarca);
+        }
+        if (cboxCategoriaIsEmpty)
+        ComboBox.loadCboxCategoria(cboxCategoria);
+    }//GEN-LAST:event_cboxTipoActionPerformed
+
+    private void btnIncluirVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirVeiculoActionPerformed
+        ctrlVeiculos.newVeiculo();
+    }//GEN-LAST:event_btnIncluirVeiculoActionPerformed
+
+    private void tabTransacoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabTransacoesMouseClicked
+        if (evt.getSource() != clientesTransacoesTable) {
+            clientesTransacoesTable.getSelectionModel().clearSelection();
+        }
+        if (evt.getSource() != transacoesTable) {
+            transacoesTable.getSelectionModel().clearSelection();
+        }
+
+    }//GEN-LAST:event_tabTransacoesMouseClicked
+
+    private void txtDiasTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDiasTransacoesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDiasTransacoesActionPerformed
+
+    private void btnListarTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarTransacoesActionPerformed
+        ctrlTransacoes.showClientes();
+    }//GEN-LAST:event_btnListarTransacoesActionPerformed
+
+    private void btnVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendaActionPerformed
+        ttm.setTipoTransacao(3);//tipo 3 venda
+        ctrlTransacoes.setVisibilityLocacaoOptions(false);
+    }//GEN-LAST:event_btnVendaActionPerformed
+
+    private void btnDevolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolucaoActionPerformed
+        ttm.setTipoTransacao(2);//tipo 2 devolução
+        ctrlTransacoes.setVisibilityLocacaoOptions(false);
+    }//GEN-LAST:event_btnDevolucaoActionPerformed
+
+    private void btnLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocacaoActionPerformed
+        ttm.setTipoTransacao(1);//tipo 1 locacao
+        ctrlTransacoes.setVisibilityLocacaoOptions(true);
+    }//GEN-LAST:event_btnLocacaoActionPerformed
+
+    private void cboxCategoriaTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxCategoriaTransacoesActionPerformed
+        ctrlTransacoes.activateCboxCategoriaTransacoes();
+    }//GEN-LAST:event_cboxCategoriaTransacoesActionPerformed
+
+    private void cboxMarcaTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxMarcaTransacoesActionPerformed
+        ctrlTransacoes.activateCboxMarcaTransacoes();
+    }//GEN-LAST:event_cboxMarcaTransacoesActionPerformed
+
+    private void ftxtDataTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ftxtDataTransacoesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ftxtDataTransacoesActionPerformed
+
+    private void clientesTransacoesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clientesTransacoesTableMouseClicked
+        switch (ttm.getTipoVeiculo()){
+            case 1 ->ctrlTransacoes.showAllMotos();
+            case 2 ->ctrlTransacoes.showAllAutos();
+            case 3 ->ctrlTransacoes.showAllVans();
+        }
+
+    }//GEN-LAST:event_clientesTransacoesTableMouseClicked
 
     private void btnLocarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocarActionPerformed
         ctrlTransacoes.newLocacao();
@@ -1102,215 +1081,57 @@ public class Frame extends javax.swing.JFrame {
         data.setTime(dataDate);
 
         locarVeiculo(dias, data, c);
-         */
+        */
     }//GEN-LAST:event_btnLocarActionPerformed
-
-    private void VendaTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VendaTableMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_VendaTableMousePressed
-
-    private void btnAutomoveisVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutomoveisVendaActionPerformed
-        //vvtm.setTipoVeiculo(3);
-        //vvtm.setListaVeiculos();
-    }//GEN-LAST:event_btnAutomoveisVendaActionPerformed
-
-    private void btnMotocicletasVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotocicletasVendaActionPerformed
-        // vvtm.setTipoVeiculo(2);
-        //vvtm.setListaVeiculos();
-    }//GEN-LAST:event_btnMotocicletasVendaActionPerformed
-
-    private void btnVansVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVansVendaActionPerformed
-        //vvtm.setTipoVeiculo(1);
-        //vvtm.setListaVeiculos();
-    }//GEN-LAST:event_btnVansVendaActionPerformed
-
-    private void DevolverTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DevolverTableMousePressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_DevolverTableMousePressed
-
-    private void btnVansDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVansDevolverActionPerformed
-        //vdtm.setTipoVeiculo(1);
-        //vdtm.setListaVeiculos();
-    }//GEN-LAST:event_btnVansDevolverActionPerformed
-
-    private void btnMotocicletasDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotocicletasDevolverActionPerformed
-        //vdtm.setTipoVeiculo(2);
-        //vdtm.setListaVeiculos();
-    }//GEN-LAST:event_btnMotocicletasDevolverActionPerformed
-
-    private void btnAutomoveisDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutomoveisDevolverActionPerformed
-        //vdtm.setTipoVeiculo(3);
-        //vdtm.setListaVeiculos();
-    }//GEN-LAST:event_btnAutomoveisDevolverActionPerformed
-
-    private void ftxtDataTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ftxtDataTransacoesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ftxtDataTransacoesActionPerformed
-
-    private void tabDevolucaoComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabDevolucaoComponentShown
-
-    }//GEN-LAST:event_tabDevolucaoComponentShown
-
-    private void cboxMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxMarcaActionPerformed
-        boolean cboxCategoriaIsEmpty = cboxMarca.getModel().getSize() == 0;
-        if (!cboxCategoriaIsEmpty) {
-            String type = (String) cboxTipo.getSelectedItem();
-            String marca = (String) cboxMarca.getSelectedItem();
-            String categoria = (String) cboxCategoria.getSelectedItem();
-            if (!"".equals(type) && !"".equals(marca)) {
-                ComboBox.loadCboxModelo(cboxModelo, type, marca, categoria);
-            }
-        }
-    }//GEN-LAST:event_cboxMarcaActionPerformed
-
-    private void ftxtRgClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ftxtRgClienteActionPerformed
-
-    }//GEN-LAST:event_ftxtRgClienteActionPerformed
-
-    private void cboxModeloMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboxModeloMouseReleased
-
-    }//GEN-LAST:event_cboxModeloMouseReleased
-
-    private void cboxTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxTipoActionPerformed
-        boolean cboxMarcaIsEmpty = cboxMarca.getModel().getSize() == 0;
-        boolean cboxCategoriaIsEmpty = cboxMarca.getModel().getSize() == 0;
-
-        if (cboxMarcaIsEmpty) {
-            ComboBox.loadCboxMarca(cboxMarca);
-        }
-        if (cboxCategoriaIsEmpty)
-            ComboBox.loadCboxCategoria(cboxCategoria);
-    }//GEN-LAST:event_cboxTipoActionPerformed
-
-    private void cboxCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxCategoriaActionPerformed
-        String type = (String) cboxTipo.getSelectedItem();
-        String marca = (String) cboxMarca.getSelectedItem();
-        String categoria = (String) cboxCategoria.getSelectedItem();
-        if (!"".equals(type) && !"".equals(marca)) {
-            ComboBox.loadCboxModelo(cboxModelo, type, marca, categoria);
-        }
-    }//GEN-LAST:event_cboxCategoriaActionPerformed
-
-    private void btnLimparClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimparClienteActionPerformed
-        ctm.limpaTabela();
-        clearFieldsCliente();
-    }//GEN-LAST:event_btnLimparClienteActionPerformed
-
-    private void btnListarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarClienteActionPerformed
-        ctrlClientes.showClientes();
-    }//GEN-LAST:event_btnListarClienteActionPerformed
-
-    private void btnAtualizarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarClienteActionPerformed
-        ctrlClientes.updateCliente();
-    }//GEN-LAST:event_btnAtualizarClienteActionPerformed
-
-    private void btnRemoverClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverClienteActionPerformed
-        ctrlClientes.deleteCliente();
-    }//GEN-LAST:event_btnRemoverClienteActionPerformed
-
-    private void btnIncluirClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIncluirClienteActionPerformed
-        ctrlClientes.newCliente();
-    }//GEN-LAST:event_btnIncluirClienteActionPerformed
-
-    private void cboxMarcaTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxMarcaTransacoesActionPerformed
-        ctrlTransacoes.activateCboxMarcaTransacoes();
-    }//GEN-LAST:event_cboxMarcaTransacoesActionPerformed
-
-    private void btnVansVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVansVeiculosActionPerformed
-        setBtnColors("Vans", "Veiculos");
-        vtm.setTipoVeiculo(3);//tipo 3 van
-        ctrlVeiculos.showVans();
-    }//GEN-LAST:event_btnVansVeiculosActionPerformed
-
-    private void btnMotocicletasVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotocicletasVeiculosActionPerformed
-        setBtnColors("Motocicletas", "Veiculos");
-        vtm.setTipoVeiculo(1);//tipo 1 moto
-        ctrlVeiculos.showMotos();
-    }//GEN-LAST:event_btnMotocicletasVeiculosActionPerformed
-
-    private void btnAutomoveisVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutomoveisVeiculosActionPerformed
-        setBtnColors("Automoveis", "Veiculos");
-        vtm.setTipoVeiculo(2);//tipo 2 auto
-        ctrlVeiculos.showAutos();
-    }//GEN-LAST:event_btnAutomoveisVeiculosActionPerformed
-
-    private void cboxModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxModeloActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cboxModeloActionPerformed
-
-    private void cboxCategoriaVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxCategoriaVeiculoActionPerformed
-        ctrlVeiculos.activateCboxCategoriaVeiculos();
-    }//GEN-LAST:event_cboxCategoriaVeiculoActionPerformed
-
-    private void cboxMarcaVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxMarcaVeiculoActionPerformed
-        ctrlVeiculos.activateCboxMarcaVeiculos();
-    }//GEN-LAST:event_cboxMarcaVeiculoActionPerformed
-
-    private void btnLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocacaoActionPerformed
-        ttm.setTipoTransacao(1);//tipo 1 locacao
-        ctrlTransacoes.setVisibilityLocacaoOptions(true);
-    }//GEN-LAST:event_btnLocacaoActionPerformed
-
-    private void btnDevolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolucaoActionPerformed
-        ttm.setTipoTransacao(2);//tipo 2 devolução
-        ctrlTransacoes.setVisibilityLocacaoOptions(false);
-    }//GEN-LAST:event_btnDevolucaoActionPerformed
-
-    private void btnVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendaActionPerformed
-        ttm.setTipoTransacao(3);//tipo 3 venda
-        ctrlTransacoes.setVisibilityLocacaoOptions(false);
-    }//GEN-LAST:event_btnVendaActionPerformed
-
-    private void btnListarTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarTransacoesActionPerformed
-        ctrlTransacoes.showClientes();
-    }//GEN-LAST:event_btnListarTransacoesActionPerformed
-
-    private void tabTransacoesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabTransacoesMouseClicked
-        if (evt.getSource() != clientesTransacoesTable) {
-            clientesTransacoesTable.getSelectionModel().clearSelection();
-        }
-        if (evt.getSource() != transacoesTable) {
-            transacoesTable.getSelectionModel().clearSelection();
-        }
-
-
-    }//GEN-LAST:event_tabTransacoesMouseClicked
-
-    private void txtPesquisarClientesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarClientesKeyReleased
-        ctrlTransacoes.filterCtt(txtPesquisarClientes.getText());
-    }//GEN-LAST:event_txtPesquisarClientesKeyReleased
-
-    private void txtDiasTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDiasTransacoesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtDiasTransacoesActionPerformed
-
-    private void clientesTransacoesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clientesTransacoesTableMouseClicked
-        switch (ttm.getTipoVeiculo()){
-            case 1 ->ctrlTransacoes.showAllMotos();
-            case 2 ->ctrlTransacoes.showAllAutos();
-            case 3 ->ctrlTransacoes.showAllVans();
-        }
-        
-    }//GEN-LAST:event_clientesTransacoesTableMouseClicked
-
-    private void cboxCategoriaTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxCategoriaTransacoesActionPerformed
-        ctrlTransacoes.activateCboxCategoriaTransacoes();
-    }//GEN-LAST:event_cboxCategoriaTransacoesActionPerformed
 
     private void txtPesquisarClientesKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarClientesKeyTyped
 
     }//GEN-LAST:event_txtPesquisarClientesKeyTyped
 
+    private void txtPesquisarClientesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPesquisarClientesKeyReleased
+        ctrlTransacoes.filterCtt(txtPesquisarClientes.getText());
+    }//GEN-LAST:event_txtPesquisarClientesKeyReleased
+
+    private void btnAutomoveisTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutomoveisTransacoesActionPerformed
+        setBtnColors("Automoveis", "Transacoes");
+        ttm.setTipoVeiculo(2);//tipo 2 auto
+        ctrlTransacoes.showAllAutos();
+    }//GEN-LAST:event_btnAutomoveisTransacoesActionPerformed
+
+    private void transacoesTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transacoesTableMousePressed
+        JTable table = (JTable) evt.getSource();
+        Point p = evt.getPoint();
+        int row = table.rowAtPoint(p);
+        if (evt.getClickCount() == 2) {
+            // Your code here
+        }
+    }//GEN-LAST:event_transacoesTableMousePressed
+
+    private void btnMotocicletasTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotocicletasTransacoesActionPerformed
+        setBtnColors("Motocicletas", "Transacoes");
+        ttm.setTipoVeiculo(1);//tipo 1 moto
+        ctrlTransacoes.showAllMotos();
+    }//GEN-LAST:event_btnMotocicletasTransacoesActionPerformed
+
+    private void btnVansTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVansTransacoesActionPerformed
+        setBtnColors("Vans", "Transacoes");
+        ttm.setTipoVeiculo(3);//tipo 3 van
+        ctrlTransacoes.showAllVans();
+    }//GEN-LAST:event_btnVansTransacoesActionPerformed
+
+    private void btnDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolverActionPerformed
+        
+        
+    }//GEN-LAST:event_btnDevolverActionPerformed
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable DevolverTable;
-    private javax.swing.JTable VendaTable;
     private javax.swing.JButton btnAtualizarCliente;
-    private javax.swing.JButton btnAutomoveisDevolver;
     private javax.swing.JButton btnAutomoveisTransacoes;
     private javax.swing.JButton btnAutomoveisVeiculos;
-    private javax.swing.JButton btnAutomoveisVenda;
     private javax.swing.JButton btnDevolucao;
+    private javax.swing.JButton btnDevolver;
     private javax.swing.JButton btnIncluirCliente;
     private javax.swing.JButton btnIncluirVeiculo;
     private javax.swing.JButton btnLimparCliente;
@@ -1318,24 +1139,18 @@ public class Frame extends javax.swing.JFrame {
     private javax.swing.JButton btnListarTransacoes;
     private javax.swing.JButton btnLocacao;
     private javax.swing.JButton btnLocar;
-    private javax.swing.JButton btnMotocicletasDevolver;
     private javax.swing.JButton btnMotocicletasTransacoes;
     private javax.swing.JButton btnMotocicletasVeiculos;
-    private javax.swing.JButton btnMotocicletasVenda;
     private javax.swing.JButton btnRemoverCliente;
-    private javax.swing.JButton btnVansDevolver;
     private javax.swing.JButton btnVansTransacoes;
     private javax.swing.JButton btnVansVeiculos;
-    private javax.swing.JButton btnVansVenda;
     private javax.swing.JButton btnVenda;
     private javax.swing.JComboBox<String> cboxCategoria;
     private javax.swing.JComboBox<String> cboxCategoriaTransacoes;
     private javax.swing.JComboBox<String> cboxCategoriaVeiculo;
-    private javax.swing.JComboBox<String> cboxCategoriaVenda;
     private javax.swing.JComboBox<String> cboxMarca;
     private javax.swing.JComboBox<String> cboxMarcaTransacoes;
     private javax.swing.JComboBox<String> cboxMarcaVeiculo;
-    private javax.swing.JComboBox<String> cboxMarcaVenda;
     private javax.swing.JComboBox<Object> cboxModelo;
     private javax.swing.JComboBox<String> cboxTipo;
     private javax.swing.JTable clienteTable;
@@ -1364,15 +1179,11 @@ public class Frame extends javax.swing.JFrame {
     private javax.swing.JTabbedPane paneAllTabs;
     private javax.swing.JScrollPane paneClienteTable;
     private javax.swing.JScrollPane paneClientesTransacoesTable;
-    private javax.swing.JScrollPane paneDevolverTable;
     private javax.swing.JScrollPane paneVeiculoTable;
     private javax.swing.JScrollPane paneVeiculoTableLocacao;
-    private javax.swing.JScrollPane paneVendaTable;
     private javax.swing.JPanel tabCliente;
-    private javax.swing.JPanel tabDevolucao;
     private javax.swing.JPanel tabTransacoes;
     private javax.swing.JPanel tabVeiculos;
-    private javax.swing.JPanel tabVenda;
     private javax.swing.JTable transacoesTable;
     private javax.swing.JTextField txtDiasTransacoes;
     private javax.swing.JTextField txtEndereco;
