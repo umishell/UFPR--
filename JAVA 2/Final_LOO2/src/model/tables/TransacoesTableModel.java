@@ -389,6 +389,8 @@ public class TransacoesTableModel extends DefaultTableModel {
         // Convert row index to model index (consider sorting)
         int modelRow = table.convertRowIndexToModel(selectedRow);
 
+        System.out.println("categoria: "+listaMotos.get(modelRow).getCategoria());
+        System.out.println("moto: "+listaMotos.get(modelRow).getValorDiariaLocacao(listaMotos.get(modelRow).getCategoria()));
         return switch (tipoVeiculo) {
             case 1 ->
                 listaMotos.get(modelRow).getValorDiariaLocacao(listaMotos.get(modelRow).getCategoria());

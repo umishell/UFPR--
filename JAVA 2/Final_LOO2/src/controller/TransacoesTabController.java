@@ -52,13 +52,19 @@ public class TransacoesTabController {
         if (!view.getClientesTransacoesTable().getSelectionModel().isSelectionEmpty() && !view.getTransacoesTable().getSelectionModel().isSelectionEmpty()) {
             try {
                 Locacao loc = view.getLocacaoFormulario();
-                //System.out.println(loc.toString());
+                System.out.println("@newLocacao \n"+loc.toString());
                 
-                int idcliente = cttm.getIdOfSelectedClient(view.getClientesTransacoesTable());
-                int idveiculo = ttm.getIdOfSelectedVeiculo(view.getTransacoesTable());
+                int idcliente = cttm.getIdOfSelectedClient(view.getClientesTransacoesTable());  System.out.println("idcliente: "+idcliente);
+                int idveiculo = ttm.getIdOfSelectedVeiculo(view.getTransacoesTable());System.out.println("idveiculo: "+idveiculo);
                 if (!locDao.locacaoIsActive(loc.getDate(), idveiculo)) {
                     locDao.add(loc, idcliente, idveiculo);
                     view.clearFieldsLocacao();
+                    switch (ttm.getTipoVeiculo()){
+                        case 1 -> showAllMotos();
+                        //case 2 -> showAllAutos();
+                        //case 3 -> showAllVans();
+                    }
+                    view.apresentaInfo("Locação Concluida.");
                 } else {
                     view.apresentaInfo("Veiculo Alugado.");
                 }
@@ -201,6 +207,72 @@ public class TransacoesTabController {
         }
         // }
     }
+    public void showAllAutos() {
+        try {
+            AutomovelDaoSql autoDao = new AutomovelDaoSql();
+            ArrayList<Automovel> autos = new ArrayList<>();
+            ttm.setListaAutos(autos);
+            ttm.fireTableDataChanged();
+            filtroTransacoesTable.getSorter().setRowFilter(null);
+            ttm.setRowCount(0);
+            switch (ttm.getTipoTransacao()) {
+
+                case 1 /*Locacao*/ -> {
+                    autos = autoDao.getAllWithEstado("disponivel");
+                }
+                case 2 /*Devolução*/ -> {
+                    int idcliente = cttm.getIdOfSelectedClient(view.getClientesTransacoesTable());
+                    autos = autoDao.getAllLocadasPorCliente(idcliente);
+                }
+                case 3 /*Venda*/ -> {
+                    autos = autoDao.getAllWithEstado("disponivel");
+                }
+            }
+            if (autos.isEmpty()) {
+                view.apresentaInfo("não há automoveis");
+            } else {
+                ttm.setListaAutos(autos);
+                ttm.fireTableDataChanged();
+            }
+        } catch (NullPointerException e) {
+            view.apresentaErro("Erro ao mostrar autos na tabela.");
+            e.printStackTrace();
+        }
+        // }
+    }
+    public void showAllVans() {
+        try {
+            VanDaoSql vanDao = new VanDaoSql();
+            ArrayList<Van> vans = new ArrayList<>();
+            ttm.setListaVans(vans);
+            ttm.fireTableDataChanged();
+            filtroTransacoesTable.getSorter().setRowFilter(null);
+            ttm.setRowCount(0);
+            switch (ttm.getTipoTransacao()) {
+
+                case 1 /*Locacao*/ -> {
+                    vans = vanDao.getAllWithEstado("disponivel");
+                }
+                case 2 /*Devolução*/ -> {
+                    int idcliente = cttm.getIdOfSelectedClient(view.getClientesTransacoesTable());
+                    vans = vanDao.getAllLocadasPorCliente(idcliente);
+                }
+                case 3 /*Venda*/ -> {
+                    vans = vanDao.getAllWithEstado("disponivel");
+                }
+            }
+            if (vans.isEmpty()) {
+                view.apresentaInfo("não há vans");
+            } else {
+                ttm.setListaVans(vans);
+                ttm.fireTableDataChanged();
+            }
+        } catch (NullPointerException e) {
+            view.apresentaErro("Erro ao mostrar vans na tabela.");
+            e.printStackTrace();
+        }
+        // }
+    }
 
     public void showAutos() {
         try {
@@ -277,15 +349,15 @@ public class TransacoesTabController {
             if (view.getClientesTransacoesTable().getSelectionModel().isSelectionEmpty()) {
                 switch (ttm.getTipoVeiculo()) {
                     case 1 -> {
-                        showMotos();
+                        showAllMotos();
                         ttm.fireTableDataChanged();
                     }
                     case 2 -> {
-                        showAutos();
+                        //showAllAutos();
                         ttm.fireTableDataChanged();
                     }
                     case 3 -> {
-                        showVans();
+                        //showAllVans();
                         ttm.fireTableDataChanged();
                     }
                 }
@@ -331,15 +403,15 @@ public class TransacoesTabController {
             if (view.getClientesTransacoesTable().getSelectionModel().isSelectionEmpty()) {
                 switch (ttm.getTipoVeiculo()) {
                     case 1 -> {
-                        showMotos();
+                        showAllMotos();
                         ttm.fireTableDataChanged();
                     }
                     case 2 -> {
-                        showAutos();
+                        //showAllAutos();
                         ttm.fireTableDataChanged();
                     }
                     case 3 -> {
-                        showVans();
+                        //showAllVans();
                         ttm.fireTableDataChanged();
                     }
                 }

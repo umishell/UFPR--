@@ -63,13 +63,13 @@ public class Automovel extends Veiculo {
     public double getValorDiariaLocacao(String categoria) {
 
         switch (categoria) {
-            case "popular" -> {
+            case "Popular" -> {
                 return 70;
             }
-            case "intermediario" -> {
+            case "Intermediario" -> {
                 return 200;
             }
-            case "luxo" -> {
+            case "Luxo" -> {
                 return 350;
             }
         }

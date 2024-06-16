@@ -12,7 +12,6 @@ import java.sql.Date;
 import javax.swing.JOptionPane;
 import model.dto.Locacao;
 
-
 public class LocacaoDaoSql implements LocacaoDao {
 
     private static LocacaoDaoSql dao;
@@ -29,10 +28,10 @@ public class LocacaoDaoSql implements LocacaoDao {
     public void add(Locacao locacao) {
     }
 
-    private final String locacaoIsActive = "SELECT * FROM locacao WHERE idveiculo = ? AND date = ? AND active = 1";
+    private final String addLocacao = "SELECT * FROM locacao WHERE idveiculo = ? AND date = ? AND active = 1";
 
     public boolean locacaoIsActive(LocalDate date, int idveiculo) throws SQLException, IOException, NullPointerException {
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(locacaoIsActive)) {
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(addLocacao);) {
             stmt.setInt(1, idveiculo);
             stmt.setDate(2, Date.valueOf(date));
             ResultSet rs = stmt.executeQuery();
@@ -41,24 +40,29 @@ public class LocacaoDaoSql implements LocacaoDao {
         }
     }
 
-        private final String insert = "INSERT INTO locacao (dias, valor, date, idcliente, idveiculo) VALUES (?,?,?,?,?)";
+    private final String insert = "INSERT INTO locacao (dias, valor, date, idcliente, idveiculo) VALUES (?,?,?,?,?)";
+    private final String updateCategoriaVeiculo = "UPDATE veiculo SET idestado=2 WHERE idveiculo=?";
 
-        public void add(Locacao locacao, int idcliente, int idveiculo) {
 
-            try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtAdiciona = conn.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);) {
-                stmtAdiciona.setInt(1, locacao.getDias());
-                stmtAdiciona.setDouble(2, locacao.getValor());
-                stmtAdiciona.setDate(3, Date.valueOf(locacao.getDate()));
-                System.out.println("@LocacaoDaoSql.add(), idcliente: "+idcliente);
-                stmtAdiciona.setInt(4, idcliente/*GetId.getIdCliente(conn, cpf)*/);
-                stmtAdiciona.setInt(5, idveiculo/*GetId.getIdVeiculo(conn, placa)*/);
-                stmtAdiciona.execute();
-            } catch (SQLException | IOException e) {
-                JOptionPane.showMessageDialog(null, "@LocacaoDaoSql.add():  Error adding locacao: " + e.getMessage());
-                e.printStackTrace();
-            }
+    public void add(Locacao locacao, int idcliente, int idveiculo) {
 
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtAdiciona = conn.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+                PreparedStatement stmt0 = conn.prepareStatement(updateCategoriaVeiculo);) {
+            stmtAdiciona.setInt(1, locacao.getDias());
+            stmtAdiciona.setDouble(2, locacao.getValor());
+            stmtAdiciona.setDate(3, Date.valueOf(locacao.getDate()));
+            System.out.println("@LocacaoDaoSql.add(), idcliente: " + idcliente);
+            stmtAdiciona.setInt(4, idcliente);
+            stmtAdiciona.setInt(5, idveiculo);
+            stmt0.setInt(1, idveiculo);
+            stmtAdiciona.execute();
+            stmt0.executeUpdate();
+        } catch (SQLException | IOException e) {
+            JOptionPane.showMessageDialog(null, "@LocacaoDaoSql.add():  Error adding locacao: " + e.getMessage());
+            e.printStackTrace();
         }
+
+    }
 
     private final String selectAll = "select * from locacao";
 
@@ -158,19 +162,19 @@ public class LocacaoDaoSql implements LocacaoDao {
         return null;
     }
 
-    private final String update = "update locacao set dias=?, valor=?, date=? , idcliente=?, idveiculo=? where idlocacao = ?";
-
+    private final String update = "UPDATE locacao SET dias=?, valor=?, date=? , idcliente=?, idveiculo=? WHERE idlocacao = ?";
+    
     @Override
     public void update(Locacao locacao) {
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtAtualiza = conn.prepareStatement(update);) {
-            stmtAtualiza.setInt(1, locacao.getDias());
-            stmtAtualiza.setDouble(2, locacao.getValor());
-            stmtAtualiza.setDate(3, java.sql.Date.valueOf(locacao.getDate()));
-            stmtAtualiza.setInt(4, locacao.getIdCliente());
-            stmtAtualiza.setInt(5, locacao.getIdVeiculo());
-            stmtAtualiza.setInt(6, GetId.getIdLocacao(conn, locacao.getIdVeiculo(), locacao.getDate()));
-
-            stmtAtualiza.executeUpdate();
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(update);) {
+            stmt.setInt(1, locacao.getDias());
+            stmt.setDouble(2, locacao.getValor());
+            stmt.setDate(3, java.sql.Date.valueOf(locacao.getDate()));
+            stmt.setInt(4, locacao.getIdCliente());
+            stmt.setInt(5, locacao.getIdVeiculo());
+            stmt.setInt(6, GetId.getIdLocacao(conn, locacao.getIdVeiculo(), locacao.getDate()));
+            
+            stmt.executeUpdate();
 
         } catch (SQLException | IOException e) {
             JOptionPane.showMessageDialog(null, "@LocacaoDaoSql.update():  Error updating locacao: " + e.getMessage());

@@ -73,7 +73,7 @@ public class Frame extends javax.swing.JFrame {
     }
 
     public void initView(Frame frame) {
-        frame.setSize(1455, 800);
+        frame.setSize(1455, 700);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Example
         frame.setVisible(true);
     }
@@ -334,90 +334,97 @@ public class Frame extends javax.swing.JFrame {
         tabTransacoes.setLayout(tabTransacoesLayout);
         tabTransacoesLayout.setHorizontalGroup(
             tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tabTransacoesLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabTransacoesLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(tabTransacoesLayout.createSequentialGroup()
-                            .addComponent(lblPesquisarClientes)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(txtPesquisarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabTransacoesLayout.createSequentialGroup()
-                            .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(tabTransacoesLayout.createSequentialGroup()
-                                    .addComponent(lblNumDiasTransacoes)
-                                    .addGap(33, 33, 33))
-                                .addGroup(tabTransacoesLayout.createSequentialGroup()
-                                    .addComponent(lblDataTransacoes)
-                                    .addGap(43, 43, 43)))
-                            .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(tabTransacoesLayout.createSequentialGroup()
-                                    .addGap(32, 32, 32)
-                                    .addComponent(txtDiasTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(175, 175, 175)
-                                    .addComponent(btnLocar))
-                                .addGroup(tabTransacoesLayout.createSequentialGroup()
-                                    .addGap(12, 12, 12)
-                                    .addComponent(ftxtDataTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addComponent(paneClientesTransacoesTable, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(tabTransacoesLayout.createSequentialGroup()
-                        .addGap(93, 93, 93)
-                        .addComponent(btnMotocicletasTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(btnAutomoveisTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(btnVansTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(tabTransacoesLayout.createSequentialGroup()
+                                .addGap(22, 22, 22)
+                                .addComponent(btnListarTransacoes)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabTransacoesLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(paneClientesTransacoesTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(69, 69, 69)))
+                        .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(tabTransacoesLayout.createSequentialGroup()
+                                .addGap(64, 64, 64)
+                                .addComponent(btnMotocicletasTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31)
+                                .addComponent(btnAutomoveisTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(32, 32, 32)
+                                .addComponent(btnVansTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36)
+                                .addComponent(cboxMarcaTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(cboxCategoriaTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(paneVeiculoTableLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(262, 262, 262))
                     .addGroup(tabTransacoesLayout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(paneVeiculoTableLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(114, 114, 114))
+                        .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(tabTransacoesLayout.createSequentialGroup()
+                                .addGap(190, 190, 190)
+                                .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(tabTransacoesLayout.createSequentialGroup()
+                                        .addComponent(lblNumDiasTransacoes)
+                                        .addGap(33, 33, 33))
+                                    .addGroup(tabTransacoesLayout.createSequentialGroup()
+                                        .addComponent(lblDataTransacoes)
+                                        .addGap(43, 43, 43)))
+                                .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(tabTransacoesLayout.createSequentialGroup()
+                                        .addGap(32, 32, 32)
+                                        .addComponent(txtDiasTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(175, 175, 175)
+                                        .addComponent(btnLocar))
+                                    .addGroup(tabTransacoesLayout.createSequentialGroup()
+                                        .addGap(12, 12, 12)
+                                        .addComponent(ftxtDataTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(tabTransacoesLayout.createSequentialGroup()
+                                .addComponent(lblPesquisarClientes)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtPesquisarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(870, 870, 870))))
             .addGroup(tabTransacoesLayout.createSequentialGroup()
-                .addGap(424, 424, 424)
+                .addGap(418, 418, 418)
                 .addComponent(btnLocacao)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDevolucao)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnVenda)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tabTransacoesLayout.createSequentialGroup()
-                .addGap(121, 121, 121)
-                .addComponent(btnListarTransacoes)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cboxMarcaTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(cboxCategoriaTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(135, 135, 135))
         );
         tabTransacoesLayout.setVerticalGroup(
             tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tabTransacoesLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
                 .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnDevolucao)
                     .addComponent(btnLocacao)
                     .addComponent(btnVenda))
-                .addGap(24, 24, 24)
-                .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cboxMarcaTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cboxCategoriaTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnListarTransacoes))
-                .addGap(18, 18, 18)
-                .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(tabTransacoesLayout.createSequentialGroup()
-                        .addGap(1, 1, 1)
-                        .addComponent(btnMotocicletasTransacoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(txtPesquisarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lblPesquisarClientes))
-                    .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnVansTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnAutomoveisTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(32, 32, 32)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(paneClientesTransacoesTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(paneVeiculoTableLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                    .addGroup(tabTransacoesLayout.createSequentialGroup()
+                        .addComponent(btnListarTransacoes)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtPesquisarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblPesquisarClientes))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(paneClientesTransacoesTable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(tabTransacoesLayout.createSequentialGroup()
+                        .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(tabTransacoesLayout.createSequentialGroup()
+                                .addGap(1, 1, 1)
+                                .addComponent(btnMotocicletasTransacoes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnVansTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnAutomoveisTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cboxMarcaTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(cboxCategoriaTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(paneVeiculoTableLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 448, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
                 .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnLocar)
                     .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1278,7 +1285,12 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDiasTransacoesActionPerformed
 
     private void clientesTransacoesTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_clientesTransacoesTableMouseClicked
-        ctrlTransacoes.showAllMotos();
+        switch (ttm.getTipoVeiculo()){
+            case 1 ->ctrlTransacoes.showAllMotos();
+            case 2 ->ctrlTransacoes.showAllAutos();
+            case 3 ->ctrlTransacoes.showAllVans();
+        }
+        
     }//GEN-LAST:event_clientesTransacoesTableMouseClicked
 
     private void cboxCategoriaTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxCategoriaTransacoesActionPerformed
@@ -1711,15 +1723,17 @@ public class Frame extends javax.swing.JFrame {
     public Locacao getLocacaoFormulario() throws DateTimeParseException,NumberFormatException {
         //try {
             int dias = Integer.parseInt(txtDiasTransacoes.getText());
+            System.out.println("@getLocacaoFormulario.dias : "+dias);
             String dateString = ftxtDataTransacoes.getText();
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate localDate = LocalDate.parse(dateString, formatter);
             double valorDiariaLocacao = ttm.getValorDiariaLocacao(transacoesTable);
+                System.out.println("@getLocacaoFormulario.valorDiarialocacao : "+valorDiariaLocacao);
             double valor = valorDiariaLocacao * dias;
             if (dias == 0 || localDate == null) {
                 apresentaErro("Preencha a data e a quantidade de dias.");
             } else {
-                System.out.println("valor locacao : "+valor);
+                System.out.println("@getLocacaoFormulario.valor locacao : "+valor);
                 return new Locacao(dias, valor, localDate);
             }
         //} 
