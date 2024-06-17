@@ -79,6 +79,22 @@ public class LocacaoDaoSql implements LocacaoDao {
             JOptionPane.showMessageDialog(null, "@LocacaoDaoSql.update():  Error updating locacao: " + e.getMessage());
         }
     }
+    private final String devolverAdiantado = "UPDATE locacao SET active=0, dias = ?, valor = ? WHERE idlocacao = ?";
+    private final String updateEstadoDevolverAdiantado = "UPDATE veiculo SET idestado=1 WHERE idveiculo=?";
+
+    public void devolverDataNaoPrevista(int idlocacao, int idveiculo, int dias, double valor) {
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(devolverAdiantado);
+                PreparedStatement stmt0 = conn.prepareStatement(updateEstadoDevolverAdiantado);) {
+            stmt.setInt(1, idlocacao);
+            stmt0.setInt(1, idveiculo);
+            stmt.executeUpdate();
+            stmt0.executeUpdate();
+
+        } catch (SQLException | IOException e) {
+            JOptionPane.showMessageDialog(null, "@LocacaoDaoSql.update():  Error updating locacao: " + e.getMessage());
+        }
+    }
+  
 
     private final String selectAll = "select * from locacao";
 

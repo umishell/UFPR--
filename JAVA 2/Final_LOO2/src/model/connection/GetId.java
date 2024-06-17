@@ -74,27 +74,61 @@ public class GetId {
         return 0;
     }
 
-    private static final String sqlGetidLocacao0 = "select idlocacao from locacao where idveiculo = ? && data = ?";
-    private static final String sqlGetidLocacao0 = """
-                                                   SELECT idlocacao
-                                                   FROM locacao
-                                                   WHERE idveiculo = ? AND date = (
-                                                      SELECT MAX(date)
-                                                      FROM locacao
-                                                      WHERE idveiculo = ? ) AND active = 1
-                                                   );""";
+    //private static final String sqlGetidLocacao0 = "select idlocacao from locacao where idveiculo = ? && data = ?";
+    private static final String sqlGetidLocacaoRented = """
+                                                   SELECT idlocacao FROM locacao
+                                                   WHERE idveiculo = ? 
+                                                   AND date = (SELECT MAX(date) FROM locacao WHERE idveiculo = ? ) 
+                                                   AND active = 1 );""";
 
     public static int getIdLocacaoFromRented(int idveiculo) {
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sqlGetidLocacao0);) {
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sqlGetidLocacaoRented);) {
             stmt.setInt(1, idveiculo);
-            Date sqldate = java.sql.Date.valueOf(date);
-            stmt.setDate(2, sqldate);
+            stmt.setInt(2, idveiculo);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 return rs.getInt("idlocacao");
             }
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@GetId.getIdLocacao(): " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@GetId.getIdLocacaoFromRented(): " + e.getMessage());
+        }
+        return 0;
+    }
+
+    private static final String sqlGetDateLocacaoRented = """
+                                                   SELECT date FROM locacao WHERE idveiculo = ? 
+                                                   AND date = (SELECT MAX(date) FROM locacao WHERE idveiculo = ? ) 
+                                                   AND active = 1 ;""";
+
+    public static LocalDate getDateFromRented(int idveiculo) {
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sqlGetDateLocacaoRented);) {
+            stmt.setInt(1, idveiculo);
+            stmt.setInt(2, idveiculo);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                return rs.getDate("date").toLocalDate();
+            }
+        } catch (SQLException | IOException e) {
+            JOptionPane.showMessageDialog(null, "@GetId.getDateLocacaoFromRented(): " + e.getMessage());
+        }
+        return null;
+    }
+
+    private static final String sqlGetDiasLocacaoRented = """
+                                                   SELECT dias FROM locacao WHERE idveiculo = ? 
+                                                   AND date = (SELECT MAX(date) FROM locacao WHERE idveiculo = ? ) 
+                                                   AND active = 1 ;""";
+
+    public static int getDiasFromRented(int idveiculo) {
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sqlGetDiasLocacaoRented);) {
+            stmt.setInt(1, idveiculo);
+            stmt.setInt(2, idveiculo);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                return rs.getInt("dias");
+            }
+        } catch (SQLException | IOException e) {
+            JOptionPane.showMessageDialog(null, "@GetId.getDiasLocacaoFromRented(): " + e.getMessage());
         }
         return 0;
     }

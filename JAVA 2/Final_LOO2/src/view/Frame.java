@@ -1024,16 +1024,19 @@ public class Frame extends javax.swing.JFrame {
     private void btnVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendaActionPerformed
         ttm.setTipoTransacao(3);//tipo 3 venda
         ctrlTransacoes.setVisibilityLocacaoOptions(false);
+        ctrlTransacoes.setVisibilityDevolucaoOptions(false);
     }//GEN-LAST:event_btnVendaActionPerformed
 
     private void btnDevolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolucaoActionPerformed
         ttm.setTipoTransacao(2);//tipo 2 devolução
         ctrlTransacoes.setVisibilityLocacaoOptions(false);
+        ctrlTransacoes.setVisibilityDevolucaoOptions(true);
     }//GEN-LAST:event_btnDevolucaoActionPerformed
 
     private void btnLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocacaoActionPerformed
         ttm.setTipoTransacao(1);//tipo 1 locacao
         ctrlTransacoes.setVisibilityLocacaoOptions(true);
+        ctrlTransacoes.setVisibilityDevolucaoOptions(false);
     }//GEN-LAST:event_btnLocacaoActionPerformed
 
     private void cboxCategoriaTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxCategoriaTransacoesActionPerformed
@@ -1120,8 +1123,7 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVansTransacoesActionPerformed
 
     private void btnDevolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolverActionPerformed
-        
-        
+        ctrlTransacoes.devolverLocacao();
     }//GEN-LAST:event_btnDevolverActionPerformed
 
 
@@ -1577,6 +1579,10 @@ public class Frame extends javax.swing.JFrame {
 
     public javax.swing.JTextField getTxtDiasTransacoes() {
         return txtDiasTransacoes;
+    }
+
+    public javax.swing.JButton getBtnDevolver() {
+        return btnDevolver;
     }
 
 }

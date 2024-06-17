@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import model.combo.ComboBox;
 import model.connection.AutomovelDaoSql;
@@ -54,19 +55,25 @@ public class TransacoesTabController {
         if (!view.getClientesTransacoesTable().getSelectionModel().isSelectionEmpty() && !view.getTransacoesTable().getSelectionModel().isSelectionEmpty()) {
             try {
                 Locacao loc = view.getLocacaoFormulario();
-                System.out.println("@newLocacao \n"+loc.toString());
-                
-                int idcliente = cttm.getIdOfSelectedClient(view.getClientesTransacoesTable());  System.out.println("idcliente: "+idcliente);
-                int idveiculo = ttm.getIdOfSelectedVeiculo(view.getTransacoesTable());System.out.println("idveiculo: "+idveiculo);
+                System.out.println("@newLocacao \n" + loc.toString());
+
+                int idcliente = cttm.getIdOfSelectedClient(view.getClientesTransacoesTable());
+                System.out.println("idcliente: " + idcliente);
+                int idveiculo = ttm.getIdOfSelectedVeiculo(view.getTransacoesTable());
+                System.out.println("idveiculo: " + idveiculo);
                 if (!locDao.locacaoIsActive(loc.getDate(), idveiculo)) {
                     locDao.locar(loc, idcliente, idveiculo);
                     view.clearFieldsLocacao();
-                    switch (ttm.getTipoVeiculo()){
-                        case 1 -> showAllMotos();
-                        case 2 -> showAllAutos();
-                        case 3 -> showAllVans();
-                    }view.apresentaInfo("Locação Concluida.");
-                    
+                    switch (ttm.getTipoVeiculo()) {
+                        case 1 ->
+                            showAllMotos();
+                        case 2 ->
+                            showAllAutos();
+                        case 3 ->
+                            showAllVans();
+                    }
+                    view.apresentaInfo("Locação Concluida.");
+
                 } else {
                     view.apresentaInfo("Veiculo Alugado.");
                 }
@@ -82,92 +89,68 @@ public class TransacoesTabController {
         }
     }
 
-    public void devolverLocacao(){
+    private long dateDifferenceFromNow(LocalDate date) {
+        LocalDate today = LocalDate.now();
+        return ChronoUnit.DAYS.between(date, today);
+    }
+
+    public void devolverLocacao() {
         if (!view.getTransacoesTable().getSelectionModel().isSelectionEmpty()) {
             int idveiculo = ttm.getIdOfSelectedVeiculo(view.getTransacoesTable());
             int idlocacao = GetId.getIdLocacaoFromRented(idveiculo);
-            //if (idlocacao == 0) view.apresentaInfo("Esse veiculo não possui locação ativa");
-            locDao.devolver(idlocacao, idveiculo);
-            switch (ttm.getTipoVeiculo()){
-                case 1 -> showAllMotos();
-                case 2 -> showAllAutos();
-                case 3 -> showAllVans();
-            }view.apresentaInfo("Veículo devolvido.");
+            double valorDiaria = ttm.getValorDiariaLocacao(view.getTransacoesTable());
+            int dias = GetId.getDiasFromRented(idveiculo);
+            LocalDate date = ttm.getDateOfSelectedVeiculo(view.getTransacoesTable());
+            long dif = dateDifferenceFromNow(date.plusDays(dias));
+System.out.println(idveiculo+" "+dias+" "+date+" "+dif+"\n");
+
+            if (dif < dias) { // devolvendo antes da data prevista.
+                double pagamentoReduzido = dias * valorDiaria - (dias - dif) * valorDiaria;
+System.out.println(valorDiaria+" "+pagamentoReduzido+" "+idlocacao); System.out.println((dias - dif+"\n"));
+                locDao.devolverDataNaoPrevista(idlocacao, idveiculo, (int) (dias - dif), pagamentoReduzido);
+                view.apresentaInfo("Valor a pagar: " + pagamentoReduzido + " Reais.");
+                switch (ttm.getTipoVeiculo()) {
+                    case 1 ->
+                        showAllMotos();
+                    case 2 ->
+                        showAllAutos();
+                    case 3 ->
+                        showAllVans();
+                }
+                view.apresentaInfo("Veículo devolvido.");
+
+            } else if (dif > dias) { // devolvendo atrasado.
+                double pagamentoComMulta = dias * valorDiaria - (dif - dias) * valorDiaria;
+System.out.println(valorDiaria+" "+pagamentoComMulta+" "+idlocacao); System.out.println((dias + dif+"\n"));
+
+                locDao.devolverDataNaoPrevista(idlocacao, idveiculo, (int) (dias + dif), pagamentoComMulta);
+                view.apresentaInfo("Valor a pagar: " + pagamentoComMulta + " Reais.");
+                switch (ttm.getTipoVeiculo()) {
+                    case 1 ->
+                        showAllMotos();
+                    case 2 ->
+                        showAllAutos();
+                    case 3 ->
+                        showAllVans();
+                }
+                view.apresentaInfo("Veículo devolvido.");
+
+            } else { // devolvendo no dia certo.
+                locDao.devolver(idlocacao, idveiculo);
+                switch (ttm.getTipoVeiculo()) {
+                    case 1 ->
+                        showAllMotos();
+                    case 2 ->
+                        showAllAutos();
+                    case 3 ->
+                        showAllVans();
+                }
+                view.apresentaInfo("Veículo devolvido.");
+            }
         }
     }
+
     /*
-    public void newVeiculo() {
-        try {
-            Veiculo v = view.getVeiculoFormulario();
-
-            if (v instanceof Motocicleta moto) {
-                if (!motoDao.motoExists(moto)) {
-                    showMotos();
-                    ttm.addVeiculo(moto);//view.addVeiculoToVtm(moto);
-                    motoDao.add(moto);
-                    view.clearFieldsVeiculo();
-                } else {
-                    view.apresentaInfo("vehicle already exists");
-                }
-            } else if (v instanceof Automovel) {
-                Automovel auto = (Automovel) v;
-                if (!autoDao.autoExists(auto)) {
-                    ttm.addVeiculo(auto);//view.addVeiculoToVtm(auto);
-                    autoDao.add(auto);
-                    view.clearFieldsVeiculo();
-                } else {
-                    view.apresentaInfo("vehicle already exists");
-                }
-            } else if (v instanceof Van) {
-                Van van = (Van) v;
-                if (!vanDao.vanExists(van)) {
-                    ttm.addVeiculo(van);//view.addVeiculoToVtm(van);
-                    vanDao.add(van);
-                    view.clearFieldsVeiculo();
-                } else {
-                    view.apresentaInfo("vehicle already exists");
-                }
-            }
-
-        } catch (IOException | SQLException | NullPointerException e) {
-            view.apresentaErro("Erro ao incluir Veiculo.");
-            e.printStackTrace();
-        } catch (NumberFormatException e) {
-            view.apresentaErro("preencha corretamente o ano.");
-            e.printStackTrace();
-        }
-    }
-
-    
-    public void updateVeiculo() {
-        try {
-            Cliente cliente = view.getClienteFormulario();
-            int row = view.getSelectedRowAtClienteTable();
-            view.updateClienteAtCtm(row, cliente);
-            cliDao.update(cliente);
-            view.clearFieldsCliente();
-
-        } catch (IOException | SQLException | NullPointerException e) {
-            view.apresentaErro("Erro ao atualizar Cliente.");
-            e.printStackTrace();
-        }
-    }
-
-    public void deleteVeiculo() {
-        try {
-            ArrayList<Cliente> clientes = view.removeClientesFromSelectedRowsAtCtm();
-            for (Cliente c : clientes) {
-                cliDao.delete(c);
-                view.removeSelectedRowsAtClienteTable();
-            }
-            view.clearFieldsCliente();
-
-        } catch (IOException | SQLException | NullPointerException e) {
-            view.apresentaErro("Erro ao deletar Cliente.");
-            e.printStackTrace();
-        }
-    }
-     */
     public void showMotos() {
         try {
             MotocicletaDaoSql motoDao = new MotocicletaDaoSql();
@@ -188,7 +171,7 @@ public class TransacoesTabController {
             e.printStackTrace();
         }
     }
-
+     */
     public void showAllMotos() {
         try {
             MotocicletaDaoSql motoDao = new MotocicletaDaoSql();
@@ -222,6 +205,7 @@ public class TransacoesTabController {
         }
         // }
     }
+
     public void showAllAutos() {
         try {
             AutomovelDaoSql autoDao = new AutomovelDaoSql();
@@ -255,6 +239,7 @@ public class TransacoesTabController {
         }
         // }
     }
+
     public void showAllVans() {
         try {
             VanDaoSql vanDao = new VanDaoSql();
@@ -473,5 +458,9 @@ public class TransacoesTabController {
         view.getLblDataTransacoes().setVisible(b);
         view.getFtxtDataTransacoes().setVisible(b);
         view.getBtnLocar().setVisible(b);
+    }
+
+    public void setVisibilityDevolucaoOptions(boolean b) {
+        view.getBtnDevolver().setVisible(b);
     }
 }

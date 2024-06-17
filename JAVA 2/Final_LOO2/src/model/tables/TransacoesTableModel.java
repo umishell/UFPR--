@@ -1,9 +1,11 @@
 package model.tables;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import model.connection.GetId;
 import model.dto.Automovel;
 import model.dto.Motocicleta;
 import model.dto.Van;
@@ -389,8 +391,8 @@ public class TransacoesTableModel extends DefaultTableModel {
         // Convert row index to model index (consider sorting)
         int modelRow = table.convertRowIndexToModel(selectedRow);
 
-        System.out.println("categoria: "+listaMotos.get(modelRow).getCategoria());
-        System.out.println("moto: "+listaMotos.get(modelRow).getValorDiariaLocacao(listaMotos.get(modelRow).getCategoria()));
+        System.out.println("categoria: " + listaMotos.get(modelRow).getCategoria());
+        System.out.println("moto: " + listaMotos.get(modelRow).getValorDiariaLocacao(listaMotos.get(modelRow).getCategoria()));
         return switch (tipoVeiculo) {
             case 1 ->
                 listaMotos.get(modelRow).getValorDiariaLocacao(listaMotos.get(modelRow).getCategoria());
@@ -425,30 +427,22 @@ public class TransacoesTableModel extends DefaultTableModel {
                 0;
         }; // Unexpected vehicle type
     }
-    
-    public int getDateOfSelectedVeiculo(JTable table) {
+
+    public LocalDate getDateOfSelectedVeiculo(JTable table) {
         int selectedRow = table.getSelectedRow();
-
-        // Check for valid selection
         if (selectedRow < 0) {
-            return 0; // No row selected
+            return null;
         }
-
-        // Convert row index to model index (consider sorting)
         int modelRow = table.convertRowIndexToModel(selectedRow);
-
         return switch (tipoVeiculo) {
             case 1 ->
-                listaMotos.get(modelRow).getIdveiculo();
+                GetId.getDateFromRented(listaMotos.get(modelRow).getIdveiculo());
             case 2 ->
-                listaAutos.get(modelRow).getIdveiculo();
+                GetId.getDateFromRented(listaAutos.get(modelRow).getIdveiculo());
             case 3 ->
-                listaVans.get(modelRow).getIdveiculo();
+                GetId.getDateFromRented(listaVans.get(modelRow).getIdveiculo());
             default ->
-                0;
-        }; // Unexpected vehicle type
+                null;
+        };
     }
-    
-    
-
 }
