@@ -68,6 +68,7 @@ public class LocacaoDaoSql implements LocacaoDao {
     private final String updateEstadoDevolver = "UPDATE veiculo SET idestado=1 WHERE idveiculo=?";
 
     public void devolver(int idlocacao, int idveiculo) {
+        System.out.println("idlocacao "+idlocacao+" . idveiculo "+idveiculo);
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(devolver);
                 PreparedStatement stmt0 = conn.prepareStatement(updateEstadoDevolver);) {
             stmt.setInt(1, idlocacao);
@@ -76,7 +77,8 @@ public class LocacaoDaoSql implements LocacaoDao {
             stmt0.executeUpdate();
 
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@LocacaoDaoSql.update():  Error updating locacao: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@LocacaoDaoSql.devolver():  Error updating locacao: " + e.getMessage());
+            e.printStackTrace();
         }
     }
     private final String devolverAdiantado = "UPDATE locacao SET active=0, dias = ?, valor = ? WHERE idlocacao = ?";
@@ -85,13 +87,16 @@ public class LocacaoDaoSql implements LocacaoDao {
     public void devolverDataNaoPrevista(int idlocacao, int idveiculo, int dias, double valor) {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(devolverAdiantado);
                 PreparedStatement stmt0 = conn.prepareStatement(updateEstadoDevolverAdiantado);) {
-            stmt.setInt(1, idlocacao);
+            stmt.setInt(1, dias);
+            stmt.setDouble(2, valor);
+            stmt.setInt(3, idlocacao);
             stmt0.setInt(1, idveiculo);
             stmt.executeUpdate();
             stmt0.executeUpdate();
 
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@LocacaoDaoSql.update():  Error updating locacao: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@devolverDataNaoPrevista():  Error updating locacao: " + e.getMessage());
+            e.printStackTrace();
         }
     }
   

@@ -1031,6 +1031,11 @@ public class Frame extends javax.swing.JFrame {
         ttm.setTipoTransacao(2);//tipo 2 devolução
         ctrlTransacoes.setVisibilityLocacaoOptions(false);
         ctrlTransacoes.setVisibilityDevolucaoOptions(true);
+        switch (ttm.getTipoVeiculo()){
+            case 1 ->ctrlTransacoes.showAllMotos();
+            case 2 ->ctrlTransacoes.showAllAutos();
+            case 3 ->ctrlTransacoes.showAllVans();
+        }
     }//GEN-LAST:event_btnDevolucaoActionPerformed
 
     private void btnLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocacaoActionPerformed

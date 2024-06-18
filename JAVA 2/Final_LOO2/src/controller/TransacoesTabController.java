@@ -90,24 +90,26 @@ public class TransacoesTabController {
     }
 
     private long dateDifferenceFromNow(LocalDate date) {
-        LocalDate today = LocalDate.now();
+        //LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.parse("2024-06-17");   //TESTE
         return ChronoUnit.DAYS.between(date, today);
     }
 
     public void devolverLocacao() {
         if (!view.getTransacoesTable().getSelectionModel().isSelectionEmpty()) {
             int idveiculo = ttm.getIdOfSelectedVeiculo(view.getTransacoesTable());
-            int idlocacao = GetId.getIdLocacaoFromRented(idveiculo);
+            int idlocacao = GetId.getIdLocacaoFromRented(idveiculo); 
             double valorDiaria = ttm.getValorDiariaLocacao(view.getTransacoesTable());
             int dias = GetId.getDiasFromRented(idveiculo);
             LocalDate date = ttm.getDateOfSelectedVeiculo(view.getTransacoesTable());
-            long dif = dateDifferenceFromNow(date.plusDays(dias));
-System.out.println(idveiculo+" "+dias+" "+date+" "+dif+"\n");
+            long dif = dateDifferenceFromNow(date.plusDays(dias)); 
+System.out.println("@devolverLocacao(): dias "+dias+"\n Localdate "+date+"\n diff "+dif+"\n");System.out.println("idlocacao "+idlocacao+"\n idveiculo "+idveiculo);
 
-            if (dif < dias) { // devolvendo antes da data prevista.
-                double pagamentoReduzido = dias * valorDiaria - (dias - dif) * valorDiaria;
-System.out.println(valorDiaria+" "+pagamentoReduzido+" "+idlocacao); System.out.println((dias - dif+"\n"));
-                locDao.devolverDataNaoPrevista(idlocacao, idveiculo, (int) (dias - dif), pagamentoReduzido);
+            if (dif < 0) { // devolvendo antes da data prevista.
+                System.out.println("\n(dif < 0)devolvendo antes da data prevista.");
+                double pagamentoReduzido = (dias + dif) * valorDiaria;
+System.out.println("\npagamentoreduzido "+pagamentoReduzido+" Reais\n"); 
+                locDao.devolverDataNaoPrevista(idlocacao, idveiculo, (int)(dias + dif), pagamentoReduzido);
                 view.apresentaInfo("Valor a pagar: " + pagamentoReduzido + " Reais.");
                 switch (ttm.getTipoVeiculo()) {
                     case 1 ->
@@ -119,11 +121,12 @@ System.out.println(valorDiaria+" "+pagamentoReduzido+" "+idlocacao); System.out.
                 }
                 view.apresentaInfo("Veículo devolvido.");
 
-            } else if (dif > dias) { // devolvendo atrasado.
-                double pagamentoComMulta = dias * valorDiaria - (dif - dias) * valorDiaria;
-System.out.println(valorDiaria+" "+pagamentoComMulta+" "+idlocacao); System.out.println((dias + dif+"\n"));
+            } else if (dif > 0) { // devolvendo atrasado.
+                System.out.println("(dif < 0)devolvendo atrasado.");
+                double pagamentoComMulta = (dias + dif) * valorDiaria;
+System.out.println("\npagamentocommulta "+pagamentoComMulta+" Reais\n"); 
 
-                locDao.devolverDataNaoPrevista(idlocacao, idveiculo, (int) (dias + dif), pagamentoComMulta);
+                locDao.devolverDataNaoPrevista(idlocacao, idveiculo, (int)(dias + dif), pagamentoComMulta);
                 view.apresentaInfo("Valor a pagar: " + pagamentoComMulta + " Reais.");
                 switch (ttm.getTipoVeiculo()) {
                     case 1 ->
@@ -136,6 +139,7 @@ System.out.println(valorDiaria+" "+pagamentoComMulta+" "+idlocacao); System.out.
                 view.apresentaInfo("Veículo devolvido.");
 
             } else { // devolvendo no dia certo.
+                System.out.println("\n(else)devolvendo no dia certo.");
                 locDao.devolver(idlocacao, idveiculo);
                 switch (ttm.getTipoVeiculo()) {
                     case 1 ->
@@ -194,7 +198,7 @@ System.out.println(valorDiaria+" "+pagamentoComMulta+" "+idlocacao); System.out.
                 }
             }
             if (motos.isEmpty()) {
-                view.apresentaInfo("não há motocicletas");
+                //view.apresentaInfo("não há motocicletas");
             } else {
                 ttm.setListaMotos(motos);
                 ttm.fireTableDataChanged();
@@ -228,7 +232,7 @@ System.out.println(valorDiaria+" "+pagamentoComMulta+" "+idlocacao); System.out.
                 }
             }
             if (autos.isEmpty()) {
-                view.apresentaInfo("não há automoveis");
+               // view.apresentaInfo("não há automoveis");
             } else {
                 ttm.setListaAutos(autos);
                 ttm.fireTableDataChanged();
@@ -262,7 +266,7 @@ System.out.println(valorDiaria+" "+pagamentoComMulta+" "+idlocacao); System.out.
                 }
             }
             if (vans.isEmpty()) {
-                view.apresentaInfo("não há vans");
+                //view.apresentaInfo("não há vans");
             } else {
                 ttm.setListaVans(vans);
                 ttm.fireTableDataChanged();

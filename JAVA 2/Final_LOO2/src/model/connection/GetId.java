@@ -79,7 +79,7 @@ public class GetId {
                                                    SELECT idlocacao FROM locacao
                                                    WHERE idveiculo = ? 
                                                    AND date = (SELECT MAX(date) FROM locacao WHERE idveiculo = ? ) 
-                                                   AND active = 1 );""";
+                                                   AND active = 1""";
 
     public static int getIdLocacaoFromRented(int idveiculo) {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(sqlGetidLocacaoRented);) {
@@ -91,6 +91,7 @@ public class GetId {
             }
         } catch (SQLException | IOException e) {
             JOptionPane.showMessageDialog(null, "@GetId.getIdLocacaoFromRented(): " + e.getMessage());
+            e.printStackTrace();
         }
         return 0;
     }
