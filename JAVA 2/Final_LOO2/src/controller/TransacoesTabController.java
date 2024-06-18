@@ -83,6 +83,8 @@ public class TransacoesTabController {
                 view.apresentaInfo("Invalid date format. Please use YYYY-MM-DD.");
             } catch (NumberFormatException e) {
                 view.apresentaInfo("Preencha o numero de dias.");
+            } catch (RuntimeException e) {
+                view.apresentaInfo("Data é no Passado.");
             }
         } else {
             view.apresentaInfo("Selecione Cliente e Veiculo para locar.");
@@ -90,8 +92,8 @@ public class TransacoesTabController {
     }
 
     private long dateDifferenceFromNow(LocalDate date) {
-        //LocalDate today = LocalDate.now();
-        LocalDate today = LocalDate.parse("2024-06-17");   //TESTE
+        LocalDate today = LocalDate.now();
+        //LocalDate today = LocalDate.parse("2024-06-17");   //TESTE
         return ChronoUnit.DAYS.between(date, today);
     }
 
@@ -101,7 +103,7 @@ public class TransacoesTabController {
             int idlocacao = GetId.getIdLocacaoFromRented(idveiculo); 
             double valorDiaria = ttm.getValorDiariaLocacao(view.getTransacoesTable());
             int dias = GetId.getDiasFromRented(idveiculo);
-            LocalDate date = ttm.getDateOfSelectedVeiculo(view.getTransacoesTable());
+            LocalDate date = ttm.getDateOfSelectedVeiculo(view.getTransacoesTable()); System.out.println(date);
             long dif = dateDifferenceFromNow(date.plusDays(dias)); 
 System.out.println("@devolverLocacao(): dias "+dias+"\n Localdate "+date+"\n diff "+dif+"\n");System.out.println("idlocacao "+idlocacao+"\n idveiculo "+idveiculo);
 
@@ -141,6 +143,7 @@ System.out.println("\npagamentocommulta "+pagamentoComMulta+" Reais\n");
             } else { // devolvendo no dia certo.
                 System.out.println("\n(else)devolvendo no dia certo.");
                 locDao.devolver(idlocacao, idveiculo);
+                view.apresentaInfo("Valor a pagar: " + dias*valorDiaria + " Reais.");
                 switch (ttm.getTipoVeiculo()) {
                     case 1 ->
                         showAllMotos();
