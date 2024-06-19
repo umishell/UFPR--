@@ -7,6 +7,7 @@ import model.connection.DaoType;
 import model.connection.LocacaoDaoSql;
 import model.connection.MotocicletaDaoSql;
 import model.connection.VanDaoSql;
+import model.connection.VendaDaoSql;
 import model.tables.ClientesTableModel;
 import model.tables.ClientesTransacoesTableModel;
 import model.tables.TableFilter;
@@ -41,10 +42,11 @@ public class Main {
         AutomovelDaoSql autoDao = AutomovelDaoSql.getAutomovelDaoSql();//DaoFactory.getAutomovelDao(DaoType.SQL);
         VanDaoSql vanDao = VanDaoSql.getVanDaoSql();//DaoFactory.getVanDao(DaoType.SQL);
         LocacaoDaoSql locDao = LocacaoDaoSql.getLocacaoDaoSql();
+        VendaDaoSql selDao = VendaDaoSql.getVendaDaoSql();
 
         ClientesTabController ctrlClientes = new ClientesTabController(view, cliDao);
         VeiculosTabController ctrlVeiculos = new VeiculosTabController(view, vtm, filtroVeiculoTable, motoDao, autoDao, vanDao);
-        TransacoesTabController ctrlTransacoes = new TransacoesTabController(view, ttm, cttm, filtroTransacoesTable, filtroClientesTransacoesTable, motoDao, autoDao, vanDao, locDao);
+        TransacoesTabController ctrlTransacoes = new TransacoesTabController(view, ttm, cttm, filtroTransacoesTable, filtroClientesTransacoesTable, motoDao, autoDao, vanDao, locDao, selDao);
 
         view.setControllers(ctrlClientes, ctrlVeiculos, ctrlTransacoes);
 

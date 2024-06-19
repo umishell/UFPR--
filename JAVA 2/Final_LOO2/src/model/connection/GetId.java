@@ -9,7 +9,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import javax.swing.JOptionPane;
 
-public class GetId {
+public abstract class GetId {
 
     private static final String sqlGetidVeiculo = "SELECT idveiculo FROM veiculo WHERE placa = ?";
 

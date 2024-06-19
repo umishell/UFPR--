@@ -36,11 +36,10 @@ public class MotocicletaDaoSql implements MotocicletaDao {
     }
 
     private final String insertVeiculo = "INSERT INTO veiculo (valorDeCompra, tipo, ano, placa) VALUES (?,?,?,?);";
-    private final String insertMoto = "INSERT INTO motocicleta (idveiculo, idmodeloMotocicleta) VALUES (?,?))";
+    private final String insertMoto = "INSERT INTO motocicleta (idveiculo, idmodeloMotocicleta) VALUES (?,?)";
 
     @Override
     public void add(Motocicleta moto) {
-//moto.to_String();
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtVeiculo = conn.prepareStatement(insertVeiculo, Statement.RETURN_GENERATED_KEYS); PreparedStatement stmtMoto = conn.prepareStatement(insertMoto);) {
             stmtVeiculo.setDouble(1, moto.getValorDeCompra());
             stmtVeiculo.setString(2, "Motocicleta");
@@ -162,22 +161,18 @@ public class MotocicletaDaoSql implements MotocicletaDao {
                                       FROM motocicleta
                                       INNER JOIN veiculo ON motocicleta.idveiculo = veiculo.idveiculo
                                       INNER JOIN locacao ON motocicleta.idveiculo = locacao.idveiculo
-                                     
                                       INNER JOIN estado ON veiculo.idestado = estado.idestado
                                       INNER JOIN modeloMotocicleta ON motocicleta.idmodeloMotocicleta = modelomotocicleta.idmodeloMotocicleta
                                       INNER JOIN categoria ON modelomotocicleta.idcategoria = categoria.idcategoria
                                       INNER JOIN marca ON modelomotocicleta.idmarca = marca.idmarca
                                       WHERE estado.estado = 'locado' AND locacao.idcliente = ?
-                                      GROUP BY veiculo.idveiculo, marca.marca, estado.estado, categoria.categoria,
-                                     		  veiculo.valorDeCompra, veiculo.placa, veiculo.ano, modelomotocicleta.modelo;
                                      """;
 
     public ArrayList<Motocicleta> getAllLocadasPorCliente(int idcliente) {
 
         ArrayList<Motocicleta> motos = new ArrayList<>();
 
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("select * from locacao where idveiculo = ?"); 
-                PreparedStatement stmtLista = conn.prepareStatement(selectAllLocadas);) {
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("select * from locacao where idveiculo = ?"); PreparedStatement stmtLista = conn.prepareStatement(selectAllLocadas);) {
             stmtLista.setInt(1, idcliente);
             try (ResultSet rs = stmtLista.executeQuery();) {
                 while (rs.next()) {
@@ -220,7 +215,7 @@ public class MotocicletaDaoSql implements MotocicletaDao {
         return motos;
     }
 
-    private final String selectAllDisponiveis = """
+    private final String toRent = """
                                      SELECT
                                        veiculo.idveiculo,
                                        marca.marca,
@@ -236,59 +231,112 @@ public class MotocicletaDaoSql implements MotocicletaDao {
                                      INNER JOIN modeloMotocicleta ON motocicleta.idmodeloMotocicleta = modelomotocicleta.idmodeloMotocicleta
                                      INNER JOIN categoria ON modelomotocicleta.idcategoria = categoria.idcategoria
                                      INNER JOIN marca ON modelomotocicleta.idmarca = marca.idmarca
-                                     WHERE estado.estado = ?
-                                     GROUP BY veiculo.idveiculo, marca.marca, estado.estado, categoria.categoria,
-                                              veiculo.valorDeCompra, veiculo.placa, veiculo.ano, modelomotocicleta.modelo;
+                                     WHERE estado.estado = 'disponivel'
                                      """;
 
-    public ArrayList<Motocicleta> getAllWithEstado(String estado) {
+    public ArrayList<Motocicleta> getAllToRent() {
 
         ArrayList<Motocicleta> motos = new ArrayList<>();
 
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("select * from locacao where idveiculo = ?"); 
-                PreparedStatement stmtLista = conn.prepareStatement(selectAllDisponiveis);) {
-            stmtLista.setString(1, estado);
-            try (ResultSet rs = stmtLista.executeQuery();) {
-                while (rs.next()) {
-                    int idveiculo = rs.getInt("idveiculo");
-                    String marca = rs.getString("marca");
-                    //String estado = rs.getString("estado");
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("SELECT * FROM locacao WHERE idveiculo = ?"); PreparedStatement stmtLista = conn.prepareStatement(toSell); ResultSet rs = stmtLista.executeQuery();) {
 
-                    ArrayList<Locacao> locacoes = new ArrayList<>();
-                    stmtLocacoes.setInt(1, idveiculo);
-                    try (ResultSet rs0 = stmtLocacoes.executeQuery();) {
-                        if (!rs0.isBeforeFirst()) { //if there are rows available{
-                            //System.out.println("veiculo " + idveiculo + " sem locacoes.");
-                            locacoes = null;
-                        } else {
-                            while (rs0.next()) {
-                                boolean active;
-                                if (estado == "disponivel") {
-                                    active = true;
-                                } else {
-                                    active = false;
-                                }
-                                int dias = rs0.getInt("dias");
-                                double valor = rs0.getDouble("valor");
-                                LocalDate date = rs0.getDate("date").toLocalDate();
-                                int idCliente = rs0.getInt("idcliente");
-                                locacoes.add(new Locacao(active, dias, valor, date, idCliente, idveiculo));
-                            }
+            while (rs.next()) {
+                int idveiculo = rs.getInt("idveiculo");
+                String marca = rs.getString("marca");
+                String estado = rs.getString("estado");
+
+                ArrayList<Locacao> locacoes = new ArrayList<>();
+                stmtLocacoes.setInt(1, idveiculo);
+                try (ResultSet rs0 = stmtLocacoes.executeQuery();) {
+                    if (!rs0.isBeforeFirst()) { //if there are rows available{
+                        locacoes = null;
+                    } else {
+                        while (rs0.next()) {
+                            boolean active = rs0.getBoolean("active");
+                            int dias = rs0.getInt("dias");
+                            double valor = rs0.getDouble("valor");
+                            LocalDate date = rs0.getDate("date").toLocalDate();
+                            int idCliente = rs0.getInt("idcliente");
+                            locacoes.add(new Locacao(active, dias, valor, date, idCliente, idveiculo));
                         }
                     }
-                    String categoria = rs.getString("categoria");
-                    Double valorDeCompra = rs.getDouble("valorDeCompra");
-                    String placa = rs.getString("placa");
-                    int ano = rs.getInt("ano");
-                    String modelo = rs.getString("modelo");
-
-                    motos.add(new Motocicleta(idveiculo, "Motocicleta", marca, estado, locacoes, categoria, valorDeCompra, placa, ano, modelo));
                 }
+                String categoria = rs.getString("categoria");
+                Double valorDeCompra = rs.getDouble("valorDeCompra");
+                String placa = rs.getString("placa");
+                int ano = rs.getInt("ano");
+                String modelo = rs.getString("modelo");
+
+                motos.add(new Motocicleta(idveiculo, "Motocicleta", marca, estado, locacoes, categoria, valorDeCompra, placa, ano, modelo));
             }
+
             return motos;
 
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.getAllNaoLocados():  Error getting all motos nao locadas: \n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.getAllToRent(): \n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return motos;
+    }
+    private final String toSell = """
+                                     SELECT
+                                       veiculo.idveiculo,
+                                       marca.marca,
+                                       estado.estado,
+                                       categoria.categoria,
+                                       veiculo.valorDeCompra,
+                                       veiculo.placa,
+                                       veiculo.ano,
+                                       modelomotocicleta.modelo
+                                     FROM motocicleta
+                                     INNER JOIN veiculo ON motocicleta.idveiculo = veiculo.idveiculo
+                                     INNER JOIN estado ON veiculo.idestado = estado.idestado
+                                     INNER JOIN modeloMotocicleta ON motocicleta.idmodeloMotocicleta = modelomotocicleta.idmodeloMotocicleta
+                                     INNER JOIN categoria ON modelomotocicleta.idcategoria = categoria.idcategoria
+                                     INNER JOIN marca ON modelomotocicleta.idmarca = marca.idmarca
+                                     WHERE estado.estado != 'vendido'
+                                     """;
+
+    public ArrayList<Motocicleta> getAllToSell() {
+
+        ArrayList<Motocicleta> motos = new ArrayList<>();
+
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("SELECT * FROM locacao WHERE idveiculo = ?"); PreparedStatement stmtLista = conn.prepareStatement(toSell); ResultSet rs = stmtLista.executeQuery();) {
+
+            while (rs.next()) {
+                int idveiculo = rs.getInt("idveiculo");
+                String marca = rs.getString("marca");
+                String estado = rs.getString("estado");
+
+                ArrayList<Locacao> locacoes = new ArrayList<>();
+                stmtLocacoes.setInt(1, idveiculo);
+                try (ResultSet rs0 = stmtLocacoes.executeQuery();) {
+                    if (!rs0.isBeforeFirst()) { //if there are rows available{
+                        locacoes = null;
+                    } else {
+                        while (rs0.next()) {
+                            boolean active = rs0.getBoolean("active");
+                            int dias = rs0.getInt("dias");
+                            double valor = rs0.getDouble("valor");
+                            LocalDate date = rs0.getDate("date").toLocalDate();
+                            int idCliente = rs0.getInt("idcliente");
+                            locacoes.add(new Locacao(active, dias, valor, date, idCliente, idveiculo));
+                        }
+                    }
+                }
+                String categoria = rs.getString("categoria");
+                Double valorDeCompra = rs.getDouble("valorDeCompra");
+                String placa = rs.getString("placa");
+                int ano = rs.getInt("ano");
+                String modelo = rs.getString("modelo");
+
+                motos.add(new Motocicleta(idveiculo, "Motocicleta", marca, estado, locacoes, categoria, valorDeCompra, placa, ano, modelo));
+            }
+
+            return motos;
+
+        } catch (SQLException | IOException e) {
+            JOptionPane.showMessageDialog(null, "@MotocicletaDaoSql.getAllToSell():  \n" + e.getMessage());
             e.printStackTrace();
         }
         return motos;

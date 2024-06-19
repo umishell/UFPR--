@@ -37,7 +37,7 @@ public class VanDaoSql implements VanDao {
     }
 
     private final String insertVeiculo = "INSERT INTO veiculo (valorDeCompra, tipo, ano, placa) VALUES (?,?,?,?);";
-    private final String insertVan = "INSERT INTO van (idveiculo, idmodeloVan) VALUES (?,?))";
+    private final String insertVan = "INSERT INTO van (idveiculo, idmodeloVan) VALUES (?,?)";
     
     @Override
     public void add(Van van) {
@@ -149,8 +149,6 @@ public class VanDaoSql implements VanDao {
                                       INNER JOIN categoria ON modelovan.idcategoria = categoria.idcategoria
                                       INNER JOIN marca ON modelovan.idmarca = marca.idmarca
                                       WHERE estado.estado = 'locado' AND locacao.idcliente = ?
-                                      GROUP BY veiculo.idveiculo, marca.marca, estado.estado, categoria.categoria,
-                                     		  veiculo.valorDeCompra, veiculo.placa, veiculo.ano, modelovan.modelo;
                                      """;
 
     public ArrayList<Van> getAllLocadasPorCliente(int idcliente) {
@@ -200,7 +198,7 @@ public class VanDaoSql implements VanDao {
         return vans;
     }
 
-    private final String selectAllDisponiveis = """
+    private final String toRent = """
                                      SELECT
                                        veiculo.idveiculo,
                                        marca.marca,
@@ -216,64 +214,116 @@ public class VanDaoSql implements VanDao {
                                      INNER JOIN modeloVan ON van.idmodeloVan = modelovan.idmodeloVan
                                      INNER JOIN categoria ON modelovan.idcategoria = categoria.idcategoria
                                      INNER JOIN marca ON modelovan.idmarca = marca.idmarca
-                                     WHERE estado.estado = ?
-                                     GROUP BY veiculo.idveiculo, marca.marca, estado.estado, categoria.categoria,
-                                              veiculo.valorDeCompra, veiculo.placa, veiculo.ano, modelovan.modelo;
+                                     WHERE estado.estado = 'disponivel'
                                      """;
 
-    public ArrayList<Van> getAllWithEstado(String estado) {
+    public ArrayList<Van> getAllToRent() {
 
         ArrayList<Van> vans = new ArrayList<>();
 
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("SELECT * FROM locacao WHERE idveiculo = ?"); 
-                PreparedStatement stmtLista = conn.prepareStatement(selectAllDisponiveis);) {
-            stmtLista.setString(1, estado);
-            try (ResultSet rs = stmtLista.executeQuery();) {
-                while (rs.next()) {
-                    int idveiculo = rs.getInt("idveiculo");
-                    String marca = rs.getString("marca");
-                    //String estado = rs.getString("estado");
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("SELECT * FROM locacao WHERE idveiculo = ?"); PreparedStatement stmtLista = conn.prepareStatement(toSell); ResultSet rs = stmtLista.executeQuery();) {
 
-                    ArrayList<Locacao> locacoes = new ArrayList<>();
-                    stmtLocacoes.setInt(1, idveiculo);
-                    try (ResultSet rs0 = stmtLocacoes.executeQuery();) {
-                        if (!rs0.isBeforeFirst()) { //if there are rows available{
-                            //System.out.println("veiculo " + idveiculo + " sem locacoes.");
-                            locacoes = null;
-                        } else {
-                            while (rs0.next()) {
-                                boolean active;
-                                if (estado == "disponivel") {
-                                    active = true;
-                                } else {
-                                    active = false;
-                                }
-                                int dias = rs0.getInt("dias");
-                                double valor = rs0.getDouble("valor");
-                                LocalDate date = rs0.getDate("date").toLocalDate();
-                                int idCliente = rs0.getInt("idcliente");
-                                locacoes.add(new Locacao(active, dias, valor, date, idCliente, idveiculo));
-                            }
+            while (rs.next()) {
+                int idveiculo = rs.getInt("idveiculo");
+                String marca = rs.getString("marca");
+                String estado = rs.getString("estado");
+
+                ArrayList<Locacao> locacoes = new ArrayList<>();
+                stmtLocacoes.setInt(1, idveiculo);
+                try (ResultSet rs0 = stmtLocacoes.executeQuery();) {
+                    if (!rs0.isBeforeFirst()) { //if there are rows available{
+                        locacoes = null;
+                    } else {
+                        while (rs0.next()) {
+                            boolean active = rs0.getBoolean("active");
+                            int dias = rs0.getInt("dias");
+                            double valor = rs0.getDouble("valor");
+                            LocalDate date = rs0.getDate("date").toLocalDate();
+                            int idCliente = rs0.getInt("idcliente");
+                            locacoes.add(new Locacao(active, dias, valor, date, idCliente, idveiculo));
                         }
                     }
-                    String categoria = rs.getString("categoria");
-                    Double valorDeCompra = rs.getDouble("valorDeCompra");
-                    String placa = rs.getString("placa");
-                    int ano = rs.getInt("ano");
-                    String modelo = rs.getString("modelo");
-
-                    vans.add(new Van(idveiculo, "Van", marca, estado, locacoes, categoria, valorDeCompra, placa, ano, modelo));
                 }
+                String categoria = rs.getString("categoria");
+                Double valorDeCompra = rs.getDouble("valorDeCompra");
+                String placa = rs.getString("placa");
+                int ano = rs.getInt("ano");
+                String modelo = rs.getString("modelo");
+
+                vans.add(new Van(idveiculo, "Van", marca, estado, locacoes, categoria, valorDeCompra, placa, ano, modelo));
             }
+
             return vans;
 
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@VanDaoSql.getAllNaoLocados():  Error getting all vans nao locadas: \n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@VanDaoSql.getAllToRent(): \n" + e.getMessage());
             e.printStackTrace();
         }
         return vans;
     }
+    private final String toSell = """
+                                     SELECT
+                                       veiculo.idveiculo,
+                                       marca.marca,
+                                       estado.estado,
+                                       categoria.categoria,
+                                       veiculo.valorDeCompra,
+                                       veiculo.placa,
+                                       veiculo.ano,
+                                       modelovan.modelo
+                                     FROM van
+                                     INNER JOIN veiculo ON van.idveiculo = veiculo.idveiculo
+                                     INNER JOIN estado ON veiculo.idestado = estado.idestado
+                                     INNER JOIN modeloVan ON van.idmodeloVan = modelovan.idmodeloVan
+                                     INNER JOIN categoria ON modelovan.idcategoria = categoria.idcategoria
+                                     INNER JOIN marca ON modelovan.idmarca = marca.idmarca
+                                     WHERE estado.estado != 'vendido'
+                                     """;
 
+    public ArrayList<Van> getAllToSell() {
+
+        ArrayList<Van> vans = new ArrayList<>();
+
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("SELECT * FROM locacao WHERE idveiculo = ?"); PreparedStatement stmtLista = conn.prepareStatement(toSell); ResultSet rs = stmtLista.executeQuery();) {
+
+            while (rs.next()) {
+                int idveiculo = rs.getInt("idveiculo");
+                String marca = rs.getString("marca");
+                String estado = rs.getString("estado");
+
+                ArrayList<Locacao> locacoes = new ArrayList<>();
+                stmtLocacoes.setInt(1, idveiculo);
+                try (ResultSet rs0 = stmtLocacoes.executeQuery();) {
+                    if (!rs0.isBeforeFirst()) { //if there are rows available{
+                        locacoes = null;
+                    } else {
+                        while (rs0.next()) {
+                            boolean active = rs0.getBoolean("active");
+                            int dias = rs0.getInt("dias");
+                            double valor = rs0.getDouble("valor");
+                            LocalDate date = rs0.getDate("date").toLocalDate();
+                            int idCliente = rs0.getInt("idcliente");
+                            locacoes.add(new Locacao(active, dias, valor, date, idCliente, idveiculo));
+                        }
+                    }
+                }
+                String categoria = rs.getString("categoria");
+                Double valorDeCompra = rs.getDouble("valorDeCompra");
+                String placa = rs.getString("placa");
+                int ano = rs.getInt("ano");
+                String modelo = rs.getString("modelo");
+
+                vans.add(new Van(idveiculo, "Van", marca, estado, locacoes, categoria, valorDeCompra, placa, ano, modelo));
+            }
+
+            return vans;
+
+        } catch (SQLException | IOException e) {
+            JOptionPane.showMessageDialog(null, "@VanDaoSql.getAllToSell():  \n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return vans;
+    }
 
     private final String selectById = """
                                       SELECT

@@ -64,6 +64,7 @@ public class Frame extends javax.swing.JFrame {
         //BUTTON VISUALS
         monospace = new Font("Monospace", Font.BOLD, 14);
         originalBtnColor = btnMotocicletasVeiculos.getBackground();
+        
         costumizeButtons();
 
         //vtm.setTipoVeiculo(1);//tipo 1 moto
@@ -138,6 +139,7 @@ public class Frame extends javax.swing.JFrame {
         btnListarTransacoes = new javax.swing.JButton();
         txtDiasTransacoes = new javax.swing.JTextField();
         btnDevolver = new javax.swing.JButton();
+        btnVender = new javax.swing.JButton();
         tabVeiculos = new javax.swing.JPanel();
         paneVeiculoTable = new javax.swing.JScrollPane();
         veiculosTable = new javax.swing.JTable();
@@ -324,6 +326,13 @@ public class Frame extends javax.swing.JFrame {
             }
         });
 
+        btnVender.setText("Vender");
+        btnVender.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVenderActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout tabTransacoesLayout = new javax.swing.GroupLayout(tabTransacoes);
         tabTransacoes.setLayout(tabTransacoesLayout);
         tabTransacoesLayout.setHorizontalGroup(
@@ -353,7 +362,8 @@ public class Frame extends javax.swing.JFrame {
                                 .addComponent(cboxMarcaTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(cboxCategoriaTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(paneVeiculoTableLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(paneVeiculoTableLocacao, javax.swing.GroupLayout.PREFERRED_SIZE, 716, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnVender))
                         .addGap(262, 262, 262))
                     .addGroup(tabTransacoesLayout.createSequentialGroup()
                         .addComponent(lblPesquisarClientes)
@@ -426,7 +436,9 @@ public class Frame extends javax.swing.JFrame {
                 .addComponent(btnDevolver)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnLocar)
+                    .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnLocar)
+                        .addComponent(btnVender))
                     .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblNumDiasTransacoes)
                         .addComponent(txtDiasTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -1024,6 +1036,14 @@ public class Frame extends javax.swing.JFrame {
         ttm.setTipoTransacao(3);//tipo 3 venda
         ctrlTransacoes.setVisibilityLocacaoOptions(false);
         ctrlTransacoes.setVisibilityDevolucaoOptions(false);
+        switch (ttm.getTipoVeiculo()) {
+            case 1 ->
+                ctrlTransacoes.showAllMotos();
+            case 2 ->
+                ctrlTransacoes.showAllAutos();
+            case 3 ->
+                ctrlTransacoes.showAllVans();
+        }
     }//GEN-LAST:event_btnVendaActionPerformed
 
     private void btnDevolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolucaoActionPerformed
@@ -1136,6 +1156,10 @@ public class Frame extends javax.swing.JFrame {
         ctrlTransacoes.devolverLocacao();
     }//GEN-LAST:event_btnDevolverActionPerformed
 
+    private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
+        ctrlTransacoes.vender();
+    }//GEN-LAST:event_btnVenderActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizarCliente;
@@ -1156,6 +1180,7 @@ public class Frame extends javax.swing.JFrame {
     private javax.swing.JButton btnVansTransacoes;
     private javax.swing.JButton btnVansVeiculos;
     private javax.swing.JButton btnVenda;
+    private javax.swing.JButton btnVender;
     private javax.swing.JComboBox<String> cboxCategoria;
     private javax.swing.JComboBox<String> cboxCategoriaTransacoes;
     private javax.swing.JComboBox<String> cboxCategoriaVeiculo;

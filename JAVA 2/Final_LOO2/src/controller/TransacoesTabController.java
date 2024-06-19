@@ -13,11 +13,13 @@ import model.connection.GetId;
 import model.connection.LocacaoDaoSql;
 import model.connection.MotocicletaDaoSql;
 import model.connection.VanDaoSql;
+import model.connection.VendaDaoSql;
 import model.dto.Automovel;
 import model.dto.Cliente;
 import model.dto.Locacao;
 import model.dto.Motocicleta;
 import model.dto.Van;
+import model.dto.Venda;
 import model.tables.ClientesTransacoesTableModel;
 import model.tables.TableFilter;
 import model.tables.TransacoesTableModel;
@@ -34,9 +36,10 @@ public class TransacoesTabController {
     private AutomovelDaoSql autoDao;
     private VanDaoSql vanDao;
     private LocacaoDaoSql locDao;
+    private VendaDaoSql selDao;
 
     public TransacoesTabController(Frame view, TransacoesTableModel ttm, ClientesTransacoesTableModel cttm, TableFilter f, TableFilter f1,
-            MotocicletaDaoSql motoDao, AutomovelDaoSql autoDao, VanDaoSql vanDao, LocacaoDaoSql locDao) {
+            MotocicletaDaoSql motoDao, AutomovelDaoSql autoDao, VanDaoSql vanDao, LocacaoDaoSql locDao, VendaDaoSql selDao) {
         this.view = view;
         this.ttm = ttm;
         this.cttm = cttm;
@@ -46,6 +49,7 @@ public class TransacoesTabController {
         this.autoDao = autoDao;
         this.vanDao = vanDao;
         this.locDao = locDao;
+        this.selDao = selDao;
     }
 
     public TransacoesTabController() {
@@ -91,6 +95,40 @@ public class TransacoesTabController {
         }
     }
 
+    public void vender() {
+        if (!view.getClientesTransacoesTable().getSelectionModel().isSelectionEmpty() && !view.getTransacoesTable().getSelectionModel().isSelectionEmpty()) {
+            try {
+                int idcliente = cttm.getIdOfSelectedClient(view.getClientesTransacoesTable());
+                System.out.println("idcliente: " + idcliente);
+                int idveiculo = ttm.getIdOfSelectedVeiculo(view.getTransacoesTable());
+                System.out.println("idveiculo: " + idveiculo);
+                LocalDate today = LocalDate.now();
+                Venda venda = new Venda(idveiculo, idcliente, today);
+                selDao.efetivar(venda);
+                switch (ttm.getTipoVeiculo()) {
+                    case 1 ->
+                        showAllMotos();
+                    case 2 ->
+                        showAllAutos();
+                    case 3 ->
+                        showAllVans();
+                }
+                view.apresentaInfo("Venda Concluida.");
+            } catch (/*IOException | SQLException |*/NullPointerException e) {
+                view.apresentaErro("Erro ao vender.");
+                e.printStackTrace();
+            } catch (DateTimeParseException e) {
+                view.apresentaInfo("Invalid date format. Please use YYYY-MM-DD.");
+            } catch (NumberFormatException e) {
+                view.apresentaInfo("Preencha o numero de dias.");
+            } catch (RuntimeException e) {
+                view.apresentaInfo("Data é no Passado.");
+            }
+        } else {
+            view.apresentaInfo("Selecione Cliente e Veiculo para locar.");
+        }
+    }
+
     private long dateDifferenceFromNow(LocalDate date) {
         LocalDate today = LocalDate.now();
         //LocalDate today = LocalDate.parse("2024-06-17");   //TESTE
@@ -99,65 +137,170 @@ public class TransacoesTabController {
 
     public void devolverLocacao() {
         if (!view.getTransacoesTable().getSelectionModel().isSelectionEmpty()) {
-            int idveiculo = ttm.getIdOfSelectedVeiculo(view.getTransacoesTable());
-            int idlocacao = GetId.getIdLocacaoFromRented(idveiculo); 
-            double valorDiaria = ttm.getValorDiariaLocacao(view.getTransacoesTable());
-            int dias = GetId.getDiasFromRented(idveiculo);
-            LocalDate date = ttm.getDateOfSelectedVeiculo(view.getTransacoesTable()); System.out.println(date);
-            long dif = dateDifferenceFromNow(date.plusDays(dias)); 
-System.out.println("@devolverLocacao(): dias "+dias+"\n Localdate "+date+"\n diff "+dif+"\n");System.out.println("idlocacao "+idlocacao+"\n idveiculo "+idveiculo);
+            try {
+                int idveiculo = ttm.getIdOfSelectedVeiculo(view.getTransacoesTable());
+                int idlocacao = GetId.getIdLocacaoFromRented(idveiculo);
+                double valorDiaria = ttm.getValorDiariaLocacao(view.getTransacoesTable());
+                int dias = GetId.getDiasFromRented(idveiculo);
+                LocalDate date = ttm.getDateOfSelectedVeiculo(view.getTransacoesTable());
+                System.out.println(date);
+                long dif = dateDifferenceFromNow(date.plusDays(dias));
+                System.out.println("@devolverLocacao(): dias " + dias + "\n Localdate " + date + "\n diff " + dif + "\n");
+                System.out.println("idlocacao " + idlocacao + "\n idveiculo " + idveiculo);
 
-            if (dif < 0) { // devolvendo antes da data prevista.
-                System.out.println("\n(dif < 0)devolvendo antes da data prevista.");
-                double pagamentoReduzido = (dias + dif) * valorDiaria;
-System.out.println("\npagamentoreduzido "+pagamentoReduzido+" Reais\n"); 
-                locDao.devolverDataNaoPrevista(idlocacao, idveiculo, (int)(dias + dif), pagamentoReduzido);
-                view.apresentaInfo("Valor a pagar: " + pagamentoReduzido + " Reais.");
-                switch (ttm.getTipoVeiculo()) {
-                    case 1 ->
-                        showAllMotos();
-                    case 2 ->
-                        showAllAutos();
-                    case 3 ->
-                        showAllVans();
+                if (dif < 0) { // devolvendo antes da data prevista.
+                    System.out.println("\n(dif < 0)devolvendo antes da data prevista.");
+                    double pagamentoReduzido = (dias + dif) * valorDiaria;
+                    System.out.println("\npagamentoreduzido " + pagamentoReduzido + " Reais\n");
+                    locDao.devolverDataNaoPrevista(idlocacao, idveiculo, (int) (dias + dif), pagamentoReduzido);
+                    view.apresentaInfo("Valor a pagar: " + pagamentoReduzido + " Reais.");
+                    switch (ttm.getTipoVeiculo()) {
+                        case 1 ->
+                            showAllMotos();
+                        case 2 ->
+                            showAllAutos();
+                        case 3 ->
+                            showAllVans();
+                    }
+                    view.apresentaInfo("Veículo devolvido.");
+
+                } else if (dif > 0) { // devolvendo atrasado.
+                    System.out.println("(dif < 0)devolvendo atrasado.");
+                    double pagamentoComMulta = (dias + dif) * valorDiaria;
+                    System.out.println("\npagamentocommulta " + pagamentoComMulta + " Reais\n");
+
+                    locDao.devolverDataNaoPrevista(idlocacao, idveiculo, (int) (dias + dif), pagamentoComMulta);
+                    view.apresentaInfo("Valor a pagar: " + pagamentoComMulta + " Reais.");
+                    switch (ttm.getTipoVeiculo()) {
+                        case 1 ->
+                            showAllMotos();
+                        case 2 ->
+                            showAllAutos();
+                        case 3 ->
+                            showAllVans();
+                    }
+                    view.apresentaInfo("Veículo devolvido.");
+
+                } else { // devolvendo no dia certo.
+                    System.out.println("\n(else)devolvendo no dia certo.");
+                    locDao.devolver(idlocacao, idveiculo);
+                    view.apresentaInfo("Valor a pagar: " + dias * valorDiaria + " Reais.");
+                    switch (ttm.getTipoVeiculo()) {
+                        case 1 ->
+                            showAllMotos();
+                        case 2 ->
+                            showAllAutos();
+                        case 3 ->
+                            showAllVans();
+                    }
+                    view.apresentaInfo("Veículo devolvido.");
                 }
-                view.apresentaInfo("Veículo devolvido.");
-
-            } else if (dif > 0) { // devolvendo atrasado.
-                System.out.println("(dif < 0)devolvendo atrasado.");
-                double pagamentoComMulta = (dias + dif) * valorDiaria;
-System.out.println("\npagamentocommulta "+pagamentoComMulta+" Reais\n"); 
-
-                locDao.devolverDataNaoPrevista(idlocacao, idveiculo, (int)(dias + dif), pagamentoComMulta);
-                view.apresentaInfo("Valor a pagar: " + pagamentoComMulta + " Reais.");
-                switch (ttm.getTipoVeiculo()) {
-                    case 1 ->
-                        showAllMotos();
-                    case 2 ->
-                        showAllAutos();
-                    case 3 ->
-                        showAllVans();
-                }
-                view.apresentaInfo("Veículo devolvido.");
-
-            } else { // devolvendo no dia certo.
-                System.out.println("\n(else)devolvendo no dia certo.");
-                locDao.devolver(idlocacao, idveiculo);
-                view.apresentaInfo("Valor a pagar: " + dias*valorDiaria + " Reais.");
-                switch (ttm.getTipoVeiculo()) {
-                    case 1 ->
-                        showAllMotos();
-                    case 2 ->
-                        showAllAutos();
-                    case 3 ->
-                        showAllVans();
-                }
-                view.apresentaInfo("Veículo devolvido.");
+            } catch (NullPointerException e) {
+                view.apresentaErro("Erro ao mostrar motos na tabela.");
+                e.printStackTrace();
             }
         }
     }
 
-    /*
+    public void showAllMotos() {
+        try {
+            MotocicletaDaoSql motoDao = new MotocicletaDaoSql();
+            ArrayList<Motocicleta> motos = new ArrayList<>();
+            ttm.setListaMotos(motos);
+            ttm.fireTableDataChanged();
+            filtroTransacoesTable.getSorter().setRowFilter(null);
+            ttm.setRowCount(0);
+            switch (ttm.getTipoTransacao()) {
+
+                case 1 /*Locacao*/ -> {
+                    motos = motoDao.getAllToRent();
+                }
+                case 2 /*Devolução*/ -> {
+                    int idcliente = cttm.getIdOfSelectedClient(view.getClientesTransacoesTable());
+                    motos = motoDao.getAllLocadasPorCliente(idcliente);
+                }
+                case 3 /*Venda*/ -> {
+                    motos = motoDao.getAllToSell();
+                }
+            }
+            if (motos.isEmpty()) {
+                //view.apresentaInfo("não há motocicletas");
+            } else {
+                ttm.setListaMotos(motos);
+                ttm.fireTableDataChanged();
+            }
+        } catch (NullPointerException e) {
+            view.apresentaErro("Erro ao mostrar motos na tabela.");
+            e.printStackTrace();
+        }
+    }
+
+    public void showAllAutos() {
+        try {
+            AutomovelDaoSql autoDao = new AutomovelDaoSql();
+            ArrayList<Automovel> autos = new ArrayList<>();
+            ttm.setListaAutos(autos);
+            ttm.fireTableDataChanged();
+            filtroTransacoesTable.getSorter().setRowFilter(null);
+            ttm.setRowCount(0);
+            switch (ttm.getTipoTransacao()) {
+
+                case 1 /*Locacao*/ -> {
+                    autos = autoDao.getAllToRent();
+                }
+                case 2 /*Devolução*/ -> {
+                    int idcliente = cttm.getIdOfSelectedClient(view.getClientesTransacoesTable());
+                    autos = autoDao.getAllLocadosPorCliente(idcliente);
+                }
+                case 3 /*Venda*/ -> {
+                    autos = autoDao.getAllToSell();
+                }
+            }
+            if (autos.isEmpty()) {
+                // view.apresentaInfo("não há automoveis");
+            } else {
+                ttm.setListaAutos(autos);
+                ttm.fireTableDataChanged();
+            }
+        } catch (NullPointerException e) {
+            view.apresentaErro("Erro ao mostrar autos na tabela.");
+            e.printStackTrace();
+        }
+    }
+
+    public void showAllVans() {
+        try {
+            VanDaoSql vanDao = new VanDaoSql();
+            ArrayList<Van> vans = new ArrayList<>();
+            ttm.setListaVans(vans);
+            ttm.fireTableDataChanged();
+            filtroTransacoesTable.getSorter().setRowFilter(null);
+            ttm.setRowCount(0);
+            switch (ttm.getTipoTransacao()) {
+
+                case 1 /*Locacao*/ -> {
+                    vans = vanDao.getAllToRent();
+                }
+                case 2 /*Devolução*/ -> {
+                    int idcliente = cttm.getIdOfSelectedClient(view.getClientesTransacoesTable());
+                    vans = vanDao.getAllLocadasPorCliente(idcliente);
+                }
+                case 3 /*Venda*/ -> {
+                    vans = vanDao.getAllToSell();
+                }
+            }
+            if (vans.isEmpty()) {
+                //view.apresentaInfo("não há vans");
+            } else {
+                ttm.setListaVans(vans);
+                ttm.fireTableDataChanged();
+            }
+        } catch (NullPointerException e) {
+            view.apresentaErro("Erro ao mostrar vans na tabela.");
+            e.printStackTrace();
+        }
+    }
+
     public void showMotos() {
         try {
             MotocicletaDaoSql motoDao = new MotocicletaDaoSql();
@@ -177,108 +320,6 @@ System.out.println("\npagamentocommulta "+pagamentoComMulta+" Reais\n");
             view.apresentaErro("Erro ao mostrar motos na tabela.");
             e.printStackTrace();
         }
-    }
-     */
-    public void showAllMotos() {
-        try {
-            MotocicletaDaoSql motoDao = new MotocicletaDaoSql();
-            ArrayList<Motocicleta> motos = new ArrayList<>();
-            ttm.setListaMotos(motos);
-            ttm.fireTableDataChanged();
-            filtroTransacoesTable.getSorter().setRowFilter(null);
-            ttm.setRowCount(0);
-            switch (ttm.getTipoTransacao()) {
-
-                case 1 /*Locacao*/ -> {
-                    motos = motoDao.getAllWithEstado("disponivel");
-                }
-                case 2 /*Devolução*/ -> {
-                    int idcliente = cttm.getIdOfSelectedClient(view.getClientesTransacoesTable());
-                    motos = motoDao.getAllLocadasPorCliente(idcliente);
-                }
-                case 3 /*Venda*/ -> {
-                    motos = motoDao.getAllWithEstado("disponivel");
-                }
-            }
-            if (motos.isEmpty()) {
-                //view.apresentaInfo("não há motocicletas");
-            } else {
-                ttm.setListaMotos(motos);
-                ttm.fireTableDataChanged();
-            }
-        } catch (NullPointerException e) {
-            view.apresentaErro("Erro ao mostrar motos na tabela.");
-            e.printStackTrace();
-        }
-        // }
-    }
-
-    public void showAllAutos() {
-        try {
-            AutomovelDaoSql autoDao = new AutomovelDaoSql();
-            ArrayList<Automovel> autos = new ArrayList<>();
-            ttm.setListaAutos(autos);
-            ttm.fireTableDataChanged();
-            filtroTransacoesTable.getSorter().setRowFilter(null);
-            ttm.setRowCount(0);
-            switch (ttm.getTipoTransacao()) {
-
-                case 1 /*Locacao*/ -> {
-                    autos = autoDao.getAllWithEstado("disponivel");
-                }
-                case 2 /*Devolução*/ -> {
-                    int idcliente = cttm.getIdOfSelectedClient(view.getClientesTransacoesTable());
-                    autos = autoDao.getAllLocadosPorCliente(idcliente);
-                }
-                case 3 /*Venda*/ -> {
-                    autos = autoDao.getAllWithEstado("disponivel");
-                }
-            }
-            if (autos.isEmpty()) {
-               // view.apresentaInfo("não há automoveis");
-            } else {
-                ttm.setListaAutos(autos);
-                ttm.fireTableDataChanged();
-            }
-        } catch (NullPointerException e) {
-            view.apresentaErro("Erro ao mostrar autos na tabela.");
-            e.printStackTrace();
-        }
-        // }
-    }
-
-    public void showAllVans() {
-        try {
-            VanDaoSql vanDao = new VanDaoSql();
-            ArrayList<Van> vans = new ArrayList<>();
-            ttm.setListaVans(vans);
-            ttm.fireTableDataChanged();
-            filtroTransacoesTable.getSorter().setRowFilter(null);
-            ttm.setRowCount(0);
-            switch (ttm.getTipoTransacao()) {
-
-                case 1 /*Locacao*/ -> {
-                    vans = vanDao.getAllWithEstado("disponivel");
-                }
-                case 2 /*Devolução*/ -> {
-                    int idcliente = cttm.getIdOfSelectedClient(view.getClientesTransacoesTable());
-                    vans = vanDao.getAllLocadasPorCliente(idcliente);
-                }
-                case 3 /*Venda*/ -> {
-                    vans = vanDao.getAllWithEstado("disponivel");
-                }
-            }
-            if (vans.isEmpty()) {
-                //view.apresentaInfo("não há vans");
-            } else {
-                ttm.setListaVans(vans);
-                ttm.fireTableDataChanged();
-            }
-        } catch (NullPointerException e) {
-            view.apresentaErro("Erro ao mostrar vans na tabela.");
-            e.printStackTrace();
-        }
-        // }
     }
 
     public void showAutos() {

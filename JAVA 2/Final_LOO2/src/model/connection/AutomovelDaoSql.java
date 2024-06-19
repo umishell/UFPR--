@@ -37,7 +37,7 @@ public class AutomovelDaoSql implements AutomovelDao {
     }
 
     private final String insertVeiculo = "INSERT INTO veiculo (valorDeCompra, tipo, ano, placa) VALUES (?,?,?,?)";
-    private final String insertAuto = "INSERT INTO automovel (idveiculo, idmodeloAutomovel) VALUES (?,?))";
+    private final String insertAuto = "INSERT INTO automovel (idveiculo, idmodeloAutomovel) VALUES (?,?)";
                                       
     @Override
     public void add(Automovel auto) {
@@ -150,8 +150,6 @@ public class AutomovelDaoSql implements AutomovelDao {
                                       INNER JOIN categoria ON modeloautomovel.idcategoria = categoria.idcategoria
                                       INNER JOIN marca ON modeloautomovel.idmarca = marca.idmarca
                                       WHERE estado.estado = 'locado' AND locacao.idcliente = ?
-                                      GROUP BY veiculo.idveiculo, marca.marca, estado.estado, categoria.categoria,
-                                     		  veiculo.valorDeCompra, veiculo.placa, veiculo.ano, modeloautomovel.modelo;
                                      """;
 
     public ArrayList<Automovel> getAllLocadosPorCliente(int idcliente) {
@@ -201,8 +199,8 @@ public class AutomovelDaoSql implements AutomovelDao {
         }
         return autos;
     }
-
-    private final String selectAllDisponiveis = """
+    
+    private final String toRent = """
                                      SELECT
                                        veiculo.idveiculo,
                                        marca.marca,
@@ -218,59 +216,112 @@ public class AutomovelDaoSql implements AutomovelDao {
                                      INNER JOIN modeloAutomovel ON automovel.idmodeloAutomovel = modeloautomovel.idmodeloAutomovel
                                      INNER JOIN categoria ON modeloautomovel.idcategoria = categoria.idcategoria
                                      INNER JOIN marca ON modeloautomovel.idmarca = marca.idmarca
-                                     WHERE estado.estado = ?
-                                     GROUP BY veiculo.idveiculo, marca.marca, estado.estado, categoria.categoria,
-                                              veiculo.valorDeCompra, veiculo.placa, veiculo.ano, modeloautomovel.modelo;
+                                     WHERE estado.estado = 'disponivel'
                                      """;
 
-    public ArrayList<Automovel> getAllWithEstado(String estado) {
+    public ArrayList<Automovel> getAllToRent() {
 
         ArrayList<Automovel> autos = new ArrayList<>();
 
-        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("SELECT * FROM locacao where idveiculo = ?"); 
-                PreparedStatement stmtLista = conn.prepareStatement(selectAllDisponiveis);) {
-            stmtLista.setString(1, estado);
-            try (ResultSet rs = stmtLista.executeQuery();) {
-                while (rs.next()) {
-                    int idveiculo = rs.getInt("idveiculo");
-                    String marca = rs.getString("marca");
-                    //String estado = rs.getString("estado");
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("SELECT * FROM locacao WHERE idveiculo = ?"); PreparedStatement stmtLista = conn.prepareStatement(toSell); ResultSet rs = stmtLista.executeQuery();) {
 
-                    ArrayList<Locacao> locacoes = new ArrayList<>();
-                    stmtLocacoes.setInt(1, idveiculo);
-                    try (ResultSet rs0 = stmtLocacoes.executeQuery();) {
-                        if (!rs0.isBeforeFirst()) { //if there are rows available{
-                            //System.out.println("veiculo " + idveiculo + " sem locacoes.");
-                            locacoes = null;
-                        } else {
-                            while (rs0.next()) {
-                                boolean active;
-                                if (estado == "disponivel") {
-                                    active = true;
-                                } else {
-                                    active = false;
-                                }
-                                int dias = rs0.getInt("dias");
-                                double valor = rs0.getDouble("valor");
-                                LocalDate date = rs0.getDate("date").toLocalDate();
-                                int idCliente = rs0.getInt("idcliente");
-                                locacoes.add(new Locacao(active, dias, valor, date, idCliente, idveiculo));
-                            }
+            while (rs.next()) {
+                int idveiculo = rs.getInt("idveiculo");
+                String marca = rs.getString("marca");
+                String estado = rs.getString("estado");
+
+                ArrayList<Locacao> locacoes = new ArrayList<>();
+                stmtLocacoes.setInt(1, idveiculo);
+                try (ResultSet rs0 = stmtLocacoes.executeQuery();) {
+                    if (!rs0.isBeforeFirst()) { //if there are rows available{
+                        locacoes = null;
+                    } else {
+                        while (rs0.next()) {
+                            boolean active = rs0.getBoolean("active");
+                            int dias = rs0.getInt("dias");
+                            double valor = rs0.getDouble("valor");
+                            LocalDate date = rs0.getDate("date").toLocalDate();
+                            int idCliente = rs0.getInt("idcliente");
+                            locacoes.add(new Locacao(active, dias, valor, date, idCliente, idveiculo));
                         }
                     }
-                    String categoria = rs.getString("categoria");
-                    Double valorDeCompra = rs.getDouble("valorDeCompra");
-                    String placa = rs.getString("placa");
-                    int ano = rs.getInt("ano");
-                    String modelo = rs.getString("modelo");
-
-                    autos.add(new Automovel(idveiculo, "Automovel", marca, estado, locacoes, categoria, valorDeCompra, placa, ano, modelo));
                 }
+                String categoria = rs.getString("categoria");
+                Double valorDeCompra = rs.getDouble("valorDeCompra");
+                String placa = rs.getString("placa");
+                int ano = rs.getInt("ano");
+                String modelo = rs.getString("modelo");
+
+                autos.add(new Automovel(idveiculo, "Automovel", marca, estado, locacoes, categoria, valorDeCompra, placa, ano, modelo));
             }
+
             return autos;
 
         } catch (SQLException | IOException e) {
-            JOptionPane.showMessageDialog(null, "@AutomovelDaoSql.getAllNaoLocados():  Error getting all autos nao locados: \n" + e.getMessage());
+            JOptionPane.showMessageDialog(null, "@AutomovelDaoSql.getAllToRent(): \n" + e.getMessage());
+            e.printStackTrace();
+        }
+        return autos;
+    }
+    private final String toSell = """
+                                     SELECT
+                                       veiculo.idveiculo,
+                                       marca.marca,
+                                       estado.estado,
+                                       categoria.categoria,
+                                       veiculo.valorDeCompra,
+                                       veiculo.placa,
+                                       veiculo.ano,
+                                       modeloautomovel.modelo
+                                     FROM automovel
+                                     INNER JOIN veiculo ON automovel.idveiculo = veiculo.idveiculo
+                                     INNER JOIN estado ON veiculo.idestado = estado.idestado
+                                     INNER JOIN modeloAutomovel ON automovel.idmodeloAutomovel = modeloautomovel.idmodeloAutomovel
+                                     INNER JOIN categoria ON modeloautomovel.idcategoria = categoria.idcategoria
+                                     INNER JOIN marca ON modeloautomovel.idmarca = marca.idmarca
+                                     WHERE estado.estado != 'vendido'
+                                     """;
+
+    public ArrayList<Automovel> getAllToSell() {
+
+        ArrayList<Automovel> autos = new ArrayList<>();
+
+        try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtLocacoes = conn.prepareStatement("SELECT * FROM locacao WHERE idveiculo = ?"); PreparedStatement stmtLista = conn.prepareStatement(toSell); ResultSet rs = stmtLista.executeQuery();) {
+
+            while (rs.next()) {
+                int idveiculo = rs.getInt("idveiculo");
+                String marca = rs.getString("marca");
+                String estado = rs.getString("estado");
+
+                ArrayList<Locacao> locacoes = new ArrayList<>();
+                stmtLocacoes.setInt(1, idveiculo);
+                try (ResultSet rs0 = stmtLocacoes.executeQuery();) {
+                    if (!rs0.isBeforeFirst()) { //if there are rows available{
+                        locacoes = null;
+                    } else {
+                        while (rs0.next()) {
+                            boolean active = rs0.getBoolean("active");
+                            int dias = rs0.getInt("dias");
+                            double valor = rs0.getDouble("valor");
+                            LocalDate date = rs0.getDate("date").toLocalDate();
+                            int idCliente = rs0.getInt("idcliente");
+                            locacoes.add(new Locacao(active, dias, valor, date, idCliente, idveiculo));
+                        }
+                    }
+                }
+                String categoria = rs.getString("categoria");
+                Double valorDeCompra = rs.getDouble("valorDeCompra");
+                String placa = rs.getString("placa");
+                int ano = rs.getInt("ano");
+                String modelo = rs.getString("modelo");
+
+                autos.add(new Automovel(idveiculo, "Automovel", marca, estado, locacoes, categoria, valorDeCompra, placa, ano, modelo));
+            }
+
+            return autos;
+
+        } catch (SQLException | IOException e) {
+            JOptionPane.showMessageDialog(null, "@AutomovelDaoSql.getAllToSell():  \n" + e.getMessage());
             e.printStackTrace();
         }
         return autos;

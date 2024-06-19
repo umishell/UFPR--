@@ -68,7 +68,7 @@ public class LocacaoDaoSql implements LocacaoDao {
     private final String updateEstadoDevolver = "UPDATE veiculo SET idestado=1 WHERE idveiculo=?";
 
     public void devolver(int idlocacao, int idveiculo) {
-        System.out.println("idlocacao "+idlocacao+" . idveiculo "+idveiculo);
+        //System.out.println("idlocacao "+idlocacao+" . idveiculo "+idveiculo);
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmt = conn.prepareStatement(devolver);
                 PreparedStatement stmt0 = conn.prepareStatement(updateEstadoDevolver);) {
             stmt.setInt(1, idlocacao);

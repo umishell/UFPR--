@@ -128,7 +128,6 @@ public class VeiculosTabController {
             view.apresentaErro("Erro ao mostrar motos na tabela.");
             e.printStackTrace();
         }
-        // }
     }
 
     public void showAutos() {
@@ -150,7 +149,6 @@ public class VeiculosTabController {
             view.apresentaErro("Erro ao mostrar autos na tabela.");
             e.printStackTrace();
         }
-        //}
     }
 
     public void showVans() {
