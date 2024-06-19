@@ -36,7 +36,7 @@ public class MotocicletaDaoSql implements MotocicletaDao {
     }
 
     private final String insertVeiculo = "INSERT INTO veiculo (valorDeCompra, tipo, ano, placa) VALUES (?,?,?,?);";
-    private final String insertMoto = "INSERT INTO motocicleta (idveiculo, idmodeloMotocicleta) VALUES (?,?)";
+    private final String insertMoto = "INSERT INTO motocicleta (idveiculo, idmodeloMotocicleta) VALUES (?,?);";
 
     @Override
     public void add(Motocicleta moto) {
@@ -45,10 +45,12 @@ public class MotocicletaDaoSql implements MotocicletaDao {
             stmtVeiculo.setString(2, "Motocicleta");
             stmtVeiculo.setInt(3, moto.getAno());
             stmtVeiculo.setString(4, moto.getPlaca());
+            stmtVeiculo.execute();
+            
             stmtMoto.setInt(1, GetId.getIdVeiculo(conn, moto.getPlaca()));
             stmtMoto.setInt(2, GetId.getIdmodelo(conn, "Motocicleta", moto.getModelo()));
-            stmtVeiculo.execute();
             stmtMoto.execute();
+            
 
             ResultSet rs = stmtVeiculo.getGeneratedKeys();
             rs.next();

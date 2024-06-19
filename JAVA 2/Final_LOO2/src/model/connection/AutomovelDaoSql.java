@@ -41,7 +41,6 @@ public class AutomovelDaoSql implements AutomovelDao {
                                       
     @Override
     public void add(Automovel auto) {
-//auto.to_String();
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtVeiculo = conn.prepareStatement(insertVeiculo, Statement.RETURN_GENERATED_KEYS); PreparedStatement stmtAuto = conn.prepareStatement(insertAuto);) {
             stmtVeiculo.setDouble(1, auto.getValorDeCompra());
             stmtVeiculo.setString(2, "Automovel");

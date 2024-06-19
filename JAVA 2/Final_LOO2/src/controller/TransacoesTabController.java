@@ -511,4 +511,8 @@ public class TransacoesTabController {
     public void setVisibilityDevolucaoOptions(boolean b) {
         view.getBtnDevolver().setVisible(b);
     }
+    
+    public void setVisibilityVendaOptions(boolean b) {
+        view.getBtnVender().setVisible(b);
+    }
 }

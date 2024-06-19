@@ -51,6 +51,10 @@ public class Frame extends javax.swing.JFrame {
     private Color originalBtnColor;
     private Font monospace;
 
+    private boolean notEnteredClientes;
+    private boolean notEnteredVeiculos;
+    private boolean notEnteredTransacoes;
+
     public Frame() {
 
         //TABLE MODELS
@@ -64,12 +68,12 @@ public class Frame extends javax.swing.JFrame {
         //BUTTON VISUALS
         monospace = new Font("Monospace", Font.BOLD, 14);
         originalBtnColor = btnMotocicletasVeiculos.getBackground();
-        
+
         costumizeButtons();
 
-        //vtm.setTipoVeiculo(1);//tipo 1 moto
-        ttm.setTipoVeiculo(1);//tipo 1 moto
-        ttm.setTipoTransacao(1);//tipo 1 locacao
+        notEnteredClientes = true;
+        notEnteredVeiculos = true;
+        notEnteredTransacoes = true;
 
     }
 
@@ -189,6 +193,9 @@ public class Frame extends javax.swing.JFrame {
         tabTransacoes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabTransacoesMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tabTransacoesMouseEntered(evt);
             }
         });
 
@@ -366,9 +373,17 @@ public class Frame extends javax.swing.JFrame {
                             .addComponent(btnVender))
                         .addGap(262, 262, 262))
                     .addGroup(tabTransacoesLayout.createSequentialGroup()
-                        .addComponent(lblPesquisarClientes)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtPesquisarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(tabTransacoesLayout.createSequentialGroup()
+                                .addComponent(btnLocacao)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnDevolucao)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnVenda))
+                            .addGroup(tabTransacoesLayout.createSequentialGroup()
+                                .addComponent(lblPesquisarClientes)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txtPesquisarClientes, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(1047, 1047, 1047))))
             .addGroup(tabTransacoesLayout.createSequentialGroup()
                 .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -379,28 +394,20 @@ public class Frame extends javax.swing.JFrame {
                         .addGap(60, 60, 60)
                         .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(tabTransacoesLayout.createSequentialGroup()
-                                .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(tabTransacoesLayout.createSequentialGroup()
-                                        .addComponent(lblNumDiasTransacoes)
-                                        .addGap(33, 33, 33))
-                                    .addGroup(tabTransacoesLayout.createSequentialGroup()
-                                        .addComponent(lblDataTransacoes)
-                                        .addGap(43, 43, 43)))
-                                .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(tabTransacoesLayout.createSequentialGroup()
-                                        .addGap(32, 32, 32)
-                                        .addComponent(txtDiasTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(175, 175, 175)
-                                        .addComponent(btnLocar))
-                                    .addGroup(tabTransacoesLayout.createSequentialGroup()
-                                        .addGap(12, 12, 12)
-                                        .addComponent(ftxtDataTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(lblNumDiasTransacoes)
+                                .addGap(33, 33, 33))
                             .addGroup(tabTransacoesLayout.createSequentialGroup()
-                                .addComponent(btnLocacao)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnDevolucao)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnVenda)))
+                                .addComponent(lblDataTransacoes)
+                                .addGap(43, 43, 43)))
+                        .addGroup(tabTransacoesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(tabTransacoesLayout.createSequentialGroup()
+                                .addGap(32, 32, 32)
+                                .addComponent(txtDiasTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(175, 175, 175)
+                                .addComponent(btnLocar))
+                            .addGroup(tabTransacoesLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(ftxtDataTransacoes, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         tabTransacoesLayout.setVerticalGroup(
@@ -452,9 +459,12 @@ public class Frame extends javax.swing.JFrame {
         paneAllTabs.addTab("Transacoes", tabTransacoes);
 
         tabVeiculos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        tabVeiculos.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentShown(java.awt.event.ComponentEvent evt) {
-                tabVeiculosComponentShown(evt);
+        tabVeiculos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabVeiculosMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tabVeiculosMouseEntered(evt);
             }
         });
 
@@ -700,6 +710,15 @@ public class Frame extends javax.swing.JFrame {
 
         paneAllTabs.addTab("Veículos", tabVeiculos);
 
+        tabCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabClienteMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                tabClienteMouseEntered(evt);
+            }
+        });
+
         lblNomeCliente.setText("Nome");
 
         lblSobrenomeCliente.setText("Sobrenome");
@@ -939,11 +958,6 @@ public class Frame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNomeClienteActionPerformed
 
-    private void tabVeiculosComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_tabVeiculosComponentShown
-        // Cmarca.setModel(cm.getMarcaModel());
-        //Ccategoria.setModel(cm.getCategoriaModel());
-    }//GEN-LAST:event_tabVeiculosComponentShown
-
     private void cboxCategoriaVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxCategoriaVeiculoActionPerformed
         ctrlVeiculos.activateCboxCategoriaVeiculos();
     }//GEN-LAST:event_cboxCategoriaVeiculoActionPerformed
@@ -953,19 +967,19 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_cboxMarcaVeiculoActionPerformed
 
     private void btnAutomoveisVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutomoveisVeiculosActionPerformed
-        setBtnColors("Automoveis", "Veiculos");
+        setBtnColorsVeiculos("Automoveis", "Veiculos");
         vtm.setTipoVeiculo(2);//tipo 2 auto
         ctrlVeiculos.showAutos();
     }//GEN-LAST:event_btnAutomoveisVeiculosActionPerformed
 
     private void btnMotocicletasVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotocicletasVeiculosActionPerformed
-        setBtnColors("Motocicletas", "Veiculos");
+        setBtnColorsVeiculos("Motocicletas", "Veiculos");
         vtm.setTipoVeiculo(1);//tipo 1 moto
         ctrlVeiculos.showMotos();
     }//GEN-LAST:event_btnMotocicletasVeiculosActionPerformed
 
     private void btnVansVeiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVansVeiculosActionPerformed
-        setBtnColors("Vans", "Veiculos");
+        setBtnColorsVeiculos("Vans", "Veiculos");
         vtm.setTipoVeiculo(3);//tipo 3 van
         ctrlVeiculos.showVans();
     }//GEN-LAST:event_btnVansVeiculosActionPerformed
@@ -1034,8 +1048,10 @@ public class Frame extends javax.swing.JFrame {
 
     private void btnVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendaActionPerformed
         ttm.setTipoTransacao(3);//tipo 3 venda
+        setBtnColorsTransacoes("Venda");
         ctrlTransacoes.setVisibilityLocacaoOptions(false);
         ctrlTransacoes.setVisibilityDevolucaoOptions(false);
+        ctrlTransacoes.setVisibilityVendaOptions(true);
         switch (ttm.getTipoVeiculo()) {
             case 1 ->
                 ctrlTransacoes.showAllMotos();
@@ -1048,8 +1064,10 @@ public class Frame extends javax.swing.JFrame {
 
     private void btnDevolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDevolucaoActionPerformed
         ttm.setTipoTransacao(2);//tipo 2 devolução
+        setBtnColorsTransacoes("Devolução");
         ctrlTransacoes.setVisibilityLocacaoOptions(false);
         ctrlTransacoes.setVisibilityDevolucaoOptions(true);
+        ctrlTransacoes.setVisibilityVendaOptions(false);
         switch (ttm.getTipoVeiculo()) {
             case 1 ->
                 ctrlTransacoes.showAllMotos();
@@ -1062,8 +1080,10 @@ public class Frame extends javax.swing.JFrame {
 
     private void btnLocacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLocacaoActionPerformed
         ttm.setTipoTransacao(1);//tipo 1 locacao
+        setBtnColorsTransacoes("Locação");
         ctrlTransacoes.setVisibilityLocacaoOptions(true);
         ctrlTransacoes.setVisibilityDevolucaoOptions(false);
+        ctrlTransacoes.setVisibilityVendaOptions(false);
     }//GEN-LAST:event_btnLocacaoActionPerformed
 
     private void cboxCategoriaTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboxCategoriaTransacoesActionPerformed
@@ -1126,7 +1146,7 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPesquisarClientesKeyReleased
 
     private void btnAutomoveisTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAutomoveisTransacoesActionPerformed
-        setBtnColors("Automoveis", "Transacoes");
+        setBtnColorsVeiculos("Automoveis", "Transacoes");
         ttm.setTipoVeiculo(2);//tipo 2 auto
         ctrlTransacoes.showAllAutos();
     }//GEN-LAST:event_btnAutomoveisTransacoesActionPerformed
@@ -1141,13 +1161,13 @@ public class Frame extends javax.swing.JFrame {
     }//GEN-LAST:event_transacoesTableMousePressed
 
     private void btnMotocicletasTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMotocicletasTransacoesActionPerformed
-        setBtnColors("Motocicletas", "Transacoes");
+        setBtnColorsVeiculos("Motocicletas", "Transacoes");
         ttm.setTipoVeiculo(1);//tipo 1 moto
         ctrlTransacoes.showAllMotos();
     }//GEN-LAST:event_btnMotocicletasTransacoesActionPerformed
 
     private void btnVansTransacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVansTransacoesActionPerformed
-        setBtnColors("Vans", "Transacoes");
+        setBtnColorsVeiculos("Vans", "Transacoes");
         ttm.setTipoVeiculo(3);//tipo 3 van
         ctrlTransacoes.showAllVans();
     }//GEN-LAST:event_btnVansTransacoesActionPerformed
@@ -1159,6 +1179,57 @@ public class Frame extends javax.swing.JFrame {
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
         ctrlTransacoes.vender();
     }//GEN-LAST:event_btnVenderActionPerformed
+
+    private void tabVeiculosMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabVeiculosMouseEntered
+        if (notEnteredVeiculos) {
+            notEnteredVeiculos = false;
+            setBtnColorsVeiculos("Motocicletas", "Veiculos");
+            vtm.setTipoVeiculo(1);//tipo 1 moto
+            ctrlVeiculos.showMotos();
+        }
+    }//GEN-LAST:event_tabVeiculosMouseEntered
+
+    private void tabVeiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabVeiculosMouseClicked
+        if (evt.getSource() != veiculosTable) {
+            veiculosTable.getSelectionModel().clearSelection();
+        }
+    }//GEN-LAST:event_tabVeiculosMouseClicked
+
+    private void tabClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabClienteMouseClicked
+        if (evt.getSource() != clienteTable) {
+            clienteTable.getSelectionModel().clearSelection();
+        }
+
+    }//GEN-LAST:event_tabClienteMouseClicked
+
+    private void tabTransacoesMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabTransacoesMouseEntered
+        if (notEnteredTransacoes) {
+            notEnteredTransacoes = false;
+            ttm.setTipoVeiculo(1);//tipo 1 moto
+            ttm.setTipoTransacao(1);//tipo 1 locacao
+            ctrlTransacoes.setVisibilityLocacaoOptions(true);
+            ctrlTransacoes.setVisibilityDevolucaoOptions(false);
+            ctrlTransacoes.setVisibilityVendaOptions(false);
+            setBtnColorsTransacoes("Locação");
+            setBtnColorsVeiculos("Motocicletas", "Transacoes");
+            ctrlTransacoes.showClientes();
+            switch (ttm.getTipoVeiculo()) {
+                case 1 ->
+                    ctrlTransacoes.showAllMotos();
+                case 2 ->
+                    ctrlTransacoes.showAllAutos();
+                case 3 ->
+                    ctrlTransacoes.showAllVans();
+            }
+        }
+    }//GEN-LAST:event_tabTransacoesMouseEntered
+
+    private void tabClienteMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabClienteMouseEntered
+        if (notEnteredClientes) {
+            notEnteredClientes = false;
+            ctrlClientes.showClientes();
+        }
+    }//GEN-LAST:event_tabClienteMouseEntered
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1421,7 +1492,7 @@ public class Frame extends javax.swing.JFrame {
         }
     }
 
-    private void setBtnColors(String btn, String tab) {
+    private void setBtnColorsVeiculos(String btn, String tab) {
         Color o = originalBtnColor;
         switch (tab) {
             case "Veiculos" -> {
@@ -1487,72 +1558,45 @@ public class Frame extends javax.swing.JFrame {
 
                 }
             }
-            /*case "Devolucao" -> {
-                Color m = btnMotocicletasDevolver.getBackground();
-                Color a = btnAutomoveisDevolver.getBackground();
-                Color v = btnVansDevolver.getBackground();
-                switch (btn) {
-                    case "Motocicletas" -> {
-                        btnMotocicletasDevolver.setBackground(new Color(118, 181, 197));
-                        if (a != o) {
-                            btnAutomoveisDevolver.setBackground(o);
-                        } else if (v != o) {
-                            btnVansDevolver.setBackground(o);
-                        }
-                    }
-                    case "Automoveis" -> {
-                        btnAutomoveisDevolver.setBackground(new Color(118, 181, 197));
-                        if (m != o) {
-                            btnMotocicletasDevolver.setBackground(o);
-                        } else if (v != o) {
-                            btnVansDevolver.setBackground(o);
-                        }
-                    }
-                    case "Vans" -> {
-                        btnVansDevolver.setBackground(new Color(118, 181, 197));
-                        if (m != o) {
-                            btnMotocicletasDevolver.setBackground(o);
-                        } else if (a != o) {
-                            btnAutomoveisDevolver.setBackground(o);
-                        }
-                    }
-                }
-            }
-            case "Venda" -> {
-                Color m = btnMotocicletasVenda.getBackground();
-                Color a = btnAutomoveisVenda.getBackground();
-                Color v = btnVansVenda.getBackground();
-                switch (btn) {
-                    case "Motocicletas" -> {
-                        btnMotocicletasVenda.setBackground(new Color(118, 181, 197));
-                        if (a != o) {
-                            btnAutomoveisVenda.setBackground(o);
-                        } else if (v != o) {
-                            btnVansVenda.setBackground(o);
-                        }
-                    }
-                    case "Automoveis" -> {
-                        btnAutomoveisVenda.setBackground(new Color(118, 181, 197));
-                        if (m != o) {
-                            btnMotocicletasVenda.setBackground(o);
-                        } else if (v != o) {
-                            btnVansVenda.setBackground(o);
-                        }
-                    }
-                    case "Vans" -> {
-                        btnVansVenda.setBackground(new Color(118, 181, 197));
-                        if (m != o) {
-                            btnMotocicletasVenda.setBackground(o);
-                        } else if (a != o) {
-                            btnAutomoveisVenda.setBackground(o);
-                        }
-                    }
-                }
-            }*/
             default -> {
             }
         }
 
+    }
+
+    private void setBtnColorsTransacoes(String btn) {
+        Color o = originalBtnColor;
+        Color l = btnLocacao.getBackground();
+        Color d = btnDevolucao.getBackground();
+        Color v = btnVenda.getBackground();
+        switch (btn) {
+            case "Locação" -> {
+                btnLocacao.setBackground(new Color(118, 181, 197));
+                if (d != o) {
+                    btnDevolucao.setBackground(o);
+                } else if (v != o) {
+                    btnVenda.setBackground(o);
+                }
+            }
+            case "Devolução" -> {
+                btnDevolucao.setBackground(new Color(118, 181, 197));
+                if (l != o) {
+                    btnLocacao.setBackground(o);
+                } else if (v != o) {
+                    btnVenda.setBackground(o);
+                }
+            }
+            case "Venda" -> {
+                btnVenda.setBackground(new Color(118, 181, 197));
+                if (l != o) {
+                    btnLocacao.setBackground(o);
+                } else if (d != o) {
+                    btnDevolucao.setBackground(o);
+                }
+            }
+            default -> {
+            }
+        }
     }
 
     public javax.swing.JComboBox<String> getCboxCategoriaTransacoes() {
@@ -1575,7 +1619,7 @@ public class Frame extends javax.swing.JFrame {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate localDate = LocalDate.parse(dateString, formatter);
 //if (localDate.isBefore(LocalDate.now())) {
-         //   throw new RuntimeException("Date is in the past");
+        //   throw new RuntimeException("Date is in the past");
         //}
         double valorDiariaLocacao = ttm.getValorDiariaLocacao(transacoesTable);
         System.out.println("@getLocacaoFormulario.valorDiarialocacao : " + valorDiariaLocacao);
@@ -1619,6 +1663,10 @@ public class Frame extends javax.swing.JFrame {
 
     public javax.swing.JButton getBtnDevolver() {
         return btnDevolver;
+    }
+
+    public javax.swing.JButton getBtnVender() {
+        return btnVender;
     }
 
 }

@@ -51,15 +51,15 @@ public class VeiculosTableModel extends DefaultTableModel {
         if (v instanceof Motocicleta moto) {
             this.listaMotos.add(moto);
             this.fireTableDataChanged();
-            this.fireTableRowsInserted(listaMotos.size() - 1, listaMotos.size() - 1);//update JTable
+            //this.fireTableRowsInserted(listaMotos.size() - 1, listaMotos.size() - 1);//update JTable
         } else if (v instanceof Automovel auto) {
             this.listaAutos.add(auto);
             this.fireTableDataChanged();
-            this.fireTableRowsInserted(listaAutos.size() - 1, listaAutos.size() - 1);//update JTable
+            //this.fireTableRowsInserted(listaAutos.size() - 1, listaAutos.size() - 1);//update JTable
         } else if (v instanceof Van van) {
             this.listaVans.add(van);
             this.fireTableDataChanged();
-            this.fireTableRowsInserted(listaVans.size() - 1, listaVans.size() - 1);//update JTable
+           // this.fireTableRowsInserted(listaVans.size() - 1, listaVans.size() - 1);//update JTable
         }
     }
 
@@ -277,7 +277,7 @@ public class VeiculosTableModel extends DefaultTableModel {
         this.listaMotos = motos;
         if (!listaMotos.isEmpty()) {
             this.fireTableDataChanged();
-            this.fireTableRowsInserted(0, listaMotos.size() - 1);//update JTable
+           // this.fireTableRowsInserted(0, listaMotos.size() - 1);//update JTable
         }
     }
 
@@ -285,7 +285,7 @@ public class VeiculosTableModel extends DefaultTableModel {
         this.listaAutos = autos;
         if (!listaAutos.isEmpty()) {
             this.fireTableDataChanged();
-            this.fireTableRowsInserted(0, listaAutos.size() - 1);//update JTable
+            //this.fireTableRowsInserted(0, listaAutos.size() - 1);//update JTable
         }
     }
 
@@ -293,7 +293,7 @@ public class VeiculosTableModel extends DefaultTableModel {
         this.listaVans = vans;
         if (!listaVans.isEmpty()) {
             this.fireTableDataChanged();
-            this.fireTableRowsInserted(0, listaVans.size() - 1);//update JTable
+            //this.fireTableRowsInserted(0, listaVans.size() - 1);//update JTable
         }
     }
 

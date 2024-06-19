@@ -134,9 +134,9 @@ public abstract class GetId {
         return 0;
     }
 
-    private static final String sqlGetidModeloMotocicleta = "select idmodeloMotocicleta from modeloMotocicleta where modelo=?";
-    private static final String sqlGetidModeloAutomovel = "select idmodeloAutomovel from modeloAutomovel where modelo=?";
-    private static final String sqlGetidModeloVan = "select idmodeloVan from modeloVan where modelo=?";
+    private static final String sqlGetidModeloMotocicleta = "select idmodeloMotocicleta from modelomotocicleta where modelo=?";
+    private static final String sqlGetidModeloAutomovel = "select idmodeloAutomovel from modeloautomovel where modelo=?";
+    private static final String sqlGetidModeloVan = "select idmodeloVan from modelovan where modelo=?";
 
     public static int getIdmodelo(Connection conn, String type, String modelo) {
         try {
