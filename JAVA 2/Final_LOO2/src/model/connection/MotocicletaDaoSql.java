@@ -39,7 +39,7 @@ public class MotocicletaDaoSql implements MotocicletaDao {
     private final String insertMoto = "INSERT INTO motocicleta (idveiculo, idmodeloMotocicleta) VALUES (?,?);";
 
     @Override
-    public void add(Motocicleta moto) {
+    public void add(Motocicleta moto)throws SQLException, IOException, NullPointerException {
         try (Connection conn = ConnectionFactory.getConnection(); PreparedStatement stmtVeiculo = conn.prepareStatement(insertVeiculo, Statement.RETURN_GENERATED_KEYS); PreparedStatement stmtMoto = conn.prepareStatement(insertMoto);) {
             stmtVeiculo.setDouble(1, moto.getValorDeCompra());
             stmtVeiculo.setString(2, "Motocicleta");
@@ -108,7 +108,6 @@ public class MotocicletaDaoSql implements MotocicletaDao {
                             LocalDate date = rs0.getDate("date").toLocalDate();
                             int idCliente = rs0.getInt("idcliente");
                             locacoes.add(new Locacao(active, dias, valor, date, idCliente, idveiculo));
-//System.out.println("veiculo-> "+idveiculo + ": " + idCliente + " " + valor + " " + date + " " + dias);
                         }
                     }
                 }
@@ -128,27 +127,7 @@ public class MotocicletaDaoSql implements MotocicletaDao {
         }
         return motos;
     }
-    /*private final String selectAllLocadas = """
-                                     SELECT
-                                        veiculo.idveiculo,
-                                        marca.marca,
-                                        estado.estado,
-                                        categoria.categoria,
-                                        veiculo.valorDeCompra,
-                                        veiculo.placa,
-                                        veiculo.ano ,
-                                        modelomotocicleta.modelo,
-                                        locacao.active
-                                     FROM motocicleta
-                                     INNER JOIN veiculo ON motocicleta.idveiculo = veiculo.idveiculo
-                                     INNER JOIN locacao ON motocicleta.idveiculo = locacao.idveiculo
-                                     INNER JOIN estado ON veiculo.idestado = estado.idestado
-                                     INNER JOIN modeloMotocicleta ON motocicleta.idmodeloMotocicleta = modelomotocicleta.idmodeloMotocicleta
-                                     INNER JOIN categoria ON modelomotocicleta.idcategoria = categoria.idcategoria
-                                     INNER JOIN marca ON modelomotocicleta.idmarca = marca.idmarca
-                                     WHERE locacao.idcliente = ? AND locacao.active = 1
-                                     ORDER BY motocicleta.idveiculo;
-                                     """;*/
+
     private final String selectAllLocadas = """
                                      SELECT
                                         veiculo.idveiculo,

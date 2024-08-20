@@ -37,6 +37,7 @@ public class Main {
         TableFilter filtroClientesTransacoesTable = new TableFilter();
         filtroClientesTransacoesTable.initFilter(view.getClientesTransacoesTable());
 
+        // DAO MODELS
         ClienteDaoSql cliDao = DaoFactory.getClienteDao(DaoType.SQL);
         MotocicletaDaoSql motoDao = MotocicletaDaoSql.getMotocicletaDaoSql();//DaoFactory.getMotocicletaDao(DaoType.SQL);
         AutomovelDaoSql autoDao = AutomovelDaoSql.getAutomovelDaoSql();//DaoFactory.getAutomovelDao(DaoType.SQL);
@@ -44,12 +45,15 @@ public class Main {
         LocacaoDaoSql locDao = LocacaoDaoSql.getLocacaoDaoSql();
         VendaDaoSql selDao = VendaDaoSql.getVendaDaoSql();
 
+        //CONTROLES
         ClientesTabController ctrlClientes = new ClientesTabController(view, cliDao);
         VeiculosTabController ctrlVeiculos = new VeiculosTabController(view, vtm, filtroVeiculoTable, motoDao, autoDao, vanDao);
         TransacoesTabController ctrlTransacoes = new TransacoesTabController(view, ttm, cttm, filtroTransacoesTable, filtroClientesTransacoesTable, motoDao, autoDao, vanDao, locDao, selDao);
 
+        // SET CONTROLLER TO USE ON VIEW
         view.setControllers(ctrlClientes, ctrlVeiculos, ctrlTransacoes);
 
+        //CARREGANDO  COMBO BOXES
         ctrlVeiculos.loadAllCategoriaMarcaCboxes();
         ctrlVeiculos.setSingleSelectionOnVtm();
         ctrlTransacoes.loadAllCategoriaMarcaCboxes();
